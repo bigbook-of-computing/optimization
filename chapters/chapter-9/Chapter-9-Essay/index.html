@@ -1,0 +1,5855 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A comprehensive guide to the foundations of optimization algorithms and techniques">
+      
+      
+        <meta name="author" content="Big Book of Computing">
+      
+      
+        <link rel="canonical" href="https://bigbookofcomputing.github.io/chapters/chapter-9/Chapter-9-Essay/">
+      
+      
+        <link rel="prev" href="../../chapter-8/Chapter-8-Essay/">
+      
+      
+        <link rel="next" href="../../chapter-10/Chapter-10-Essay/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Chapter-9 Bayesian Thinking and Inference - Big Book of Computing | Optimization</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+      <link rel="stylesheet" href="../../../static/styles.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-ECS7B3X8JM"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-ECS7B3X8JM",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-ECS7B3X8JM",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#9-bayesian-thinking-and-inference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Big Book of Computing | Optimization" class="md-header__button md-logo" aria-label="Big Book of Computing | Optimization" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Big Book of Computing | Optimization
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter-9 Bayesian Thinking and Inference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1M8 13h8v-2H8zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4a5 5 0 0 0 5-5 5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5M7 15a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/bigbookofcomputing/optimization" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contents/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../introduction/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Introduction
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../chapter-1/Chapter-1-Essay/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapter-1/Chapter-1-WorkBook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  WorkBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapter-1/Chapter-1-CodeBook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  CodeBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapter-1/Chapter-1-Quizes/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Quizes
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapter-1/Chapter-1-Interviews/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Interviews
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Big Book of Computing | Optimization" class="md-nav__button md-logo" aria-label="Big Book of Computing | Optimization" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    Big Book of Computing | Optimization
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/bigbookofcomputing/optimization" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapters
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Chapters
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-outline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Outline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#91-from-optimization-to-inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 From Optimization to Inference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.1 From Optimization to Inference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bridge-concept-energy-and-probability-duality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bridge Concept: Energy and Probability Duality
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimization-vs-inference-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optimization vs. Inference Goals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical-analogy-equilibrium-and-free-energy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Analogy: Equilibrium and Free Energy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#92-bayes-theorem-updating-belief" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 Bayes' Theorem — Updating Belief
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.2 Bayes&#39; Theorem — Updating Belief">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#formula-the-calculus-of-belief" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Formula: The Calculus of Belief
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interpretation-prior-likelihood-posterior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpretation: Prior × Likelihood ∝ Posterior
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analogy-learning-as-entropy-reduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analogy: Learning as Entropy Reduction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connection-to-volume-ii-thermal-reweighting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connection to Volume II: Thermal Reweighting
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#93-maximum-likelihood-and-map-estimation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 Maximum Likelihood and MAP Estimation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.3 Maximum Likelihood and MAP Estimation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#maximum-likelihood-ml-estimation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maximum Likelihood (ML) Estimation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maximum-a-posteriori-map-estimation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maximum A Posteriori (MAP) Estimation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bridge-regularized-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bridge: Regularized Optimization
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#94-priors-likelihoods-and-posteriors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4 Priors, Likelihoods, and Posteriors
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.4 Priors, Likelihoods, and Posteriors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prior-distributions-encoding-inductive-bias" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prior Distributions: Encoding Inductive Bias
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical-analogy-symmetry-and-constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Analogy: Symmetry and Constraints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#likelihood-and-posterior-the-data-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Likelihood and Posterior: The Data Update
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#95-evidence-and-model-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.5 Evidence and Model Comparison
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.5 Evidence and Model Comparison">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#model-evidence-marginal-likelihood" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Model Evidence (Marginal Likelihood)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-comparison-via-bayes-factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Model Comparison via Bayes Factor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#occams-razor-emerges-naturally" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Occam's Razor Emerges Naturally
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analogy-free-energy-minimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analogy: Free Energy Minimization
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#96-the-free-energy-view-of-inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.6 The Free Energy View of Inference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.6 The Free Energy View of Inference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#variational-inference-approximating-the-posterior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variational Inference: Approximating the Posterior
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#defining-the-variational-free-energy-mathcalfq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Defining the Variational Free Energy \(\mathcal{F}(q)\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical-analogy-mean-field-approximation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Analogy: Mean-Field Approximation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bridge-to-graphical-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bridge to Graphical Models
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#97-uncertainty-and-credible-intervals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.7 Uncertainty and Credible Intervals
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.7 Uncertainty and Credible Intervals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#credible-intervals-vs-confidence-intervals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Credible Intervals vs. Confidence Intervals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#posterior-predictive-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Posterior Predictive Distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical-analogy-ensemble-averaging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Analogy: Ensemble Averaging
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#98-bayesian-networks-the-architecture-of-belief" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.8 Bayesian Networks — The Architecture of Belief
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.8 Bayesian Networks — The Architecture of Belief">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#directed-acyclic-graph-dag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Directed Acyclic Graph (DAG)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#joint-factorization-the-chain-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Joint Factorization: The Chain Rule
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analogy-causal-structure-and-message-passing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analogy: Causal Structure and Message Passing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#99-worked-example-bayesian-coin-toss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.9 Worked Example — Bayesian Coin Toss
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.9 Worked Example — Bayesian Coin Toss">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup-the-conjugate-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup: The Conjugate Model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-analytical-posterior-and-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Analytical Posterior and Results
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interpretation-entropy-reduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpretation: Entropy Reduction
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#910-code-demo-bayesian-inference-on-coin-bias" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.10 Code Demo — Bayesian Inference on Coin Bias
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.10 Code Demo — Bayesian Inference on Coin Bias">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#observation-and-interpretation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observation and Interpretation 📈
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#911-philosophical-and-practical-perspectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.11 Philosophical and Practical Perspectives
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.11 Philosophical and Practical Perspectives">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#interpretive-duality-logic-and-energy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpretive Duality: Logic and Energy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#priors-as-inductive-bias-the-role-of-assumption" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Priors as Inductive Bias: The Role of Assumption
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#occams-principle-emerges-naturally" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Occam's Principle Emerges Naturally
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modern-ai-relevance-modeling-uncertainty" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modern AI Relevance: Modeling Uncertainty
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#912-takeaways-bridge-to-chapter-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.12 Takeaways &amp; Bridge to Chapter 10
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.12 Takeaways &amp; Bridge to Chapter 10">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-takeaways-from-chapter-9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways from Chapter 9
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bridge-to-chapter-10-from-theory-to-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bridge to Chapter 10: From Theory to Application
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-16/Chapter-16-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-17/Chapter-17-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-18/Chapter-18-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-19/Chapter-19-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WorkBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    WorkBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-9-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-16/Chapter-16-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-17/Chapter-17-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-18/Chapter-18-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-19/Chapter-19-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CodeBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CodeBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-9-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-16/Chapter-16-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-17/Chapter-17-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-18/Chapter-18-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-19/Chapter-19-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quizes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Quizes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-9-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-16/Chapter-16-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-17/Chapter-17-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-18/Chapter-18-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-19/Chapter-19-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Interviews
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Interviews
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-9-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-16/Chapter-16-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-17/Chapter-17-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-18/Chapter-18-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-19/Chapter-19-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-outline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Outline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#91-from-optimization-to-inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 From Optimization to Inference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.1 From Optimization to Inference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bridge-concept-energy-and-probability-duality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bridge Concept: Energy and Probability Duality
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimization-vs-inference-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optimization vs. Inference Goals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical-analogy-equilibrium-and-free-energy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Analogy: Equilibrium and Free Energy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#92-bayes-theorem-updating-belief" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 Bayes' Theorem — Updating Belief
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.2 Bayes&#39; Theorem — Updating Belief">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#formula-the-calculus-of-belief" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Formula: The Calculus of Belief
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interpretation-prior-likelihood-posterior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpretation: Prior × Likelihood ∝ Posterior
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analogy-learning-as-entropy-reduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analogy: Learning as Entropy Reduction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connection-to-volume-ii-thermal-reweighting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connection to Volume II: Thermal Reweighting
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#93-maximum-likelihood-and-map-estimation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 Maximum Likelihood and MAP Estimation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.3 Maximum Likelihood and MAP Estimation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#maximum-likelihood-ml-estimation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maximum Likelihood (ML) Estimation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maximum-a-posteriori-map-estimation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maximum A Posteriori (MAP) Estimation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bridge-regularized-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bridge: Regularized Optimization
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#94-priors-likelihoods-and-posteriors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4 Priors, Likelihoods, and Posteriors
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.4 Priors, Likelihoods, and Posteriors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prior-distributions-encoding-inductive-bias" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prior Distributions: Encoding Inductive Bias
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical-analogy-symmetry-and-constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Analogy: Symmetry and Constraints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#likelihood-and-posterior-the-data-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Likelihood and Posterior: The Data Update
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#95-evidence-and-model-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.5 Evidence and Model Comparison
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.5 Evidence and Model Comparison">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#model-evidence-marginal-likelihood" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Model Evidence (Marginal Likelihood)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-comparison-via-bayes-factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Model Comparison via Bayes Factor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#occams-razor-emerges-naturally" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Occam's Razor Emerges Naturally
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analogy-free-energy-minimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analogy: Free Energy Minimization
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#96-the-free-energy-view-of-inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.6 The Free Energy View of Inference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.6 The Free Energy View of Inference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#variational-inference-approximating-the-posterior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variational Inference: Approximating the Posterior
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#defining-the-variational-free-energy-mathcalfq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Defining the Variational Free Energy \(\mathcal{F}(q)\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical-analogy-mean-field-approximation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Analogy: Mean-Field Approximation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bridge-to-graphical-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bridge to Graphical Models
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#97-uncertainty-and-credible-intervals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.7 Uncertainty and Credible Intervals
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.7 Uncertainty and Credible Intervals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#credible-intervals-vs-confidence-intervals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Credible Intervals vs. Confidence Intervals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#posterior-predictive-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Posterior Predictive Distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical-analogy-ensemble-averaging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Analogy: Ensemble Averaging
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#98-bayesian-networks-the-architecture-of-belief" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.8 Bayesian Networks — The Architecture of Belief
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.8 Bayesian Networks — The Architecture of Belief">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#directed-acyclic-graph-dag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Directed Acyclic Graph (DAG)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#joint-factorization-the-chain-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Joint Factorization: The Chain Rule
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analogy-causal-structure-and-message-passing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analogy: Causal Structure and Message Passing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#99-worked-example-bayesian-coin-toss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.9 Worked Example — Bayesian Coin Toss
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.9 Worked Example — Bayesian Coin Toss">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup-the-conjugate-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup: The Conjugate Model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-analytical-posterior-and-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Analytical Posterior and Results
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interpretation-entropy-reduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpretation: Entropy Reduction
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#910-code-demo-bayesian-inference-on-coin-bias" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.10 Code Demo — Bayesian Inference on Coin Bias
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.10 Code Demo — Bayesian Inference on Coin Bias">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#observation-and-interpretation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observation and Interpretation 📈
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#911-philosophical-and-practical-perspectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.11 Philosophical and Practical Perspectives
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.11 Philosophical and Practical Perspectives">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#interpretive-duality-logic-and-energy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpretive Duality: Logic and Energy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#priors-as-inductive-bias-the-role-of-assumption" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Priors as Inductive Bias: The Role of Assumption
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#occams-principle-emerges-naturally" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Occam's Principle Emerges Naturally
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modern-ai-relevance-modeling-uncertainty" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modern AI Relevance: Modeling Uncertainty
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#912-takeaways-bridge-to-chapter-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.12 Takeaways &amp; Bridge to Chapter 10
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.12 Takeaways &amp; Bridge to Chapter 10">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-takeaways-from-chapter-9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways from Chapter 9
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bridge-to-chapter-10-from-theory-to-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bridge to Chapter 10: From Theory to Application
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/bigbookofcomputing/optimization/edit/master/docs/chapters/chapter-9/Chapter-9-Essay.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/bigbookofcomputing/optimization/raw/master/docs/chapters/chapter-9/Chapter-9-Essay.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="9-bayesian-thinking-and-inference"><strong>9. Bayesian Thinking and Inference</strong></h1>
+<hr />
+<h2 id="introduction"><strong>Introduction</strong></h2>
+<p>The optimization methods of Part II sought the single best parameter configuration—the minimum of a loss landscape or the ground state of an energy function. This deterministic pursuit of <span class="arithmatex">\(\mathbf{\theta}^*\)</span> provided powerful tools for finding optimal solutions, but it inherently discarded information about <strong>uncertainty</strong>: the breadth of plausible solutions, the robustness of the optimum, and the confidence we should place in predictions. This chapter marks the transition from <strong>optimization</strong> (finding the best state) to <strong>inference</strong> (characterizing the distribution of plausible states), shifting our focus from point estimates to probability distributions. We establish <strong>Bayesian inference</strong> as the principled framework for learning under uncertainty, revealing deep connections between statistical reasoning, thermodynamic equilibration, and the minimization of informational free energy.</p>
+<p>We begin by formalizing the <strong>energy-probability duality</strong> established in statistical mechanics: minimizing energy <span class="arithmatex">\(E(\mathbf{s})\)</span> is equivalent to maximizing probability <span class="arithmatex">\(P(\mathbf{s})\)</span> via the Boltzmann distribution <span class="arithmatex">\(P(\mathbf{s}) \propto e^{-E/k_B T}\)</span>. This duality transforms the loss landscape of optimization into a log-probability landscape, where the ground state corresponds to the most probable configuration. The centerpiece of this chapter is <strong>Bayes' Theorem</strong>—the fundamental calculus of belief that governs how rational agents update prior knowledge <span class="arithmatex">\(p(\mathbf{\theta})\)</span> into posterior knowledge <span class="arithmatex">\(p(\mathbf{\theta}|\mathcal{D})\)</span> by incorporating observed data through the likelihood <span class="arithmatex">\(p(\mathcal{D}|\mathbf{\theta})\)</span>. We demonstrate that common optimization techniques are special cases of Bayesian inference: <strong>Maximum Likelihood (ML)</strong> estimation emerges when priors are ignored, while <strong>Maximum A Posteriori (MAP)</strong> estimation reveals that regularization (L2, L1 penalties) is simply the application of Bayesian priors. We explore the <strong>Variational Free Energy</strong> framework, showing how intractable posterior inference is recast as an optimization problem—minimizing the KL divergence between an approximate distribution <span class="arithmatex">\(q(\mathbf{\theta})\)</span> and the true posterior <span class="arithmatex">\(p(\mathbf{\theta}|\mathcal{D})\)</span>—mirroring the mean-field approximations of statistical physics. The chapter examines <strong>model evidence</strong> and the <strong>Bayes Factor</strong> for model comparison, demonstrating how Occam's Razor emerges naturally from the integral structure of Bayesian inference. We then introduce <strong>Bayesian Networks</strong> (directed acyclic graphs encoding conditional dependencies) as the architectural framework for distributed inference across multiple variables. Worked examples and code demonstrations illustrate Bayesian coin-toss inference with conjugate priors (Beta-Binomial), visualizing how evidence accumulation sharpens posterior distributions and reduces informational entropy.</p>
+<p>By the end of this chapter, you will understand Bayesian inference as a rigorous mathematical framework unifying probability, thermodynamics, and optimization. You will see how the posterior predictive distribution <span class="arithmatex">\(p(y_*|x_*, \mathcal{D})\)</span> naturally incorporates parameter uncertainty into predictions (ensemble averaging over <span class="arithmatex">\(\mathbf{\theta}\)</span>), how MAP estimation connects regularization to prior beliefs (L2 penalty = Gaussian prior), and how variational inference transforms intractable belief propagation into tractable free energy minimization. This foundation bridges the deterministic optimization of Part II with the probabilistic modeling of Part III, preparing us for Chapter 10, where we apply these Bayesian principles to concrete predictive models: <strong>Linear Regression</strong> (ML under Gaussian noise) and <strong>Logistic Regression</strong> (ML under Bernoulli likelihood). Inference is not merely an alternative to optimization—it is the completion of the optimization framework, embedding uncertainty quantification into the learning process itself.</p>
+<hr />
+<h2 id="chapter-outline"><strong>Chapter Outline</strong></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Sec.</strong></th>
+<th style="text-align: left;"><strong>Title</strong></th>
+<th style="text-align: left;"><strong>Core Ideas &amp; Examples</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>9.1</strong></td>
+<td style="text-align: left;">From Optimization to Inference</td>
+<td style="text-align: left;">Energy-probability duality: <span class="arithmatex">\(E(\mathbf{s}) \leftrightarrow -k_B T \ln P(\mathbf{s})\)</span>; minimizing energy <span class="arithmatex">\(\iff\)</span> maximizing probability; optimization seeks best state <span class="arithmatex">\(\mathbf{\theta}^*\)</span> (point estimate), inference seeks distribution $p(\mathbf{\theta}</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>9.2</strong></td>
+<td style="text-align: left;">Bayes' Theorem — Updating Belief</td>
+<td style="text-align: left;">Formula: $p(\mathbf{\theta}</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>9.3</strong></td>
+<td style="text-align: left;">Maximum Likelihood and MAP Estimation</td>
+<td style="text-align: left;">ML estimate: $\mathbf{\theta}_{\text{ML}} = \arg\max p(\mathcal{D}</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>9.4</strong></td>
+<td style="text-align: left;">Priors, Likelihoods, and Posteriors</td>
+<td style="text-align: left;">Prior <span class="arithmatex">\(p(\mathbf{\theta})\)</span>: encodes inductive bias, conjugate priors (Beta-Binomial, Gaussian-Gaussian) yield analytical posteriors, hierarchical priors (multi-level uncertainty); physical analogy: priors as symmetries/constraints, data breaks symmetry; likelihood $p(\mathcal{D}</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>9.5</strong></td>
+<td style="text-align: left;">Evidence and Model Comparison</td>
+<td style="text-align: left;">Model evidence (marginal likelihood): $p(\mathcal{D}</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>9.6</strong></td>
+<td style="text-align: left;">The Free Energy View of Inference</td>
+<td style="text-align: left;">Variational Inference (VI): approximate intractable posterior $p(\mathbf{\theta}</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>9.7</strong></td>
+<td style="text-align: left;">Uncertainty and Credible Intervals</td>
+<td style="text-align: left;">Credible interval (Bayesian): direct probability statement (95% credible <span class="arithmatex">\(\to\)</span> 95% probability true value in range); posterior predictive distribution: $p(y_*</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>9.8</strong></td>
+<td style="text-align: left;">Bayesian Networks — The Architecture of Belief</td>
+<td style="text-align: left;">Directed Acyclic Graph (DAG): nodes (random variables), edges (conditional dependencies), acyclicity (causal hierarchy); joint factorization: $p(\mathbf{x}) = \prod_i p(x_i</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>9.9</strong></td>
+<td style="text-align: left;">Worked Example — Bayesian Coin Toss</td>
+<td style="text-align: left;">Binary encoding: unknown bias <span class="arithmatex">\(\theta \in [0,1]\)</span>; conjugate model: Binomial likelihood $p(k</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>9.10</strong></td>
+<td style="text-align: left;">Code Demo — Bayesian Inference on Coin Bias</td>
+<td style="text-align: left;">Python implementation: Beta prior (weak, symmetric), Binomial data (20 tosses, 12 heads); posterior update: prior <span class="arithmatex">\(\text{Beta}(2,2)\)</span> <span class="arithmatex">\(\to\)</span> posterior <span class="arithmatex">\(\text{Beta}(14,10)\)</span>; visualization: prior (wide, centered at 0.5) vs posterior (narrow, shifted to 0.6); entropy reduction: posterior distribution concentrates around empirical frequency; Example: Bayesian learning as belief refinement visualized</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>9.11</strong></td>
+<td style="text-align: left;">Philosophical and Practical Perspectives</td>
+<td style="text-align: left;">Interpretive duality: Bayesian inference as logical reasoning under uncertainty, optimization as energetic relaxation; priors as inductive bias: explicit encoding of structural assumptions (architecture, regularization); Occam's Razor: emerges naturally from evidence integral (simplicity favored); modern AI: Bayesian Neural Networks (uncertainty in weights), VAEs (variational free energy), active inference (minimize predictive error); Example: all learning embeds assumptions via priors</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>9.12</strong></td>
+<td style="text-align: left;">Takeaways &amp; Bridge to Chapter 10</td>
+<td style="text-align: left;">Bayes' Theorem as calculus of belief: prior <span class="arithmatex">\(\times\)</span> likelihood <span class="arithmatex">\(\to\)</span> posterior (entropy reduction via evidence); inference-thermodynamics duality: free energy minimization (<span class="arithmatex">\(\mathcal{F}\)</span>), evidence maximization; MAP <span class="arithmatex">\(\leftrightarrow\)</span> regularization: L2 penalty = Gaussian prior, L1 = Laplace prior; uncertainty quantification: posterior predictive distribution (ensemble averaging); bridge to Chapter 10: Linear Regression (ML under Gaussian noise), Logistic Regression (ML under Bernoulli likelihood); Example: from abstract distributions to concrete predictive models</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="91-from-optimization-to-inference"><strong>9.1 From Optimization to Inference</strong></h2>
+<p>In <strong>Part II: Optimization as Physics</strong> (Chapters 4–8), our objective was primarily <strong>optimization</strong>: finding the unique parameter configuration (<span class="arithmatex">\(\mathbf{\theta}^*\)</span>) that minimized the system's loss (<span class="arithmatex">\(L\)</span>) or energy (<span class="arithmatex">\(E\)</span>). We treated <span class="arithmatex">\(E(\mathbf{s})\)</span> as a static, continuous surface (Chapters 4–6) or a discrete energy graph (Chapter 8), and we developed dynamics (gradients, annealing) to reach the <strong>ground state</strong> (minimum).</p>
+<p>The transition to <strong>Part III: Learning as Inference</strong> marks a philosophical and mathematical departure: we move from finding the single <em>best state</em> to characterizing the overall <em>distribution of plausible states</em>.</p>
+<hr />
+<h3 id="bridge-concept-energy-and-probability-duality"><strong>Bridge Concept: Energy and Probability Duality</strong></h3>
+<p>The link between optimization and inference is the fundamental duality between <strong>energy (<span class="arithmatex">\(E\)</span>)</strong> and <strong>probability (<span class="arithmatex">\(P\)</span>)</strong> established in statistical mechanics (Chapter 2.1).</p>
+<p>In a system at thermodynamic equilibrium, the probability of observing a microstate <span class="arithmatex">\(\mathbf{s}\)</span> is dictated by its energy via the <strong>Boltzmann distribution</strong>:</p>
+<div class="arithmatex">\[
+P(\mathbf{s}) \propto e^{-E(\mathbf{s})/k_B T}
+\]</div>
+<p>This provides a unified view of the system's objective:</p>
+<div class="arithmatex">\[
+\text{Minimizing energy } E(\mathbf{s}) \quad \iff \quad \text{Maximizing probability } P(\mathbf{s})
+\]</div>
+<p>Therefore, the loss landscape we spent Part II navigating is, when scaled and negated, the <strong>log-probability landscape</strong> we now seek to map:</p>
+<div class="arithmatex">\[
+E(\mathbf{s}) \leftrightarrow -k_B T \ln P(\mathbf{s})
+\]</div>
+<p>Optimization is maximizing the probability of a state; inference is characterizing that probability distribution.</p>
+<hr />
+<h3 id="optimization-vs-inference-goals"><strong>Optimization vs. Inference Goals</strong></h3>
+<p>This duality clarifies the difference in objectives:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Goal</th>
+<th style="text-align: left;">Optimization (Part II)</th>
+<th style="text-align: left;">Inference (Part III)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Search Target</strong></td>
+<td style="text-align: left;">The <strong>best state</strong> (<span class="arithmatex">\(\mathbf{\theta}^*\)</span>).</td>
+<td style="text-align: left;">The <strong>most plausible explanation</strong> ($P(\mathbf{\theta}</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Output</strong></td>
+<td style="text-align: left;">A <strong>single point estimate</strong> (e.g., <span class="arithmatex">\(\mathbf{\theta}_{\text{ML}}\)</span>).</td>
+<td style="text-align: left;">A <strong>full distribution</strong> (e.g., the posterior).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Uncertainty</strong></td>
+<td style="text-align: left;">Explicitly ignored (point estimate).</td>
+<td style="text-align: left;">Explicitly modeled (the spread/width of the distribution).</td>
+</tr>
+</tbody>
+</table>
+<p>The single point estimate (<span class="arithmatex">\(\mathbf{\theta}^*\)</span>) of optimization is insufficient for tasks that require quantifying <strong>uncertainty</strong>—such as medical diagnostics, autonomous driving, or predicting fluctuations in a physical system. Inference directly addresses this need by providing the probability density across the entire parameter space.</p>
+<hr />
+<h3 id="physical-analogy-equilibrium-and-free-energy"><strong>Physical Analogy: Equilibrium and Free Energy</strong></h3>
+<p>The most refined physical analogy involves the total informational energy of the system:</p>
+<ul>
+<li><strong>In Statistical Mechanics:</strong> A system evolves to minimize its <strong>Helmholtz Free Energy (<span class="arithmatex">\(\mathcal{F}\)</span>)</strong>, which balances internal energy (<span class="arithmatex">\(E\)</span>) and disorder (<span class="arithmatex">\(T S\)</span>).</li>
+<li><strong>In Bayesian Learning:</strong> The parameter distribution evolves (is updated) to minimize its <strong>Variational Free Energy (<span class="arithmatex">\(\mathcal{F}\)</span>)</strong>, which balances the model's fit to data (energy) and its complexity/uncertainty (entropy).</li>
+</ul>
+<p>The equilibrium state—the minimal free energy configuration in physics—is the statistical mirror of the optimal belief system in learning: the <strong>posterior distribution</strong> that maximizes model evidence.</p>
+<p>The <strong>Goal</strong> of this transition is to establish <strong>probability as a language of uncertainty</strong> and use <strong>Bayes' theorem</strong> as the governing law for updating that language.</p>
+<h2 id="92-bayes-theorem-updating-belief"><strong>9.2 Bayes' Theorem — Updating Belief</strong></h2>
+<p><strong>Bayes' Theorem</strong> is the fundamental calculus governing how a system rationally processes <strong>new evidence (<span class="arithmatex">\(\mathcal{D}\)</span>) to update its current state of knowledge (<span class="arithmatex">\(\mathbf{\theta}\)</span>)</strong>. It is the governing law of statistical inference, translating the geometric search of optimization (Part II) into a process of probabilistic belief refinement.</p>
+<hr />
+<h3 id="formula-the-calculus-of-belief"><strong>Formula: The Calculus of Belief</strong></h3>
+<p>The theorem defines the relationship between the four core components of the learning process:</p>
+<div class="arithmatex">\[
+p(\mathbf{\theta}|\mathcal{D}) = \frac{p(\mathcal{D}|\mathbf{\theta}) p(\mathbf{\theta})}{p(\mathcal{D})}
+\]</div>
+<p>The equation formalizes the logical structure of the update:</p>
+<ul>
+<li><span class="arithmatex">\(p(\mathbf{\theta}|\mathcal{D})\)</span>: <strong>Posterior</strong> — The <strong>updated belief</strong> about the model parameters <span class="arithmatex">\(\mathbf{\theta}\)</span> after incorporating the data <span class="arithmatex">\(\mathcal{D}\)</span>. This is the output of the inference process.</li>
+<li><span class="arithmatex">\(p(\mathcal{D}|\mathbf{\theta})\)</span>: <strong>Likelihood</strong> — The probability of observing the data <span class="arithmatex">\(\mathcal{D}\)</span> <em>given</em> a specific set of parameters <span class="arithmatex">\(\mathbf{\theta}\)</span>. This term links the data model (or loss function) to the parameters.</li>
+<li><span class="arithmatex">\(p(\mathbf{\theta})\)</span>: <strong>Prior</strong> — The <strong>initial belief</strong> about <span class="arithmatex">\(\mathbf{\theta}\)</span> before any data is observed.</li>
+<li><span class="arithmatex">\(p(\mathcal{D})\)</span>: <strong>Model Evidence</strong> — A normalization constant (or marginal likelihood) that ensures the posterior integrates to one.</li>
+</ul>
+<hr />
+<h3 id="interpretation-prior-likelihood-posterior"><strong>Interpretation: Prior × Likelihood ∝ Posterior</strong></h3>
+<p>The most common, conceptual statement of the theorem is: <strong>Posterior <span class="arithmatex">\(\propto\)</span> Likelihood <span class="arithmatex">\(\times\)</span> Prior</strong>.</p>
+<ul>
+<li>The <strong>Prior</strong> represents the initial <strong>uncertainty</strong> or stored knowledge of the system.</li>
+<li>The <strong>Likelihood</strong> acts as the <strong>evidence</strong> from the real world.</li>
+<li>The <strong>Posterior</strong> is the resulting refinement: the prior belief is <em>scaled</em> (updated) by the weight of the observed evidence.</li>
+</ul>
+<p>This continuous, iterative refinement of belief is the core mechanism of Bayesian learning.</p>
+<hr />
+<h3 id="analogy-learning-as-entropy-reduction"><strong>Analogy: Learning as Entropy Reduction</strong></h3>
+<p>The Bayesian update process is directly analogous to <strong>entropy reduction</strong> in information theory:</p>
+<ul>
+<li>The initial, often wide, <strong>Prior</strong> distribution represents a high state of <strong>uncertainty (high entropy)</strong>.</li>
+<li>As data is sequentially observed and evidence is accumulated, the resulting <strong>Posterior</strong> distribution becomes sharper, narrower, and more concentrated around a specific value.</li>
+<li>This shrinking of the distribution's volume corresponds to a reduction in entropy and a measurable gain in <strong>knowledge</strong>.</li>
+</ul>
+<p>The entire learning trajectory is seen as a system evolving to dissipate informational entropy, a statistical mirror of the physical process of <strong>equilibration</strong> toward a minimal informational energy state.</p>
+<hr />
+<h3 id="connection-to-volume-ii-thermal-reweighting"><strong>Connection to Volume II: Thermal Reweighting</strong></h3>
+<p>The <strong>Likelihood</strong> term provides a direct link back to the thermodynamics discussed in Volume II and Chapter 7:
+* The probability of a state is related to the negative energy by <span class="arithmatex">\(P(\mathbf{s}) \propto e^{-\beta E(\mathbf{s})}\)</span>.
+* Therefore, the likelihood <span class="arithmatex">\(p(\mathcal{D}|\mathbf{\theta})\)</span> (the probability of data given parameters) is often proportional to the Boltzmann factor of an <strong>effective energy</strong> defined by the model's prediction error.
+* Inference, in this light, becomes a form of <strong>thermal reweighting of states</strong> (parameter configurations), where the data provides the external field that biases the probability distribution toward the observed reality.</p>
+<h2 id="93-maximum-likelihood-and-map-estimation"><strong>9.3 Maximum Likelihood and MAP Estimation</strong></h2>
+<p>While Bayesian inference ultimately seeks to characterize the <strong>full posterior distribution</strong> <span class="arithmatex">\(p(\mathbf{\theta}|\mathcal{D})\)</span>, in many practical applications, particularly for training large models, we need a single, optimal <strong>point estimate</strong> <span class="arithmatex">\(\mathbf{\theta}^*\)</span>. The two most common optimization-friendly point estimators—<strong>Maximum Likelihood (ML)</strong> and <strong>Maximum A Posteriori (MAP)</strong>—are derived directly from the components of Bayes' theorem.</p>
+<hr />
+<h3 id="maximum-likelihood-ml-estimation"><strong>Maximum Likelihood (ML) Estimation</strong></h3>
+<p>The <strong>Maximum Likelihood Estimate (<span class="arithmatex">\(\mathbf{\theta}_{\text{ML}}\)</span>)</strong> is the parameter vector that makes the observed data <span class="arithmatex">\(\mathcal{D}\)</span> most probable under the assumed model.</p>
+<div class="arithmatex">\[
+\mathbf{\theta}_{\text{ML}} = \arg\max_{\mathbf{\theta}} p(\mathcal{D}|\mathbf{\theta})
+\]</div>
+<ul>
+<li><strong>Focus:</strong> ML relies exclusively on the <strong>likelihood</strong> term <span class="arithmatex">\(p(\mathcal{D}|\mathbf{\theta})\)</span>, which links the model's predictive performance to the parameters. It <strong>ignores the prior</strong> <span class="arithmatex">\(p(\mathbf{\theta})\)</span> entirely.</li>
+<li><strong>Optimization Bridge:</strong> Maximizing the likelihood is mathematically equivalent to minimizing the <strong>negative log-likelihood</strong> (our familiar loss function <span class="arithmatex">\(L\)</span>): <span class="arithmatex">\(\mathbf{\theta}_{\text{ML}} = \arg\min_{\mathbf{\theta}} [-\ln p(\mathcal{D}|\mathbf{\theta})]\)</span>.</li>
+</ul>
+<hr />
+<h3 id="maximum-a-posteriori-map-estimation"><strong>Maximum A Posteriori (MAP) Estimation</strong></h3>
+<p>The <strong>Maximum A Posteriori Estimate (<span class="arithmatex">\(\mathbf{\theta}_{\text{MAP}}\)</span>)</strong> selects the parameter vector corresponding to the peak (mode) of the full posterior distribution:</p>
+<div class="arithmatex">\[
+\mathbf{\theta}_{\text{MAP}} = \arg\max_{\mathbf{\theta}} p(\mathbf{\theta}|\mathcal{D})
+\]</div>
+<p>Since the model evidence <span class="arithmatex">\(p(\mathcal{D})\)</span> (the denominator) is a constant with respect to the parameters, maximizing the posterior is equivalent to maximizing the product of the likelihood and the prior: <span class="arithmatex">\(\arg\max p(\mathcal{D}|\mathbf{\theta}) p(\mathbf{\theta})\)</span>.</p>
+<p>Taking the negative logarithm converts this product maximization into a summation minimization problem:</p>
+<div class="arithmatex">\[
+\mathbf{\theta}_{\text{MAP}} = \arg\min_{\mathbf{\theta}} [-\ln p(\mathcal{D}|\mathbf{\theta}) - \ln p(\mathbf{\theta})]
+\]</div>
+<hr />
+<h3 id="bridge-regularized-optimization"><strong>Bridge: Regularized Optimization</strong></h3>
+<p>This MAP objective reveals the profound connection between Bayesian inference and optimization: <strong>MAP estimation is mathematically identical to regularized optimization</strong>.</p>
+<ul>
+<li><span class="arithmatex">\(-\ln p(\mathcal{D}|\mathbf{\theta})\)</span>: This is the standard data term or <strong>Loss Function</strong>.</li>
+<li><span class="arithmatex">\(-\ln p(\mathbf{\theta})\)</span>: This is the negative log-prior, which acts as the <strong>Regularization Term</strong> or <strong>Penalty</strong>.</li>
+</ul>
+<p>For instance, minimizing the <span class="arithmatex">\(L^2\)</span> penalty (weight decay in neural networks or <strong>Ridge Regression</strong> in linear models) is the direct result of selecting a Gaussian prior distribution <span class="arithmatex">\(p(\mathbf{\theta})\)</span>. Minimizing the <span class="arithmatex">\(L^1\)</span> penalty (<strong>LASSO</strong>) is the result of selecting a Laplace prior.</p>
+<div class="admonition tip">
+<p class="admonition-title">MAP as Regularized Optimization</p>
+<p>The MAP estimate reveals a profound connection: <strong>every regularized optimization problem implicitly assumes a prior distribution</strong>. For example:</p>
+<ul>
+<li><strong><span class="arithmatex">\(L^2\)</span> regularization</strong> (<span class="arithmatex">\(\|\mathbf{\theta}\|^2\)</span> penalty) corresponds to a <strong>Gaussian prior</strong> <span class="arithmatex">\(p(\mathbf{\theta}) \propto e^{-\|\mathbf{\theta}\|^2/2\sigma^2}\)</span>.</li>
+<li><strong><span class="arithmatex">\(L^1\)</span> regularization</strong> (<span class="arithmatex">\(\|\mathbf{\theta}\|_1\)</span> penalty) corresponds to a <strong>Laplace prior</strong> <span class="arithmatex">\(p(\mathbf{\theta}) \propto e^{-\|\mathbf{\theta}\|_1/\lambda}\)</span>.</li>
+</ul>
+<p>Regularization is not just a mathematical trick—it is the <strong>log-prior energy</strong> shaping the solution.</p>
+</div>
+<p><strong>Conclusion:</strong> The choice of regularization in optimization is simply the explicit introduction of a <strong>Bayesian prior</strong>—an initial, energetic constraint that biases the system's search away from overly complex solutions.</p>
+<h2 id="94-priors-likelihoods-and-posteriors"><strong>9.4 Priors, Likelihoods, and Posteriors</strong></h2>
+<p>Bayesian inference is the iterative process of combining the <strong>prior belief</strong> with the <strong>likelihood of the evidence</strong> to produce an updated <strong>posterior belief</strong>. The mathematical choice of these distributions carries both statistical utility and physical significance.</p>
+<hr />
+<h3 id="prior-distributions-encoding-inductive-bias"><strong>Prior Distributions: Encoding Inductive Bias</strong></h3>
+<p>The <strong>Prior distribution, <span class="arithmatex">\(p(\mathbf{\theta})\)</span></strong>, is the mathematical expression of our knowledge, assumptions, or biases about the parameters <span class="arithmatex">\(\mathbf{\theta}\)</span> <em>before</em> seeing any data. It is the foundation upon which all learning is built.</p>
+<ul>
+<li><strong>Conjugate Priors:</strong> These are selected for analytical convenience. A prior is <strong>conjugate</strong> to the likelihood if the resulting <strong>posterior, <span class="arithmatex">\(p(\mathbf{\theta}|\mathcal{D})\)</span></strong>, belongs to the <strong>same distributional family as the prior</strong>. For example, the Beta distribution is conjugate to the Binomial likelihood (Section 9.9), and the Gaussian is conjugate to the Gaussian likelihood.</li>
+<li><strong>Non-conjugate and Hierarchical Priors:</strong> When analytical solutions are impossible, non-conjugate priors must be used, requiring numerical methods like Markov Chain Monte Carlo (MCMC, Chapter 2.5) or Variational Inference (VI, Chapter 9.6). <strong>Hierarchical priors</strong> are used to model multiple layers of uncertainty, where the parameters of the prior distribution itself are treated as random variables.</li>
+</ul>
+<hr />
+<h3 id="physical-analogy-symmetry-and-constraints"><strong>Physical Analogy: Symmetry and Constraints</strong></h3>
+<p>In a physical system, the prior can be interpreted as encoding the initial <strong>conserved quantities or symmetries</strong> of the model.</p>
+<ul>
+<li><strong>Priors as Constraints:</strong> As seen with MAP estimation (Section 9.3), the prior imposes an energetic penalty (regularization) that constrains the parameter space, preventing solutions that violate the model's fundamental assumptions.</li>
+<li><strong>Data Breaks Symmetry:</strong> The subsequent introduction of the likelihood <span class="arithmatex">\(p(\mathcal{D}|\mathbf{\theta})\)</span>—the observed evidence—acts as a perturbation that <strong>breaks the initial symmetry</strong> defined by the prior, forcing the resulting posterior to adopt the structure revealed by the data.</li>
+</ul>
+<hr />
+<h3 id="likelihood-and-posterior-the-data-update"><strong>Likelihood and Posterior: The Data Update</strong></h3>
+<p>The <strong>Likelihood, <span class="arithmatex">\(p(\mathcal{D}|\mathbf{\theta})\)</span></strong>, links the model to the data. The functional form of the likelihood is determined by the generative model assumed for the data (e.g., Gaussian noise for continuous data, Bernoulli for binary outcomes).</p>
+<p>The final <strong>Posterior, <span class="arithmatex">\(p(\mathbf{\theta}|\mathcal{D})\)</span></strong>, synthesizes these components:</p>
+<div class="arithmatex">\[
+p(\mathbf{\theta}|\mathcal{D}) \propto p(\mathcal{D}|\mathbf{\theta}) p(\mathbf{\theta})
+\]</div>
+<p>The posterior represents the <strong>refinement of the system's knowledge</strong>. It is the ultimate output of Bayesian learning, encoding both the most probable value for the parameter (the peak) and the quantifiable <strong>uncertainty</strong> around that value (the distribution's width).</p>
+<h2 id="95-evidence-and-model-comparison"><strong>9.5 Evidence and Model Comparison</strong></h2>
+<p>While the <strong>Posterior</strong> <span class="arithmatex">\(p(\mathbf{\theta}|\mathcal{D})\)</span> is used for parameter estimation, the normalization factor in Bayes' Theorem, the <strong>Model Evidence <span class="arithmatex">\(p(\mathcal{D}|M)\)</span></strong>, is the key to comparing fundamentally different models or hypotheses (<span class="arithmatex">\(M\)</span>).</p>
+<hr />
+<h3 id="model-evidence-marginal-likelihood"><strong>Model Evidence (Marginal Likelihood)</strong></h3>
+<p>The <strong>Model Evidence</strong> (or <strong>Marginal Likelihood</strong>) <span class="arithmatex">\(p(\mathcal{D}|M)\)</span> is the total probability of the observed data <span class="arithmatex">\(\mathcal{D}\)</span>, averaged over all possible settings of the model's parameters <span class="arithmatex">\(\mathbf{\theta}\)</span>, weighted by the <strong>prior</strong> <span class="arithmatex">\(p(\mathbf{\theta}|M)\)</span>:</p>
+<div class="arithmatex">\[
+p(\mathcal{D}|M) = \int p(\mathcal{D}|\mathbf{\theta}, M) p(\mathbf{\theta}|M) d\mathbf{\theta}
+\]</div>
+<ul>
+<li><strong>Interpretation:</strong> The evidence measures how well a model <span class="arithmatex">\(M\)</span> performs overall, taking into account the prior plausibility of all its parameter configurations.</li>
+</ul>
+<hr />
+<h3 id="model-comparison-via-bayes-factor"><strong>Model Comparison via Bayes Factor</strong></h3>
+<p>The evidence is used to compare two competing models, <span class="arithmatex">\(M_1\)</span> and <span class="arithmatex">\(M_2\)</span>, via the <strong>Bayes Factor (<span class="arithmatex">\(\text{BF}_{12}\)</span>)</strong>:</p>
+<div class="arithmatex">\[
+\text{BF}_{12} = \frac{p(\mathcal{D}|M_1)}{p(\mathcal{D}|M_2)}
+\]</div>
+<ul>
+<li>If <span class="arithmatex">\(\text{BF}_{12} &gt; 1\)</span>, the data favor model <span class="arithmatex">\(M_1\)</span>.</li>
+</ul>
+<hr />
+<h3 id="occams-razor-emerges-naturally"><strong>Occam's Razor Emerges Naturally</strong></h3>
+<p>The integral nature of the evidence automatically enforces <strong>Occam's Principle</strong>.</p>
+<ul>
+<li><strong>Penalty for Complexity:</strong> A highly complex model (one that is "overfit") may achieve a very high <strong>likelihood peak</strong> <span class="arithmatex">\(p(\mathcal{D}|\mathbf{\theta})\)</span> for a specific <span class="arithmatex">\(\mathbf{\theta}_{\text{ML}}\)</span>, but this peak often occupies only an infinitesimally small volume of the overall parameter space.</li>
+<li><strong>Simpler Models Win:</strong> The integration over the entire parameter space penalizes this phenomenon. Simpler models, which have a broader, more robust distribution that provides a reasonable fit across a larger <strong>prior volume</strong>, are rewarded with higher evidence, provided they explain the data adequately.</li>
+</ul>
+<p>The evidence ensures models compete not just by <em>fit</em> but by <strong>simplicity and explanatory power</strong>.</p>
+<details class="question">
+<summary>Why Does the Evidence Integral Prefer Simple Models?</summary>
+<p>The <strong>model evidence</strong> <span class="arithmatex">\(p(\mathcal{D}|M) = \int p(\mathcal{D}|\mathbf{\theta}, M) p(\mathbf{\theta}|M) d\mathbf{\theta}\)</span> naturally penalizes complexity through the <strong>prior volume</strong> effect.</p>
+<p><strong>Intuition:</strong></p>
+<ul>
+<li>A <strong>complex model</strong> has many parameters <span class="arithmatex">\(\mathbf{\theta}\)</span>, spreading its prior probability <span class="arithmatex">\(p(\mathbf{\theta}|M)\)</span> thinly over a large hypothesis space.</li>
+<li>A <strong>simple model</strong> has fewer parameters, concentrating its prior probability over a smaller space.</li>
+<li>When both models fit the data equally well (similar likelihood <span class="arithmatex">\(p(\mathcal{D}|\mathbf{\theta})\)</span>), the simple model's concentrated prior yields <strong>higher evidence</strong>.</li>
+</ul>
+<p><strong>Physical Analogy:</strong> Think of the prior as a fixed amount of "probability mass" distributed over parameter space. A complex model dilutes this mass over many dimensions, while a simple model concentrates it. The evidence integral rewards concentration.</p>
+<p>This is <strong>Occam's Razor emerging from probability theory</strong>: the simplest hypothesis consistent with the data is favored, not by philosophical preference, but by mathematical necessity.</p>
+</details>
+<hr />
+<h3 id="analogy-free-energy-minimization"><strong>Analogy: Free Energy Minimization</strong></h3>
+<p>Maximizing the model evidence <span class="arithmatex">\(p(\mathcal{D}|M)\)</span> is analogous to minimizing the <strong>Helmholtz Free Energy <span class="arithmatex">\(\mathcal{F}\)</span></strong> in statistical mechanics.</p>
+<p>The negative log-evidence, <span class="arithmatex">\(-\ln p(\mathcal{D}|M)\)</span>, is formally related to the free energy, which balances <strong>energy (fit to data)</strong> and <strong>entropy (complexity)</strong>. Thus, selecting the model with maximum evidence is equivalent to selecting the model with minimal free energy, achieving a natural balance between accuracy and complexity.</p>
+<h2 id="96-the-free-energy-view-of-inference"><strong>9.6 The Free Energy View of Inference</strong></h2>
+<p>Characterizing the complex, high-dimensional <strong>posterior distribution</strong> <span class="arithmatex">\(p(\mathbf{\theta}|\mathcal{D})\)</span> exactly is often computationally <strong>intractable</strong>. This intractability forces us to adopt a framework rooted in statistical physics: <strong>Variational Inference</strong>. This approach reframes the search for the posterior as an optimization problem: minimizing the <strong>Variational Free Energy</strong> functional.</p>
+<hr />
+<h3 id="variational-inference-approximating-the-posterior"><strong>Variational Inference: Approximating the Posterior</strong></h3>
+<p>Instead of calculating the true, often non-analytic, posterior <span class="arithmatex">\(p(\mathbf{\theta}|\mathcal{D})\)</span>, Variational Inference seeks a simpler, tractable distribution, <span class="arithmatex">\(q(\mathbf{\theta})\)</span>. This distribution, chosen from a restricted family (e.g., a Gaussian with diagonal covariance), must be the <strong>best possible approximation</strong> of the true posterior.</p>
+<p>The measure of how "close" the approximation <span class="arithmatex">\(q\)</span> is to the true posterior <span class="arithmatex">\(p\)</span> is quantified by minimizing the <strong>Kullback-Leibler (KL) divergence</strong> (Section 2.2):</p>
+<div class="arithmatex">\[
+\min_q D_{\mathrm{KL}}(q||p)
+\]</div>
+<hr />
+<h3 id="defining-the-variational-free-energy-mathcalfq"><strong>Defining the Variational Free Energy <span class="arithmatex">\(\mathcal{F}(q)\)</span></strong></h3>
+<p>The optimization objective is derived by manipulating the definition of the KL divergence. This leads to the <strong>Variational Free Energy functional, <span class="arithmatex">\(\mathcal{F}(q)\)</span></strong>, which is often referred to as the <strong>Evidence Lower Bound (ELBO)</strong> when maximized:</p>
+<div class="arithmatex">\[
+\mathcal{F}(q) = \mathbb{E}_q[\ln q(\mathbf{\theta}) - \ln p(\mathcal{D}, \mathbf{\theta})]
+\]</div>
+<p>Minimizing <span class="arithmatex">\(\mathcal{F}(q)\)</span> with respect to the parameters of the approximation <span class="arithmatex">\(q\)</span> is mathematically equivalent to minimizing the KL divergence <span class="arithmatex">\(D_{\mathrm{KL}}(q||p)\)</span>.</p>
+<ul>
+<li><strong>Interpretation:</strong> The complex task of statistical inference is recast as a familiar optimization problem: finding the distribution <span class="arithmatex">\(q\)</span> that minimizes this free energy functional. The entire system "relaxes" toward a state of minimal informational free energy.</li>
+</ul>
+<hr />
+<h3 id="physical-analogy-mean-field-approximation"><strong>Physical Analogy: Mean-Field Approximation</strong></h3>
+<p>The Variational Free Energy approach has a direct and profound analogy in <strong>statistical physics</strong>:</p>
+<ul>
+<li><strong>Mean-Field Theory:</strong> In physics, the true, complex energy interactions between many coupled particles (which define the true joint probability <span class="arithmatex">\(p\)</span>) are approximated by substituting simpler, decoupled interactions (approximated by <span class="arithmatex">\(q\)</span>). This makes the system solvable.</li>
+<li><strong>Decoupling:</strong> Variational Inference typically uses an approximation <span class="arithmatex">\(q(\mathbf{\theta})\)</span> that assumes certain parameters are independent, effectively decoupling the interactions within the model's posterior.</li>
+</ul>
+<hr />
+<h3 id="bridge-to-graphical-models"><strong>Bridge to Graphical Models</strong></h3>
+<p>This framework is the foundation for solving large, complex probabilistic models.</p>
+<ul>
+<li>The <strong>Expectation-Maximization (EM) algorithm</strong> (used in GMMs, Chapter 3.8) is a classic example of iteratively minimizing the variational free energy.</li>
+<li>Variational Inference is the most scalable method for performing inference on <strong>Probabilistic Graphical Models</strong> (Chapter 11) and modern deep generative architectures like <strong>Variational Autoencoders (VAEs)</strong> (Chapter 13.7, 14.6).</li>
+</ul>
+<h2 id="97-uncertainty-and-credible-intervals"><strong>9.7 Uncertainty and Credible Intervals</strong></h2>
+<p>The most powerful advantage of the Bayesian approach over single-point estimators like Maximum Likelihood (ML) or Maximum A Posteriori (MAP) is its rigorous, explicit quantification of <strong>uncertainty</strong>. By characterizing the full posterior distribution <span class="arithmatex">\(p(\mathbf{\theta}|\mathcal{D})\)</span>, Bayesian methods provide probabilistic guarantees on parameter estimates and future predictions.</p>
+<hr />
+<h3 id="credible-intervals-vs-confidence-intervals"><strong>Credible Intervals vs. Confidence Intervals</strong></h3>
+<p>Bayesian inference provides a direct, intuitive measure of uncertainty via the <strong>Credible Interval</strong>:</p>
+<ul>
+<li><strong>Bayesian Credible Interval:</strong> This is a direct probability statement on the parameters. A 95% credible interval means there is a <strong>95% probability</strong> that the true parameter value lies within this specific range.</li>
+<li><strong>Frequentist Confidence Interval:</strong> This is a statement about the statistical procedure's long-run reliability, not the parameter itself. A 95% confidence interval means that if the experiment were repeated many times, 95% of the calculated intervals would contain the true parameter value. The Bayesian interval is often preferred for its direct, actionable interpretation.</li>
+</ul>
+<hr />
+<h3 id="posterior-predictive-distribution"><strong>Posterior Predictive Distribution</strong></h3>
+<p>The highest-value output of the Bayesian framework is the <strong>Posterior Predictive Distribution</strong>. It gives the probability of a new outcome <span class="arithmatex">\(y_*\)</span> given a new input <span class="arithmatex">\(x_*\)</span> by marginalizing over the posterior uncertainty in the parameters:</p>
+<div class="arithmatex">\[
+p(y_*|x_*,\mathcal{D}) = \int p(y_*|x_*,\mathbf{\theta}) p(\mathbf{\theta}|\mathcal{D}) d\mathbf{\theta}
+\]</div>
+<ul>
+<li><strong>Process:</strong> The model computes the prediction <span class="arithmatex">\(p(y_*|x_*,\mathbf{\theta})\)</span> for <strong>all possible parameter settings</strong> <span class="arithmatex">\(\mathbf{\theta}\)</span> and averages them, weighted by their probability under the posterior.</li>
+<li><strong>Value:</strong> This procedure naturally incorporates all sources of parameter uncertainty into the final prediction, leading to robust and well-calibrated confidence in the forecasts.</li>
+</ul>
+<hr />
+<h3 id="physical-analogy-ensemble-averaging"><strong>Physical Analogy: Ensemble Averaging</strong></h3>
+<p>The predictive distribution is the statistical analogue of computing the <strong>ensemble average</strong> of an observable in statistical physics.</p>
+<ul>
+<li><strong>Thermal Ensemble:</strong> In statistical mechanics, a thermodynamic quantity (e.g., magnetization) is found by averaging its value over all possible microstates, weighted by their Boltzmann probability.</li>
+<li><strong>Model Ensemble:</strong> The Bayesian predictive distribution averages over the ensemble of possible <strong>models</strong> (<span class="arithmatex">\(\mathbf{\theta}\)</span>), weighted by their <strong>posterior probability</strong> (their evidential energy).</li>
+</ul>
+<p>The prediction is thus the consensus of the entire ensemble of plausible solutions, not just the single best-fit point.</p>
+<h2 id="98-bayesian-networks-the-architecture-of-belief"><strong>9.8 Bayesian Networks — The Architecture of Belief</strong></h2>
+<p>While Bayes' Theorem (Section 9.2) provides the rule for updating belief in a single parameter, <strong>Bayesian Networks (BNs)</strong> (also known as Belief Networks) introduce a <strong>graphical structure</strong> to model the dependencies and relationships among many variables in a complex system. BNs effectively shift the focus from a single probability calculation to a network-wide process of distributed inference.</p>
+<hr />
+<h3 id="directed-acyclic-graph-dag"><strong>Directed Acyclic Graph (DAG)</strong></h3>
+<p>A Bayesian Network uses a <strong>Directed Acyclic Graph (DAG)</strong> to visually and mathematically represent the structure of the joint probability distribution:
+* <strong>Nodes:</strong> Represent the system's <strong>random variables</strong> (e.g., atomic position, phase state, disease presence).
+* <strong>Directed Edges:</strong> Represent <strong>direct conditional dependencies</strong> or influences between variables. An edge <span class="arithmatex">\(A \to B\)</span> implies that <span class="arithmatex">\(B\)</span> is directly dependent on <span class="arithmatex">\(A\)</span>.
+* <strong>Acyclic:</strong> The graph contains no directed loops or cycles, enforcing a clear <strong>causal hierarchy</strong> (e.g., <span class="arithmatex">\(A\)</span> cannot cause <span class="arithmatex">\(B\)</span>, and <span class="arithmatex">\(B\)</span> simultaneously cause <span class="arithmatex">\(A\)</span>).</p>
+<hr />
+<h3 id="joint-factorization-the-chain-rule"><strong>Joint Factorization: The Chain Rule</strong></h3>
+<p>The network's structure allows the mathematically complex <strong>joint probability distribution</strong> over all <span class="arithmatex">\(N\)</span> variables, <span class="arithmatex">\(p(\mathbf{x}) = p(x_1, \dots, x_N)\)</span>, to be factored into a product of simpler, local conditional probabilities:</p>
+<div class="arithmatex">\[
+p(\mathbf{x}) = \prod_i p(x_i | \text{parents}(x_i))
+\]</div>
+<ul>
+<li><strong>Interpretation:</strong> This factorization vastly simplifies computation. Instead of modeling one massive joint probability table, we only need to define the local relationships—the conditional probability distributions (CPDs) or conditional probability tables (CPTs)—for each variable given its direct ancestors (parents) in the graph.</li>
+</ul>
+<hr />
+<h3 id="analogy-causal-structure-and-message-passing"><strong>Analogy: Causal Structure and Message Passing</strong></h3>
+<ul>
+<li><strong>Causal Structure:</strong> BNs make the <strong>causal structure explicit</strong>. Inference involves calculating the posterior of an unobserved variable given observed evidence (e.g., finding the probability of a cause given its effect). This process is known as <strong>message passing</strong> across the graph.</li>
+<li><strong>Energy Network:</strong> The graph can be viewed as an <strong>energy network</strong>. The conditional probabilities are the <strong>local interactions</strong> or <strong>couplings</strong> that govern the system, and inference is the process of finding the global statistical consistency (equilibrium) imposed by these local rules.</li>
+</ul>
+<p>Bayesian Networks are thus the architectural blueprint for modeling <strong>distributed inference</strong>, leading directly to the more general <strong>Probabilistic Graphical Models</strong> (e.g., Markov Random Fields) discussed in Chapter 11.</p>
+<h2 id="99-worked-example-bayesian-coin-toss"><strong>9.9 Worked Example — Bayesian Coin Toss</strong></h2>
+<p>To transition the abstract theory of <strong>Bayes' Theorem</strong> (Section 9.2) and the role of the <strong>prior</strong> (Section 9.4) into a practical demonstration, we use the classic, solvable problem of estimating the <strong>bias (<span class="arithmatex">\(\theta\)</span>) of a coin</strong>. This example illustrates how the statistical process of learning works by reducing the entropy (uncertainty) in the parameter space.</p>
+<hr />
+<h3 id="setup-the-conjugate-model"><strong>Setup: The Conjugate Model</strong></h3>
+<p>We model the probability of obtaining a specific outcome (e.g., <span class="arithmatex">\(k\)</span> heads in <span class="arithmatex">\(n\)</span> tosses) given an unknown probability of heads <span class="arithmatex">\(\theta\)</span>.</p>
+<ul>
+<li><strong>Likelihood Function:</strong> The process of coin tossing follows the <strong>Binomial distribution</strong>, <span class="arithmatex">\(p(k|n,\theta)\)</span>.</li>
+<li><strong>Prior Distribution:</strong> We choose the <strong>Beta distribution</strong>, <span class="arithmatex">\(p(\theta) = \text{Beta}(\alpha, \beta)\)</span>, as the prior for the unknown bias <span class="arithmatex">\(\theta\)</span>.<ul>
+<li>The <strong>Beta distribution</strong> is the <strong>conjugate prior</strong> for the Binomial likelihood. This mathematical convenience ensures that the resulting posterior distribution will also be a Beta distribution, allowing for a simple, closed-form solution.</li>
+<li>The hyperparameters <span class="arithmatex">\(\alpha\)</span> and <span class="arithmatex">\(\beta\)</span> encode our initial, <em>prior belief</em> about the coin's bias, often interpreted as the prior number of heads (<span class="arithmatex">\(\alpha\)</span>) and tails (<span class="arithmatex">\(\beta\)</span>) observed.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="the-analytical-posterior-and-results"><strong>The Analytical Posterior and Results</strong></h3>
+<p>Applying Bayes' Theorem (<span class="arithmatex">\(P(\mathbf{\theta}|\mathcal{D}) \propto P(\mathcal{D}|\mathbf{\theta}) P(\mathbf{\theta})\)</span>) to the Beta prior and the Binomial likelihood yields an analytically closed posterior distribution:</p>
+<div class="arithmatex">\[
+p(\theta|k,n) = \text{Beta}(\alpha+k, \beta+n-k)
+\]</div>
+<p>The inference process is straightforward: the initial prior counts (<span class="arithmatex">\(\alpha\)</span> and <span class="arithmatex">\(\beta\)</span>) are simply augmented by the observed evidence (the actual number of heads <span class="arithmatex">\(k\)</span> and tails <span class="arithmatex">\(n-k\)</span>).</p>
+<p>This posterior allows us to derive explicit results for the system's updated belief:</p>
+<ul>
+<li><strong>Posterior Mean (Most Plausible Bias):</strong></li>
+</ul>
+<div class="arithmatex">\[
+\mathbb{E}[\theta] = \frac{\alpha+k}{\alpha+\beta+n}
+\]</div>
+<div class="language-text highlight"><pre><span></span><code>This is a weighted average of the prior belief and the empirical frequency, showing how the prior is **tilted** toward the data.
+</code></pre></div>
+<ul>
+<li><strong>Posterior Variance (Uncertainty):</strong> The variance of the Beta distribution decreases as the total number of observations (<span class="arithmatex">\(\alpha+\beta+n\)</span>) increases.</li>
+</ul>
+<hr />
+<h3 id="interpretation-entropy-reduction"><strong>Interpretation: Entropy Reduction</strong></h3>
+<p>This example confirms that Bayesian learning is a continuous process of <strong>entropy reduction</strong>:
+* <strong>Refinement:</strong> Each observation refines the distribution.
+* <strong>Shrinking Uncertainty:</strong> The posterior variance shrinks with each new toss, demonstrating that the system's uncertainty about the true bias decreases as the evidence accumulates. The posterior distribution becomes more concentrated, corresponding to a lower informational energy state.</p>
+<div class="admonition example">
+<p class="admonition-title">Coin Toss: Bayesian Learning as Symmetry Breaking</p>
+<p>Consider starting with a <strong>uniform prior</strong> <span class="arithmatex">\(\text{Beta}(1,1)\)</span>, representing complete ignorance about the coin's bias.</p>
+<p>After observing <strong>7 heads in 10 tosses</strong>, the posterior becomes <span class="arithmatex">\(\text{Beta}(8,4)\)</span>:</p>
+<ul>
+<li><strong>Posterior mean:</strong> <span class="arithmatex">\(\mathbb{E}[\theta] = \frac{8}{8+4} = 0.667\)</span> (close to empirical frequency <span class="arithmatex">\(7/10 = 0.7\)</span>).</li>
+<li><strong>Posterior concentration:</strong> The distribution is now sharply peaked around 0.667, with variance reduced from the prior's broad uncertainty.</li>
+</ul>
+<p>This is <strong>learning as entropy reduction</strong>: the data breaks the initial symmetry, concentrating probability mass around the evidence-supported bias. The wide prior collapses into a sharp posterior through the Bayesian update.</p>
+</div>
+<h2 id="910-code-demo-bayesian-inference-on-coin-bias"><strong>9.10 Code Demo — Bayesian Inference on Coin Bias</strong></h2>
+<p>This demonstration visually confirms the process of <strong>Bayesian belief refinement</strong> (Section 9.2, 9.9) by plotting the transformation of the <strong>Prior</strong> distribution into the <strong>Posterior</strong> distribution for a coin's bias (<span class="arithmatex">\(\theta\)</span>). The code utilizes the analytical solution derived from the conjugate pairing of the Beta prior and the Binomial likelihood.</p>
+<hr />
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">beta</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">alpha</span><span class="p">,</span> <span class="n">beta_</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span>  <span class="c1"># prior (Beta(2, 2) is a weak, symmetric prior)</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">n</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">12</span>        <span class="c1"># data: 20 tosses, 12 heads (Empirical bias = 0.6)</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">prior</span> <span class="o">=</span> <span class="n">beta</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta_</span><span class="p">)</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1"># Posterior is Beta(alpha + k, beta + n - k)</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="n">posterior</span> <span class="o">=</span> <span class="n">beta</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">+</span> <span class="n">k</span><span class="p">,</span> <span class="n">beta_</span> <span class="o">+</span> <span class="n">n</span> <span class="o">-</span> <span class="n">k</span><span class="p">)</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">prior</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Prior: Beta(2, 2)&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">posterior</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Posterior: Beta(</span><span class="si">{</span><span class="n">alpha</span><span class="o">+</span><span class="n">k</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">beta_</span><span class="o">+</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;darkorange&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">k</span><span class="o">/</span><span class="n">n</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;darkgreen&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Empirical Freq. (</span><span class="si">{</span><span class="n">k</span><span class="o">/</span><span class="n">n</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Bayesian Update for Coin Bias&#39;</span><span class="p">)</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Coin Bias ($\theta$)&#39;</span><span class="p">)</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability Density&#39;</span><span class="p">)</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</span></code></pre></div>
+<h3 id="observation-and-interpretation">Observation and Interpretation 📈</h3>
+<p>The resulting plot illustrates the following key principles of Bayesian inference:</p>
+<ol>
+<li><strong>Prior Belief:</strong> The initial <strong>Prior</strong> (grey dashed line, <span class="arithmatex">\(\text{Beta}(2, 2)\)</span>) is broad and symmetric, representing high <strong>uncertainty</strong> about the coin's bias, with the peak centered at <span class="arithmatex">\(\theta=0.5\)</span>.</li>
+<li><strong>Evidence Incorporation:</strong> The observed data (<span class="arithmatex">\(k=12\)</span> heads in <span class="arithmatex">\(n=20\)</span> tosses, empirical frequency 0.6) is incorporated into the posterior's parameters: <span class="arithmatex">\(\text{Beta}(2+12, 2+8) = \text{Beta}(14, 10)\)</span>.</li>
+<li><strong>Refinement:</strong> The <strong>Posterior</strong> (orange solid line) is <strong>narrower</strong> (lower variance) and <strong>shifted</strong> to the right, concentrating the probability mass around the empirical frequency of 0.6.</li>
+<li><strong>Entropy Reduction:</strong> The reduction in the width of the distribution demonstrates the system's <strong>entropy reduction</strong> (gain in knowledge) as data refines the initial uncertainty. The entire process is a direct visual representation of the posterior tilting and concentrating its probability mass toward the evidence.</li>
+</ol>
+<h2 id="911-philosophical-and-practical-perspectives"><strong>9.11 Philosophical and Practical Perspectives</strong></h2>
+<p>The Bayesian framework is more than just a set of mathematical formulas; it represents a comprehensive <strong>philosophical perspective on learning</strong> that unifies probability, optimization, and scientific reasoning.</p>
+<hr />
+<h3 id="interpretive-duality-logic-and-energy"><strong>Interpretive Duality: Logic and Energy</strong></h3>
+<p>Bayesian inference provides a deep duality for interpreting the process of knowledge acquisition:</p>
+<ul>
+<li><strong>Bayesian Inference</strong> is fundamentally <strong>logical reasoning under uncertainty</strong>. It is a calculus of belief that quantifies how new evidence must update prior assumptions to maintain rational consistency.</li>
+<li><strong>Optimization</strong> (as seen in Part II) is the <strong>energetic relaxation</strong> of a physical or computational system toward minimal cost or minimal potential energy.</li>
+</ul>
+<p>The two are unified by the principle that the most probable state (<span class="arithmatex">\(P_{\text{max}}\)</span>) is the one with the lowest informational energy (<span class="arithmatex">\(E_{\text{min}}\)</span>).</p>
+<hr />
+<h3 id="priors-as-inductive-bias-the-role-of-assumption"><strong>Priors as Inductive Bias: The Role of Assumption</strong></h3>
+<p>Every system that learns or predicts must embed fundamental assumptions about the structure of the world—this is known as <strong>inductive bias</strong>.</p>
+<ul>
+<li>In Bayesian inference, the <strong>Prior <span class="arithmatex">\(p(\mathbf{\theta})\)</span></strong> is the explicit encoding of this bias. It provides the energetic constraint that guides the search for a solution.</li>
+<li>This perspective confirms that every learning system—from a simple linear regressor with <span class="arithmatex">\(L^2\)</span> penalty to a complex deep network architecture—is inherently making assumptions, or priors, about the nature of the solution. An improper prior can lead to a precise, yet fundamentally flawed, answer.</li>
+</ul>
+<hr />
+<h3 id="occams-principle-emerges-naturally"><strong>Occam's Principle Emerges Naturally</strong></h3>
+<p>The inherent structure of Bayesian inference provides a rigorous, mathematical basis for <strong>Occam’s Razor</strong>.</p>
+<ul>
+<li>The <strong>Model Evidence</strong> (Section 9.5), which models compete to maximize, is a measure that naturally penalizes overly complex models.</li>
+<li>A simpler hypothesis, which occupies a larger prior volume while remaining consistent with the data, receives higher evidence. The Bayesian framework thus favors <strong>simpler explanations</strong> and robust hypotheses over complex, finely tuned ones that only narrowly fit the data.</li>
+</ul>
+<hr />
+<h3 id="modern-ai-relevance-modeling-uncertainty"><strong>Modern AI Relevance: Modeling Uncertainty</strong></h3>
+<p>The principles of Bayesian thinking are essential for building trustworthy and robust AI systems.</p>
+<ul>
+<li><strong>Variational Autoencoders (VAEs):</strong> These deep generative architectures rely on the <strong>Variational Free Energy</strong> principle (Section 9.6) to learn compact, probabilistic <strong>latent representations</strong>.</li>
+<li><strong>Bayesian Neural Networks (BNNs):</strong> By placing probability distributions over the network's weights, BNNs provide robust uncertainty estimates for their predictions, which is critical in safety-conscious domains.</li>
+<li>The entire movement toward <strong>probabilistic modeling</strong> seeks to move beyond single-point guesses, establishing that the correct answer is not a single number, but a <strong>distribution of possibilities</strong>.</li>
+</ul>
+<h2 id="912-takeaways-bridge-to-chapter-10"><strong>9.12 Takeaways &amp; Bridge to Chapter 10</strong></h2>
+<p>This chapter successfully transitioned the conceptual framework of the volume from <strong>optimization (finding the single best state)</strong> to <strong>inference (characterizing the distribution of plausible states)</strong>.</p>
+<hr />
+<h3 id="key-takeaways-from-chapter-9"><strong>Key Takeaways from Chapter 9</strong></h3>
+<ul>
+<li><strong>Bayes' Theorem is the Calculus of Belief:</strong> The theorem provides the fundamental, mathematically rigorous rule for updating prior knowledge (<span class="arithmatex">\(P(\mathbf{\theta})\)</span>) into posterior knowledge (<span class="arithmatex">\(P(\mathbf{\theta}|\mathcal{D})\)</span>) based on observed data (<span class="arithmatex">\(\mathcal{D}\)</span>). Learning is seen as a process of continuous <strong>entropy reduction</strong>.</li>
+<li><strong>Duality with Thermodynamics:</strong> Inference and thermodynamics share a fundamental mathematical skeleton. The goal of Bayesian learning is equivalent to minimizing the <strong>Variational Free Energy (<span class="arithmatex">\(\mathcal{F}\)</span>)</strong> functional, which balances the energy (fit to data) and entropy (complexity/uncertainty) of the system.</li>
+<li><strong>MAP <span class="arithmatex">\(\leftrightarrow\)</span> Regularization:</strong> The <strong>Maximum A Posteriori (MAP)</strong> estimate proves that the concept of <strong>regularization</strong> in optimization is the direct application of a <strong>Bayesian prior</strong>. For example, <span class="arithmatex">\(L^2\)</span> weight decay is the penalty term resulting from a Gaussian prior.</li>
+<li><strong>Uncertainty is Key:</strong> The Bayesian approach explicitly quantifies uncertainty via the <strong>Posterior Predictive Distribution</strong>, which averages predictions over the entire ensemble of plausible parameter settings.</li>
+</ul>
+<hr />
+<h3 id="bridge-to-chapter-10-from-theory-to-application"><strong>Bridge to Chapter 10: From Theory to Application</strong></h3>
+<p>Chapter 9 focused on the theoretical principles of inference, treating parameters (<span class="arithmatex">\(\mathbf{\theta}\)</span>) and data (<span class="arithmatex">\(\mathcal{D}\)</span>) abstractly as distributions. The next step is to ground these probabilistic principles in concrete, widely used predictive models.</p>
+<p><strong>Chapter 10: "Regression &amp; Classification — The Linear Family,"</strong> will demonstrate that the foundational methods of prediction—<strong>Linear Regression</strong> and <strong>Logistic Regression</strong>—are simply the direct application of the Maximum Likelihood (ML) or MAP estimation principles.</p>
+<ul>
+<li><strong>Linear Regression</strong> is the ML estimate under the assumption of <strong>Gaussian noise</strong> (squared error loss).</li>
+<li><strong>Logistic Regression</strong> is the ML estimate under the assumption of a <strong>Bernoulli likelihood</strong> (cross-entropy loss).</li>
+</ul>
+<p>We will move from discussing probability distributions in the abstract to fitting data under these specific, probabilistic models, thus establishing the statistical foundation for all subsequent predictive learning.</p>
+<h2 id="references"><strong>References</strong></h2>
+<p>[1] Bayes, T., &amp; Price, R. (1763). "An Essay towards solving a Problem in the Doctrine of Chances." <em>Philosophical Transactions of the Royal Society of London</em>, 53, 370-418.</p>
+<p>[2] Laplace, P. S. (1814). <em>Essai philosophique sur les probabilités</em>. Paris: Courcier.</p>
+<p>[3] Jaynes, E. T. (2003). <em>Probability Theory: The Logic of Science</em>. Cambridge University Press.</p>
+<p>[4] Bishop, C. M. (2006). <em>Pattern Recognition and Machine Learning</em>. Springer.</p>
+<p>[5] MacKay, D. J. C. (2003). <em>Information Theory, Inference, and Learning Algorithms</em>. Cambridge University Press.</p>
+<p>[6] Blei, D. M., Kucukelbir, A., &amp; McAuliffe, J. D. (2017). "Variational Inference: A Review for Statisticians." <em>Journal of the American Statistical Association</em>, 112(518), 859-877.</p>
+<p>[7] Murphy, K. P. (2012). <em>Machine Learning: A Probabilistic Perspective</em>. MIT Press.</p>
+<p>[8] Koller, D., &amp; Friedman, N. (2009). <em>Probabilistic Graphical Models: Principles and Techniques</em>. MIT Press.</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../chapter-8/Chapter-8-Essay/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Chapter-8 Combinatorial Optimization and QUBO">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Chapter-8 Combinatorial Optimization and QUBO
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../chapter-10/Chapter-10-Essay/" class="md-footer__link md-footer__link--next" aria-label="Next: Chapter-10 Regression &amp; Classification — The Linear Family">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Chapter-10 Regression & Classification — The Linear Family
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://bigbookofcomputing.github.io" target="_blank" rel="noopener" title="bigbookofcomputing.github.io" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/bigbookofcomputing" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256c0 120 82.7 220.8 194.2 248.5V334.2h-52.8V256h52.8v-33.7c0-87.1 39.4-127.5 125-127.5 16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H287v175.9C413.8 494.8 512 386.9 512 256"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.youtube.com/@big-book-of-computing" target="_blank" rel="noopener" title="www.youtube.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M549.7 124.1c-6.2-23.7-24.8-42.3-48.3-48.6C458.9 64 288.1 64 288.1 64S117.3 64 74.7 75.5c-23.5 6.3-42 24.9-48.3 48.6C15 167 15 256.4 15 256.4s0 89.4 11.4 132.3c6.3 23.6 24.8 41.5 48.3 47.8C117.3 448 288.1 448 288.1 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zM232.2 337.6V175.2l142.7 81.2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+  
+
+
+<h4>Cookie consent</h4>
+<p>We use cookies to recognize your repeated visits and preferences, as well as to measure the effectiveness of our documentation and whether users find what they're searching for. With your consent, you're helping us to make our documentation better.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="github" checked>
+      <span class="task-list-indicator"></span>
+      GitHub
+    </label>
+  </li>
+
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../static/mathjax-config.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

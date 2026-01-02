@@ -1,0 +1,5712 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A comprehensive guide to the foundations of optimization algorithms and techniques">
+      
+      
+        <meta name="author" content="Big Book of Computing">
+      
+      
+        <link rel="canonical" href="https://bigbookofcomputing.github.io/chapters/chapter-6/Chapter-6-Essay/">
+      
+      
+        <link rel="prev" href="../../chapter-5/Chapter-5-Essay/">
+      
+      
+        <link rel="next" href="../../chapter-7/Chapter-7-Essay/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Chapter-6 Advanced Gradient Dynamics - Big Book of Computing | Optimization</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+      <link rel="stylesheet" href="../../../static/styles.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-ECS7B3X8JM"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-ECS7B3X8JM",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-ECS7B3X8JM",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#6-advanced-gradient-dynamics" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Big Book of Computing | Optimization" class="md-header__button md-logo" aria-label="Big Book of Computing | Optimization" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Big Book of Computing | Optimization
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter-6 Advanced Gradient Dynamics
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1M8 13h8v-2H8zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4a5 5 0 0 0 5-5 5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5M7 15a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/bigbookofcomputing/optimization" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contents/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../introduction/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Introduction
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../chapter-1/Chapter-1-Essay/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapter-1/Chapter-1-WorkBook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  WorkBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapter-1/Chapter-1-CodeBook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  CodeBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapter-1/Chapter-1-Quizes/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Quizes
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapter-1/Chapter-1-Interviews/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Interviews
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Big Book of Computing | Optimization" class="md-nav__button md-logo" aria-label="Big Book of Computing | Optimization" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    Big Book of Computing | Optimization
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/bigbookofcomputing/optimization" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapters
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Chapters
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-outline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Outline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#61-beyond-simple-descent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Beyond Simple Descent
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.1 Beyond Simple Descent">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#motivation-the-failure-in-ravines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Motivation: The Failure in Ravines
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#need-for-richer-dynamics-inertia-and-adaptivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Need for Richer Dynamics: Inertia and Adaptivity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical-analogy-the-damped-harmonic-oscillator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Analogy: The Damped Harmonic Oscillator
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#62-momentum-learning-with-inertia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Momentum — Learning with Inertia
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2 Momentum — Learning with Inertia">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-algorithm-introducing-velocity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Algorithm: Introducing Velocity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical-view-inertia-and-damping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical View: Inertia and Damping
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trade-offs-and-limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trade-offs and Limitations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#63-nesterov-accelerated-gradient-nag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Nesterov Accelerated Gradient (NAG)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.3 Nesterov Accelerated Gradient (NAG)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-anticipatory-idea-looking-ahead" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Anticipatory Idea: Looking Ahead
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-algorithm-predictive-motion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Algorithm: Predictive Motion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical-analogy-inertial-navigation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Analogy: Inertial Navigation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#64-rmsprop-adaptive-step-sizes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 RMSProp — Adaptive Step Sizes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.4 RMSProp — Adaptive Step Sizes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-problem-of-anisotropy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Problem of Anisotropy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-solution-running-average-of-squared-gradients" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Solution: Running Average of Squared Gradients
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical-analogy-adaptive-friction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Analogy: Adaptive Friction
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#65-adam-adaptive-moment-estimation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 Adam — Adaptive Moment Estimation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.5 Adam — Adaptive Moment Estimation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-algorithm-fusing-dynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Algorithm: Fusing Dynamics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical-analogy-the-smart-particle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Analogy: The Smart Particle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practical-strengths-and-limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Practical Strengths and Limitations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#66-geometry-of-adaptive-dynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6 Geometry of Adaptive Dynamics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.6 Geometry of Adaptive Dynamics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#coordinate-re-scaling-and-the-modified-metric" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Coordinate Re-scaling and the Modified Metric
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-optimizer-as-a-geometric-learner" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Optimizer as a Geometric Learner
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analogy-to-natural-gradient-descent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analogy to Natural Gradient Descent
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#67-stability-convergence-and-energy-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.7 Stability, Convergence, and Energy View
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.7 Stability, Convergence, and Energy View">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#defining-the-effective-hamiltonian" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Defining the Effective Hamiltonian
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dissipation-and-monotonic-convergence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dissipation and Monotonic Convergence
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-damped-oscillator-picture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Damped Oscillator Picture
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#68-comparing-methods-on-a-ravine-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.8 Comparing Methods on a Ravine Function
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.8 Comparing Methods on a Ravine Function">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-ravine-test-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Ravine Test Function
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trajectory-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trajectory Comparison
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-role-of-geometry-and-dynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Role of Geometry and Dynamics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#69-code-demo-comparing-gd-momentum-and-adam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.9 Code Demo — Comparing GD, Momentum, and Adam
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#610-practical-notes-and-heuristics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.10 Practical Notes and Heuristics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.10 Practical Notes and Heuristics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tuning-parameters-the-adam-defaults" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tuning Parameters: The Adam Defaults
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#learning-rate-decay-schedules-annealing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learning Rate Decay Schedules (Annealing)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#empirical-insight-flat-minima-and-generalization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Empirical Insight: Flat Minima and Generalization
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#611-takeaways-bridge-to-chapter-7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.11 Takeaways &amp; Bridge to Chapter 7
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.11 Takeaways &amp; Bridge to Chapter 7">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-we-accomplished-in-chapter-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What We Accomplished in Chapter 6
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bridge-to-chapter-7-when-gradients-fail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bridge to Chapter 7: When Gradients Fail
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-16/Chapter-16-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-17/Chapter-17-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-18/Chapter-18-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-19/Chapter-19-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WorkBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    WorkBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-6-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-16/Chapter-16-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-17/Chapter-17-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-18/Chapter-18-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-19/Chapter-19-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CodeBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CodeBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-6-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-16/Chapter-16-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-17/Chapter-17-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-18/Chapter-18-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-19/Chapter-19-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quizes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Quizes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-6-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-16/Chapter-16-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-17/Chapter-17-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-18/Chapter-18-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-19/Chapter-19-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Interviews
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Interviews
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-6-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-16/Chapter-16-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-17/Chapter-17-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-18/Chapter-18-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-19/Chapter-19-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-outline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Outline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#61-beyond-simple-descent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Beyond Simple Descent
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.1 Beyond Simple Descent">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#motivation-the-failure-in-ravines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Motivation: The Failure in Ravines
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#need-for-richer-dynamics-inertia-and-adaptivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Need for Richer Dynamics: Inertia and Adaptivity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical-analogy-the-damped-harmonic-oscillator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Analogy: The Damped Harmonic Oscillator
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#62-momentum-learning-with-inertia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Momentum — Learning with Inertia
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2 Momentum — Learning with Inertia">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-algorithm-introducing-velocity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Algorithm: Introducing Velocity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical-view-inertia-and-damping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical View: Inertia and Damping
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trade-offs-and-limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trade-offs and Limitations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#63-nesterov-accelerated-gradient-nag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Nesterov Accelerated Gradient (NAG)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.3 Nesterov Accelerated Gradient (NAG)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-anticipatory-idea-looking-ahead" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Anticipatory Idea: Looking Ahead
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-algorithm-predictive-motion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Algorithm: Predictive Motion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical-analogy-inertial-navigation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Analogy: Inertial Navigation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#64-rmsprop-adaptive-step-sizes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 RMSProp — Adaptive Step Sizes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.4 RMSProp — Adaptive Step Sizes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-problem-of-anisotropy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Problem of Anisotropy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-solution-running-average-of-squared-gradients" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Solution: Running Average of Squared Gradients
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical-analogy-adaptive-friction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Analogy: Adaptive Friction
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#65-adam-adaptive-moment-estimation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 Adam — Adaptive Moment Estimation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.5 Adam — Adaptive Moment Estimation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-algorithm-fusing-dynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Algorithm: Fusing Dynamics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical-analogy-the-smart-particle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Analogy: The Smart Particle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practical-strengths-and-limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Practical Strengths and Limitations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#66-geometry-of-adaptive-dynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6 Geometry of Adaptive Dynamics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.6 Geometry of Adaptive Dynamics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#coordinate-re-scaling-and-the-modified-metric" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Coordinate Re-scaling and the Modified Metric
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-optimizer-as-a-geometric-learner" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Optimizer as a Geometric Learner
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analogy-to-natural-gradient-descent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analogy to Natural Gradient Descent
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#67-stability-convergence-and-energy-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.7 Stability, Convergence, and Energy View
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.7 Stability, Convergence, and Energy View">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#defining-the-effective-hamiltonian" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Defining the Effective Hamiltonian
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dissipation-and-monotonic-convergence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dissipation and Monotonic Convergence
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-damped-oscillator-picture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Damped Oscillator Picture
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#68-comparing-methods-on-a-ravine-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.8 Comparing Methods on a Ravine Function
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.8 Comparing Methods on a Ravine Function">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-ravine-test-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Ravine Test Function
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trajectory-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trajectory Comparison
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-role-of-geometry-and-dynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Role of Geometry and Dynamics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#69-code-demo-comparing-gd-momentum-and-adam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.9 Code Demo — Comparing GD, Momentum, and Adam
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#610-practical-notes-and-heuristics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.10 Practical Notes and Heuristics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.10 Practical Notes and Heuristics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tuning-parameters-the-adam-defaults" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tuning Parameters: The Adam Defaults
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#learning-rate-decay-schedules-annealing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learning Rate Decay Schedules (Annealing)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#empirical-insight-flat-minima-and-generalization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Empirical Insight: Flat Minima and Generalization
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#611-takeaways-bridge-to-chapter-7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.11 Takeaways &amp; Bridge to Chapter 7
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.11 Takeaways &amp; Bridge to Chapter 7">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-we-accomplished-in-chapter-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What We Accomplished in Chapter 6
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bridge-to-chapter-7-when-gradients-fail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bridge to Chapter 7: When Gradients Fail
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/bigbookofcomputing/optimization/edit/master/docs/chapters/chapter-6/Chapter-6-Essay.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/bigbookofcomputing/optimization/raw/master/docs/chapters/chapter-6/Chapter-6-Essay.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="6-advanced-gradient-dynamics"><strong>6. Advanced Gradient Dynamics</strong></h1>
+<h2 id="introduction"><strong>Introduction</strong></h2>
+<p>Chapter 5 established gradient descent as the fundamental dynamical law of optimization: a deterministic, <strong>overdamped relaxation</strong> process where the parameter velocity is directly proportional to the negative gradient force (<span class="arithmatex">\(d\mathbf{\theta}/dt = -\gamma \nabla L\)</span>), analogous to a particle moving through thick viscous fluid. While this framework is theoretically sound—the loss function acts as a Lyapunov function, guaranteeing monotonic energy dissipation and convergence to critical points—it suffers catastrophic failures on the high-dimensional, <strong>anisotropic ravine landscapes</strong> characteristic of real machine learning problems. The root cause is the <strong>condition number</strong> <span class="arithmatex">\(\kappa = \lambda_{\max}/\lambda_{\min}\)</span> of the Hessian: when curvature varies by orders of magnitude across different parameter directions, a single global learning rate <span class="arithmatex">\(\eta\)</span> must be conservatively set to prevent divergence in the stiffest direction, inevitably causing agonizingly slow convergence along the flat "sloppy" valley floors. This manifests as the infamous <strong>zigzagging</strong> behavior—the gradient points perpendicular to the valley floor (across the steep walls), causing the optimizer to bounce back and forth while making negligible forward progress toward the minimum.</p>
+<p>This chapter transcends the overdamped approximation by introducing two transformative concepts from classical mechanics and adaptive control theory: <strong>momentum</strong> (inertia) and <strong>per-parameter adaptive scaling</strong> (dynamic friction). We begin by upgrading the equation of motion from zero-mass overdamped dynamics to the full <strong>damped harmonic oscillator</strong> equation <span class="arithmatex">\(m\ddot{\mathbf{\theta}} = -\gamma m\dot{\mathbf{\theta}} - \nabla L\)</span>, incorporating inertia as a velocity accumulation mechanism that enables the optimizer to <strong>coast across plateaus</strong> (maintaining speed when gradients are small) and <strong>smooth out zigzags</strong> (averaging oscillatory forces). We develop <strong>Momentum</strong> and its mathematically refined variant <strong>Nesterov Accelerated Gradient (NAG)</strong>, which employs anticipatory gradient evaluation at predicted future positions to enable faster convergence. Moving beyond global inertia, we introduce <strong>adaptive methods</strong>—<strong>RMSProp</strong> and <strong>Adam (Adaptive Moment Estimation)</strong>—which maintain running estimates of per-parameter gradient statistics (first and second moments <span class="arithmatex">\(m_t, v_t\)</span>) to automatically compute coordinate-specific effective learning rates <span class="arithmatex">\(\eta_i \propto 1/\sqrt{v_i}\)</span>. We reveal that adaptive methods fundamentally <strong>redefine the geometry</strong> of parameter space, acting as online learned diagonal preconditioners that transform anisotropic elliptical ravines into isotropic spherical bowls, approximating the ideal (but intractable) Newton's method scaling by <span class="arithmatex">\(H^{-1}\)</span>.</p>
+<p>By the end of this chapter, you will understand that modern optimizers are sophisticated <strong>damped dynamical systems</strong> whose total energy (Hamiltonian <span class="arithmatex">\(\mathcal{H} = L + \frac{1}{2m}|\mathbf{p}|^2\)</span>) is continuously dissipated via friction until reaching equilibrium, that momentum enables barrier crossing and prevents stalling via accumulated kinetic energy, and that adaptive scaling is a form of <strong>learned geometry</strong> that makes the optimization isotropic in a transformed metric space—connecting to Natural Gradient Descent and the Fisher Information Matrix. You will recognize the empirical finding that stochastic noise (from mini-batch sampling) combined with adaptive dynamics preferentially drives the system toward <strong>flat, wide minima</strong> (thermodynamically stable states) that generalize better than sharp minima. These foundations prepare you for <strong>Chapter 7</strong>, where we confront landscapes so rugged (spin glasses) or discrete (combinatorial optimization) that gradient information becomes useless, requiring a shift to <strong>heuristic methods</strong> like <strong>Simulated Annealing</strong> that replace deterministic gradient forces with temperature-controlled stochastic jumps to tunnel through energy barriers.</p>
+<hr />
+<h2 id="chapter-outline"><strong>Chapter Outline</strong></h2>
+<table>
+<thead>
+<tr>
+<th><strong>Sec.</strong></th>
+<th><strong>Title</strong></th>
+<th><strong>Core Ideas &amp; Examples</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>6.1</strong></td>
+<td><strong>Beyond Simple Descent</strong></td>
+<td>Failure modes of gradient descent: zigzagging in anisotropic ravines (high condition number <span class="arithmatex">\(\kappa\)</span>), stalling on plateaus (small <span class="arithmatex">\(\|\nabla L\|\)</span>); need for memory (inertia) and per-parameter adaptivity; upgrade from overdamped <span class="arithmatex">\(\mathbf{v} \propto -\nabla L\)</span> to damped oscillator <span class="arithmatex">\(m\ddot{\mathbf{\theta}} = -\gamma m\dot{\mathbf{\theta}} - \nabla L\)</span>; physical foundation for momentum and adaptive methods.</td>
+</tr>
+<tr>
+<td><strong>6.2</strong></td>
+<td><strong>Momentum: Learning with Inertia</strong></td>
+<td>Velocity accumulation <span class="arithmatex">\(\mathbf{v}_{t+1} = \beta \mathbf{v}_t - \eta \nabla L\)</span>, update <span class="arithmatex">\(\mathbf{\theta}_{t+1} = \mathbf{\theta}_t + \mathbf{v}_{t+1}\)</span>; momentum coefficient <span class="arithmatex">\(\beta \approx 0.9\)</span> controls memory/damping; physical analogy—particle with mass coasting across plateaus, averaging out zigzags; enables barrier crossing via kinetic energy; trade-offs: overshooting with high <span class="arithmatex">\(\beta\)</span>, still uses global <span class="arithmatex">\(\eta\)</span>.</td>
+</tr>
+<tr>
+<td><strong>6.3</strong></td>
+<td><strong>Nesterov Accelerated Gradient (NAG)</strong></td>
+<td>Anticipatory dynamics: compute gradient at predicted future position <span class="arithmatex">\(\nabla L(\mathbf{\theta}_t + \beta \mathbf{v}_t)\)</span> instead of current <span class="arithmatex">\(\nabla L(\mathbf{\theta}_t)\)</span>; "look-ahead" correction prevents overshooting; provably accelerated convergence on convex functions; analogy—inertial navigation (skier anticipating turn, car steering before corner); smoother geodesic path on curved loss manifold.</td>
+</tr>
+<tr>
+<td><strong>6.4</strong></td>
+<td><strong>RMSProp: Adaptive Step Sizes</strong></td>
+<td>Per-parameter learning rates via running average of squared gradients <span class="arithmatex">\(s_t = \rho s_{t-1} + (1-\rho)(\nabla L_t)^2\)</span>; update <span class="arithmatex">\(\mathbf{\theta}_{t+1} = \mathbf{\theta}_t - \frac{\eta}{\sqrt{s_t+\epsilon}}\nabla L_t\)</span>; inverse curvature scaling: large <span class="arithmatex">\(s_i\)</span> (stiff) → small effective <span class="arithmatex">\(\eta_i\)</span> (strong brake), small <span class="arithmatex">\(s_j\)</span> (sloppy) → large effective <span class="arithmatex">\(\eta_j\)</span> (light brake); transforms elliptical contours to spherical, lowers condition number.</td>
+</tr>
+<tr>
+<td><strong>6.5</strong></td>
+<td><strong>Adam: Adaptive Moment Estimation</strong></td>
+<td>Combines momentum (<span class="arithmatex">\(m_t = \beta_1 m_{t-1} + (1-\beta_1)\nabla L\)</span>) and adaptive scaling (<span class="arithmatex">\(v_t = \beta_2 v_{t-1} + (1-\beta_2)(\nabla L)^2\)</span>); bias correction <span class="arithmatex">\(m_{\text{hat}} = m_t/(1-\beta_1^t)\)</span>, <span class="arithmatex">\(v_{\text{hat}} = v_t/(1-\beta_2^t)\)</span>; update <span class="arithmatex">\(\mathbf{\theta}_{t+1} = \mathbf{\theta}_t - \eta \frac{m_{\text{hat}}}{\sqrt{v_{\text{hat}}}+\epsilon}\)</span>; defaults <span class="arithmatex">\(\beta_1=0.9\)</span>, <span class="arithmatex">\(\beta_2=0.999\)</span>; "smart particle" navigator and damper; robust, widely used, limitation—may prefer sharp minima.</td>
+</tr>
+<tr>
+<td><strong>6.6</strong></td>
+<td><strong>Geometry of Adaptive Dynamics</strong></td>
+<td>Adaptive methods redefine metric: <span class="arithmatex">\(\Delta \theta_i \propto \frac{1}{\sqrt{v_i}} m_i\)</span> transforms distance <span class="arithmatex">\(d\mathbf{\theta}^2_{\text{adaptive}} \sim v^{-1} d\mathbf{\theta} \cdot d\mathbf{\theta}\)</span>; diagonal approximation of inverse Hessian <span class="arithmatex">\(H^{-1}\)</span> (Newton's method <span class="arithmatex">\(\mathbf{\theta} - H^{-1}\nabla L\)</span> intractable); isotropic motion in transformed data-dependent space; connection to Natural Gradient Descent via Fisher Information Matrix <span class="arithmatex">\(I(\mathbf{\theta})^{-1}\nabla L\)</span>.</td>
+</tr>
+<tr>
+<td><strong>6.7</strong></td>
+<td><strong>Stability, Convergence, and Energy View</strong></td>
+<td>Hamiltonian (total energy) <span class="arithmatex">\(\mathcal{H} = L(\mathbf{\theta}) + \frac{1}{2m}\|\mathbf{p}\|^2\)</span> (potential + kinetic); dissipation via damping <span class="arithmatex">\(\frac{d\mathcal{H}}{dt} = -\gamma \|\mathbf{v}\|^2 \le 0\)</span> ensures stability and convergence; damped oscillator picture—critically damped vs. underdamped regimes; fixed points at minima; phase space <span class="arithmatex">\((\mathbf{\theta}, \mathbf{v})\)</span> dynamics; attractors as basins.</td>
+</tr>
+<tr>
+<td><strong>6.8</strong></td>
+<td><strong>Comparing Methods on a Ravine Function</strong></td>
+<td>Test function <span class="arithmatex">\(L(\theta_1, \theta_2) = 0.5\theta_1^2 + 5\theta_2^2\)</span> (anisotropic, <span class="arithmatex">\(\kappa=10\)</span>); GD zigzags (oscillates on steep <span class="arithmatex">\(\theta_2\)</span>, slow on flat <span class="arithmatex">\(\theta_1\)</span>); Momentum smooths oscillations via averaging, accelerates along valley; Adam most direct—adaptive scaling transforms ravine to isotropic bowl; trajectory comparison shows geometry vs. dynamics trade-offs.</td>
+</tr>
+<tr>
+<td><strong>6.9</strong></td>
+<td><strong>Code Demo: Comparing GD, Momentum, and Adam</strong></td>
+<td>Python implementation on ravine <span class="arithmatex">\(L=0.5\theta_1^2 + 5\theta_2^2\)</span>; GD update <span class="arithmatex">\(\mathbf{\theta} - \eta\nabla L\)</span>, Momentum with <span class="arithmatex">\(\beta=0.9\)</span>, Adam with <span class="arithmatex">\(\beta_1=0.9, \beta_2=0.999\)</span>; visualize trajectories on contour plot from start <span class="arithmatex">\((3,3)\)</span> to minimum <span class="arithmatex">\((0,0)\)</span>; GD blue zigzag, Momentum orange smooth, Adam green direct; confirms inertia + adaptivity overcome anisotropy.</td>
+</tr>
+<tr>
+<td><strong>6.10</strong></td>
+<td><strong>Practical Notes and Heuristics</strong></td>
+<td>Adam defaults: <span class="arithmatex">\(\eta \approx 10^{-3}\)</span>, <span class="arithmatex">\(\beta_1=0.9\)</span>, <span class="arithmatex">\(\beta_2=0.999\)</span>, <span class="arithmatex">\(\epsilon=10^{-8}\)</span>; learning rate annealing (cooling) to dampen stochastic oscillations for precise convergence; cosine annealing with warm restarts (SGDR) for cyclic exploration; flat minima vs. sharp minima—high noise/momentum find flat basins (thermodynamically stable), correlate with better generalization; overfitting at sharp minima.</td>
+</tr>
+<tr>
+<td><strong>6.11</strong></td>
+<td><strong>Takeaways &amp; Bridge to Chapter 7</strong></td>
+<td>Recap: momentum adds inertia (coasting, oscillation dampening), adaptive methods (RMSProp, Adam) learn geometry via per-parameter scaling (diagonal <span class="arithmatex">\(H^{-1}\)</span> approximation), damped dynamical system with Hamiltonian dissipation, flat minima from stochastic+adaptive dynamics; limitations—gradient-based methods fail on discontinuous/combinatorial landscapes, deep barriers in spin glasses; bridge to Chapter 7: heuristic methods (Simulated Annealing) use temperature-controlled stochastic jumps to tunnel barriers when gradients useless.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p>In Chapter 5, we established <strong>Gradient Descent (GD)</strong> as a <strong>deterministic, overdamped relaxation</strong> process, where the velocity of the model parameters is directly proportional to the force (<span class="arithmatex">\(\mathbf{v} \propto -\nabla L\)</span>). While robust in theory, this simple dynamic fails spectacularly in the high-dimensional, anisotropic ravines of real loss landscapes. It forces the optimizer to use an extremely small step size (<span class="arithmatex">\(\eta\)</span>) constrained by the stiffest direction, leading to painfully slow convergence along the flat valley floor.</p>
+<p>This chapter moves beyond the <strong>overdamped</strong> approximation, introducing concepts from classical mechanics to create richer, more efficient optimization dynamics that form the foundation of modern machine learning.</p>
+<hr />
+<h2 id="61-beyond-simple-descent"><strong>6.1 Beyond Simple Descent</strong></h2>
+<hr />
+<h3 id="motivation-the-failure-in-ravines"><strong>Motivation: The Failure in Ravines</strong></h3>
+<p>The primary weakness of standard Gradient Descent (GD) and even Stochastic Gradient Descent (SGD) is their inability to navigate ill-conditioned, <strong>anisotropic</strong> loss landscapes—a geometry characterized by a large <strong>condition number</strong> of the Hessian.</p>
+<div class="arithmatex">\[
+\kappa = \lambda_{\max} / \lambda_{\min}
+\]</div>
+<ul>
+<li><strong>Zigzagging:</strong> The gradient vector, pointing in the direction of steepest descent, is perpendicular to the elliptical contour lines. In a narrow ravine, the gradient points <em>across</em> the steep walls, leading to oscillation and a "zigzag" path that makes almost no progress toward the minimum along the flat valley floor.</li>
+<li><strong>Stalling:</strong> In vast, flat regions like plateaus or the bottoms of "sloppy" valleys, the gradient magnitude <span class="arithmatex">\(\Vert \nabla L \Vert\)</span> approaches zero. The update step <span class="arithmatex">\(\mathbf{\theta}_{t+1} = \mathbf{\theta}_t - \eta \nabla L\)</span> becomes vanishingly small, causing the optimization to stall prematurely.</li>
+</ul>
+<p>To address these failures, we must introduce <strong>memory</strong> and <strong>intelligence</strong> into the dynamics.</p>
+<hr />
+<h3 id="need-for-richer-dynamics-inertia-and-adaptivity"><strong>Need for Richer Dynamics: Inertia and Adaptivity</strong></h3>
+<p>The solution is to upgrade the optimizer's dynamical system by breaking the simple, friction-dominated <span class="arithmatex">\(\mathbf{v} \propto \mathbf{F}\)</span> relationship. We require two new properties to traverse the landscape efficiently:</p>
+<ul>
+<li><strong>Inertia (Momentum):</strong> Introducing a "mass" to the system allows the velocity to accumulate contributions from past gradients. This memory helps the optimizer <strong>smooth out zigzags</strong> (momentum cancels out oscillations across the ravine) and <strong>coast across plateaus</strong> (maintaining speed even when the current gradient is small).</li>
+<li><strong>Per-Parameter Adaptivity:</strong> Recognizing that the landscape's stiffness varies by parameter (<span class="arithmatex">\(\theta_i\)</span> versus <span class="arithmatex">\(\theta_j\)</span>), we need a mechanism to set an effective, coordinate-specific learning rate <span class="arithmatex">\(\eta_i\)</span>. This allows the optimizer to take large steps in flat (sloppy) directions and conservative steps in steep (stiff) directions, effectively <strong>sphericizing the loss landscape on the fly</strong>.</li>
+</ul>
+<hr />
+<h3 id="physical-analogy-the-damped-harmonic-oscillator"><strong>Physical Analogy: The Damped Harmonic Oscillator</strong></h3>
+<p>The new, richer dynamics that incorporate inertia can be directly modeled using a generalized physical equation of motion. While Chapter 5 used the simplified zero-mass (overdamped) limit, modern optimizers are better described by the full equation for a particle with mass <span class="arithmatex">\(m\)</span> moving in a viscous medium under a force derived from a potential <span class="arithmatex">\(L(\mathbf{\theta})\)</span>:</p>
+<div class="arithmatex">\[
+\frac{d^2\mathbf{\theta}}{dt^2} + \gamma \frac{d\mathbf{\theta}}{dt} + \frac{1}{m}\nabla L(\mathbf{\theta}) = 0
+\]</div>
+<p>We can multiply by <span class="arithmatex">\(m\)</span> and define <span class="arithmatex">\(\mathbf{F} = -\nabla L(\mathbf{\theta})\)</span> to obtain a familiar form:</p>
+<div class="arithmatex">\[
+m\frac{d^2\mathbf{\theta}}{dt^2} = -\gamma m \frac{d\mathbf{\theta}}{dt} - \nabla L(\mathbf{\theta})
+\]</div>
+<p>This equation provides the foundation for our next concepts:
+* The term <span class="arithmatex">\(m\frac{d^2\mathbf{\theta}}{dt^2}\)</span> is <strong>Inertia</strong> (or mass <span class="arithmatex">\(\times\)</span> acceleration).
+* The term <span class="arithmatex">\(-\gamma m \frac{d\mathbf{\theta}}{dt}\)</span> is the <strong>Damping Force</strong> (or friction, <span class="arithmatex">\(\propto\)</span> velocity).
+* The term <span class="arithmatex">\(-\nabla L(\mathbf{\theta})\)</span> is the <strong>Potential Force</strong>.</p>
+<p>By numerically integrating this equation (rather than the zero-mass version in Chapter 5), we introduce <strong>Momentum</strong> (Chapter 6.2) and transition from static relaxation to a sophisticated, <strong>damped dynamical system</strong> where the parameters evolve with memory and inertia.</p>
+<hr />
+<h2 id="62-momentum-learning-with-inertia"><strong>6.2 Momentum — Learning with Inertia</strong></h2>
+<p>The <strong>Momentum</strong> method, often simply called <strong>Momentum</strong>, is the first and most foundational technique to improve upon basic gradient descent by introducing the concept of <strong>inertia</strong> or "memory" into the optimization dynamics. It is a direct response to the "zigzagging" and "stalling" problems inherent in the overdamped model of Chapter 5.</p>
+<hr />
+<h3 id="the-algorithm-introducing-velocity"><strong>The Algorithm: Introducing Velocity</strong></h3>
+<p>Momentum accelerates learning by accumulating a velocity vector, <span class="arithmatex">\(\mathbf{v}_t\)</span>, which incorporates both the current gradient and the history of previous gradients. The parameters are no longer updated solely by the instantaneous gradient; they are updated by this accumulated velocity.</p>
+<p>The update rule introduces a new hyperparameter, <span class="arithmatex">\(\beta\)</span>, which is the <strong>momentum coefficient</strong> (or dampening factor).</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\mathbf{v}_{t+1} &amp;= \beta \mathbf{v}_t - \eta \nabla L(\mathbf{\theta}_t) \\
+\mathbf{\theta}_{t+1} &amp;= \mathbf{\theta}_t + \mathbf{v}_{t+1}
+\end{aligned}
+\]</div>
+<ul>
+<li><span class="arithmatex">\(\mathbf{v}_t\)</span> is the <strong>velocity</strong> vector at time <span class="arithmatex">\(t\)</span>.</li>
+<li><span class="arithmatex">\(\beta\)</span> (a value typically set around 0.9) determines how much of the previous velocity is retained. It controls the amount of memory or persistence.</li>
+<li><span class="arithmatex">\(-\eta \nabla L(\mathbf{\theta}_t)\)</span> is the current, instantaneous "force" pulling the parameters downhill.</li>
+</ul>
+<p>This process transforms the optimization from a first-order map into a second-order recurrence relation.</p>
+<hr />
+<h3 id="physical-view-inertia-and-damping"><strong>Physical View: Inertia and Damping</strong></h3>
+<p>The Momentum update is the numerical approximation of the continuous equation of motion for a particle with mass <span class="arithmatex">\(m\)</span> undergoing <strong>underdamped motion</strong> in a viscous medium.</p>
+<ul>
+<li><strong>Inertia:</strong> The term <span class="arithmatex">\(\beta \mathbf{v}_t\)</span> allows the optimizer to build up speed (momentum) and coast across flat regions where <span class="arithmatex">\(\nabla L \approx 0\)</span>. This kinetic energy prevents the system from stalling.</li>
+<li><strong>Damping:</strong> The coefficient <span class="arithmatex">\(\beta\)</span> acts as a friction or <strong>damping factor</strong>. If <span class="arithmatex">\(\beta=0.9\)</span>, the motion is lightly damped, meaning <span class="arithmatex">\(90\%\)</span> of the current velocity persists, allowing for efficient movement. If <span class="arithmatex">\(\beta=0\)</span>, we recover standard Gradient Descent (no memory).</li>
+<li><strong>Oscillation Cancellation:</strong> In narrow ravines (Section 5.3), the current gradient zigzags, but the accumulated velocity <span class="arithmatex">\(\mathbf{v}_t\)</span> averages these oscillations out, smoothing the trajectory and allowing the optimizer to travel quickly along the flat valley floor toward the minimum.</li>
+</ul>
+<p>This is analogous to a <strong>ball rolling in a bumpy valley</strong>. The kinetic energy gained allows the ball to roll straight over small bumps (local noise or shallow minima) instead of getting stuck in them.</p>
+<hr />
+<h3 id="trade-offs-and-limitations"><strong>Trade-offs and Limitations</strong></h3>
+<p>Momentum significantly accelerates convergence but introduces a critical new trade-off.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Aspect</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Consequence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Too High <span class="arithmatex">\(\beta\)</span></strong></td>
+<td style="text-align: left;">Overly persistent velocity (low damping).</td>
+<td style="text-align: left;">The particle may <strong>overshoot</strong> the minimum entirely and climb far up the other side, wasting steps.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Too Low <span class="arithmatex">\(\beta\)</span></strong></td>
+<td style="text-align: left;">Little memory (high damping).</td>
+<td style="text-align: left;">The motion devolves back toward slow, zigzagging GD.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Single <span class="arithmatex">\(\eta\)</span></strong></td>
+<td style="text-align: left;">Still uses one global learning rate, <span class="arithmatex">\(\eta\)</span>.</td>
+<td style="text-align: left;">Still sensitive to the <em>anisotropy</em> of the landscape. Must use a small <span class="arithmatex">\(\eta\)</span> to prevent divergence in stiff directions.</td>
+</tr>
+</tbody>
+</table>
+<p>Momentum solves the inertia problem but does not address the fundamental issue of anisotropy and the compromised global learning rate. This requires the <strong>adaptive methods</strong> explored in the following sections.</p>
+<hr />
+<h2 id="63-nesterov-accelerated-gradient-nag"><strong>6.3 Nesterov Accelerated Gradient (NAG)</strong></h2>
+<p>The <strong>Nesterov Accelerated Gradient (NAG)</strong>, originally developed by Yurii Nesterov for convex optimization, is a mathematically refined variation of the standard Momentum method. While standard Momentum (Section 6.2) is based on the idea of a particle that <strong>reacts</strong> to the gradient at its current position, NAG employs a form of <strong>anticipatory dynamics</strong> to correct its trajectory before overshooting the target.</p>
+<hr />
+<h3 id="the-anticipatory-idea-looking-ahead"><strong>The Anticipatory Idea: Looking Ahead</strong></h3>
+<p>The core weakness of standard Momentum is that it calculates the gradient <span class="arithmatex">\(\nabla L(\mathbf{\theta}_t)\)</span> at the current position <span class="arithmatex">\(\mathbf{\theta}_t\)</span> and then applies the accumulated velocity <span class="arithmatex">\(\mathbf{v}_t\)</span>. By the time the next step is calculated, the system has effectively "overshot" the minimum due to its inertia, causing wasted motion.</p>
+<p>NAG addresses this by recognizing that the velocity <span class="arithmatex">\(\mathbf{v}_t\)</span> already points in the direction of the <em>next</em> location. It exploits this predictive power by calculating the gradient <em>not</em> at the current location <span class="arithmatex">\(\mathbf{\theta}_t\)</span>, but at the potential future location, <span class="arithmatex">\(\mathbf{\theta}_t + \beta \mathbf{v}_t\)</span>.</p>
+<p>The new step is therefore calculated based on an <strong>"anticipatory" gradient</strong>.</p>
+<hr />
+<h3 id="the-algorithm-predictive-motion"><strong>The Algorithm: Predictive Motion</strong></h3>
+<p>The NAG update rule modifies the velocity calculation to use the lookahead position:</p>
+<div class="arithmatex">\[
+\mathbf{v}_{t+1} = \beta \mathbf{v}_t - \eta \nabla L(\mathbf{\theta}_t + \beta \mathbf{v}_t)
+\]</div>
+<div class="arithmatex">\[
+\mathbf{\theta}_{t+1} = \mathbf{\theta}_t + \mathbf{v}_{t+1}
+\]</div>
+<ul>
+<li><span class="arithmatex">\(\beta \mathbf{v}_t\)</span> represents the <strong>predicted step</strong> based on the existing velocity (momentum).</li>
+<li><span class="arithmatex">\(\nabla L(\mathbf{\theta}_t + \beta \mathbf{v}_t)\)</span> is the gradient calculated at that predicted future position.</li>
+</ul>
+<p>This predictive gradient helps the momentum method "turn the corner" earlier in curved valleys. By correcting the direction <em>before</em> the overshoot occurs, NAG achieves mathematically provable <strong>accelerated convergence</strong> rates compared to classic Gradient Descent or standard Momentum, especially in smooth, convex settings.</p>
+<hr />
+<h3 id="physical-analogy-inertial-navigation"><strong>Physical Analogy: Inertial Navigation</strong></h3>
+<p>The NAG update is analogous to a vehicle using <strong>inertial navigation</strong> or a skier correcting their line.</p>
+<ul>
+<li><strong>Standard Momentum (Car Steering):</strong> Imagine driving a car toward a turn. Standard Momentum calculates the necessary turn when the car <em>reaches</em> the turn. Due to the car's inertia, it drifts wide before correcting.</li>
+<li><strong>NAG (Predictive Steering):</strong> NAG, by contrast, calculates the gradient at the predicted future point. It senses the curve <em>ahead</em> and starts turning the wheel <em>before</em> reaching the corner. This allows the system to follow a more geodesic (minimum-distance) path on the curved loss manifold.</li>
+</ul>
+<p>The introduction of this <strong>"anticipatory" force</strong> makes the optimizer more efficient and stable, making NAG a widely used technique in high-performance deep learning.</p>
+<div class="admonition tip">
+<p class="admonition-title">Momentum as Oscillation Damping</p>
+<p>Momentum's power comes from averaging out oscillatory forces. In a narrow ravine, the gradient alternates direction (pointing left, then right across the steep walls), but the accumulated velocity <span class="arithmatex">\(\beta \mathbf{v}_t\)</span> acts as a low-pass filter, canceling these perpendicular oscillations while reinforcing the consistent downward component along the valley floor. This transforms erratic zigzags into smooth, accelerated descent.</p>
+</div>
+<hr />
+<h2 id="64-rmsprop-adaptive-step-sizes"><strong>6.4 RMSProp — Adaptive Step Sizes</strong></h2>
+<p>RMSProp, or <strong>Root Mean Square Propagation</strong>, is a crucial adaptive learning rate algorithm that addresses the long-standing problem of <strong>anisotropy</strong> (the ravine effect) that plagues both standard Gradient Descent and Momentum. By dynamically scaling the learning rate for <em>each parameter</em> based on the history of its past gradients, RMSProp allows the optimizer to move quickly along shallow (sloppy) directions and carefully along steep (stiff) ones.</p>
+<hr />
+<h3 id="the-problem-of-anisotropy"><strong>The Problem of Anisotropy</strong></h3>
+<p>In real loss landscapes, different parameters <span class="arithmatex">\(\theta_i\)</span> and <span class="arithmatex">\(\theta_j\)</span> can correspond to vastly different curvatures.</p>
+<ul>
+<li>If parameter <span class="arithmatex">\(\theta_i\)</span> lies in a steep, stiff direction (<span class="arithmatex">\(\lambda_{\max}\)</span> is large), its gradients will be large.</li>
+<li>If parameter <span class="arithmatex">\(\theta_j\)</span> lies along a flat, sloppy direction (<span class="arithmatex">\(\lambda_{\min}\)</span> is small), its gradients will be small.</li>
+</ul>
+<p>A single, global learning rate <span class="arithmatex">\(\eta\)</span> must be set small enough to prevent the large gradients of <span class="arithmatex">\(\theta_i\)</span> from causing divergence, which inevitably means <span class="arithmatex">\(\eta\)</span> is far too small for <span class="arithmatex">\(\theta_j\)</span>, leading to slow convergence.</p>
+<hr />
+<h3 id="the-solution-running-average-of-squared-gradients"><strong>The Solution: Running Average of Squared Gradients</strong></h3>
+<p>RMSProp introduces a <strong>per-parameter scaling factor</strong> that normalizes the gradient by a running, exponentially decaying average of its squared magnitude.</p>
+<p>The algorithm maintains a vector of accumulated squared gradients, <span class="arithmatex">\(s_t\)</span>:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+s_t &amp;= \rho s_{t-1} + (1-\rho) (\nabla L_t)^2 \\
+\mathbf{\theta}_{t+1} &amp;= \mathbf{\theta}_t - \frac{\eta}{\sqrt{s_t+\epsilon}} \nabla L_t
+\end{aligned}
+\]</div>
+<ul>
+<li><span class="arithmatex">\(\nabla L_t\)</span> is the stochastic gradient vector at time <span class="arithmatex">\(t\)</span>.</li>
+<li>The division <span class="arithmatex">\((\nabla L_t)^2\)</span> is calculated element-wise.</li>
+<li><span class="arithmatex">\(\rho\)</span> (the decay rate, typically around 0.9) determines the length of the window over which squared gradients are averaged.</li>
+<li><span class="arithmatex">\(\epsilon\)</span> (a small constant, e.g., <span class="arithmatex">\(10^{-8}\)</span>) is added for numerical stability to prevent division by zero.</li>
+</ul>
+<p>The scaling term <span class="arithmatex">\(\frac{1}{\sqrt{s_t}}\)</span> effectively acts as an <strong>inverse curvature metric</strong>.</p>
+<hr />
+<h3 id="physical-analogy-adaptive-friction"><strong>Physical Analogy: Adaptive Friction</strong></h3>
+<p>RMSProp can be viewed as an optimization with an <strong>adaptive, coordinate-dependent friction coefficient</strong>.</p>
+<ul>
+<li><strong>In Steep Directions (Large Gradients):</strong> If a parameter <span class="arithmatex">\(\theta_i\)</span> has historically large gradients, <span class="arithmatex">\(s_{t,i}\)</span> will be large. The effective learning rate <span class="arithmatex">\(\frac{\eta}{\sqrt{s_{t,i}}}\)</span> becomes small, acting as a <strong>strong brake</strong> (high friction) to prevent oscillations and divergence.</li>
+<li><strong>In Flat Directions (Small Gradients):</strong> If a parameter <span class="arithmatex">\(\theta_j\)</span> has historically small gradients, <span class="arithmatex">\(s_{t,j}\)</span> will be small. The effective learning rate <span class="arithmatex">\(\frac{\eta}{\sqrt{s_{t,j}}}\)</span> remains relatively large, acting as a <strong>light brake</strong> (low friction) to allow rapid movement along the valley floor.</li>
+</ul>
+<p>RMSProp dynamically re-scales the learning space, making the elliptical contours of the loss landscape appear more spherical to the optimizer, effectively lowering the condition number <span class="arithmatex">\(\kappa\)</span> and leading to faster, more stable convergence.</p>
+<hr />
+<h2 id="65-adam-adaptive-moment-estimation"><strong>6.5 Adam — Adaptive Moment Estimation</strong></h2>
+<p>The <strong>Adam</strong> (Adaptive Moment Estimation) optimizer is arguably the most widely used algorithm in modern deep learning. It is a high-performance synthesis that combines the core strengths of the preceding methods: the <strong>inertia</strong> (momentum) of Chapter 6.2 and the <strong>adaptive step sizing</strong> (RMSProp) of Chapter 6.4.</p>
+<p>Adam is not merely a combination; it is a refinement that leverages the estimated first and second <em>moments</em> of the stochastic gradient—hence its name.</p>
+<hr />
+<h3 id="the-algorithm-fusing-dynamics"><strong>The Algorithm: Fusing Dynamics</strong></h3>
+<p>Adam maintains and updates three primary vectors for each parameter <span class="arithmatex">\(\theta_i\)</span> at every time step <span class="arithmatex">\(t\)</span>: the gradient <span class="arithmatex">\(\nabla L_t\)</span>, the first moment estimate <span class="arithmatex">\(m_t\)</span>, and the second raw moment estimate <span class="arithmatex">\(v_t\)</span>.</p>
+<ol>
+<li><strong>Estimate First Moment (Momentum):</strong> Accumulates a decaying average of past gradients.</li>
+</ol>
+<div class="arithmatex">\[
+m_t = \beta_1 m_{t-1} + (1-\beta_1)\nabla L_t
+\]</div>
+<ol>
+<li><strong>Estimate Second Moment (Adaptive Scaling):</strong> Accumulates a decaying average of <em>squared</em> gradients.</li>
+</ol>
+<div class="arithmatex">\[
+v_t = \beta_2 v_{t-1} + (1-\beta_2)(\nabla L_t)^2
+\]</div>
+<ol>
+<li><strong>Bias Correction:</strong> Both <span class="arithmatex">\(m_t\)</span> and <span class="arithmatex">\(v_t\)</span> are initialized near zero and are biased toward zero during the early steps. This step corrects the estimates to account for this initial bias.</li>
+</ol>
+<div class="arithmatex">\[
+m_{\text{hat}} = m_t / (1-\beta_1^t)
+\]</div>
+<div class="arithmatex">\[
+v_{\text{hat}} = v_t / (1-\beta_2^t)
+\]</div>
+<ol>
+<li><strong>Final Update Rule:</strong> Combines the bias-corrected moments to compute the update.</li>
+</ol>
+<div class="arithmatex">\[
+\mathbf{\theta}_{t+1} = \mathbf{\theta}_t - \eta \frac{m_{\text{hat}}}{\sqrt{v_{\text{hat}}} + \epsilon}
+\]</div>
+<p>Typical default hyperparameters are <span class="arithmatex">\(\beta_1 = 0.9\)</span> (retains <span class="arithmatex">\(90\%\)</span> of velocity), <span class="arithmatex">\(\beta_2 = 0.999\)</span> (retains <span class="arithmatex">\(99.9\%\)</span> of squared gradient history), and <span class="arithmatex">\(\epsilon = 10^{-8}\)</span>.</p>
+<hr />
+<h3 id="physical-analogy-the-smart-particle"><strong>Physical Analogy: The Smart Particle</strong></h3>
+<p>Adam is analogous to a <strong>"smart particle"</strong> or a sophisticated self-adjusting robot navigating the high-dimensional loss landscape.</p>
+<ul>
+<li><strong><span class="arithmatex">\(m_{\text{hat}}\)</span> (The Navigator):</strong> This term provides the <strong>direction</strong> and <strong>inertia</strong> (momentum). It averages the instantaneous forces to determine the overall direction of the valley floor, smoothing out the noise from SGD.</li>
+<li><strong><span class="arithmatex">\(\sqrt{v_{\text{hat}}}\)</span> (The Damper):</strong> This term dynamically adjusts the <strong>friction</strong> and <strong>mass</strong> for each coordinate. Like RMSProp, it applies heavy damping (a small effective <span class="arithmatex">\(\eta\)</span>) in steep directions and light damping (a large effective <span class="arithmatex">\(\eta\)</span>) in flat directions.</li>
+</ul>
+<p>By dividing the momentum-based direction (<span class="arithmatex">\(m_{\text{hat}}\)</span>) by the adaptive scale (<span class="arithmatex">\(\sqrt{v_{\text{hat}}}\)</span>), Adam automatically scales its steps to be large when progress is consistently made (high momentum, low stiffness) and small when the parameter is thrashing against a steep wall.</p>
+<hr />
+<h3 id="practical-strengths-and-limitations"><strong>Practical Strengths and Limitations</strong></h3>
+<p>Adam's widespread adoption stems from its reliability across many domains.</p>
+<ul>
+<li><strong>Robustness:</strong> It requires very little hyperparameter tuning and generally achieves excellent results in high-noise environments (like deep learning with small mini-batches), sparse gradient regimes, and non-stationary problems.</li>
+<li><strong>Efficiency:</strong> The computational cost per step is very low, requiring only a few extra operations per parameter compared to basic SGD.</li>
+</ul>
+<p>A noted limitation is that while Adam is superb at <em>finding</em> a low-loss region quickly, its default <span class="arithmatex">\(\sqrt{v_{\text{hat}}}\)</span> scaling can sometimes lead to convergence toward <strong>sharp minima</strong> (Section 4.4) that generalize slightly worse than the <strong>flat minima</strong> found by well-tuned, non-adaptive optimizers like SGD with Momentum. This issue is typically addressed with minor variants (e.g., AdamW) or specialized learning rate schedules (Chapter 6.10).</p>
+<div class="admonition example">
+<p class="admonition-title">Adam as Unified Navigator</p>
+<p>Adam represents the synthesis of two fundamental ideas: momentum provides directional persistence (like a ball rolling with inertia), while adaptive scaling provides automatic brake adjustment (like ABS in a car). Consider navigating a mountain road with sharp turns (anisotropic ravine): momentum keeps you moving forward smoothly without jerking the wheel at every bump, while adaptive braking prevents skidding on steep sections. Together, they create a robust optimizer that handles diverse terrain without manual tuning.</p>
+</div>
+<hr />
+<h2 id="66-geometry-of-adaptive-dynamics"><strong>6.6 Geometry of Adaptive Dynamics</strong></h2>
+<p>Adaptive methods like RMSProp and Adam (Sections 6.4 and 6.5) are not merely heuristics for picking better learning rates; they fundamentally <strong>redefine the geometry</strong> of the optimization problem. By dynamically scaling the gradient <span class="arithmatex">\(\nabla L\)</span> by the inverse square root of the accumulated squared gradients (<span class="arithmatex">\(\mathbf{v}_{\text{hat}}^{-1/2}\)</span>), these algorithms effectively change the metric tensor of the parameter space.</p>
+<hr />
+<h3 id="coordinate-re-scaling-and-the-modified-metric"><strong>Coordinate Re-scaling and the Modified Metric</strong></h3>
+<p>The core idea of adaptivity is to transform the anisotropic (elliptical) loss landscape into a more isotropic (spherical) one.</p>
+<p>In standard Gradient Descent, the movement is measured using the standard Euclidean distance (or <span class="arithmatex">\(L^2\)</span> norm) in parameter space, <span class="arithmatex">\(d\mathbf{\theta}^2 = \sum_i d\theta_i^2\)</span>. However, adaptive algorithms implicitly define a <strong>new, non-Euclidean distance</strong> <span class="arithmatex">\(d\mathbf{\theta}^2_{\text{adaptive}}\)</span> where steps along steep directions are inherently smaller in the context of the overall move.</p>
+<p>The step size for each parameter <span class="arithmatex">\(\theta_i\)</span> is governed by:</p>
+<div class="arithmatex">\[
+\Delta \theta_i \propto \frac{1}{\sqrt{v_{\text{hat},i}}} m_{\text{hat},i}
+\]</div>
+<p>This is equivalent to operating in a metric where the distance <span class="arithmatex">\(d\mathbf{\theta}\)</span> is weighted by the inverse of the parameter's average historical steepness:</p>
+<div class="arithmatex">\[
+d\mathbf{\theta}^2_{\text{adaptive}} \sim (\text{diag}(\mathbf{v}_{\text{hat}}))^{-1} d\mathbf{\theta} \cdot d\mathbf{\theta}
+\]</div>
+<ul>
+<li><strong>Interpretation:</strong> The optimization trajectory is now performing an <em>isotropic</em> move within this <strong>transformed, data-dependent space</strong>. The parameters are no longer scaled equally; instead, they are rescaled such that <span class="arithmatex">\(1\)</span> unit of motion along a stiff dimension (<span class="arithmatex">\(\theta_i\)</span>, where <span class="arithmatex">\(v_{\text{hat},i}\)</span> is large) is made numerically smaller than <span class="arithmatex">\(1\)</span> unit of motion along a sloppy dimension (<span class="arithmatex">\(\theta_j\)</span>, where <span class="arithmatex">\(v_{\text{hat},j}\)</span> is small).</li>
+</ul>
+<hr />
+<h3 id="the-optimizer-as-a-geometric-learner"><strong>The Optimizer as a Geometric Learner</strong></h3>
+<p>This interpretation reveals that the optimizer is performing a form of <strong>learning geometry</strong>. The optimizer uses the history of gradients (<span class="arithmatex">\(\mathbf{v}_{\text{hat}}\)</span>) to construct a localized, diagonal approximation of the curvature, acting as a <strong>preconditioner</strong> (Section 5.3).</p>
+<p>Ideally, the optimal preconditioning matrix is the inverse Hessian <span class="arithmatex">\(H^{-1}\)</span> (Newton's method, Section 5.10). Since calculating <span class="arithmatex">\(H^{-1}\)</span> is intractable, adaptive methods settle for a sparse, diagonal approximation <span class="arithmatex">\(\mathbf{v}_{\text{hat}}^{-1/2}\)</span>. This approximation does an excellent job of correcting for the differing scales (the ravine effect) by:
+* <strong>Compressing</strong> the steps in stiff directions.
+* <strong>Stretching</strong> the steps in sloppy directions.</p>
+<hr />
+<h3 id="analogy-to-natural-gradient-descent"><strong>Analogy to Natural Gradient Descent</strong></h3>
+<p>This dynamic re-scaling is closely related to the concept of <strong>Natural Gradient Descent</strong>.</p>
+<p>In information geometry (Section 2.3), the distance between two probability distributions is measured by the <strong>Fisher Information Matrix</strong> <span class="arithmatex">\(I(\mathbf{\theta})\)</span>. The Natural Gradient is defined as <span class="arithmatex">\(I(\mathbf{\theta})^{-1} \nabla L(\mathbf{\theta})\)</span>, which ensures that the optimizer always takes the steepest possible step when distance is measured in terms of <strong>statistical distinguishability</strong> rather than arbitrary Euclidean units.</p>
+<p>Adaptive methods approximate this principle. They aim to take steps that are <strong>isotropic</strong> in the transformed geometry defined by the data's historical variations. The optimizer is thereby taking the most efficient path along the underlying manifold of learned solutions.</p>
+<hr />
+<h2 id="67-stability-convergence-and-energy-view"><strong>6.7 Stability, Convergence, and Energy View</strong></h2>
+<p>The introduction of <strong>Momentum</strong> (inertia) and <strong>Adaptive Scaling</strong> (dynamic friction) transforms our optimization process from the simple, first-order, overdamped dynamics of basic Gradient Descent (Chapter 5) into a complex, second-order, underdamped system. This physical shift provides powerful guarantees about <strong>stability</strong> and <strong>convergence</strong>, which can be best understood by defining a total energy function, or <strong>Hamiltonian</strong>, for the optimization.</p>
+<hr />
+<h3 id="defining-the-effective-hamiltonian"><strong>Defining the Effective Hamiltonian</strong></h3>
+<p>In classical mechanics, the state of a system is defined by its position <span class="arithmatex">\(\mathbf{\theta}\)</span> and its momentum <span class="arithmatex">\(\mathbf{p} = m\mathbf{v}\)</span>, where <span class="arithmatex">\(\mathbf{v}\)</span> is velocity. The total energy, or <strong>Hamiltonian (<span class="arithmatex">\(\mathcal{H}\)</span>)</strong>, is the sum of the potential energy (our loss, <span class="arithmatex">\(L(\mathbf{\theta})\)</span>) and the kinetic energy (related to the particle's motion):</p>
+<div class="arithmatex">\[
+\mathcal{H}(\mathbf{\theta}, \mathbf{p}) = L(\mathbf{\theta}) + \frac{1}{2m}|\mathbf{p}|^2
+\]</div>
+<p>Where <span class="arithmatex">\(m\)</span> is the effective mass of the optimizer's parameter vector.</p>
+<ul>
+<li><span class="arithmatex">\(L(\mathbf{\theta})\)</span> is the <strong>Potential Energy</strong>. It pulls the system toward minima.</li>
+<li><span class="arithmatex">\(\frac{1}{2m}|\mathbf{p}|^2\)</span> is the <strong>Kinetic Energy</strong>. It is introduced via momentum and allows the system to escape local traps and coast across flat regions.</li>
+</ul>
+<p>The parameters <span class="arithmatex">\(\mathbf{\theta}\)</span> and velocity <span class="arithmatex">\(\mathbf{v}\)</span> (or momentum <span class="arithmatex">\(\mathbf{p}\)</span>) now form the <strong>phase space</strong> of our optimization dynamical system.</p>
+<hr />
+<h3 id="dissipation-and-monotonic-convergence"><strong>Dissipation and Monotonic Convergence</strong></h3>
+<p>If this were an idealized physical system, <span class="arithmatex">\(\mathcal{H}\)</span> would be conserved. However, optimization, like any physical relaxation, requires energy to be <em>dissipated</em>. The Momentum term introduces a <strong>damping force</strong> (friction, <span class="arithmatex">\(\gamma\)</span>) proportional to velocity.</p>
+<p>The time derivative of the total energy <span class="arithmatex">\(\mathcal{H}\)</span> for a damped system shows that the energy is constantly being dissipated:</p>
+<div class="arithmatex">\[
+\frac{d\mathcal{H}}{dt} = -\gamma |\mathbf{v}|^2 \le 0
+\]</div>
+<p>This fundamental result has two key implications for convergence:
+* <strong>Stability:</strong> Since <span class="arithmatex">\(d\mathcal{H}/dt\)</span> is always non-positive, the total energy of the system is guaranteed to decrease (or stay constant) over time. This ensures the optimization is stable and does not diverge due to the added inertia, provided the damping (friction, <span class="arithmatex">\(\gamma\)</span>) is appropriately balanced.
+* <strong>Convergence:</strong> The dissipation ensures the system will eventually stop moving (<span class="arithmatex">\(\mathbf{v} \to 0\)</span>) and settle at a <strong>fixed point</strong> where the potential energy <span class="arithmatex">\(L(\mathbf{\theta})\)</span> is at a minimum.</p>
+<hr />
+<h3 id="the-damped-oscillator-picture"><strong>The Damped Oscillator Picture</strong></h3>
+<p>Momentum methods act as <strong>damped oscillators</strong> in the rugged potential <span class="arithmatex">\(L(\mathbf{\theta})\)</span>.</p>
+<ul>
+<li>The system is given a \"kick\" by the gradient (force).</li>
+<li>It then oscillates toward the minimum due to its inertia (momentum).</li>
+<li>The oscillation is controlled and gradually reduced by the damping (friction coefficient <span class="arithmatex">\(\gamma\)</span>).</li>
+</ul>
+<p>A well-tuned Momentum optimizer (high <span class="arithmatex">\(\beta\)</span> for inertia, moderate <span class="arithmatex">\(\eta\)</span> for force) operates in the <strong>critically damped</strong> or <strong>underdamped</strong> regime. This is the ideal state where the system is guaranteed to converge to the low-energy fixed point (the minimum) faster than the fully overdamped approach of pure Gradient Descent, which lacks the energy to overcome plateaus.</p>
+<p>By embracing this physical analogy of energy, momentum, and dissipation, we treat modern optimization as a robust, dynamical system converging to <strong>attractors</strong> (basins of minimal loss) in its high-dimensional phase space.</p>
+<hr />
+<h2 id="68-comparing-methods-on-a-ravine-function"><strong>6.8 Comparing Methods on a Ravine Function</strong></h2>
+<p>The concepts of inertia (Momentum) and adaptive scaling (Adam/RMSProp) are best understood by visualizing their behavior on a challenging, anisotropic landscape. The "ravine" or "valley" function serves as the canonical stress test for any optimization algorithm.</p>
+<hr />
+<h3 id="the-ravine-test-function"><strong>The Ravine Test Function</strong></h3>
+<p>We use a simple, two-dimensional quadratic loss function that illustrates <strong>ill-conditioned curvature</strong>.</p>
+<div class="arithmatex">\[
+L(\theta_1, \theta_2) = 0.5\theta_1^2 + 5\theta_2^2
+\]</div>
+<p>The loss surface defined by <span class="arithmatex">\(L\)</span> exhibits extreme <strong>anisotropy</strong>:
+* <strong><span class="arithmatex">\(\theta_1\)</span> Direction (Sloppy/Flat):</strong> The quadratic coefficient is <span class="arithmatex">\(0.5\)</span>. Movement along this axis is slow, corresponding to a small eigenvalue of the Hessian.
+* <strong><span class="arithmatex">\(\theta_2\)</span> Direction (Stiff/Steep):</strong> The quadratic coefficient is <span class="arithmatex">\(5\)</span>. Movement along this axis is rapid and highly sensitive, corresponding to a large eigenvalue.</p>
+<p>The contour lines of this function are narrow, elongated ellipses, with the minimum at <span class="arithmatex">\((0, 0)\)</span>. The optimization challenge is to travel quickly along the flat <span class="arithmatex">\(\theta_1\)</span> axis without overshooting and diverging on the steep <span class="arithmatex">\(\theta_2\)</span> axis.</p>
+<hr />
+<h3 id="trajectory-comparison"><strong>Trajectory Comparison</strong></h3>
+<p>By running Gradient Descent (GD), Momentum, and Adam from the same starting point, we observe three distinct dynamical behaviors:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Algorithm</th>
+<th style="text-align: left;">Mechanism</th>
+<th style="text-align: left;">Observed Trajectory</th>
+<th style="text-align: left;">Physical Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Gradient Descent (GD)</strong></td>
+<td style="text-align: left;">Overdamped relaxation.</td>
+<td style="text-align: left;"><strong>Zigzagging.</strong> The trajectory oscillates violently across the steep <span class="arithmatex">\(\theta_2\)</span> axis while making agonizingly slow progress down the flat <span class="arithmatex">\(\theta_1\)</span> axis.</td>
+<td style="text-align: left;">The gradient force is dominated by the steep direction, causing continuous overshooting and correction.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Momentum</strong></td>
+<td style="text-align: left;">Adds inertia (memory) <span class="arithmatex">\(\beta\)</span>.</td>
+<td style="text-align: left;"><strong>Smoother Path.</strong> The initial zigzagging is dampened because the momentum term <span class="arithmatex">\(\beta \mathbf{v}_t\)</span> averages out the orthogonal oscillations. The optimizer accelerates along the valley floor, reaching the minimum faster than GD.</td>
+<td style="text-align: left;">Inertia allows the particle to ignore the short-term bumps (steep walls) and maintain direction along the main axis of descent.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Adam</strong></td>
+<td style="text-align: left;">Adaptive scaling and inertia.</td>
+<td style="text-align: left;"><strong>Direct Convergence.</strong> The trajectory is the most efficient, quickly aligning with the valley floor and converging with minimal oscillation.</td>
+<td style="text-align: left;">The optimizer automatically applies a small effective <span class="arithmatex">\(\eta\)</span> to the stiff <span class="arithmatex">\(\theta_2\)</span> direction and a large effective <span class="arithmatex">\(\eta\)</span> to the sloppy <span class="arithmatex">\(\theta_1\)</span> direction, transforming the ravine into a nearly isotropic bowl.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="the-role-of-geometry-and-dynamics"><strong>The Role of Geometry and Dynamics</strong></h3>
+<p>This comparison demonstrates that the difficulty of optimization lies in the <strong>ill-conditioned geometry</strong> of the loss surface, not the local minimum value.
+* <strong>Momentum</strong> improves performance by adjusting the <em>dynamics</em> (adding <span class="arithmatex">\(\mathbf{v}\)</span> to dampen motion).
+* <strong>Adam</strong> improves performance by implicitly transforming the <em>geometry</em> (scaling the metric of the space).</p>
+<p>Both approaches vastly outperform simple GD, confirming that modern optimization requires a model of motion richer than simple proportional friction.</p>
+<details class="question">
+<summary>Why Does Anisotropy Cause Zigzagging?</summary>
+<p>In a ravine landscape, the gradient <span class="arithmatex">\(\nabla L\)</span> points perpendicular to the contour lines. For an elliptical ravine aligned with coordinate axes, the gradient has a large component in the steep <span class="arithmatex">\(\theta_2\)</span> direction and a small component in the flat <span class="arithmatex">\(\theta_1\)</span> direction. Since GD uses <span class="arithmatex">\(\mathbf{\theta}_{t+1} = \mathbf{\theta}_t - \eta \nabla L\)</span>, it takes large steps perpendicular to the valley (overshooting across the steep walls) and tiny steps along the valley floor (slow progress toward minimum). The result is a zigzag path that wastes most updates correcting perpendicular overshoot rather than advancing toward the optimum.</p>
+</details>
+<hr />
+<h2 id="69-code-demo-comparing-gd-momentum-and-adam"><strong>6.9 Code Demo — Comparing GD, Momentum, and Adam</strong></h2>
+<p>This demonstration provides a practical implementation of the optimization methods discussed, visually contrasting their trajectories on the <strong>ravine test function</strong> <span class="arithmatex">\(L(\theta_1, \theta_2) = 0.5\theta_1^2 + 5\theta_2^2\)</span> (Section 6.8). This comparison vividly shows how inertia (Momentum) and adaptive scaling (Adam) overcome the slow, zigzagging behavior of pure Gradient Descent (GD).</p>
+<p>The setup assumes a constant learning rate <span class="arithmatex">\(\eta\)</span> is used by all three methods for a fair, albeit challenging, comparison on this ill-conditioned surface.</p>
+<hr />
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># --- 1. Define Loss Gradient (Ravine Function) ---</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1"># L(x, y) = 0.5*x^2 + 5*y^2</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1"># Gradient is: [dL/dx, dL/dy] = [x, 10*y]</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="k">def</span><span class="w"> </span><span class="nf">grad</span><span class="p">(</span><span class="n">theta</span><span class="p">):</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="c1"># theta is a 2D vector [x, y]</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">theta</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="mi">10</span><span class="o">*</span><span class="n">y</span><span class="p">])</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="c1"># --- 2. Helper Function to Run Optimization ---</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="k">def</span><span class="w"> </span><span class="nf">run_optimizer</span><span class="p">(</span><span class="n">update_func</span><span class="p">,</span> <span class="n">theta0</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">]),</span> <span class="n">steps</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Runs a given optimization update function for a set number of steps.&quot;&quot;&quot;</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="n">traj</span> <span class="o">=</span> <span class="p">[</span><span class="n">theta0</span><span class="o">.</span><span class="n">copy</span><span class="p">()]</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    <span class="n">theta</span> <span class="o">=</span> <span class="n">theta0</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="p">):</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>        <span class="c1"># The update function is responsible for calculating the next theta</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>        <span class="n">theta</span> <span class="o">=</span> <span class="n">update_func</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>        <span class="n">traj</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">theta</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">traj</span><span class="p">)</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="c1"># --- 3. Optimization Algorithms ---</span>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="n">eta</span> <span class="o">=</span> <span class="mf">0.05</span> <span class="c1"># Learning rate, compromised by the stiff direction (y/theta_2)</span>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="c1"># 3.1. Gradient Descent (GD)</span>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="k">def</span><span class="w"> </span><span class="nf">gd_update</span><span class="p">(</span><span class="n">theta</span><span class="p">):</span>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Standard Gradient Descent: theta_t+1 = theta_t - eta * grad(theta_t)&quot;&quot;&quot;</span>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>    <span class="k">return</span> <span class="n">theta</span> <span class="o">-</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">grad</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="c1"># 3.2. Momentum</span>
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a><span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># Global state: velocity vector</span>
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="n">beta</span> <span class="o">=</span> <span class="mf">0.9</span>      <span class="c1"># Momentum coefficient (inertia)</span>
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="k">def</span><span class="w"> </span><span class="nf">momentum_update</span><span class="p">(</span><span class="n">theta</span><span class="p">):</span>
+</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Momentum: v_t+1 = beta*v_t - eta*grad, theta_t+1 = theta_t + v_t+1&quot;&quot;&quot;</span>
+</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>    <span class="c1"># NOTE: The global &#39;v&#39; must be updated within the function&#39;s closure context</span>
+</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>    <span class="k">global</span> <span class="n">v</span>
+</span><span id="__span-0-39"><a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>    <span class="n">v</span> <span class="o">=</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">v</span> <span class="o">-</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">grad</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+</span><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>    <span class="k">return</span> <span class="n">theta</span> <span class="o">+</span> <span class="n">v</span>
+</span><span id="__span-0-41"><a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>
+</span><span id="__span-0-42"><a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a><span class="c1"># 3.3. Adam (Simplified)</span>
+</span><span id="__span-0-43"><a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a><span class="n">m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># First moment estimate (momentum)</span>
+</span><span id="__span-0-44"><a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a><span class="n">v2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># Second moment estimate (squared gradient history)</span>
+</span><span id="__span-0-45"><a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a><span class="n">b1</span><span class="p">,</span> <span class="n">b2</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.999</span>
+</span><span id="__span-0-46"><a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a><span class="n">eps</span> <span class="o">=</span> <span class="mf">1e-8</span>
+</span><span id="__span-0-47"><a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a><span class="c1"># Use a mutable list to track time step t for bias correction (t is passed as [1] initially)</span>
+</span><span id="__span-0-48"><a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a><span class="k">def</span><span class="w"> </span><span class="nf">adam_update</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">t_counter</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+</span><span id="__span-0-49"><a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Adam: Combines momentum (m) and adaptive scaling (v2) with bias correction.&quot;&quot;&quot;</span>
+</span><span id="__span-0-50"><a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a>    <span class="k">global</span> <span class="n">m</span><span class="p">,</span> <span class="n">v2</span>
+</span><span id="__span-0-51"><a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a>    <span class="n">g</span> <span class="o">=</span> <span class="n">grad</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+</span><span id="__span-0-52"><a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a>    <span class="n">t</span> <span class="o">=</span> <span class="n">t_counter</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># Current time step</span>
+</span><span id="__span-0-53"><a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a>
+</span><span id="__span-0-54"><a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a>    <span class="c1"># 1. Update biased moment estimates</span>
+</span><span id="__span-0-55"><a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a>    <span class="n">m</span> <span class="o">=</span> <span class="n">b1</span> <span class="o">*</span> <span class="n">m</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">b1</span><span class="p">)</span><span class="o">*</span><span class="n">g</span>
+</span><span id="__span-0-56"><a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a>    <span class="n">v2</span> <span class="o">=</span> <span class="n">b2</span> <span class="o">*</span> <span class="n">v2</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">b2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">g</span><span class="o">*</span><span class="n">g</span><span class="p">)</span>
+</span><span id="__span-0-57"><a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a>
+</span><span id="__span-0-58"><a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a>    <span class="c1"># 2. Bias correction (required especially early on)</span>
+</span><span id="__span-0-59"><a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a>    <span class="n">m_hat</span> <span class="o">=</span> <span class="n">m</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">b1</span><span class="o">**</span><span class="n">t</span><span class="p">)</span>
+</span><span id="__span-0-60"><a id="__codelineno-0-60" name="__codelineno-0-60" href="#__codelineno-0-60"></a>    <span class="n">v_hat</span> <span class="o">=</span> <span class="n">v2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">b2</span><span class="o">**</span><span class="n">t</span><span class="p">)</span>
+</span><span id="__span-0-61"><a id="__codelineno-0-61" name="__codelineno-0-61" href="#__codelineno-0-61"></a>
+</span><span id="__span-0-62"><a id="__codelineno-0-62" name="__codelineno-0-62" href="#__codelineno-0-62"></a>    <span class="c1"># 3. Final adaptive update</span>
+</span><span id="__span-0-63"><a id="__codelineno-0-63" name="__codelineno-0-63" href="#__codelineno-0-63"></a>    <span class="n">theta</span> <span class="o">-=</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">m_hat</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">v_hat</span><span class="p">)</span><span class="o">+</span><span class="n">eps</span><span class="p">)</span>
+</span><span id="__span-0-64"><a id="__codelineno-0-64" name="__codelineno-0-64" href="#__codelineno-0-64"></a>    <span class="n">t_counter</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span> <span class="c1"># Increment time step</span>
+</span><span id="__span-0-65"><a id="__codelineno-0-65" name="__codelineno-0-65" href="#__codelineno-0-65"></a>    <span class="k">return</span> <span class="n">theta</span>
+</span><span id="__span-0-66"><a id="__codelineno-0-66" name="__codelineno-0-66" href="#__codelineno-0-66"></a>
+</span><span id="__span-0-67"><a id="__codelineno-0-67" name="__codelineno-0-67" href="#__codelineno-0-67"></a><span class="c1"># --- 4. Run Trajectories ---</span>
+</span><span id="__span-0-68"><a id="__codelineno-0-68" name="__codelineno-0-68" href="#__codelineno-0-68"></a><span class="c1"># Reset global state variables before each run</span>
+</span><span id="__span-0-69"><a id="__codelineno-0-69" name="__codelineno-0-69" href="#__codelineno-0-69"></a><span class="n">traj_gd</span> <span class="o">=</span> <span class="n">run_optimizer</span><span class="p">(</span><span class="n">gd_update</span><span class="p">)</span>
+</span><span id="__span-0-70"><a id="__codelineno-0-70" name="__codelineno-0-70" href="#__codelineno-0-70"></a><span class="n">v</span><span class="p">[:]</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># Reset momentum velocity state</span>
+</span><span id="__span-0-71"><a id="__codelineno-0-71" name="__codelineno-0-71" href="#__codelineno-0-71"></a><span class="n">traj_m</span> <span class="o">=</span> <span class="n">run_optimizer</span><span class="p">(</span><span class="n">momentum_update</span><span class="p">)</span>
+</span><span id="__span-0-72"><a id="__codelineno-0-72" name="__codelineno-0-72" href="#__codelineno-0-72"></a><span class="n">m</span><span class="p">[:]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">v2</span><span class="p">[:]</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># Reset Adam moment states</span>
+</span><span id="__span-0-73"><a id="__codelineno-0-73" name="__codelineno-0-73" href="#__codelineno-0-73"></a><span class="n">traj_a</span> <span class="o">=</span> <span class="n">run_optimizer</span><span class="p">(</span><span class="n">adam_update</span><span class="p">)</span>
+</span><span id="__span-0-74"><a id="__codelineno-0-74" name="__codelineno-0-74" href="#__codelineno-0-74"></a>
+</span><span id="__span-0-75"><a id="__codelineno-0-75" name="__codelineno-0-75" href="#__codelineno-0-75"></a><span class="c1"># --- 5. Visualization ---</span>
+</span><span id="__span-0-76"><a id="__codelineno-0-76" name="__codelineno-0-76" href="#__codelineno-0-76"></a><span class="c1"># Plotting the loss contours</span>
+</span><span id="__span-0-77"><a id="__codelineno-0-77" name="__codelineno-0-77" href="#__codelineno-0-77"></a><span class="n">t1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+</span><span id="__span-0-78"><a id="__codelineno-0-78" name="__codelineno-0-78" href="#__codelineno-0-78"></a><span class="n">t2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+</span><span id="__span-0-79"><a id="__codelineno-0-79" name="__codelineno-0-79" href="#__codelineno-0-79"></a><span class="n">T1</span><span class="p">,</span> <span class="n">T2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">)</span>
+</span><span id="__span-0-80"><a id="__codelineno-0-80" name="__codelineno-0-80" href="#__codelineno-0-80"></a><span class="n">L_loss</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">T1</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">T2</span><span class="o">**</span><span class="mi">2</span>
+</span><span id="__span-0-81"><a id="__codelineno-0-81" name="__codelineno-0-81" href="#__codelineno-0-81"></a>
+</span><span id="__span-0-82"><a id="__codelineno-0-82" name="__codelineno-0-82" href="#__codelineno-0-82"></a><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+</span><span id="__span-0-83"><a id="__codelineno-0-83" name="__codelineno-0-83" href="#__codelineno-0-83"></a><span class="n">CS</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">T1</span><span class="p">,</span> <span class="n">T2</span><span class="p">,</span> <span class="n">L_loss</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;magma&#39;</span><span class="p">)</span>
+</span><span id="__span-0-84"><a id="__codelineno-0-84" name="__codelineno-0-84" href="#__codelineno-0-84"></a><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">traj_gd</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">traj_gd</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;-o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;GD (Zigzagging)&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;royalblue&#39;</span><span class="p">)</span>
+</span><span id="__span-0-85"><a id="__codelineno-0-85" name="__codelineno-0-85" href="#__codelineno-0-85"></a><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">traj_m</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">traj_m</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;-o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Momentum (Coasting)&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;darkorange&#39;</span><span class="p">)</span>
+</span><span id="__span-0-86"><a id="__codelineno-0-86" name="__codelineno-0-86" href="#__codelineno-0-86"></a><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">traj_a</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">traj_a</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;-o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Adam (Adaptive)&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;mediumseagreen&#39;</span><span class="p">)</span>
+</span><span id="__span-0-87"><a id="__codelineno-0-87" name="__codelineno-0-87" href="#__codelineno-0-87"></a>
+</span><span id="__span-0-88"><a id="__codelineno-0-88" name="__codelineno-0-88" href="#__codelineno-0-88"></a><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gold&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Minimum&#39;</span><span class="p">)</span>
+</span><span id="__span-0-89"><a id="__codelineno-0-89" name="__codelineno-0-89" href="#__codelineno-0-89"></a><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">traj_gd</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">traj_gd</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Start&#39;</span><span class="p">)</span>
+</span><span id="__span-0-90"><a id="__codelineno-0-90" name="__codelineno-0-90" href="#__codelineno-0-90"></a>
+</span><span id="__span-0-91"><a id="__codelineno-0-91" name="__codelineno-0-91" href="#__codelineno-0-91"></a><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Optimization Trajectories on a Ravine Function&#39;</span><span class="p">)</span>
+</span><span id="__span-0-92"><a id="__codelineno-0-92" name="__codelineno-0-92" href="#__codelineno-0-92"></a><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Parameter $\theta_1$ (Sloppy/Flat Direction)&#39;</span><span class="p">)</span>
+</span><span id="__span-0-93"><a id="__codelineno-0-93" name="__codelineno-0-93" href="#__codelineno-0-93"></a><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Parameter $\theta_2$ (Stiff/Steep Direction)&#39;</span><span class="p">)</span>
+</span><span id="__span-0-94"><a id="__codelineno-0-94" name="__codelineno-0-94" href="#__codelineno-0-94"></a><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</span><span id="__span-0-95"><a id="__codelineno-0-95" name="__codelineno-0-95" href="#__codelineno-0-95"></a><span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+</span><span id="__span-0-96"><a id="__codelineno-0-96" name="__codelineno-0-96" href="#__codelineno-0-96"></a><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+</span><span id="__span-0-97"><a id="__codelineno-0-97" name="__codelineno-0-97" href="#__codelineno-0-97"></a><span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+</span><span id="__span-0-98"><a id="__codelineno-0-98" name="__codelineno-0-98" href="#__codelineno-0-98"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</span></code></pre></div>
+<hr />
+<p><strong>Interpretation</strong></p>
+<p>The resulting visualization dramatically illustrates the effect of the added dynamics:</p>
+<ul>
+<li><strong>GD (Blue):</strong> The path is marked by high-amplitude <strong>oscillations (zigzagging)</strong> perpendicular to the optimal path. The step size <span class="arithmatex">\(\eta=0.05\)</span> is too large for the stiff <span class="arithmatex">\(\theta_2\)</span> direction, causing it to overshoot the optimal line repeatedly. Convergence is agonizingly slow.</li>
+<li><strong>Momentum (Orange):</strong> The trajectory is significantly <strong>smoother and faster</strong>. The inertia (<span class="arithmatex">\(\beta=0.9\)</span>) dampens the perpendicular oscillations by averaging them out, allowing the optimizer to accelerate effectively along the flat valley floor (the <span class="arithmatex">\(\theta_1\)</span> direction).</li>
+<li><strong>Adam (Green):</strong> Adam is the <strong>most direct</strong> and fastest to converge. By estimating the high variance in <span class="arithmatex">\(\theta_2\)</span> and the low variance in <span class="arithmatex">\(\theta_1\)</span>, it automatically applies a large effective <span class="arithmatex">\(\eta\)</span> to <span class="arithmatex">\(\theta_1\)</span> and a small one to <span class="arithmatex">\(\theta_2\)</span>. This self-scaling transforms the effective geometry of the problem from an elliptical ravine into a nearly circular bowl, leading to rapid, direct descent.</li>
+</ul>
+<p>This demo confirms that the principles of <strong>inertia</strong> (Momentum) and <strong>adaptive scaling</strong> (Adam) are crucial for navigating the anisotropic and ill-conditioned geometries common to all large-scale loss functions.</p>
+<hr />
+<hr />
+<h2 id="610-practical-notes-and-heuristics"><strong>6.10 Practical Notes and Heuristics</strong></h2>
+<p>The shift from simple gradient methods to advanced dynamics like Adam introduces powerful capabilities, but also requires new practical considerations for achieving robust and efficient training. These heuristics bridge the gap between theoretical dynamics and empirical results.</p>
+<hr />
+<h3 id="tuning-parameters-the-adam-defaults"><strong>Tuning Parameters: The Adam Defaults</strong></h3>
+<p>Adam's popularity stems partly from its robust default hyperparameter settings, which work well across a broad range of problems.</p>
+<ul>
+<li><strong>Learning Rate (<span class="arithmatex">\(\eta\)</span>):</strong> Typically starts around <span class="arithmatex">\(10^{-3}\)</span> or <span class="arithmatex">\(10^{-4}\)</span>. While adaptive methods reduce <span class="arithmatex">\(\eta\)</span>'s sensitivity, it remains the most critical parameter for overall convergence speed and final solution quality.</li>
+<li><strong>Momentum Decay (<span class="arithmatex">\(\beta_1\)</span>):</strong> Controls the exponential decay rate for the first moment (momentum term, <span class="arithmatex">\(m_t\)</span>). The default of <strong><span class="arithmatex">\(0.9\)</span></strong> is widely used, meaning 90% of the past momentum is retained at each step.</li>
+<li><strong>Squared Gradient Decay (<span class="arithmatex">\(\beta_2\)</span>):</strong> Controls the decay rate for the second moment (adaptive scaling term, <span class="arithmatex">\(v_t\)</span>). The default of <strong><span class="arithmatex">\(0.999\)</span></strong> is nearly universal, providing a very long memory for the local curvature estimate.</li>
+<li><strong>Epsilon (<span class="arithmatex">\(\epsilon\)</span>):</strong> A small constant added for numerical stability to prevent division by zero, typically <strong><span class="arithmatex">\(10^{-8}\)</span></strong>.</li>
+</ul>
+<hr />
+<h3 id="learning-rate-decay-schedules-annealing"><strong>Learning Rate Decay Schedules (Annealing)</strong></h3>
+<p>Despite using adaptive scaling, the learning rate <span class="arithmatex">\(\eta\)</span> should still be reduced over time—a process often called <strong>annealing</strong> (Section 5.7).</p>
+<ul>
+<li><strong>The Problem:</strong> The stochastic nature of SGD and Adam causes parameters to perpetually oscillate around the minimum (Section 5.8). This oscillation, or "jiggling," is beneficial early on for escaping local traps, but it prevents precise convergence.</li>
+<li><strong>The Solution:</strong> Gradually reducing <span class="arithmatex">\(\eta\)</span> <strong>"cools" the system</strong> (lowers the effective temperature, <span class="arithmatex">\(T_{\text{eff}}\)</span>). As the temperature drops, the stochastic fluctuations dampen, allowing the system to settle into the precise bottom of the basin.</li>
+<li><strong>Advanced Schedules:</strong> Modern schedules, like <strong>Cosine Annealing with Warm Restarts (SGDR)</strong>, cyclically vary the learning rate, allowing the optimizer to periodically "heat up" (large <span class="arithmatex">\(\eta\)</span>) to escape sharp minima before "cooling down" (small <span class="arithmatex">\(\eta\)</span>) to converge precisely in a new, potentially better basin.</li>
+</ul>
+<hr />
+<h3 id="empirical-insight-flat-minima-and-generalization"><strong>Empirical Insight: Flat Minima and Generalization</strong></h3>
+<p>A key empirical discovery connects the dynamics of optimization to a model's ability to <strong>generalize</strong> to new data (Section 4.4).</p>
+<ul>
+<li><strong>Flat Minima:</strong> A wide, flat basin in the loss landscape corresponds to a solution that is <strong>robust</strong> to small changes in parameters. Such solutions are less sensitive to noise in the training data and often generalize better.</li>
+<li><strong>Sharp Minima:</strong> A narrow, deep, <strong>spiky</strong> minimum often corresponds to <strong>overfitting</strong>. The model has perfectly memorized the training set but is highly sensitive to new data.</li>
+</ul>
+<p>Empirical evidence suggests that optimization paths that employ <strong>high noise (small batch size)</strong> or <strong>momentum</strong> tend to preferentially settle into <strong>flatter basins</strong>. This confirms the power of the stochastic/thermal analogy: the noise, acting as temperature, helps the system find the <em>thermodynamically stable</em> (widest, lowest-free-energy) minimum, which correlates strongly with the best generalization performance.</p>
+<hr />
+<p>The practical implementation of these dynamic methods turns the training process into a sophisticated engineering task that constantly balances inertia, adaptive friction, and thermal noise to achieve the fastest and most robust convergence.</p>
+<hr />
+<h2 id="611-takeaways-bridge-to-chapter-7"><strong>6.11 Takeaways &amp; Bridge to Chapter 7</strong></h2>
+<p>This chapter completed the shift from the static map of the loss landscape (Chapter 4) to the rich, dynamic laws of motion that govern modern optimization, effectively transforming our learning process into a physics problem.</p>
+<hr />
+<h3 id="what-we-accomplished-in-chapter-6"><strong>What We Accomplished in Chapter 6</strong></h3>
+<p>We moved beyond the limitations of simple, overdamped gradient descent by integrating concepts from classical mechanics and adaptive control.</p>
+<ul>
+<li><strong>Momentum (Inertia):</strong> We introduced the concept of <strong>inertia</strong> into the optimizer's dynamics (Chapter 6.2). The resulting velocity vector <span class="arithmatex">\(\mathbf{v}_t\)</span> acts as memory, allowing the system to <strong>coast</strong> across flat plateaus and <strong>dampen oscillations</strong> in anisotropic ravines, leading to accelerated convergence.</li>
+<li><strong>Adaptive Scaling (Friction):</strong> Algorithms like RMSProp and Adam (Chapter 6.4, 6.5) introduced <strong>adaptive, per-parameter learning rates</strong>. This mechanism learns the local curvature from the history of squared gradients, acting as a <strong>dynamic friction</strong> that automatically rescales the loss landscape, making it appear isotropic and overcoming the high condition number (<span class="arithmatex">\(\kappa\)</span>) problem (Chapter 6.6).</li>
+<li><strong>Unified Dynamics:</strong> Optimizers like Adam synthesize inertia and adaptivity, behaving as a <strong>damped dynamical system</strong> whose total energy is continuously dissipated until convergence is reached (Chapter 6.7).</li>
+</ul>
+<p>$$
+\mathcal{H} = L + \frac{1}{2m}|\mathbf{p}|^2
+$$
+* <strong>Empirical Insight:</strong> We established that the resulting stochastic dynamics preferentially settle into <strong>flat minima</strong>, which are physically analogous to <strong>thermodynamically stable</strong> states and empirically correlate with better model <strong>generalization</strong> (Chapter 6.10).</p>
+<hr />
+<h3 id="bridge-to-chapter-7-when-gradients-fail"><strong>Bridge to Chapter 7: When Gradients Fail</strong></h3>
+<p>We have built sophisticated <strong>deterministic-stochastic</strong> optimizers, but their success still fundamentally relies on the <strong>gradient <span class="arithmatex">\(\nabla L\)</span></strong> being a meaningful guide. However, some landscapes break this reliance entirely:</p>
+<ol>
+<li><strong>Combinatorial Landscapes:</strong> In problems where parameters are discrete (<span class="arithmatex">\(\pm 1\)</span>, 0/1, integers, Chapter 8), the loss function is discontinuous. The gradient is zero or undefined everywhere, rendering gradient-based methods useless.</li>
+<li><strong>Rugged Glassy Landscapes:</strong> In ultra-complex systems (like a spin glass, Chapter 4.3), the landscape is so rugged that a deterministic path is quickly trapped in a local minimum, separated from the global optimum by high energy barriers. The noise of SGD is often insufficient to jump these large barriers.</li>
+</ol>
+<p>This difficulty motivates a strategic shift: instead of refining the <strong>deterministic</strong> components (momentum, adaptivity), we must weaponize the <strong>stochastic</strong> components.</p>
+<p>In <strong>Chapter 7: "Stochastic &amp; Heuristic Optimization,"</strong> we return to the most powerful exploration tool in physics: <strong>controlled randomness</strong>. We will explore heuristic methods, such as <strong>Simulated Annealing</strong>, that replace the continuous force of the gradient with temperature-dependent stochastic jumps. This physically-inspired approach allows us to escape deep local traps and explore the most rugged and complex landscapes, transforming the search problem into a thermodynamic annealing process.</p>
+<p>We have learned how to roll down a hill; now, we learn how to <strong>tunnel through mountains</strong>.</p>
+<h2 id="references"><strong>References</strong></h2>
+<p>[1] Sutskever, I., Martens, J., Dahl, G., &amp; Hinton, G. (2013). On the importance of initialization and momentum in deep learning. <em>ICML</em>, 1139–1147.</p>
+<p>[2] Nesterov, Y. (1983). A method for unconstrained convex minimization problem with the rate of convergence O(1/k^2). <em>Doklady AN USSR</em>, 269, 543–547.</p>
+<p>[3] Tieleman, T., &amp; Hinton, G. (2012). Lecture 6.5—RMSProp: Divide the gradient by a running average of its recent magnitude. <em>COURSERA: Neural Networks for Machine Learning</em>.</p>
+<p>[4] Kingma, D. P., &amp; Ba, J. (2015). Adam: A Method for Stochastic Optimization. <em>ICLR</em>.</p>
+<p>[5] Loshchilov, I., &amp; Hutter, F. (2017). SGDR: Stochastic Gradient Descent with Warm Restarts. <em>ICLR</em>.</p>
+<p>[6] Reddi, S. J., Kale, S., &amp; Kumar, S. (2018). On the Convergence of Adam and Beyond. <em>ICLR</em>.</p>
+<p>[7] Amari, S. (1998). Natural Gradient Works Efficiently in Learning. <em>Neural Computation</em>, 10(2), 251–276.</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../chapter-5/Chapter-5-Essay/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Chapter-5 Gradient Methods — The Workhorses">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Chapter-5 Gradient Methods — The Workhorses
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../chapter-7/Chapter-7-Essay/" class="md-footer__link md-footer__link--next" aria-label="Next: Chapter-7 Stochastic &amp; Heuristic Optimization">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Chapter-7 Stochastic & Heuristic Optimization
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://bigbookofcomputing.github.io" target="_blank" rel="noopener" title="bigbookofcomputing.github.io" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/bigbookofcomputing" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256c0 120 82.7 220.8 194.2 248.5V334.2h-52.8V256h52.8v-33.7c0-87.1 39.4-127.5 125-127.5 16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H287v175.9C413.8 494.8 512 386.9 512 256"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.youtube.com/@big-book-of-computing" target="_blank" rel="noopener" title="www.youtube.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M549.7 124.1c-6.2-23.7-24.8-42.3-48.3-48.6C458.9 64 288.1 64 288.1 64S117.3 64 74.7 75.5c-23.5 6.3-42 24.9-48.3 48.6C15 167 15 256.4 15 256.4s0 89.4 11.4 132.3c6.3 23.6 24.8 41.5 48.3 47.8C117.3 448 288.1 448 288.1 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zM232.2 337.6V175.2l142.7 81.2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+  
+
+
+<h4>Cookie consent</h4>
+<p>We use cookies to recognize your repeated visits and preferences, as well as to measure the effectiveness of our documentation and whether users find what they're searching for. With your consent, you're helping us to make our documentation better.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="github" checked>
+      <span class="task-list-indicator"></span>
+      GitHub
+    </label>
+  </li>
+
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../static/mathjax-config.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,6255 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A comprehensive guide to the foundations of optimization algorithms and techniques">
+      
+      
+        <meta name="author" content="Big Book of Computing">
+      
+      
+        <link rel="canonical" href="https://bigbookofcomputing.github.io/chapters/chapter-13/Chapter-13-Essay/">
+      
+      
+        <link rel="prev" href="../../chapter-12/Chapter-12-Essay/">
+      
+      
+        <link rel="next" href="../../chapter-14/Chapter-14-Essay/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Chapter-13 Hierarchical Representation Learning - Big Book of Computing | Optimization</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+      <link rel="stylesheet" href="../../../static/styles.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-ECS7B3X8JM"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-ECS7B3X8JM",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-ECS7B3X8JM",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-13-hierarchical-representation-learning" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Big Book of Computing | Optimization" class="md-header__button md-logo" aria-label="Big Book of Computing | Optimization" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Big Book of Computing | Optimization
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter-13 Hierarchical Representation Learning
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1M8 13h8v-2H8zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4a5 5 0 0 0 5-5 5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5M7 15a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/bigbookofcomputing/optimization" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contents/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../introduction/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Introduction
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../chapter-1/Chapter-1-Essay/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapter-1/Chapter-1-WorkBook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  WorkBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapter-1/Chapter-1-CodeBook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  CodeBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapter-1/Chapter-1-Quizes/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Quizes
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapter-1/Chapter-1-Interviews/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Interviews
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Big Book of Computing | Optimization" class="md-nav__button md-logo" aria-label="Big Book of Computing | Optimization" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    Big Book of Computing | Optimization
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/bigbookofcomputing/optimization" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapters
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Chapters
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-outline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Outline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#131-from-perceptrons-to-hierarchies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 From Perceptrons to Hierarchies
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.1 From Perceptrons to Hierarchies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recap-the-unit-of-computation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recap: The Unit of Computation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#core-principle-composition-yields-emergence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Principle: Composition Yields Emergence
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analogy-renormalization-in-physics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analogy: Renormalization in Physics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#132-the-geometry-of-deep-representations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.2 The Geometry of Deep Representations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.2 The Geometry of Deep Representations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#layered-transformations-change-of-coordinates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layered Transformations: Change of Coordinates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-manifold-hypothesis-revisited" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Manifold Hypothesis Revisited
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deep-networks-learn-to-unfold-the-manifold" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deep Networks Learn to Unfold the Manifold
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analogy-flattening-a-curved-potential-surface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analogy: Flattening a Curved Potential Surface
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#133-convolutional-neural-networks-cnns-spatial-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.3 Convolutional Neural Networks (CNNs) — Spatial Structure
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.3 Convolutional Neural Networks (CNNs) — Spatial Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#motivation-locality-and-invariance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Motivation: Locality and Invariance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-convolution-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Convolution Layer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-features-and-inductive-biases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Features and Inductive Biases
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical-analogy-real-space-renormalization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Analogy: Real-Space Renormalization
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#134-hierarchical-feature-maps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.4 Hierarchical Feature Maps
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.4 Hierarchical Feature Maps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#layered-abstraction-in-cnns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layered Abstraction in CNNs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#visualization-and-interpretation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visualization and Interpretation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical-analogy-hierarchy-of-excitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Analogy: Hierarchy of Excitations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#135-temporal-hierarchies-recurrent-neural-networks-rnns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.5 Temporal Hierarchies — Recurrent Neural Networks (RNNs)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.5 Temporal Hierarchies — Recurrent Neural Networks (RNNs)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sequential-data-and-recurrence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sequential Data and Recurrence
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interpretation-memory-and-dynamical-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpretation: Memory and Dynamical Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practical-variants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Practical Variants
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical-analogy-phase-space-trajectories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Analogy: Phase Space Trajectories
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#136-autoencoders-learning-internal-coordinates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.6 Autoencoders — Learning Internal Coordinates
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.6 Autoencoders — Learning Internal Coordinates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#architecture-the-information-bottleneck" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture: The Information Bottleneck
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#objective-and-goal-minimizing-reconstruction-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objective and Goal: Minimizing Reconstruction Error
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analogy-renormalization-group-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analogy: Renormalization Group Flow
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#137-variational-autoencoders-vaes-probabilistic-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.7 Variational Autoencoders (VAEs) — Probabilistic Extension
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.7 Variational Autoencoders (VAEs) — Probabilistic Extension">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#motivation-adding-uncertainty-to-the-latent-space" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Motivation: Adding Uncertainty to the Latent Space
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generative-model-and-objective" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generative Model and Objective
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interpretation-energy-and-entropy-trade-off" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpretation: Energy and Entropy Trade-off
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bridge-to-generative-modeling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bridge to Generative Modeling
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#138-spatialtemporal-hybrids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.8 Spatial–Temporal Hybrids
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.8 Spatial–Temporal Hybrids">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#combining-architectures-for-spatiotemporal-dynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Combining Architectures for Spatiotemporal Dynamics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transformers-beyond-local-coupling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transformers: Beyond Local Coupling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical-analogy-coupled-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Analogy: Coupled Fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#139-regularization-and-generalization-in-deep-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.9 Regularization and Generalization in Deep Networks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.9 Regularization and Generalization in Deep Networks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constraints-on-complexity-managing-the-energy-landscape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constraints on Complexity: Managing the Energy Landscape
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stochastic-regularization-entropy-injection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stochastic Regularization: Entropy Injection
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1310-visualization-and-interpretability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.10 Visualization and Interpretability
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.10 Visualization and Interpretability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#probing-the-internal-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probing the Internal State
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dimensionality-projection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dimensionality Projection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical-interpretation-the-emergent-phase-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Interpretation: The Emergent Phase Diagram
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1311-worked-example-hierarchical-feature-extraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.11 Worked Example — Hierarchical Feature Extraction
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.11 Worked Example — Hierarchical Feature Extraction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-system-handwritten-digits-and-cnn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The System: Handwritten Digits and CNN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#demonstration-probing-the-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demonstration: Probing the Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analogy-organizing-physical-complexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analogy: Organizing Physical Complexity 🌌
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1312-code-demo-simple-cnn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.12 Code Demo — Simple CNN
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.12 Code Demo — Simple CNN">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interpretation-of-the-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpretation of the Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1313-hierarchical-representations-beyond-vision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.13 Hierarchical Representations Beyond Vision
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.13 Hierarchical Representations Beyond Vision">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unifying-principle-hierarchical-abstraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unifying Principle: Hierarchical Abstraction
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1314-deep-networks-as-physical-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.14 Deep Networks as Physical Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.14 Deep Networks as Physical Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#viewpoint-layer-as-an-effective-energy-operator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Viewpoint: Layer as an Effective Energy Operator
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#information-flow-forces-and-dissipation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Information Flow: Forces and Dissipation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entropyenergy-duality-and-renormalization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entropy–Energy Duality and Renormalization
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1315-takeaways-bridge-to-chapter-14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.15 Takeaways &amp; Bridge to Chapter 14
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.15 Takeaways &amp; Bridge to Chapter 14">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-takeaways-from-chapter-13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways from Chapter 13
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bridge-to-chapter-14-from-representation-to-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bridge to Chapter 14: From Representation to Generation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-16/Chapter-16-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-17/Chapter-17-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-18/Chapter-18-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-19/Chapter-19-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WorkBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    WorkBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-13-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-16/Chapter-16-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-17/Chapter-17-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-18/Chapter-18-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-19/Chapter-19-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CodeBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CodeBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-13-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-16/Chapter-16-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-17/Chapter-17-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-18/Chapter-18-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-19/Chapter-19-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quizes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Quizes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-13-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-16/Chapter-16-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-17/Chapter-17-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-18/Chapter-18-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-19/Chapter-19-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Interviews
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Interviews
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-13-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-16/Chapter-16-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-17/Chapter-17-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-18/Chapter-18-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-19/Chapter-19-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-outline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Outline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#131-from-perceptrons-to-hierarchies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 From Perceptrons to Hierarchies
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.1 From Perceptrons to Hierarchies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recap-the-unit-of-computation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recap: The Unit of Computation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#core-principle-composition-yields-emergence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Principle: Composition Yields Emergence
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analogy-renormalization-in-physics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analogy: Renormalization in Physics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#132-the-geometry-of-deep-representations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.2 The Geometry of Deep Representations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.2 The Geometry of Deep Representations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#layered-transformations-change-of-coordinates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layered Transformations: Change of Coordinates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-manifold-hypothesis-revisited" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Manifold Hypothesis Revisited
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deep-networks-learn-to-unfold-the-manifold" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deep Networks Learn to Unfold the Manifold
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analogy-flattening-a-curved-potential-surface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analogy: Flattening a Curved Potential Surface
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#133-convolutional-neural-networks-cnns-spatial-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.3 Convolutional Neural Networks (CNNs) — Spatial Structure
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.3 Convolutional Neural Networks (CNNs) — Spatial Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#motivation-locality-and-invariance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Motivation: Locality and Invariance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-convolution-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Convolution Layer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-features-and-inductive-biases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Features and Inductive Biases
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical-analogy-real-space-renormalization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Analogy: Real-Space Renormalization
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#134-hierarchical-feature-maps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.4 Hierarchical Feature Maps
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.4 Hierarchical Feature Maps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#layered-abstraction-in-cnns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layered Abstraction in CNNs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#visualization-and-interpretation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visualization and Interpretation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical-analogy-hierarchy-of-excitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Analogy: Hierarchy of Excitations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#135-temporal-hierarchies-recurrent-neural-networks-rnns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.5 Temporal Hierarchies — Recurrent Neural Networks (RNNs)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.5 Temporal Hierarchies — Recurrent Neural Networks (RNNs)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sequential-data-and-recurrence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sequential Data and Recurrence
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interpretation-memory-and-dynamical-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpretation: Memory and Dynamical Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practical-variants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Practical Variants
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical-analogy-phase-space-trajectories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Analogy: Phase Space Trajectories
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#136-autoencoders-learning-internal-coordinates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.6 Autoencoders — Learning Internal Coordinates
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.6 Autoencoders — Learning Internal Coordinates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#architecture-the-information-bottleneck" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture: The Information Bottleneck
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#objective-and-goal-minimizing-reconstruction-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objective and Goal: Minimizing Reconstruction Error
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analogy-renormalization-group-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analogy: Renormalization Group Flow
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#137-variational-autoencoders-vaes-probabilistic-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.7 Variational Autoencoders (VAEs) — Probabilistic Extension
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.7 Variational Autoencoders (VAEs) — Probabilistic Extension">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#motivation-adding-uncertainty-to-the-latent-space" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Motivation: Adding Uncertainty to the Latent Space
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generative-model-and-objective" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generative Model and Objective
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interpretation-energy-and-entropy-trade-off" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpretation: Energy and Entropy Trade-off
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bridge-to-generative-modeling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bridge to Generative Modeling
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#138-spatialtemporal-hybrids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.8 Spatial–Temporal Hybrids
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.8 Spatial–Temporal Hybrids">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#combining-architectures-for-spatiotemporal-dynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Combining Architectures for Spatiotemporal Dynamics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transformers-beyond-local-coupling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transformers: Beyond Local Coupling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical-analogy-coupled-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Analogy: Coupled Fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#139-regularization-and-generalization-in-deep-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.9 Regularization and Generalization in Deep Networks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.9 Regularization and Generalization in Deep Networks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constraints-on-complexity-managing-the-energy-landscape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constraints on Complexity: Managing the Energy Landscape
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stochastic-regularization-entropy-injection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stochastic Regularization: Entropy Injection
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1310-visualization-and-interpretability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.10 Visualization and Interpretability
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.10 Visualization and Interpretability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#probing-the-internal-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probing the Internal State
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dimensionality-projection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dimensionality Projection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical-interpretation-the-emergent-phase-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Interpretation: The Emergent Phase Diagram
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1311-worked-example-hierarchical-feature-extraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.11 Worked Example — Hierarchical Feature Extraction
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.11 Worked Example — Hierarchical Feature Extraction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-system-handwritten-digits-and-cnn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The System: Handwritten Digits and CNN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#demonstration-probing-the-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demonstration: Probing the Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analogy-organizing-physical-complexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analogy: Organizing Physical Complexity 🌌
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1312-code-demo-simple-cnn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.12 Code Demo — Simple CNN
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.12 Code Demo — Simple CNN">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interpretation-of-the-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpretation of the Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1313-hierarchical-representations-beyond-vision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.13 Hierarchical Representations Beyond Vision
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.13 Hierarchical Representations Beyond Vision">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unifying-principle-hierarchical-abstraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unifying Principle: Hierarchical Abstraction
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1314-deep-networks-as-physical-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.14 Deep Networks as Physical Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.14 Deep Networks as Physical Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#viewpoint-layer-as-an-effective-energy-operator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Viewpoint: Layer as an Effective Energy Operator
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#information-flow-forces-and-dissipation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Information Flow: Forces and Dissipation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entropyenergy-duality-and-renormalization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entropy–Energy Duality and Renormalization
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1315-takeaways-bridge-to-chapter-14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.15 Takeaways &amp; Bridge to Chapter 14
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.15 Takeaways &amp; Bridge to Chapter 14">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-takeaways-from-chapter-13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways from Chapter 13
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bridge-to-chapter-14-from-representation-to-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bridge to Chapter 14: From Representation to Generation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/bigbookofcomputing/optimization/edit/master/docs/chapters/chapter-13/Chapter-13-Essay.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/bigbookofcomputing/optimization/raw/master/docs/chapters/chapter-13/Chapter-13-Essay.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="chapter-13-hierarchical-representation-learning"><strong>Chapter 13: Hierarchical Representation Learning</strong></h1>
+<hr />
+<h2 id="introduction"><strong>Introduction</strong></h2>
+<p>In Chapter 12, we established the <strong>perceptron</strong> and <strong>multilayer perceptron (MLP)</strong> as the foundational units of neural computation, demonstrating how stacking nonlinear transformations enables universal function approximation through backpropagation-driven optimization. While the fully connected MLP proved powerful for general-purpose learning, it treats every input feature independently—a critical limitation when processing data with inherent <strong>geometric structure</strong> such as spatial locality in images or temporal dependencies in sequences. This chapter marks the transition from generic feedforward architectures to <strong>specialized hierarchical networks</strong> that embed domain-specific inductive biases directly into their design, enabling efficient learning on structured data by exploiting symmetries, invariances, and local correlations that mirror the organization of physical systems.</p>
+<p>At the heart of this chapter lies the principle of <strong>hierarchical abstraction</strong>: complex patterns emerge from the compositional layering of simple transformations, mirroring the Renormalization Group (RG) framework from statistical physics where successive coarse-graining steps distill microscopic fluctuations into macroscopic order parameters. We will explore <strong>Convolutional Neural Networks (CNNs)</strong>, which encode spatial locality and translation invariance through weight-sharing kernels that act as local field operators, progressively extracting features from edges to textures to semantic objects. <strong>Recurrent Neural Networks (RNNs)</strong> introduce temporal memory through feedback connections, modeling sequential data as trajectories through a learned phase space, with advanced variants (LSTMs, GRUs) using gating mechanisms to capture long-range dependencies. <strong>Autoencoders</strong> reframe unsupervised learning as information compression, discovering low-dimensional latent manifolds through encoder-decoder architectures that minimize reconstruction error, with <strong>Variational Autoencoders (VAEs)</strong> extending this framework probabilistically by optimizing the variational free energy (ELBO) to balance reconstruction accuracy against prior regularization.</p>
+<p>By the end of this chapter, you will understand how architectural design choices impose geometric priors that accelerate learning and enhance generalization. You will see CNNs as discrete implementations of local field theories (spatial renormalization), RNNs as dynamical systems evolving in information phase space, and autoencoders as learners of intrinsic coordinate systems on curved data manifolds. The physical analogies—coarse-graining, coupled fields, energy relaxation—will converge in the view of deep networks as <strong>artificial physical systems</strong> where layers act as effective energy operators, gradients as forces, and learning as stochastic relaxation toward low-energy attractors. Visualization techniques (filter plotting, saliency maps, t-SNE projections) will reveal how networks organize complexity hierarchically, discovering emergent order parameters that characterize macroscopic states. Chapter 14 will extend these discriminative architectures to <strong>generative modeling</strong>, shifting from learning conditional distributions <span class="arithmatex">\(P(y|\mathbf{x})\)</span> to sculpting the full energy landscape <span class="arithmatex">\(P(\mathbf{x})\)</span> itself, enabling networks to synthesize new samples and explicitly model the underlying probability distributions governing data.</p>
+<hr />
+<h2 id="chapter-outline"><strong>Chapter Outline</strong></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Sec.</strong></th>
+<th style="text-align: left;"><strong>Title</strong></th>
+<th style="text-align: left;"><strong>Core Ideas &amp; Examples</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>13.1</strong></td>
+<td style="text-align: left;">From Perceptrons to Hierarchies</td>
+<td style="text-align: left;">Composition of nonlinear mappings yields emergent features; layered transformations <span class="arithmatex">\(\mathbf{h}^{(l+1)} = \phi(W^{(l)}\mathbf{h}^{(l)} + \mathbf{b}^{(l)})\)</span>; Renormalization Group (RG) analogy (coarse-graining, effective variables, order parameters); depth as hierarchical theory building</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>13.2</strong></td>
+<td style="text-align: left;">The Geometry of Deep Representations</td>
+<td style="text-align: left;">Each layer as change of coordinates (feature space transformations); Manifold Hypothesis (high-D data on low-D curved manifold); deep networks unfold/flatten manifolds for linear separability; analogy: flattening curved potential surfaces for easier optimization</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>13.3</strong></td>
+<td style="text-align: left;">Convolutional Neural Networks (CNNs) — Spatial Structure</td>
+<td style="text-align: left;">Motivation: local correlation + translation invariance; convolution layer <span class="arithmatex">\(h_{i,j}^{(l)} = \phi(\sum_{m,n} W_{m,n}^{(l)}x_{i+m,j+n}^{(l-1)} + b^{(l)})\)</span>; weight sharing (kernels), pooling (coarse-graining), receptive fields; real-space renormalization analogy</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>13.4</strong></td>
+<td style="text-align: left;">Hierarchical Feature Maps</td>
+<td style="text-align: left;">Layered abstraction: low layers (edges/textures) → middle layers (shapes/motifs) → high layers (semantic objects); filter/feature map visualization; Gabor-like early filters; physical analogy: hierarchy of excitations (microstates → order parameters)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>13.5</strong></td>
+<td style="text-align: left;">Temporal Hierarchies — Recurrent Neural Networks (RNNs)</td>
+<td style="text-align: left;">Sequential data and memory; recurrent update <span class="arithmatex">\(\mathbf{h}_t = \phi(W_h \mathbf{h}_{t-1} + W_x \mathbf{x}_t + \mathbf{b})\)</span>; RNN as dynamical system (phase space trajectories); LSTM/GRU variants (gating mechanisms for long-term dependencies); vanishing gradient problem</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>13.6</strong></td>
+<td style="text-align: left;">Autoencoders — Learning Internal Coordinates</td>
+<td style="text-align: left;">Encoder-decoder architecture (<span class="arithmatex">\(\mathbf{z} = f_\phi(\mathbf{x})\)</span>, <span class="arithmatex">\(\mathbf{x}' = g_\theta(\mathbf{z})\)</span>); information bottleneck (<span class="arithmatex">\(d \ll D\)</span>); reconstruction loss <span class="arithmatex">\(L = \|\mathbf{x} - g_\theta(f_\phi(\mathbf{x}))\|^2\)</span>; latent code as intrinsic coordinates; RG analogy (encoder=coarse-graining, decoder=reconstruction)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>13.7</strong></td>
+<td style="text-align: left;">Variational Autoencoders (VAEs) — Probabilistic Extension</td>
+<td style="text-align: left;">Generative model <span class="arithmatex">\(p(\mathbf{x},\mathbf{z}) = p(\mathbf{x}\|\mathbf{z})p(\mathbf{z})\)</span>; variational inference (approximate posterior <span class="arithmatex">\(q_\phi(\mathbf{z}\|\mathbf{x})\)</span>); ELBO <span class="arithmatex">\(\mathcal{L} = \mathbb{E}[\ln p_\theta(\mathbf{x}\|\mathbf{z})] - D_{\mathrm{KL}}[q\|\|p]\)</span>; energy-entropy tradeoff (reconstruction vs KL regularization); bridge to generative modeling</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>13.8</strong></td>
+<td style="text-align: left;">Spatial–Temporal Hybrids</td>
+<td style="text-align: left;">ConvRNNs (convolutional operations within recurrent loop); spatiotemporal dynamics (video prediction, physical simulations); Transformers (self-attention for global correlations); physical analogy: coupled fields evolving via PDEs (Navier-Stokes, Schrödinger)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>13.9</strong></td>
+<td style="text-align: left;">Regularization and Generalization in Deep Networks</td>
+<td style="text-align: left;">L2 weight decay (smooth energy surface, Gaussian prior); batch normalization (renormalization, stabilizes gradients); dropout (entropy injection, ensemble averaging, prevents co-adaptation); early stopping (thermal balance, prevents overfitting); bias-variance tradeoff</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>13.10</strong></td>
+<td style="text-align: left;">Visualization and Interpretability</td>
+<td style="text-align: left;">Activation visualization (filters show edges/textures, feature maps show detected patterns); saliency maps (gradient of output w.r.t. input, sensitivity); t-SNE/UMAP projections (manifold structure, cluster separation); latent space as phase diagram; emergent order parameters in deep layers</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>13.11</strong></td>
+<td style="text-align: left;">Worked Example — Hierarchical Feature Extraction</td>
+<td style="text-align: left;">MNIST dataset (handwritten digits); simple CNN (conv+pooling layers); probing internal states (plot learned filters in layer 1: edge detectors; visualize feature maps in middle layers: corners/loops); hierarchy: pixels → edges → motifs → digit identity; RG analogy in action</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>13.12</strong></td>
+<td style="text-align: left;">Code Demo — Simple CNN</td>
+<td style="text-align: left;">TensorFlow/Keras implementation; <code>Conv2D</code> (spatial locality, weight sharing, 3×3 kernels), <code>MaxPooling2D</code> (coarse-graining), <code>Flatten</code>, <code>Dense</code>; model structure demonstrates hierarchical abstraction (local rules + pooling = RG flow); softmax output for classification</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>13.13</strong></td>
+<td style="text-align: left;">Hierarchical Representations Beyond Vision</td>
+<td style="text-align: left;">Universal principle: simple components → complex patterns; applications: NLP (characters→words→meaning), audio (waveforms→phonemes→words), physics (microstates→order parameters→phases), biology (molecules→cells→tissues); information flow hierarchies across domains</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>13.14</strong></td>
+<td style="text-align: left;">Deep Networks as Physical Systems</td>
+<td style="text-align: left;">Layers as effective energy operators (apply transformations to state fields); weights as couplings; gradients as forces; learning as stochastic relaxation (energy dissipation via SGD); entropy-energy duality (compression vs representation efficiency); deep learning as RG in function space</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>13.15</strong></td>
+<td style="text-align: left;">Takeaways &amp; Bridge to Chapter 14</td>
+<td style="text-align: left;">Hierarchical networks embed geometric structure (CNNs: spatial, RNNs: temporal, autoencoders: latent manifolds); depth enables RG-like coarse-graining (microscopic → macroscopic features); regularization balances energy-entropy; Bridge: Chapter 14 shifts from discriminative (<span class="arithmatex">\(P(y\|\mathbf{x})\)</span>) to generative modeling (<span class="arithmatex">\(P(\mathbf{x})\)</span>), sculpting energy landscapes with VAEs, GANs, Boltzmann Machines</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="131-from-perceptrons-to-hierarchies"><strong>13.1 From Perceptrons to Hierarchies</strong></h2>
+<p><strong>Chapter 12</strong> established the <strong>perceptron</strong> as the single nonlinear unit. The basic Multilayer Perceptron (MLP) stacks these units, demonstrating that <strong>composition of non-linear mappings</strong> yields immense expressive power (Universal Approximation Theorem). The fundamental operation remains: linear transformation followed by non-linear activation.</p>
+<hr />
+<h3 id="recap-the-unit-of-computation"><strong>Recap: The Unit of Computation</strong></h3>
+<hr />
+<h3 id="core-principle-composition-yields-emergence"><strong>Core Principle: Composition Yields Emergence</strong></h3>
+<p>We now study the collective effect of stacking layers:</p>
+<ul>
+<li><strong>Local Transformation:</strong> Each individual layer <span class="arithmatex">\(l\)</span> performs a simple, local transformation of the hidden state <span class="arithmatex">\(\mathbf{h}^{(l)}\)</span>:</li>
+</ul>
+<div class="arithmatex">\[
+\mathbf{h}^{(l+1)} = \phi(W^{(l)}\mathbf{h}^{(l)} + \mathbf{b}^{(l)})
+\]</div>
+<ul>
+<li><strong>Global Structure:</strong> When this transformation is repeated in depth, the network learns to extract <strong>emergent features</strong>. Simple patterns learned in early layers are combined into increasingly complex, abstract concepts in deep layers.</li>
+</ul>
+<hr />
+<h3 id="analogy-renormalization-in-physics"><strong>Analogy: Renormalization in Physics</strong></h3>
+<p>This hierarchical process has a direct and deep analogy in statistical physics, specifically the <strong>Renormalization Group (RG)</strong> framework.</p>
+<ul>
+<li><strong>Coarse-Graining:</strong> In RG, one iteratively removes microscopic details (high-frequency fluctuations) to reveal the macroscopic, collective variables.</li>
+<li><strong>Neural Parallel:</strong> Each layer in a deep network performs a step of <strong>coarse-graining</strong> on the input signal. It encodes a new set of <strong>effective variables</strong> (<span class="arithmatex">\(\mathbf{h}^{(l+1)}\)</span>) that capture the essential information from the previous layer, ignoring microscopic noise and redundancy.</li>
+<li><strong>Emergent Variables:</strong> The deepest layers effectively encode the <strong>order parameters</strong> (Chapter 1.3) or collective variables of the data, which describe the macroscopic state of the system.</li>
+</ul>
+<p>The depth of the network is thus the mathematical mechanism for building a hierarchical theory of the data, progressing from raw, microscopic inputs to abstract, macroscopic concepts.</p>
+<h2 id="132-the-geometry-of-deep-representations"><strong>13.2 The Geometry of Deep Representations</strong></h2>
+<p>The hierarchical structure of a deep neural network (Section 13.1) provides not just a faster way to compute complex functions, but a profound way to manipulate the <strong>geometry</strong> of the data space itself. Each successive layer of transformation actively reconfigures the coordinate system, aiming to make abstract patterns linearly separable.</p>
+<hr />
+<h3 id="layered-transformations-change-of-coordinates"><strong>Layered Transformations: Change of Coordinates</strong></h3>
+<p>Every layer in a Multi-layer Perceptron (MLP) or deep network is a mathematical transformation of the input vector <span class="arithmatex">\(\mathbf{h}^{(l)}\)</span> into a new output vector <span class="arithmatex">\(\mathbf{h}^{(l+1)}\)</span>.</p>
+<ul>
+<li><strong>Interpretation:</strong> Each layer performs a <strong>change of coordinates</strong> in the data space. The hidden layers <span class="arithmatex">\(\mathbf{h}^{(l)}\)</span> define a sequence of increasingly abstract <strong>feature spaces</strong>, moving the data points from raw pixels or atomic coordinates to high-level semantic features.</li>
+</ul>
+<hr />
+<h3 id="the-manifold-hypothesis-revisited"><strong>The Manifold Hypothesis Revisited</strong></h3>
+<p>Deep learning is fundamentally motivated by the <strong>Manifold Hypothesis</strong> (Chapter 1.1): that high-dimensional data actually lies near a low-dimensional, potentially highly curved <strong>manifold (<span class="arithmatex">\(\mathcal{M}\)</span>)</strong> embedded within the large observation space.</p>
+<p>The difficulty in solving real-world problems stems from this curvature: data belonging to different classes (e.g., cats and dogs) might be hopelessly <strong>intertwined</strong> in the raw pixel space.</p>
+<hr />
+<h3 id="deep-networks-learn-to-unfold-the-manifold"><strong>Deep Networks Learn to Unfold the Manifold</strong></h3>
+<p>The primary function of the depth and non-linearity in a deep network is to systematically <strong>unfold, disentangle, and flatten</strong> this complex manifold structure.</p>
+<ul>
+<li><strong>Goal:</strong> The network seeks a final hidden representation, <span class="arithmatex">\(\mathbf{h}^{(\text{final})}\)</span>, where the data manifold is flat enough that a simple <strong>linear classifier</strong> (like the perceptron or linear regression from Chapter 10) can easily draw a straight line to separate the classes.</li>
+<li><strong>Geometric Action:</strong> Deep layers perform complex, non-linear warping of the space. For instance, a complex spiral structure in 2D space might be flattened into two concentric rings in the final hidden layer, making linear separation possible.</li>
+</ul>
+<hr />
+<h3 id="analogy-flattening-a-curved-potential-surface"><strong>Analogy: Flattening a Curved Potential Surface</strong></h3>
+<p>The geometry of deep learning mirrors the manipulation of energy landscapes in physics:</p>
+<ul>
+<li><strong>Curved Potential:</strong> The complex entanglement of the data manifold is analogous to a highly <strong>curved or rough potential surface</strong>.</li>
+<li><strong>Hierarchical Learning <span class="arithmatex">\(\leftrightarrow\)</span> Progressive Flattening:</strong> The process of hierarchical learning is equivalent to applying successive transformations that gradually <strong>flatten this potential surface</strong>. The resulting smooth landscape is then trivial for simple <strong>optimization dynamics</strong> (like gradient descent) to navigate.</li>
+</ul>
+<p>The network, therefore, acts as a geometric pre-processor, creating the optimal coordinate system for the task at hand.</p>
+<h2 id="133-convolutional-neural-networks-cnns-spatial-structure"><strong>13.3 Convolutional Neural Networks (CNNs) — Spatial Structure</strong></h2>
+<p>The <strong>Multilayer Perceptron (MLP)</strong> (Section 12.4) is ill-suited for structured data like images or physical lattices because it is <strong>geometrically unaware</strong>—it treats every input feature independently. The <strong>Convolutional Neural Network (CNN)</strong> addresses this by embedding two core inductive biases that reflect the reality of physical systems: <strong>local correlation</strong> and <strong>translation invariance</strong>.</p>
+<hr />
+<h3 id="motivation-locality-and-invariance"><strong>Motivation: Locality and Invariance</strong></h3>
+<p>Physical data, such as an image or a crystal lattice, exhibits predictable structure:
+* <strong>Local Correlation:</strong> The color of a pixel or the energy of an atom is most strongly correlated with its immediate neighbors.
+* <strong>Translation Invariance:</strong> A feature (like an edge or a structural motif) is the same regardless of its exact position in the field.</p>
+<p>The CNN architecture is designed to exploit these properties efficiently.</p>
+<hr />
+<h3 id="the-convolution-layer"><strong>The Convolution Layer</strong></h3>
+<p>The core operation is the <strong>convolution layer</strong>, which replaces the large, dense weight matrix (<span class="arithmatex">\(W\)</span>) of an MLP with a small, specialized filter or <strong>kernel</strong>.</p>
+<p>The operation involves sliding this kernel across the input feature map (e.g., an image) and computing the dot product at every location. This calculation yields the output activation (<span class="arithmatex">\(h\)</span>) at a spatial location (<span class="arithmatex">\(i, j\)</span>):</p>
+<div class="arithmatex">\[
+h_{i,j}^{(l)} = \phi\left(\sum_{m,n} W_{m,n}^{(l)}x_{i+m,j+n}^{(l-1)} + b^{(l)}\right)
+\]</div>
+<ul>
+<li><span class="arithmatex">\(W_{m,n}^{(l)}\)</span>: The small <strong>shared weight kernel</strong> (e.g., <span class="arithmatex">\(3\times 3\)</span>).</li>
+<li><span class="arithmatex">\(x_{i+m,j+n}^{(l-1)}\)</span>: The local neighborhood (the <strong>receptive field</strong>) being examined.</li>
+</ul>
+<hr />
+<h3 id="key-features-and-inductive-biases"><strong>Key Features and Inductive Biases</strong></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">CNN Feature</th>
+<th style="text-align: left;">Mechanism</th>
+<th style="text-align: left;">Physical Analogy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Locality</strong></td>
+<td style="text-align: left;">The kernel size (e.g., <span class="arithmatex">\(3 \times 3\)</span>) is small, meaning each output neuron is connected only to a small, local region of the input.</td>
+<td style="text-align: left;"><strong>Nearest-Neighbor Interaction:</strong> Mimics a local field theory where a particle only interacts directly with its physical neighbors.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Weight Sharing</strong></td>
+<td style="text-align: left;">The same kernel weights (<span class="arithmatex">\(W_{m,n}\)</span>) are reused across the entire input map.</td>
+<td style="text-align: left;"><strong>Translation Symmetry:</strong> Assumes the underlying physical laws are invariant to spatial translation.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Pooling</strong></td>
+<td style="text-align: left;">Down-sampling the feature map (e.g., taking the maximum value in a <span class="arithmatex">\(2\times 2\)</span> block).</td>
+<td style="text-align: left;"><strong>Coarse-Graining:</strong> Reduces dimensionality and extracts the dominant features from a local region.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="physical-analogy-real-space-renormalization"><strong>Physical Analogy: Real-Space Renormalization</strong></h3>
+<p>The CNN architecture embodies the principles of the <strong>Renormalization Group (RG)</strong> (Section 13.1) applied directly in the data's native spatial coordinates.</p>
+<p>The overall effect is that of <strong>real-space renormalization</strong>:
+1.  <strong>Convolution</strong> extracts local patterns (short-range correlations).
+2.  <strong>Pooling</strong> coarse-grains these features, summarizing the information in a larger block.</p>
+<p>The network builds a hierarchy where early layers find microscopic features (e.g., edges), and later layers combine them into macroscopic features (e.g., shapes), thereby extracting <strong>invariants</strong> under local transformations.</p>
+<h2 id="134-hierarchical-feature-maps"><strong>13.4 Hierarchical Feature Maps</strong></h2>
+<p>The depth of a specialized network like the <strong>Convolutional Neural Network (CNN)</strong> (Section 13.3) is not merely computational redundancy; it is the mechanism by which the network builds a genuine <strong>hierarchy of learned features</strong>, moving from raw, local inputs to abstract, global representations. This process directly mirrors the organization of complexity in physical and biological systems.</p>
+<hr />
+<h3 id="layered-abstraction-in-cnns"><strong>Layered Abstraction in CNNs</strong></h3>
+<p>In a deep CNN architecture, the learned filters and resulting feature maps (<span class="arithmatex">\(\mathbf{h}^{(l)}\)</span>) evolve significantly through the layers:</p>
+<ul>
+<li><strong>Low Layers (Microscopic):</strong> Early convolutional layers learn very simple, generalized features like <strong>edges, corners, lines, and textures</strong>. These filters are simple differential operators, acting like detectors for elementary components.</li>
+<li><strong>Middle Layers (Mesoscopic):</strong> Intermediate layers combine the outputs of the low layers to recognize <strong>motifs, shapes, and complex patterns</strong> (e.g., curves, object parts, color blobs). These features are more specific but still generic across many tasks.</li>
+<li><strong>High Layers (Macroscopic):</strong> The deepest layers and the final dense layers learn <strong>semantic objects and emergent abstractions</strong> specific to the task (e.g., faces, molecular structures, phase identity). These features effectively become the network's high-level concepts.</li>
+</ul>
+<hr />
+<h3 id="visualization-and-interpretation"><strong>Visualization and Interpretation</strong></h3>
+<p>Analyzing the internal states of a network is essential for interpretability:
+* <strong>Filter Visualization:</strong> Plotting the actual weight values learned by the kernels in early layers often shows structures that resemble <strong>Gabor filters</strong>—mathematical functions known to optimally detect edges and textures, similar to the receptive fields found in the early visual cortex.
+* <strong>Feature Map Visualization:</strong> Displaying the activation patterns for a specific input reveals the <strong>progressive abstraction</strong>. A low-layer map highlights all edges equally, while a high-layer map highlights only the regions relevant to the final classification (e.g., the part of an image containing a face).</p>
+<hr />
+<h3 id="physical-analogy-hierarchy-of-excitations"><strong>Physical Analogy: Hierarchy of Excitations</strong></h3>
+<p>The network's hierarchical organization is an accurate reflection of the way complexity is organized in nature:</p>
+<ul>
+<li><strong>Microscopic Fluctuations <span class="arithmatex">\(\rightarrow\)</span> Macroscopic Order:</strong> In physics, systems are described by a <strong>hierarchy of excitations</strong>. Raw coordinates (microstates) combine to form local densities and fluxes. These, in turn, combine to form <strong>macroscopic order parameters</strong> (Chapter 1.1) that govern collective behavior.</li>
+<li><strong>Neural Parallel:</strong> Deep networks replicate this process. Early layers respond to <strong>microscopic fluctuations</strong> (single pixels). Later layers encode the emergent <strong>order parameters</strong> that genuinely describe the system's state (e.g., magnetization, folded/unfolded structure, object class).</li>
+</ul>
+<p>This demonstrates that deep learning naturally discovers the same hierarchical language of abstraction that physicists use to describe the universe.</p>
+<h2 id="135-temporal-hierarchies-recurrent-neural-networks-rnns"><strong>13.5 Temporal Hierarchies — Recurrent Neural Networks (RNNs)</strong></h2>
+<p>While <strong>Convolutional Neural Networks (CNNs)</strong> (Section 13.3) are architecturally biased toward <strong>spatial locality and invariance</strong>, many complex systems are governed by <strong>temporal dependencies</strong> (i.e., sequence and memory). <strong>Recurrent Neural Networks (RNNs)</strong> are the specialized architecture designed to embed this <strong>temporal hierarchy</strong>, modeling the data as a probabilistic dynamical system.</p>
+<hr />
+<h3 id="sequential-data-and-recurrence"><strong>Sequential Data and Recurrence</strong></h3>
+<p>Data like language, audio waveforms, molecular trajectories, or financial time series share one characteristic: the state at time <span class="arithmatex">\(t\)</span> is strongly dependent on the state at <span class="arithmatex">\(t-1\)</span>.</p>
+<p>RNNs achieve temporal awareness by reintroducing <strong>feedback</strong> into the system. The hidden state (<span class="arithmatex">\(\mathbf{h}\)</span>) of the neuron is not only a function of the current input (<span class="arithmatex">\(\mathbf{x}_t\)</span>), but also of the hidden state from the previous time step (<span class="arithmatex">\(\mathbf{h}_{t-1}\)</span>):</p>
+<div class="arithmatex">\[
+\mathbf{h}_t = \phi(W_h \mathbf{h}_{t-1} + W_x \mathbf{x}_t + \mathbf{b})
+\]</div>
+<ul>
+<li><span class="arithmatex">\(\mathbf{h}_t\)</span>: The <strong>hidden state</strong> at time <span class="arithmatex">\(t\)</span>, which serves as the network's internal <strong>memory</strong>.</li>
+<li><span class="arithmatex">\(W_h\)</span>: The <strong>recurrent weight matrix</strong>, governing how the memory state evolves over time.</li>
+<li><span class="arithmatex">\(W_x\)</span>: The input weight matrix.</li>
+</ul>
+<hr />
+<h3 id="interpretation-memory-and-dynamical-systems"><strong>Interpretation: Memory and Dynamical Systems</strong></h3>
+<ul>
+<li><strong>Memory through Feedback:</strong> The recurrent connection <span class="arithmatex">\(W_h \mathbf{h}_{t-1}\)</span> forces the hidden state to compress the entire history of the sequence (from <span class="arithmatex">\(t=1\)</span> to <span class="arithmatex">\(t-1\)</span>) into a fixed-size vector. This is how the system carries <strong>memory</strong> through time.</li>
+<li><strong>Physical Analogy: Dynamical Systems:</strong> An RNN is equivalent to a <strong>non-linear dynamical system with feedback</strong>.<ul>
+<li>The sequence of hidden states (<span class="arithmatex">\(\mathbf{h}_1, \mathbf{h}_2, \dots\)</span>) traces a trajectory through the <strong>phase space of information</strong>.</li>
+<li>The learned weight matrix <span class="arithmatex">\(W_h\)</span> defines the <strong>transition function</strong> of this dynamical system, governing how input and previous state collectively cause the next state.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="practical-variants"><strong>Practical Variants</strong></h3>
+<p>Standard RNNs struggle with the <strong>vanishing gradient problem</strong> (where error signals decay exponentially over long sequences), hindering the learning of long-term dependencies. Advanced variants were developed to overcome this:
+* <strong>Long Short-Term Memory (LSTM):</strong> Introduced internal <strong>gating mechanisms</strong> (input, forget, output gates) that explicitly control the flow of information, allowing the network to retain or discard information over many time steps.
+* <strong>Gated Recurrent Unit (GRU):</strong> A simplified, more computationally efficient variant of the LSTM that combines the reset and update gates.</p>
+<hr />
+<h3 id="physical-analogy-phase-space-trajectories"><strong>Physical Analogy: Phase Space Trajectories</strong></h3>
+<p>RNNs are conceptually similar to the <strong>Dynamic Bayesian Networks (DBNs)</strong> (Chapter 11.9). The hidden state <span class="arithmatex">\(\mathbf{h}_t\)</span> is the <strong>latent state</strong> of the system, and its evolution is the system's <strong>trajectory</strong>. By minimizing the prediction loss, the RNN learns the transition function that best maps the observed inputs to a coherent, low-energy trajectory in its informational phase space.</p>
+<h2 id="136-autoencoders-learning-internal-coordinates"><strong>13.6 Autoencoders — Learning Internal Coordinates</strong></h2>
+<p>The <strong>Autoencoder (AE)</strong> is a fundamental architecture designed for <strong>unsupervised learning</strong> and <strong>dimensionality reduction</strong>, providing a data-driven method for discovering the intrinsic, low-dimensional coordinates of the data manifold. AEs reframe the problem of finding latent variables as a task of <strong>information compression and reconstruction</strong>.</p>
+<hr />
+<h3 id="architecture-the-information-bottleneck"><strong>Architecture: The Information Bottleneck</strong></h3>
+<p>The autoencoder is a special type of feedforward network that consists of two symmetric components:</p>
+<ol>
+<li><strong>Encoder (<span class="arithmatex">\(f_\phi\)</span>):</strong> This maps the high-dimensional input <span class="arithmatex">\(\mathbf{x} \in \mathbb{R}^D\)</span> to a low-dimensional <strong>latent code</strong> (or <strong>bottleneck</strong>), <span class="arithmatex">\(\mathbf{z} \in \mathbb{R}^d\)</span>, where <span class="arithmatex">\(d \ll D\)</span>.</li>
+</ol>
+<div class="arithmatex">\[
+\mathbf{z} = f_\phi(\mathbf{x})
+\]</div>
+<ol>
+<li><strong>Decoder (<span class="arithmatex">\(g_\theta\)</span>):</strong> This maps the low-dimensional latent code <span class="arithmatex">\(\mathbf{z}\)</span> back to the high-dimensional output space, producing a reconstruction <span class="arithmatex">\(\mathbf{x}'\)</span>.</li>
+</ol>
+<div class="arithmatex">\[
+\mathbf{x}' = g_\theta(\mathbf{z})
+\]</div>
+<p>The encoder and decoder are typically structured as multilayer perceptrons (MLPs).</p>
+<hr />
+<h3 id="objective-and-goal-minimizing-reconstruction-error"><strong>Objective and Goal: Minimizing Reconstruction Error</strong></h3>
+<p>The network is trained in an unsupervised manner by forcing the output <span class="arithmatex">\(\mathbf{x}'\)</span> to be as close as possible to the original input <span class="arithmatex">\(\mathbf{x}\)</span>.</p>
+<ul>
+<li><strong>Loss Function:</strong> The training objective minimizes the <strong>reconstruction loss</strong> (often the mean squared error, like least squares):</li>
+</ul>
+<div class="arithmatex">\[
+L = \|\mathbf{x} - g_\theta(f_\phi(\mathbf{x}))\|^2
+\]</div>
+<ul>
+<li><strong>Goal:</strong> The network's weights (<span class="arithmatex">\(\phi\)</span> and <span class="arithmatex">\(\theta\)</span>) are optimized so that the <strong>latent code <span class="arithmatex">\(\mathbf{z}\)</span> captures the essential structure of the data</strong> required for accurate reconstruction. Since <span class="arithmatex">\(d \ll D\)</span>, the encoder must discard noise and redundancy, retaining only the signal that matters. <span class="arithmatex">\(\mathbf{z}\)</span> thus becomes the optimal, low-dimensional coordinate system, or <strong>latent representation</strong>.</li>
+</ul>
+<hr />
+<h3 id="analogy-renormalization-group-flow"><strong>Analogy: Renormalization Group Flow</strong></h3>
+<p>The operation of the autoencoder directly parallels the principles of dimensionality reduction (Chapter 3) and the <strong>Renormalization Group (RG)</strong> framework (Section 13.1).</p>
+<ul>
+<li><strong>Encoder <span class="arithmatex">\(\leftrightarrow\)</span> Coarse-Graining:</strong> The encoder performs a successive <strong>coarse-graining</strong> of the input, mapping the microscopic details of <span class="arithmatex">\(\mathbf{x}\)</span> into the macroscopic, compressed variables of <span class="arithmatex">\(\mathbf{z}\)</span>.</li>
+<li><strong>Decoder <span class="arithmatex">\(\leftrightarrow\)</span> Reconstruction:</strong> The decoder reverses this process, attempting to reconstruct the detailed system from the low-dimensional code.</li>
+<li><strong>AE as Information Compressor:</strong> The entire architecture models the <strong>RG flow</strong> forward (encoder) and backward (decoder), forcing <span class="arithmatex">\(\mathbf{z}\)</span> to become the most efficient <strong>information compressor</strong> possible while retaining the necessary structure.</li>
+</ul>
+<p>Autoencoders provide a powerful, non-linear alternative to linear methods like PCA (Chapter 3.2) for discovering the low-dimensional data manifold.</p>
+<h2 id="137-variational-autoencoders-vaes-probabilistic-extension"><strong>13.7 Variational Autoencoders (VAEs) — Probabilistic Extension</strong></h2>
+<p>The standard Autoencoder (AE) (Section 13.6) provides a deterministic, geometric mapping to a latent space <span class="arithmatex">\(\mathbf{z}\)</span>. The <strong>Variational Autoencoder (VAE)</strong> extends this by embedding the principles of <strong>probabilistic inference</strong> (Chapter 9) into the architecture, ensuring that the latent space is a well-behaved probability distribution.</p>
+<hr />
+<h3 id="motivation-adding-uncertainty-to-the-latent-space"><strong>Motivation: Adding Uncertainty to the Latent Space</strong></h3>
+<p>A key limitation of standard AEs is that the latent space <span class="arithmatex">\(\mathbf{z}\)</span> may contain gaps or undefined regions, making it difficult to <strong>generate</strong> new, realistic samples by randomly sampling <span class="arithmatex">\(\mathbf{z}\)</span>. VAEs solve this by enforcing a structure on <span class="arithmatex">\(\mathbf{z}\)</span> that explicitly models uncertainty.</p>
+<hr />
+<h3 id="generative-model-and-objective"><strong>Generative Model and Objective</strong></h3>
+<p>The VAE defines a <strong>generative model</strong> where the data <span class="arithmatex">\(\mathbf{x}\)</span> is assumed to be produced by a stochastic process involving the latent variables <span class="arithmatex">\(\mathbf{z}\)</span>:</p>
+<div class="arithmatex">\[
+p(\mathbf{x},\mathbf{z}) = p(\mathbf{x}|\mathbf{z})p(\mathbf{z})
+\]</div>
+<ul>
+<li><span class="arithmatex">\(p(\mathbf{z})\)</span>: The simple <strong>Prior</strong> over the latent space (e.g., a standard Gaussian).</li>
+<li><span class="arithmatex">\(p(\mathbf{x}|\mathbf{z})\)</span>: The <strong>Decoder</strong> distribution.</li>
+</ul>
+<p>Since the true posterior <span class="arithmatex">\(p(\mathbf{z}|\mathbf{x})\)</span> is intractable, the VAE uses the <strong>Variational Inference</strong> framework (Chapter 9.6) by introducing a recognizable <strong>Inference Model</strong> (the <strong>Encoder</strong>) <span class="arithmatex">\(q_\phi(\mathbf{z}|\mathbf{x})\)</span> to approximate the posterior.</p>
+<p>The network is trained to minimize the <strong>Variational Free Energy</strong> functional (or maximize the <strong>Evidence Lower Bound, ELBO</strong>, <span class="arithmatex">\(\mathcal{L}\)</span>):</p>
+<div class="arithmatex">\[
+\mathcal{L} = \mathbb{E}_{q_\phi(\mathbf{z}|\mathbf{x})}[\ln p_\theta(\mathbf{x}|\mathbf{z})] - D_{\mathrm{KL}}[q_\phi(\mathbf{z}|\mathbf{x})||p(\mathbf{z})]
+\]</div>
+<hr />
+<h3 id="interpretation-energy-and-entropy-trade-off"><strong>Interpretation: Energy and Entropy Trade-off</strong></h3>
+<p>The VAE objective function explicitly balances two competing terms, embodying the thermodynamic <strong>Energy–Entropy duality</strong>:</p>
+<ol>
+<li><strong>Reconstruction Term (Energy):</strong> <span class="arithmatex">\(\mathbb{E}[\ln p_\theta(\mathbf{x}|\mathbf{z})]\)</span>. This term maximizes the likelihood of reconstructing the data. It is analogous to minimizing the system's <strong>potential energy</strong> (loss).</li>
+<li><strong>KL Term (Entropy):</strong> <span class="arithmatex">\(D_{\mathrm{KL}}[q_\phi(\mathbf{z}|\mathbf{x})||p(\mathbf{z})]\)</span>. This term forces the approximate posterior <span class="arithmatex">\(q\)</span> to stay close to the simple Gaussian prior <span class="arithmatex">\(p(\mathbf{z})\)</span>. It acts as a <strong>regularizer</strong> and is analogous to minimizing the system's <strong>entropy</strong> cost (keeping the system simple).</li>
+</ol>
+<p>By optimizing the ELBO, the VAE finds the best compromise between reconstruction accuracy (low energy) and latent space regularity (low entropy penalty).</p>
+<hr />
+<h3 id="bridge-to-generative-modeling"><strong>Bridge to Generative Modeling</strong></h3>
+<p>The VAE structure is pivotal because it connects the architectural principles of deep learning (hierarchical networks) to the probabilistic principles of Bayesian inference. This bridge is essential for <strong>deep generative modeling</strong> (Chapter 14), enabling the network not just to recognize patterns, but to understand the underlying distribution well enough to <em>create</em> new, realistic samples.</p>
+<h2 id="138-spatialtemporal-hybrids"><strong>13.8 Spatial–Temporal Hybrids</strong></h2>
+<p>The specialized architectures discussed so far focus on one domain of structure: <strong>CNNs</strong> model <strong>spatial locality</strong>, and <strong>RNNs</strong> model <strong>temporal sequence</strong>. However, many complex physical systems, like fluids, plasmas, or multi-agent networks, evolve in ways that are coupled across both space and time simultaneously. <strong>Spatial–Temporal Hybrids</strong> combine these two architectural mechanisms to model dynamic structure.</p>
+<hr />
+<h3 id="combining-architectures-for-spatiotemporal-dynamics"><strong>Combining Architectures for Spatiotemporal Dynamics</strong></h3>
+<p>Hybrid models embed convolution within a recurrent loop to process data that has a fixed spatial arrangement but evolves sequentially.</p>
+<ul>
+<li><strong>ConvRNNs (Convolutional RNNs):</strong> These replace the standard matrix multiplication operations in a traditional RNN (Section 13.5) with <strong>convolutional operations</strong> (Section 13.3).<ul>
+<li><strong>Spatial Step:</strong> The convolutional kernel captures the <strong>local interaction</strong> and translation invariance <em>within</em> the spatial field at time <span class="arithmatex">\(t\)</span>.</li>
+<li><strong>Temporal Step:</strong> The recurrent connection maintains the <strong>memory</strong> of the system's state from time <span class="arithmatex">\(t-1\)</span> to <span class="arithmatex">\(t\)</span>.</li>
+</ul>
+</li>
+<li><strong>Application:</strong> ConvRNNs are ideal for tasks like <strong>video prediction</strong> (forecasting future frames based on current and past frames) or modeling the evolution of <strong>spatiotemporal dynamics</strong> in physical simulations, like weather or fluid flow.</li>
+</ul>
+<hr />
+<h3 id="transformers-beyond-local-coupling"><strong>Transformers: Beyond Local Coupling</strong></h3>
+<p>More recently, the <strong>Transformer architecture</strong> has been adapted to handle spatiotemporal data, though it uses a fundamentally different mechanism.</p>
+<ul>
+<li><strong>Mechanism:</strong> Transformers abandon the explicit local coupling of CNNs and the sequential processing of RNNs. Instead, they use a self-attention mechanism to compute <strong>dynamic, global correlations</strong> between all elements in the sequence or field (Chapter 19).</li>
+<li><strong>Effect:</strong> This allows the system to discover complex, non-local dependencies in data, where an event in one corner of a field at <span class="arithmatex">\(t_1\)</span> might directly influence an event in the opposite corner at <span class="arithmatex">\(t_2\)</span>.</li>
+</ul>
+<hr />
+<h3 id="physical-analogy-coupled-fields"><strong>Physical Analogy: Coupled Fields</strong></h3>
+<p>The structure of spatiotemporal models mirrors the continuous <strong>evolution of coupled physical fields</strong>:</p>
+<ul>
+<li><strong>Classic Fields:</strong> Systems governed by partial differential equations (PDEs), such as the Navier–Stokes equations (fluid dynamics) or the Schrödinger equation (quantum fields), require tracking state across both continuous space and time.</li>
+<li><strong>Neural Analogue:</strong> ConvRNNs act as a probabilistic <strong>numerical solver</strong>. They learn a set of local, recurrent rules that successfully propagate the system's state forward in time, capturing phenomena like wave propagation, diffusion, or collective motion.</li>
+</ul>
+<p>These hybrid architectures represent the ongoing effort to build neural systems that can model the full, continuous complexity of the physical world.</p>
+<h2 id="139-regularization-and-generalization-in-deep-networks"><strong>13.9 Regularization and Generalization in Deep Networks</strong></h2>
+<p>Deep networks possess millions or billions of parameters, granting them immense flexibility. While this capacity allows them to approximate any function (Section 12.4), it also makes them highly susceptible to <strong>overfitting</strong> (high variance, Section 10.11), where the model memorizes the training data noise but fails to <strong>generalize</strong> to new inputs. <strong>Regularization</strong> techniques are essential control mechanisms that constrain this complexity.</p>
+<hr />
+<h3 id="constraints-on-complexity-managing-the-energy-landscape"><strong>Constraints on Complexity: Managing the Energy Landscape</strong></h3>
+<p>Regularization methods in deep learning are sophisticated strategies for managing the <strong>Bias–Variance Tradeoff</strong> by constraining the optimization trajectory within the high-dimensional loss landscape (Section 12.6).</p>
+<ul>
+<li><strong>Weight Decay (<span class="arithmatex">\(L^2\)</span> Penalty):</strong> This technique penalizes large weights, directly mapping to a <strong>Gaussian prior</strong> in the Bayesian framework (Section 10.4). By keeping the weights small, L2 decay smooths the energy surface and prevents the network function from exhibiting the sharp, oscillatory behavior that indicates overfitting.</li>
+<li><strong>Batch Normalization (BN):</strong> BN is primarily a technique for stabilizing the training dynamics (Chapter 6.10). By ensuring the inputs to each layer maintain a consistent mean and variance across mini-batches, BN acts as a form of <strong>renormalization</strong> in the parameter space, mitigating internal covariate shift and allowing for faster convergence with higher learning rates.</li>
+</ul>
+<hr />
+<h3 id="stochastic-regularization-entropy-injection"><strong>Stochastic Regularization: Entropy Injection</strong></h3>
+<p>Two of the most effective methods rely on injecting noise or randomness into the computation, leveraging the principles of statistical mechanics:</p>
+<ul>
+<li><strong>Dropout:</strong> During training, a random fraction of neurons are temporarily deactivated in each forward and backward pass.<ul>
+<li><strong>Effect:</strong> This forces the network to find redundant, more robust predictive pathways, preventing over-reliance on any single feature or neuron.</li>
+<li><strong>Analogy:</strong> Dropout is analogous to a severe form of <strong>entropy injection</strong> (Chapter 7.4). It transforms the training process into an implicit <strong>ensemble average</strong> over an exponentially large number of thinned sub-networks, ensuring the final network avoids freezing into a single, high-variance, overfit microstate.</li>
+</ul>
+</li>
+<li><strong>Early Stopping:</strong> This simple rule halts the optimization process not when the training loss minimizes, but when the performance on a separate <strong>validation set</strong> begins to worsen.<ul>
+<li><strong>Analogy:</strong> Early stopping is a form of <strong>cooling control</strong>. It prevents the system from undergoing a complete, low-entropy collapse into a local minimum that perfectly memorizes the noise, stopping the training at a point of optimal <strong>thermal balance</strong> where generalization is maximized.</li>
+</ul>
+</li>
+</ul>
+<p>The overall learning strategy is thus a careful dance between minimizing the energy (loss) and maintaining sufficient entropy (regularization) to ensure the solution is robust and generalizable.</p>
+<h2 id="1310-visualization-and-interpretability"><strong>13.10 Visualization and Interpretability</strong></h2>
+<p>Deep neural networks, with their millions of non-linear weights, often function as <strong>"black boxes,"</strong> making it difficult to understand <em>why</em> a particular decision was made or <em>what</em> features were learned. <strong>Visualization and Interpretability</strong> techniques are essential tools for peering into the internal state of the network, helping to verify its function and connect its learned representations back to the original physical or semantic meaning.</p>
+<hr />
+<h3 id="probing-the-internal-state"><strong>Probing the Internal State</strong></h3>
+<p>These techniques allow us to map the high-dimensional feature spaces back onto intuitive concepts, effectively revealing the hierarchy of abstraction learned by the network (Section 13.4):</p>
+<ul>
+<li><strong>Activation Visualization (What was learned):</strong> By plotting the values of the learned <strong>filters (kernels)</strong> in early layers, we can see the microscopic patterns the network finds (e.g., edges, textures, Gabor-like filters). Plotting the <strong>feature maps</strong> for a specific input reveals which abstract patterns (e.g., shapes or object parts) are being detected by later layers.</li>
+<li><strong>Saliency Maps (Where did it look):</strong> These maps highlight the regions of the input image or data vector that were most influential in generating a specific output. They are typically computed by taking the <strong>gradient of the output loss with respect to the input</strong>. High-gradient regions indicate high <strong>sensitivity</strong>—where a small change in input causes a large change in prediction.</li>
+</ul>
+<hr />
+<h3 id="dimensionality-projection"><strong>Dimensionality Projection</strong></h3>
+<p>Techniques from <strong>Part I: The Geometry of Data</strong> (Chapter 3) are crucial for visualizing the complex geometry of the network's internal <strong>latent space</strong> (<span class="arithmatex">\(\mathbf{z}\)</span>).</p>
+<ul>
+<li><strong>t-SNE and UMAP:</strong> We can take the high-dimensional output of a hidden layer (<span class="arithmatex">\(\mathbf{h}^{(l)}\)</span>) and project it onto 2D or 3D using non-linear embeddings like t-SNE or UMAP. This reveals the underlying manifold structure (Section 13.2):<ul>
+<li>If the projection shows tight, well-separated clusters, it confirms that the network has successfully <strong>disentangled</strong> the raw data features into linearly separable representations.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="physical-interpretation-the-emergent-phase-diagram"><strong>Physical Interpretation: The Emergent Phase Diagram</strong></h3>
+<p>For systems derived from physics simulations, interpretability techniques provide crucial scientific feedback:</p>
+<ul>
+<li><strong>Latent Space as Phase Diagram:</strong> When projecting the hidden states of a network trained on physical data (like spin configurations or molecular trajectories), the resulting clusters in the latent space often correspond directly to the system's distinct <strong>metastable states or thermodynamic phases</strong>.</li>
+<li><strong>Order Parameters:</strong> The most active neurons (those with the highest activation) in deep layers often act as <strong>emergent order parameters</strong>, which are abstract variables discovered by the network that accurately characterize the macroscopic state of the system (Section 13.4).</li>
+</ul>
+<p>In this way, visualization tools enable the extraction of <strong>new physical insight</strong> from the complex, hierarchical representations learned by the network.</p>
+<h2 id="1311-worked-example-hierarchical-feature-extraction"><strong>13.11 Worked Example — Hierarchical Feature Extraction</strong></h2>
+<p>This example demonstrates the core principle of <strong>hierarchical representation learning</strong> (Section 13.4) by applying a simple <strong>Convolutional Neural Network (CNN)</strong> to a classic image recognition task. The exercise shows how a deep architecture automatically learns to organize raw visual data into a logical sequence of increasingly abstract features, mirroring the organizational structure found in physical systems.</p>
+<hr />
+<h3 id="the-system-handwritten-digits-and-cnn"><strong>The System: Handwritten Digits and CNN</strong></h3>
+<ul>
+<li><strong>Dataset:</strong> The MNIST dataset of handwritten digits (0 through 9). The raw input is a <span class="arithmatex">\(28 \times 28\)</span> grayscale image (microscopic pixels).</li>
+<li><strong>Architecture:</strong> A simple CNN with a few convolutional layers followed by pooling operations (Section 13.3) and a final dense classification layer. This design enforces <strong>spatial locality</strong> and <strong>coarse-graining</strong> (renormalization).</li>
+<li><strong>Task:</strong> Train the network to correctly classify the digit (10-way classification).</li>
+</ul>
+<hr />
+<h3 id="demonstration-probing-the-hierarchy"><strong>Demonstration: Probing the Hierarchy</strong></h3>
+<p>Instead of focusing on the final accuracy, the demonstration involves <strong>probing the network's internal state</strong> after training (Section 13.10).</p>
+<ol>
+<li><strong>Plot Learned Filters (Low Layer):</strong> We visualize the weights of the kernels in the <strong>first convolutional layer</strong>.<ul>
+<li><strong>Observation:</strong> These filters typically resemble simple <strong>edge detectors</strong> or directional bars.</li>
+<li><strong>Interpretation:</strong> The lowest level of the hierarchy is tasked with identifying <strong>elementary microscopic patterns</strong>—the presence and orientation of lines—which are necessary for all subsequent processing.</li>
+</ul>
+</li>
+<li><strong>Visualize Feature Maps (Intermediate Layer):</strong> We pass a single image (e.g., a '4') through the network and plot the activations of the feature maps in a <strong>middle convolutional layer</strong>.<ul>
+<li><strong>Observation:</strong> These maps respond to complex motifs like corners, loops, or intersections, not just simple straight edges.</li>
+<li><strong>Interpretation:</strong> The network is combining the elementary features to form <strong>mesoscopic patterns</strong> (structural components of the digit).</li>
+</ul>
+</li>
+</ol>
+<h3 id="analogy-organizing-physical-complexity">Analogy: Organizing Physical Complexity 🌌</h3>
+<p>The network's success in classification is achieved by successfully creating a feature hierarchy that mirrors how physical systems organize complexity:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Network Layer</th>
+<th style="text-align: left;">Feature Learned</th>
+<th style="text-align: left;">Physical/Semantic Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Low Layers</strong></td>
+<td style="text-align: left;">Edges, lines</td>
+<td style="text-align: left;"><strong>Microscopic Fluctuations</strong> (local differences).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Middle Layers</strong></td>
+<td style="text-align: left;">Loops, corners, strokes</td>
+<td style="text-align: left;"><strong>Intermediate Structure/Motifs</strong> (coarse-grained elements).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>High Layers</strong></td>
+<td style="text-align: left;">Digit Identity ('4' vs '9')</td>
+<td style="text-align: left;"><strong>Macroscopic Order Parameter</strong> (the abstract concept governing the system).</td>
+</tr>
+</tbody>
+</table>
+<p>The CNN acts as an information-theoretic <strong>renormalization group</strong> (Section 13.1), iteratively transforming the raw, high-entropy pixel data into a low-dimensional, high-value representation of the digit's identity. This demonstrates the automatic discovery of abstraction required for interpreting complex inputs.</p>
+<h2 id="1312-code-demo-simple-cnn"><strong>13.12 Code Demo — Simple CNN</strong></h2>
+<p>This code demonstration provides a minimal implementation of a <strong>Convolutional Neural Network (CNN)</strong>, illustrating the architectural design required for <strong>hierarchical feature extraction</strong> and <strong>spatial invariance</strong> (Section 13.3, 13.4). This model structure is the computational analogue of the Renormalization Group process on spatial data.</p>
+<hr />
+<h3 id="implementation"><strong>Implementation</strong></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">tensorflow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tf</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">tensorflow.keras</span><span class="w"> </span><span class="kn">import</span> <span class="n">layers</span><span class="p">,</span> <span class="n">models</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Build model</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="c1"># Layer 1: Convolution + Non-linearity + Coarse-Graining</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">,</span><span class="mi">1</span><span class="p">)),</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="n">layers</span><span class="o">.</span><span class="n">MaxPooling2D</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)),</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="c1"># Layer 2: Deeper Feature Extraction</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="n">layers</span><span class="o">.</span><span class="n">MaxPooling2D</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)),</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="c1"># Transition to Dense/Classification</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="n">layers</span><span class="o">.</span><span class="n">Flatten</span><span class="p">(),</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">)</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="p">])</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;sparse_categorical_crossentropy&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
+</span></code></pre></div>
+<hr />
+<h3 id="interpretation-of-the-architecture"><strong>Interpretation of the Architecture</strong></h3>
+<p>The <code>Sequential</code> model structure demonstrates the key stages of deep hierarchical learning for spatial data:</p>
+<ol>
+<li><strong>Input Shape <code>(28, 28, 1)</code>:</strong> Defines the microscopic input (e.g., an MNIST image, 28 pixels by 28 pixels, 1 color channel).</li>
+<li><strong><code>Conv2D(8, (3,3), activation='relu')</code>:</strong> This is the core interaction layer.<ul>
+<li><strong><code>Conv2D</code>:</strong> Enforces <strong>spatial locality</strong> and <strong>weight sharing</strong> (translation invariance).</li>
+<li><strong><code>8, (3,3)</code>:</strong> Learns 8 distinct filters, each looking at a small <span class="arithmatex">\(3 \times 3\)</span> neighborhood (the receptive field).</li>
+<li><strong><code>relu</code>:</strong> Introduces the essential <strong>nonlinearity</strong> (Section 12.8).</li>
+</ul>
+</li>
+<li><strong><code>MaxPooling2D((2,2))</code>:</strong> This is the <strong>coarse-graining</strong> step. It down-samples the feature map by a factor of 2, reducing dimensionality and extracting the dominant features from <span class="arithmatex">\(2 \times 2\)</span> blocks. The successive pairing of <code>Conv</code> and <code>Pooling</code> simulates the iterative steps of the <strong>Renormalization Group (RG) flow</strong> through feature space.</li>
+<li><strong><code>Flatten()</code>:</strong> Converts the 2D spatial features into a 1D vector before passing to the final classification unit.</li>
+<li><strong><code>Dense(10, activation='softmax')</code>:</strong> The output layer uses the <strong>Softmax function</strong> (Section 10.8) to convert the final features into a probability distribution over the 10 possible classes (0–9).</li>
+</ol>
+<p>The overall model structure confirms the principle of <strong>hierarchical abstraction</strong>: local rules (convolution) applied repeatedly with coarse-graining (pooling) extract increasingly abstract representations (Section 13.4).</p>
+<h2 id="1313-hierarchical-representations-beyond-vision"><strong>13.13 Hierarchical Representations Beyond Vision</strong></h2>
+<p>The success of <strong>Convolutional Neural Networks (CNNs)</strong> (Sections 13.3, 13.4) in extracting hierarchical features from images is due to the architectural biases of <strong>locality</strong> and <strong>invariance</strong>. These same organizing principles—that complex systems are built from layers of abstraction—apply universally beyond computer vision to diverse domains where structure is key.</p>
+<hr />
+<h3 id="unifying-principle-hierarchical-abstraction"><strong>Unifying Principle: Hierarchical Abstraction</strong></h3>
+<p>Deep networks naturally replicate the pattern of organization found in nature, where simple, microscopic components combine into complex, macroscopic patterns. This principle is consistent across different types of data hierarchies:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Domain</th>
+<th style="text-align: left;">Hierarchy Learned by Network</th>
+<th style="text-align: left;">Analogue in Physical/Information System</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Language (NLP)</strong></td>
+<td style="text-align: left;"><strong>Characters</strong> <span class="arithmatex">\(\to\)</span> <strong>Words</strong> <span class="arithmatex">\(\to\)</span> <strong>Phrases</strong> <span class="arithmatex">\(\to\)</span> <strong>Meaning</strong>.</td>
+<td style="text-align: left;"><strong>Temporal Hierarchy:</strong> The system learns grammar and semantics by building memory over sequential inputs.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Audio</strong></td>
+<td style="text-align: left;"><strong>Waveforms</strong> <span class="arithmatex">\(\to\)</span> <strong>Spectral Patterns</strong> <span class="arithmatex">\(\to\)</span> <strong>Phonemes</strong> <span class="arithmatex">\(\to\)</span> <strong>Words</strong>.</td>
+<td style="text-align: left;"><strong>Frequency-Space Hierarchy:</strong> The network first processes information in the frequency domain before extracting time-domain sequential elements.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Physics</strong></td>
+<td style="text-align: left;"><strong>Microstates</strong> <span class="arithmatex">\(\to\)</span> <strong>Order Parameters</strong> <span class="arithmatex">\(\to\)</span> <strong>Macrostates</strong>.</td>
+<td style="text-align: left;"><strong>Energy Hierarchy:</strong> Successive layers find the collective variables that define the system's phase (e.g., magnetization or density).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Biology</strong></td>
+<td style="text-align: left;"><strong>Molecules</strong> <span class="arithmatex">\(\to\)</span> <strong>Cells</strong> <span class="arithmatex">\(\to\)</span> <strong>Tissues</strong> <span class="arithmatex">\(\to\)</span> <strong>Organ Systems</strong>.</td>
+<td style="text-align: left;"><strong>Functional Hierarchy:</strong> Networks model biological function by processing information at escalating levels of organization.</td>
+</tr>
+</tbody>
+</table>
+<p>The structure of deep learning algorithms—whether recurrent (for time) or convolutional (for space)—is designed to mimic these natural <strong>patterns of information flow</strong>.</p>
+<p>The fundamental goal remains to take high-entropy, microscopic data and distill it into a low-dimensional, high-value representation of the system's abstract state.</p>
+<h2 id="1314-deep-networks-as-physical-systems"><strong>13.14 Deep Networks as Physical Systems</strong></h2>
+<p>The concepts developed across <strong>Volume III</strong>—from the geometry of data to the dynamics of optimization—converge most powerfully in the view that a deep neural network is not just a computational device, but an <strong>artificial physical system</strong>. The principles of physics provide the most accurate and insightful language for describing the network's structure, dynamics, and capacity.</p>
+<hr />
+<h3 id="viewpoint-layer-as-an-effective-energy-operator"><strong>Viewpoint: Layer as an Effective Energy Operator</strong></h3>
+<p>The operations performed by a deep network can be mapped directly onto the concepts of <strong>fields, forces, and energy operators</strong>:</p>
+<ul>
+<li><strong>State and Field:</strong> The input (<span class="arithmatex">\(\mathbf{x}\)</span>) and the outputs of the hidden layers (<span class="arithmatex">\(\mathbf{h}^{(l)}\)</span>) act as the system's <strong>state variables</strong> or <strong>fields</strong>.</li>
+<li><strong>Energy Operator:</strong> Each layer's transformation (the linear mapping <span class="arithmatex">\(W\)</span> and the non-linear activation <span class="arithmatex">\(\phi\)</span>) can be viewed as applying an <strong>effective energy operator</strong> to the state. This operator determines how the field is transformed into a new representation.</li>
+<li><strong>Couplings:</strong> The adjustable <strong>weights (<span class="arithmatex">\(W\)</span>)</strong> are the <strong>couplings</strong> that define the interactions and the total potential energy of the system.</li>
+</ul>
+<hr />
+<h3 id="information-flow-forces-and-dissipation"><strong>Information Flow: Forces and Dissipation</strong></h3>
+<p>The process of learning—the forward and backward pass (Section 12.5)—simulates the flow of information and forces within this physical system:</p>
+<ul>
+<li><strong>Gradients as Forces:</strong> The error signal propagated backward (backpropagation) acts as a <strong>physical force</strong> that drives the system toward minimal potential energy (loss).</li>
+<li><strong>Learning as Dissipation:</strong> The optimization process (e.g., Stochastic Gradient Descent) is a form of <strong>stochastic relaxation</strong> that continuously dissipates energy (loss) via friction (damping) and noise (temperature) until it settles at a low-energy minimum (Chapter 6.7).</li>
+</ul>
+<hr />
+<h3 id="entropyenergy-duality-and-renormalization"><strong>Entropy–Energy Duality and Renormalization</strong></h3>
+<p>Deep learning provides a mechanism for balancing the fundamental thermodynamic quantities:</p>
+<ul>
+<li><strong>Entropy–Energy Duality:</strong> The learning objective (loss minimization) inherently trades <strong>entropy (complexity)</strong> for <strong>energy minimization (representation efficiency)</strong>. The network seeks the most compressed, high-value code that minimizes predictive error.</li>
+<li><strong>Deep Learning as Renormalization Group (RG):</strong> This is the ultimate unifying analogy (Section 13.1). The deep hierarchy of layers, with its successive coarse-graining (pooling) and transformation (convolution/linear map), is mathematically analogous to the steps of the <strong>Renormalization Group in function space</strong>. The network iteratively integrates out high-frequency fluctuations (noise) to reveal the simple, macroscopic order parameters.</li>
+</ul>
+<p>The deep network is, therefore, a universal mathematical tool for discovering the effective, low-energy laws governing high-dimensional data.</p>
+<h2 id="1315-takeaways-bridge-to-chapter-14"><strong>13.15 Takeaways &amp; Bridge to Chapter 14</strong></h2>
+<p>This chapter demonstrated how moving beyond the general-purpose, single-layer models leads to powerful <strong>hierarchical architectures</strong> that embed the geometric structure of the data directly into their design. The ultimate conclusion is that <strong>deep learning mirrors the organization of complexity in nature</strong>.</p>
+<hr />
+<h3 id="key-takeaways-from-chapter-13"><strong>Key Takeaways from Chapter 13</strong></h3>
+<ul>
+<li><strong>Structure from Depth:</strong> Hierarchical networks build sophisticated representations by composing simple, non-linear transformations. This process of layered abstraction is analogous to the <strong>Renormalization Group (RG) flow</strong>, converting microscopic data into macroscopic, emergent features.</li>
+<li><strong>Architectural Inductive Bias:</strong> Specialized designs efficiently model different forms of physical structure:<ul>
+<li><strong>CNNs</strong> capture <strong>spatial locality and invariance</strong>, modeling local field interactions.</li>
+<li><strong>RNNs</strong> capture <strong>temporal memory</strong>, modeling sequential dynamical systems.</li>
+<li><strong>Autoencoders</strong> discover the <strong>latent manifold</strong> or intrinsic coordinates of the data via information compression.</li>
+</ul>
+</li>
+<li><strong>Energy–Entropy Balance:</strong> The stability and generalization of deep networks are governed by the <strong>entropy–energy duality</strong>. Optimization balances minimizing energy (prediction error) with maintaining entropy (regularization) to find robust, low-energy solutions.</li>
+<li><strong>Physical Unification:</strong> Deep learning provides a universal method for discovering the <strong>hierarchy of excitations</strong> in data, progressing from local features to collective order parameters.</li>
+</ul>
+<hr />
+<h3 id="bridge-to-chapter-14-from-representation-to-generation"><strong>Bridge to Chapter 14: From Representation to Generation</strong></h3>
+<p>In <strong>Part IV</strong> so far, our architectures (MLPs, CNNs, RNNs) have primarily focused on <strong>discriminative tasks</strong>: recognizing patterns, classifying inputs, or compressing information. The objective was to learn the function <span class="arithmatex">\(P(y|\mathbf{x})\)</span>.</p>
+<p>The next step is to use the powerful hierarchical representations we've learned to model the <strong>entire underlying probability distribution</strong> <span class="arithmatex">\(P(\mathbf{x})\)</span> itself.</p>
+<ul>
+<li><strong>Challenge:</strong> The most rigorous way to prove a model <em>understands</em> the data is to have it <em>create</em> new, realistic samples.</li>
+<li><strong>The Shift:</strong> We transition from discriminative learning to <strong>generative modeling</strong>.</li>
+<li><strong>Energy Landscape:</strong> The goal shifts to finding the precise mathematical form of the <strong>energy landscape <span class="arithmatex">\(E_{\theta}(\mathbf{x})\)</span></strong> that governs the data distribution.</li>
+</ul>
+<p><strong>Chapter 14: "Energy-Based and Generative Models,"</strong> will explore architectures (like VAEs, GANs, and Boltzmann Machines) that are explicitly designed to <strong>sculpt the energy surface</strong> of the data, enabling them not just to classify, but to <em>imagine</em> and <em>synthesize</em> new realities.</p>
+<hr />
+<div class="admonition tip">
+<p class="admonition-title">Architectural Design Principle: Match Structure to Data</p>
+<p>When designing a deep architecture, choose inductive biases that match the data's intrinsic structure. For <strong>spatial data</strong> (images, physical fields), use CNNs with local kernels and pooling to exploit translation invariance. For <strong>sequential data</strong> (time series, language), use RNNs or Transformers to capture temporal dependencies. For <strong>unstructured tabular data</strong>, fully connected MLPs remain effective. Mismatched architectures force the network to learn structure from scratch, wasting capacity and requiring exponentially more data. The right architectural prior accelerates learning and improves generalization.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">t-SNE Visualization of Learned Manifolds</p>
+<p>Consider a deep autoencoder trained on MNIST digits (Section 13.6). Extract the 2D latent code <span class="arithmatex">\(\mathbf{z}\)</span> for all test images and plot them. The t-SNE projection reveals <strong>10 distinct clusters</strong>, each corresponding to a digit class (0-9). This demonstrates successful <strong>manifold disentanglement</strong>: the encoder has discovered intrinsic coordinates where digit identity becomes a simple, linearly separable property. The latent space acts as a <strong>phase diagram</strong>, with each cluster representing a distinct macrostate. Interpolating between clusters generates smooth morphs (e.g., 3→4), revealing the continuous manifold structure.</p>
+</div>
+<details class="question">
+<summary>Why Do CNNs Outperform MLPs on Images Despite Fewer Parameters?</summary>
+<p>A fully connected MLP treating a <span class="arithmatex">\(28\times28\)</span> image as a 784-dimensional vector has no awareness of spatial structure—pixel correlations must be learned from scratch. A CNN with <span class="arithmatex">\(3\times3\)</span> kernels embeds <strong>local correlation</strong> and <strong>translation invariance</strong> as architectural priors. This reduces parameter count (weight sharing) while enforcing the physical reality that neighboring pixels are strongly correlated. The CNN's inductive bias matches the <strong>2D lattice structure</strong> of images, enabling efficient learning with less data. This principle generalizes: architectural priors that mirror data geometry provide powerful regularization, analogous to imposing symmetry constraints in physical theories.</p>
+</details>
+<h2 id="references"><strong>References</strong></h2>
+<p>[1] LeCun, Y., Bottou, L., Bengio, Y., &amp; Haffner, P. (1998). Gradient-Based Learning Applied to Document Recognition. <em>Proceedings of the IEEE</em>, 86(11), 2278-2324.</p>
+<p>[2] Goodfellow, I., Bengio, Y., &amp; Courville, A. (2016). <em>Deep Learning</em>. MIT Press.</p>
+<p>[3] Hochreiter, S., &amp; Schmidhuber, J. (1997). Long Short-Term Memory. <em>Neural Computation</em>, 9(8), 1735-1780.</p>
+<p>[4] Kingma, D. P., &amp; Welling, M. (2013). Auto-Encoding Variational Bayes. <em>arXiv:1312.6114</em>.</p>
+<p>[5] Hinton, G. E., &amp; Salakhutdinov, R. R. (2006). Reducing the Dimensionality of Data with Neural Networks. <em>Science</em>, 313(5786), 504-507.</p>
+<p>[6] He, K., Zhang, X., Ren, S., &amp; Sun, J. (2016). Deep Residual Learning for Image Recognition. <em>Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition</em>, 770-778.</p>
+<p>[7] Vaswani, A., et al. (2017). Attention Is All You Need. <em>Advances in Neural Information Processing Systems</em>, 30, 5998-6008.</p>
+<p>[8] van der Maaten, L., &amp; Hinton, G. (2008). Visualizing Data using t-SNE. <em>Journal of Machine Learning Research</em>, 9, 2579-2605.</p>
+<p>[9] Mehta, P., &amp; Schwab, D. J. (2014). An Exact Mapping Between the Variational Renormalization Group and Deep Learning. <em>arXiv:1410.3831</em>.</p>
+<p>[10] Carleo, G., &amp; Troyer, M. (2017). Solving the Quantum Many-Body Problem with Artificial Neural Networks. <em>Science</em>, 355(6325), 602-606.</p>
+<hr />
+<div class="admonition tip">
+<p class="admonition-title">Architectural Design Principle: Match Structure to Data</p>
+<p>When designing a deep architecture, choose inductive biases that match the data's intrinsic structure. For <strong>spatial data</strong> (images, physical fields), use CNNs with local kernels and pooling to exploit translation invariance. For <strong>sequential data</strong> (time series, language), use RNNs or Transformers to capture temporal dependencies. For <strong>unstructured tabular data</strong>, fully connected MLPs remain effective. Mismatched architectures force the network to learn structure from scratch, wasting capacity and requiring exponentially more data. The right architectural prior accelerates learning and improves generalization.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">t-SNE Visualization of Learned Manifolds</p>
+<p>Consider a deep autoencoder trained on MNIST digits (Section 13.6). Extract the 2D latent code <span class="arithmatex">\(\mathbf{z}\)</span> for all test images and plot them. The t-SNE projection reveals <strong>10 distinct clusters</strong>, each corresponding to a digit class (0-9). This demonstrates successful <strong>manifold disentanglement</strong>: the encoder has discovered intrinsic coordinates where digit identity becomes a simple, linearly separable property. The latent space acts as a <strong>phase diagram</strong>, with each cluster representing a distinct macrostate. Interpolating between clusters generates smooth morphs (e.g., 3→4), revealing the continuous manifold structure.</p>
+</div>
+<details class="question">
+<summary>Why Do CNNs Outperform MLPs on Images Despite Fewer Parameters?</summary>
+<p>A fully connected MLP treating a <span class="arithmatex">\(28\times28\)</span> image as a 784-dimensional vector has no awareness of spatial structure—pixel correlations must be learned from scratch. A CNN with <span class="arithmatex">\(3\times3\)</span> kernels embeds <strong>local correlation</strong> and <strong>translation invariance</strong> as architectural priors. This reduces parameter count (weight sharing) while enforcing the physical reality that neighboring pixels are strongly correlated. The CNN's inductive bias matches the <strong>2D lattice structure</strong> of images, enabling efficient learning with less data. This principle generalizes: architectural priors that mirror data geometry provide powerful regularization, analogous to imposing symmetry constraints in physical theories.</p>
+</details>
+<h2 id="references_1"><strong>References</strong></h2>
+<p>[1] LeCun, Y., Bottou, L., Bengio, Y., &amp; Haffner, P. (1998). Gradient-Based Learning Applied to Document Recognition. <em>Proceedings of the IEEE</em>, 86(11), 2278-2324.</p>
+<p>[2] Goodfellow, I., Bengio, Y., &amp; Courville, A. (2016). <em>Deep Learning</em>. MIT Press.</p>
+<p>[3] Hochreiter, S., &amp; Schmidhuber, J. (1997). Long Short-Term Memory. <em>Neural Computation</em>, 9(8), 1735-1780.</p>
+<p>[4] Kingma, D. P., &amp; Welling, M. (2013). Auto-Encoding Variational Bayes. <em>arXiv:1312.6114</em>.</p>
+<p>[5] Hinton, G. E., &amp; Salakhutdinov, R. R. (2006). Reducing the Dimensionality of Data with Neural Networks. <em>Science</em>, 313(5786), 504-507.</p>
+<p>[6] He, K., Zhang, X., Ren, S., &amp; Sun, J. (2016). Deep Residual Learning for Image Recognition. <em>Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition</em>, 770-778.</p>
+<p>[7] Vaswani, A., et al. (2017). Attention Is All You Need. <em>Advances in Neural Information Processing Systems</em>, 30, 5998-6008.</p>
+<p>[8] van der Maaten, L., &amp; Hinton, G. (2008). Visualizing Data using t-SNE. <em>Journal of Machine Learning Research</em>, 9, 2579-2605.</p>
+<p>[9] Mehta, P., &amp; Schwab, D. J. (2014). An Exact Mapping Between the Variational Renormalization Group and Deep Learning. <em>arXiv:1410.3831</em>.</p>
+<p>[10] Carleo, G., &amp; Troyer, M. (2017). Solving the Quantum Many-Body Problem with Artificial Neural Networks. <em>Science</em>, 355(6325), 602-606.</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../chapter-12/Chapter-12-Essay/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Chapter-12 The Perceptron and Neural Foundations">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Chapter-12 The Perceptron and Neural Foundations
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../chapter-14/Chapter-14-Essay/" class="md-footer__link md-footer__link--next" aria-label="Next: Chapter-14 Energy-Based and Generative Models">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Chapter-14 Energy-Based and Generative Models
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://bigbookofcomputing.github.io" target="_blank" rel="noopener" title="bigbookofcomputing.github.io" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/bigbookofcomputing" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256c0 120 82.7 220.8 194.2 248.5V334.2h-52.8V256h52.8v-33.7c0-87.1 39.4-127.5 125-127.5 16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H287v175.9C413.8 494.8 512 386.9 512 256"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.youtube.com/@big-book-of-computing" target="_blank" rel="noopener" title="www.youtube.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M549.7 124.1c-6.2-23.7-24.8-42.3-48.3-48.6C458.9 64 288.1 64 288.1 64S117.3 64 74.7 75.5c-23.5 6.3-42 24.9-48.3 48.6C15 167 15 256.4 15 256.4s0 89.4 11.4 132.3c6.3 23.6 24.8 41.5 48.3 47.8C117.3 448 288.1 448 288.1 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zM232.2 337.6V175.2l142.7 81.2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+  
+
+
+<h4>Cookie consent</h4>
+<p>We use cookies to recognize your repeated visits and preferences, as well as to measure the effectiveness of our documentation and whether users find what they're searching for. With your consent, you're helping us to make our documentation better.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="github" checked>
+      <span class="task-list-indicator"></span>
+      GitHub
+    </label>
+  </li>
+
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../static/mathjax-config.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

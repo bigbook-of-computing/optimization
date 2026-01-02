@@ -1,0 +1,5809 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A comprehensive guide to the foundations of optimization algorithms and techniques">
+      
+      
+        <meta name="author" content="Big Book of Computing">
+      
+      
+        <link rel="canonical" href="https://bigbookofcomputing.github.io/chapters/chapter-7/Chapter-7-Essay/">
+      
+      
+        <link rel="prev" href="../../chapter-6/Chapter-6-Essay/">
+      
+      
+        <link rel="next" href="../../chapter-8/Chapter-8-Essay/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Chapter-7 Stochastic & Heuristic Optimization - Big Book of Computing | Optimization</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+      <link rel="stylesheet" href="../../../static/styles.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-ECS7B3X8JM"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-ECS7B3X8JM",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-ECS7B3X8JM",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#7-stochastic-heuristic-optimization" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Big Book of Computing | Optimization" class="md-header__button md-logo" aria-label="Big Book of Computing | Optimization" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Big Book of Computing | Optimization
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter-7 Stochastic & Heuristic Optimization
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1M8 13h8v-2H8zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4a5 5 0 0 0 5-5 5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5M7 15a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/bigbookofcomputing/optimization" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contents/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../introduction/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Introduction
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../chapter-1/Chapter-1-Essay/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapter-1/Chapter-1-WorkBook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  WorkBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapter-1/Chapter-1-CodeBook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  CodeBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapter-1/Chapter-1-Quizes/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Quizes
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapter-1/Chapter-1-Interviews/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Interviews
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Big Book of Computing | Optimization" class="md-nav__button md-logo" aria-label="Big Book of Computing | Optimization" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    Big Book of Computing | Optimization
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/bigbookofcomputing/optimization" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapters
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Chapters
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-outline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Outline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#71-motivation-when-determinism-gets-stuck" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Motivation — When Determinism Gets Stuck
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.1 Motivation — When Determinism Gets Stuck">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-problem-failure-of-determinism-in-rugged-landscapes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Problem: Failure of Determinism in Rugged Landscapes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-need-for-controlled-exploration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Need for Controlled Exploration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical-analogy-thermal-fluctuations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Analogy: Thermal Fluctuations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#72-stochasticity-as-a-physical-force" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Stochasticity as a Physical Force
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.2 Stochasticity as a Physical Force">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#langevin-dynamics-adding-thermal-noise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Langevin Dynamics: Adding Thermal Noise
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stationary-distribution-and-the-boltzmann-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stationary Distribution and the Boltzmann Law
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interpretation-optimization-becomes-thermodynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpretation: Optimization Becomes Thermodynamics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#73-simulated-annealing-cooling-through-landscapes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 Simulated Annealing — Cooling Through Landscapes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.3 Simulated Annealing — Cooling Through Landscapes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#physical-origin-the-metropolis-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Origin: The Metropolis Algorithm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-algorithm-controlled-uphill-moves" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Algorithm: Controlled Uphill Moves
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-guarantee-and-dynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Guarantee and Dynamics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#74-noise-induced-escapes-and-thermodynamic-analogies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 Noise-Induced Escapes and Thermodynamic Analogies
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.4 Noise-Induced Escapes and Thermodynamic Analogies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#barrier-crossing-rate-kramers-theory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Barrier Crossing Rate (Kramers' Theory)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-entropyenergy-trade-off" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Entropy–Energy Trade-off
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analogy-to-learning-annealing-a-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analogy to Learning: Annealing a Model
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#75-genetic-algorithms-evolution-as-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.5 Genetic Algorithms — Evolution as Optimization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.5 Genetic Algorithms — Evolution as Optimization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inspiration-the-darwinian-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inspiration: The Darwinian Algorithm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-iterative-evolutionary-cycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Iterative Evolutionary Cycle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mathematical-and-physical-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mathematical and Physical View
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#76-swarm-and-population-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.6 Swarm and Population Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.6 Swarm and Population Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#particle-swarm-optimization-pso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Particle Swarm Optimization (PSO)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interpretation-collective-dynamics-and-emergence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpretation: Collective Dynamics and Emergence
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-population-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Other Population Methods
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#77-random-search-and-hybrid-strategies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.7 Random Search and Hybrid Strategies
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.7 Random Search and Hybrid Strategies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pure-random-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pure Random Search
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hybrid-strategies-best-of-both-worlds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hybrid Strategies: Best of Both Worlds
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#heuristic-insight-finding-flat-minima" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Heuristic Insight: Finding Flat Minima
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#78-worked-example-simulated-annealing-on-a-rugged-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.8 Worked Example — Simulated Annealing on a Rugged Function
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.8 Worked Example — Simulated Annealing on a Rugged Function">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-rugged-test-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Rugged Test Function
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparative-dynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparative Dynamics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#observation-the-annealing-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observation: The Annealing Process
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#79-code-demo-simulated-annealing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.9 Code Demo — Simulated Annealing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#710-comparing-heuristic-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.10 Comparing Heuristic Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.10 Comparing Heuristic Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#taxonomy-of-global-search-strategies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Taxonomy of Global Search Strategies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unifying-design-principle-exploration-vs-exploitation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unifying Design Principle: Exploration vs. Exploitation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#711-connection-to-physical-ensembles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.11 Connection to Physical Ensembles
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.11 Connection to Physical Ensembles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#thermodynamic-analogy-annealing-ensembles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thermodynamic Analogy: Annealing Ensembles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ensemble-interpretation-parallel-tempering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ensemble Interpretation: Parallel Tempering
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statistical-equilibrium-the-optimizers-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statistical Equilibrium: The Optimizer's Distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#712-takeaways-bridge-to-chapter-8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.12 Takeaways &amp; Bridge to Chapter 8
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.12 Takeaways &amp; Bridge to Chapter 8">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-insights-from-stochastic-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Insights from Stochastic Optimization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bridge-to-chapter-8-the-discrete-frontier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bridge to Chapter 8: The Discrete Frontier
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-16/Chapter-16-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-17/Chapter-17-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-18/Chapter-18-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-19/Chapter-19-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WorkBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    WorkBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-7-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-16/Chapter-16-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-17/Chapter-17-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-18/Chapter-18-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-19/Chapter-19-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CodeBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CodeBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-7-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-16/Chapter-16-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-17/Chapter-17-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-18/Chapter-18-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-19/Chapter-19-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quizes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Quizes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-7-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-16/Chapter-16-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-17/Chapter-17-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-18/Chapter-18-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-19/Chapter-19-Quizes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Interviews
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Interviews
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-7-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-16/Chapter-16-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-17/Chapter-17-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-18/Chapter-18-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-19/Chapter-19-Interviews/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-outline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Outline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#71-motivation-when-determinism-gets-stuck" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Motivation — When Determinism Gets Stuck
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.1 Motivation — When Determinism Gets Stuck">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-problem-failure-of-determinism-in-rugged-landscapes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Problem: Failure of Determinism in Rugged Landscapes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-need-for-controlled-exploration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Need for Controlled Exploration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical-analogy-thermal-fluctuations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Analogy: Thermal Fluctuations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#72-stochasticity-as-a-physical-force" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Stochasticity as a Physical Force
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.2 Stochasticity as a Physical Force">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#langevin-dynamics-adding-thermal-noise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Langevin Dynamics: Adding Thermal Noise
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stationary-distribution-and-the-boltzmann-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stationary Distribution and the Boltzmann Law
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interpretation-optimization-becomes-thermodynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpretation: Optimization Becomes Thermodynamics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#73-simulated-annealing-cooling-through-landscapes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 Simulated Annealing — Cooling Through Landscapes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.3 Simulated Annealing — Cooling Through Landscapes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#physical-origin-the-metropolis-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Origin: The Metropolis Algorithm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-algorithm-controlled-uphill-moves" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Algorithm: Controlled Uphill Moves
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-guarantee-and-dynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Guarantee and Dynamics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#74-noise-induced-escapes-and-thermodynamic-analogies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 Noise-Induced Escapes and Thermodynamic Analogies
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.4 Noise-Induced Escapes and Thermodynamic Analogies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#barrier-crossing-rate-kramers-theory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Barrier Crossing Rate (Kramers' Theory)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-entropyenergy-trade-off" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Entropy–Energy Trade-off
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analogy-to-learning-annealing-a-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analogy to Learning: Annealing a Model
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#75-genetic-algorithms-evolution-as-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.5 Genetic Algorithms — Evolution as Optimization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.5 Genetic Algorithms — Evolution as Optimization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inspiration-the-darwinian-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inspiration: The Darwinian Algorithm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-iterative-evolutionary-cycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Iterative Evolutionary Cycle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mathematical-and-physical-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mathematical and Physical View
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#76-swarm-and-population-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.6 Swarm and Population Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.6 Swarm and Population Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#particle-swarm-optimization-pso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Particle Swarm Optimization (PSO)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interpretation-collective-dynamics-and-emergence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpretation: Collective Dynamics and Emergence
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-population-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Other Population Methods
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#77-random-search-and-hybrid-strategies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.7 Random Search and Hybrid Strategies
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.7 Random Search and Hybrid Strategies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pure-random-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pure Random Search
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hybrid-strategies-best-of-both-worlds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hybrid Strategies: Best of Both Worlds
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#heuristic-insight-finding-flat-minima" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Heuristic Insight: Finding Flat Minima
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#78-worked-example-simulated-annealing-on-a-rugged-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.8 Worked Example — Simulated Annealing on a Rugged Function
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.8 Worked Example — Simulated Annealing on a Rugged Function">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-rugged-test-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Rugged Test Function
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparative-dynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparative Dynamics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#observation-the-annealing-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observation: The Annealing Process
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#79-code-demo-simulated-annealing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.9 Code Demo — Simulated Annealing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#710-comparing-heuristic-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.10 Comparing Heuristic Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.10 Comparing Heuristic Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#taxonomy-of-global-search-strategies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Taxonomy of Global Search Strategies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unifying-design-principle-exploration-vs-exploitation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unifying Design Principle: Exploration vs. Exploitation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#711-connection-to-physical-ensembles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.11 Connection to Physical Ensembles
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.11 Connection to Physical Ensembles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#thermodynamic-analogy-annealing-ensembles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thermodynamic Analogy: Annealing Ensembles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ensemble-interpretation-parallel-tempering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ensemble Interpretation: Parallel Tempering
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statistical-equilibrium-the-optimizers-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statistical Equilibrium: The Optimizer's Distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#712-takeaways-bridge-to-chapter-8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.12 Takeaways &amp; Bridge to Chapter 8
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.12 Takeaways &amp; Bridge to Chapter 8">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-insights-from-stochastic-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Insights from Stochastic Optimization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bridge-to-chapter-8-the-discrete-frontier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bridge to Chapter 8: The Discrete Frontier
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/bigbookofcomputing/optimization/edit/master/docs/chapters/chapter-7/Chapter-7-Essay.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/bigbookofcomputing/optimization/raw/master/docs/chapters/chapter-7/Chapter-7-Essay.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="7-stochastic-heuristic-optimization"><strong>7. Stochastic &amp; Heuristic Optimization</strong></h1>
+<hr />
+<h2 id="introduction"><strong>Introduction</strong></h2>
+<p>The gradient-based methods of Chapters 5 and 6 are powerful workhorses for smooth, continuous optimization. Gradient Descent, SGD, momentum variants, and adaptive methods like Adam excel at exploiting local curvature to navigate loss landscapes efficiently. But their deterministic nature becomes a fatal limitation on rugged, discontinuous, or combinatorial landscapes. When local minima proliferate, when gradients vanish in flat plateaus, or when the parameter space is discrete (no derivatives exist), these methods stall. This chapter explores how <strong>controlled randomness</strong>—stochasticity and heuristics—transforms optimization from a deterministic descent into a thermodynamic search process capable of escaping local traps and finding global solutions.</p>
+<p>We begin with the motivation: understanding when and why gradient methods fail, and why noise is not a bug but a feature. The core framework is <strong>Langevin dynamics</strong>, which adds a thermal force to the gradient flow, converting optimization into a sampling problem governed by the Boltzmann distribution. This physical analogy leads naturally to <strong>Simulated Annealing</strong>, a provably convergent global optimizer that mimics the annealing of metals—starting with high-temperature exploration and cooling into low-energy exploitation. We analyze the thermodynamics of barrier crossing, where the Helmholtz free energy <span class="arithmatex">\(\mathcal{F} = E - TS\)</span> quantifies the exploration-exploitation trade-off, and show how noise-induced escapes enable the system to traverse energy barriers that deterministic flows cannot overcome. Beyond single-particle stochastic dynamics, we examine population-based heuristics like <strong>Genetic Algorithms</strong> and <strong>Particle Swarm Optimization</strong>, which leverage ensemble diversity and collective intelligence to perform parallel global searches. The chapter concludes with hybrid strategies that combine gradient precision with stochastic exploration, practical demonstrations of Simulated Annealing on rugged test functions, and a unifying perspective connecting optimization ensembles to the thermodynamic ensembles of statistical physics.</p>
+<p>By the end of this chapter, you will master the art of controlled randomness: how temperature <span class="arithmatex">\(T\)</span> governs the exploration-exploitation balance, how thermal fluctuations enable barrier crossing, how population ensembles perform robust global searches, and how stochastic optimizers naturally settle into wide, thermodynamically stable basins (flat minima) that generalize better than sharp, overfit solutions. This thermodynamic foundation prepares us for Chapter 8, where we confront the ultimate discrete frontier—combinatorial optimization on Ising models and QUBO formulations—where gradients disappear entirely, and stochastic search becomes the only viable strategy. Randomness, properly controlled, is the key to unlocking global optima on the most challenging landscapes.</p>
+<hr />
+<h2 id="chapter-outline"><strong>Chapter Outline</strong></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Sec.</strong></th>
+<th style="text-align: left;"><strong>Title</strong></th>
+<th style="text-align: left;"><strong>Core Ideas &amp; Examples</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>7.1</strong></td>
+<td style="text-align: left;">Motivation — When Determinism Gets Stuck</td>
+<td style="text-align: left;">Local minima traps, vanishing gradients on plateaus, discrete spaces with no derivatives; thermal fluctuations as exploration mechanism; analogy to physical barrier crossing; Example: rugged loss landscapes where GD stalls</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>7.2</strong></td>
+<td style="text-align: left;">Stochasticity as a Physical Force</td>
+<td style="text-align: left;">Langevin equation <span class="arithmatex">\(\frac{d\mathbf{\theta}}{dt} = -\nabla L + \sqrt{2T}\mathbf{\xi}(t)\)</span>; temperature <span class="arithmatex">\(T\)</span> controls noise magnitude; stationary distribution is Boltzmann <span class="arithmatex">\(p(\mathbf{\theta}) \propto e^{-L(\mathbf{\theta})/T}\)</span>; optimization becomes thermodynamic sampling; Example: overdamped dynamics with thermal force</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>7.3</strong></td>
+<td style="text-align: left;">Simulated Annealing — Cooling Through Landscapes</td>
+<td style="text-align: left;">Metropolis algorithm, acceptance probability <span class="arithmatex">\(P_{\text{acc}} = e^{-\Delta L/T}\)</span>; cooling schedules (exponential, logarithmic); provable convergence to global minimum with slow cooling; Example: annealing from high-<span class="arithmatex">\(T\)</span> exploration to low-<span class="arithmatex">\(T\)</span> exploitation</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>7.4</strong></td>
+<td style="text-align: left;">Noise-Induced Escapes and Thermodynamic Analogies</td>
+<td style="text-align: left;">Kramers' barrier crossing rate <span class="arithmatex">\(\Gamma \sim e^{-\Delta E/T}\)</span>; Helmholtz free energy <span class="arithmatex">\(\mathcal{F} = E - TS\)</span> (energy vs entropy trade-off); high <span class="arithmatex">\(T\)</span> maximizes entropy (exploration), low <span class="arithmatex">\(T\)</span> minimizes energy (exploitation); annealing analogy in training dynamics; Example: thermal escape over energy barriers</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>7.5</strong></td>
+<td style="text-align: left;">Genetic Algorithms — Evolution as Optimization</td>
+<td style="text-align: left;">Population-based evolutionary search; selection (fitness-proportional), crossover (recombination), mutation (random perturbations); replicator equation <span class="arithmatex">\(\dot{p}(\mathbf{\theta}) \propto p(\mathbf{\theta})[F(\mathbf{\theta}) - \bar{F}]\)</span>; non-equilibrium ensemble dynamics; Example: GA on discrete/rugged landscapes</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>7.6</strong></td>
+<td style="text-align: left;">Swarm and Population Methods</td>
+<td style="text-align: left;">Particle Swarm Optimization (PSO): velocity update <span class="arithmatex">\(\mathbf{v}_i \leftarrow \omega \mathbf{v}_i + c_1 r_1 (\mathbf{p}_i - \mathbf{x}_i) + c_2 r_2 (\mathbf{g} - \mathbf{x}_i)\)</span>; collective intelligence, personal best <span class="arithmatex">\(\mathbf{p}_i\)</span> vs global best <span class="arithmatex">\(\mathbf{g}\)</span>; Ant Colony Optimization (pheromone trails), Differential Evolution; Example: cooperative dynamical systems minimizing energy collectively</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>7.7</strong></td>
+<td style="text-align: left;">Random Search and Hybrid Strategies</td>
+<td style="text-align: left;">Pure Random Search (baseline global optimizer, curse of dimensionality); hybrid methods: Random Restart + GD, SGD with Noise Annealing, Evolutionary Gradient Hybrids; exploration (global) vs exploitation (local); finding flat minima (wide basins, better generalization); Example: combining stochastic exploration with gradient refinement</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>7.8</strong></td>
+<td style="text-align: left;">Worked Example — Simulated Annealing on a Rugged Function</td>
+<td style="text-align: left;">Test function <span class="arithmatex">\(L(x,y) = (x^2-1)^2 + (y^2-1)^2 + 0.3\sin(5x)\cos(5y)\)</span> with four deep wells + high-frequency ripples; GD trajectory (trapped in nearest minimum) vs SA trajectory (explores all basins, settles in deepest); three thermodynamic phases: high-<span class="arithmatex">\(T\)</span> exploration, metastable hopping, low-<span class="arithmatex">\(T\)</span> freezing; Example: visualization of annealing process</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>7.9</strong></td>
+<td style="text-align: left;">Code Demo — Simulated Annealing</td>
+<td style="text-align: left;">Python implementation of Metropolis SA algorithm; cooling schedule <span class="arithmatex">\(T \leftarrow \alpha T\)</span> (<span class="arithmatex">\(\alpha=0.995\)</span>); Gaussian random walk proposals; acceptance criterion <span class="arithmatex">\(P = e^{-\Delta L/T}\)</span>; trajectory visualization on contour plot; Example: SA trajectory from <span class="arithmatex">\((2.5, 2.5)\)</span> to global minimum</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>7.10</strong></td>
+<td style="text-align: left;">Comparing Heuristic Methods</td>
+<td style="text-align: left;">Taxonomy: SA (thermal exploration, slow but guaranteed), GA (population evolution, parallel exploration), PSO (collective communication, fast initial convergence), Random Restart + GD (hybrid simplicity); exploration-exploitation trade-off controlled by <span class="arithmatex">\(T\)</span>, mutation rate, inertia <span class="arithmatex">\(\omega\)</span>; Example: comparing convergence behavior and hyperparameter sensitivity</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>7.11</strong></td>
+<td style="text-align: left;">Connection to Physical Ensembles</td>
+<td style="text-align: left;">Thermodynamic analogy: SA as canonical ensemble, GA as non-equilibrium open system, PSO as interacting particle ensemble; Parallel Tempering (multiple replicas at different <span class="arithmatex">\(T\)</span>); stationary distribution <span class="arithmatex">\(p(\mathbf{\theta}) \propto e^{-L/T}\)</span> (optimizer as sampler of solution space); Example: optimization as numerical simulation of thermodynamic equilibration</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>7.12</strong></td>
+<td style="text-align: left;">Takeaways &amp; Bridge to Chapter 8</td>
+<td style="text-align: left;">Randomness as strategic force (controlled <span class="arithmatex">\(T\)</span> enables barrier crossing); thermodynamic framework (Boltzmann distribution, Metropolis algorithm); ensemble search (GA, PSO maintain population diversity); noise as regularization (wide basins generalize better); bridge to discrete spaces: combinatorial optimization on Ising models, QUBO formulations, quantum annealers; Example: transition from continuous stochastic optimization to discrete combinatorial landscapes</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="71-motivation-when-determinism-gets-stuck"><strong>7.1 Motivation — When Determinism Gets Stuck</strong></h2>
+<p>In Chapters 5 and 6, our focus was on refining <strong>gradient-based dynamics</strong>, culminating in sophisticated, momentum-driven optimizers like Adam. These methods excel by efficiently following the steepest descent. However, for a class of problems defined by highly complex or discontinuous energy surfaces, <strong>relying solely on the gradient is a guarantee of failure</strong>.</p>
+<hr />
+<h3 id="the-problem-failure-of-determinism-in-rugged-landscapes"><strong>The Problem: Failure of Determinism in Rugged Landscapes</strong></h3>
+<p>Deterministic and even moderately stochastic gradient descent algorithms fail on complex terrains due to two major, interconnected geometric challenges:</p>
+<ul>
+<li><strong>Local Minima Traps:</strong> Non-convex loss landscapes (characteristic of deep neural networks and complex physical systems like <strong>spin glasses</strong>) contain an exponential number of local minima. A deterministic optimizer, moving only "downhill," will inevitably get stuck in the nearest basin of attraction, which may be a sub-optimal solution far from the global minimum.</li>
+<li><strong>Plateaus and Vanishing Gradients:</strong> In discrete or highly complex, disordered systems, the landscape may feature vast, flat <strong>plateaus</strong> or <strong>ridges</strong> where the gradient <span class="arithmatex">\(\nabla L \approx 0\)</span>. Here, the gradient-based force vanishes, causing the optimizer to stall, even if the region is not a minimum.</li>
+</ul>
+<p>This situation calls for a dynamic that can deliberately violate the local descent principle to <strong>explore</strong> the global structure.</p>
+<hr />
+<h3 id="the-need-for-controlled-exploration"><strong>The Need for Controlled Exploration</strong></h3>
+<p>To overcome the barriers separating local minima and escape flat regions, the optimization process must introduce a means of moving <strong>uphill</strong>, or across regions of zero force, in a controlled manner.</p>
+<ul>
+<li><strong>Controlled Randomness:</strong> This is achieved by strategically injecting <strong>randomness (noise)</strong> into the optimization trajectory. This stochastic force acts as a non-deterministic catalyst for exploration.</li>
+<li><strong>Balancing Act:</strong> The goal of stochastic optimization is to maintain the critical <strong>exploration–exploitation trade-off</strong>:<ul>
+<li><strong>Exploitation:</strong> The optimizer follows the local gradient/descent (like Adam) to refine the solution within a known basin.</li>
+<li><strong>Exploration:</strong> The optimizer uses randomness to jump out of the current basin, seeking potentially deeper, unknown minima elsewhere on the landscape.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="physical-analogy-thermal-fluctuations"><strong>Physical Analogy: Thermal Fluctuations</strong></h3>
+<p>This concept has a direct and powerful analogy in statistical physics.</p>
+<ul>
+<li><strong>Energy Barriers:</strong> In physics, a particle trapped in a potential well (a local minimum) can escape only if it gains sufficient <strong>thermal energy</strong> from its environment.</li>
+<li><strong>Hopping Mechanism:</strong> The probability of a particle gaining energy <span class="arithmatex">\(\Delta E\)</span> to cross a barrier is proportional to the <strong>Boltzmann factor</strong>:</li>
+</ul>
+<div class="arithmatex">\[
+P \propto e^{-\Delta E / k_B T}
+\]</div>
+<p>Stochastic optimization methods, such as Simulated Annealing (Section 7.3), are digital simulations of this thermal process. By treating the objective function <span class="arithmatex">\(L(\mathbf{\theta})\)</span> as the potential energy <span class="arithmatex">\(E(\mathbf{s})\)</span> and introducing a tunable <strong>temperature <span class="arithmatex">\(T\)</span></strong> (energy), we give our optimizer the power to <strong>hop over energy barriers</strong> and find the true ground state.</p>
+<p>The <strong>Goal</strong> of this approach is no longer to just find the nearest minimum, but to find the <strong>global minimum</strong> by balancing downhill descent with barrier-crossing ability.</p>
+<hr />
+<h2 id="72-stochasticity-as-a-physical-force"><strong>7.2 Stochasticity as a Physical Force</strong></h2>
+<p>Having established the need for controlled randomness to escape local traps (Section 7.1), we now mathematically formalize this concept by linking optimization dynamics directly to <strong>statistical mechanics</strong> through the <strong>Langevin equation</strong>. This physical framework is the foundation for treating optimization as a thermodynamic process.</p>
+<hr />
+<h3 id="langevin-dynamics-adding-thermal-noise"><strong>Langevin Dynamics: Adding Thermal Noise</strong></h3>
+<p>In Chapter 5, we described deterministic Gradient Descent as the <strong>overdamped limit</strong> of a physical system—where velocity <span class="arithmatex">\(\mathbf{v}\)</span> is proportional to the force, and inertia (<span class="arithmatex">\(m\)</span>) and thermal noise (<span class="arithmatex">\(T\)</span>) are ignored. To reintroduce exploration, we add an explicit <strong>stochastic (noise) term</strong> <span class="arithmatex">\(\mathbf{\xi}(t)\)</span> to the continuous gradient flow equation:</p>
+<div class="arithmatex">\[
+\frac{d\mathbf{\theta}}{dt} = -\nabla L(\mathbf{\theta}) + \sqrt{2T}\mathbf{\xi}(t)
+\]</div>
+<p>This is the <strong>overdamped Langevin equation</strong> applied to the parameter vector <span class="arithmatex">\(\mathbf{\theta}\)</span>.</p>
+<ul>
+<li><span class="arithmatex">\(-\nabla L(\mathbf{\theta})\)</span> is the <strong>Deterministic Force</strong> (drift or exploitation). It pulls the system toward the local minimum of the loss <span class="arithmatex">\(L\)</span>.</li>
+<li><span class="arithmatex">\(\mathbf{\xi}(t)\)</span> is <strong>White Noise</strong> (exploration). It represents random, uncorrelated forces acting on the particle.</li>
+<li><span class="arithmatex">\(T\)</span> is the effective <strong>Temperature</strong>. This controls the magnitude of the noise and, therefore, the degree of exploration.</li>
+</ul>
+<p>This equation formally defines the parameter updates as a physical process: the particle moves downhill due to the potential force, but is constantly buffeted by thermal energy proportional to <span class="arithmatex">\(T\)</span>.</p>
+<hr />
+<h3 id="stationary-distribution-and-the-boltzmann-law"><strong>Stationary Distribution and the Boltzmann Law</strong></h3>
+<p>A key property of the Langevin equation is that for systems evolving in a potential <span class="arithmatex">\(L(\mathbf{\theta})\)</span>, the dynamics will eventually reach a <strong>stationary (equilibrium) distribution</strong> <span class="arithmatex">\(p(\mathbf{\theta})\)</span>. This distribution is given by the <strong>Boltzmann distribution</strong> (or Gibbs measure):</p>
+<div class="arithmatex">\[
+p(\mathbf{\theta}) \propto e^{-L(\mathbf{\theta})/T}
+\]</div>
+<p>This equation provides a profound <strong>Interpretation</strong>:
+* <strong>Low Energy, High Probability:</strong> States <span class="arithmatex">\(\mathbf{\theta}\)</span> that have a low loss <span class="arithmatex">\(L(\mathbf{\theta})\)</span> (low energy) are visited most frequently.
+* <strong>High Energy, Low Probability:</strong> High-loss states (energy barriers) are visited, but exponentially less frequently, with the visiting rate controlled by <span class="arithmatex">\(T\)</span>.
+* <strong>Temperature Controls Spread:</strong> A high temperature <span class="arithmatex">\(T\)</span> results in a broader, more uniform distribution (more exploration), while a low <span class="arithmatex">\(T\)</span> results in a distribution tightly concentrated around the lowest minima (more exploitation).</p>
+<hr />
+<h3 id="interpretation-optimization-becomes-thermodynamics"><strong>Interpretation: Optimization Becomes Thermodynamics</strong></h3>
+<p>This formulation achieves the core goal of Part III: it equates <strong>optimization with thermodynamics</strong>.</p>
+<ul>
+<li><strong>Minima <span class="arithmatex">\(\leftrightarrow\)</span> Low-Energy States:</strong> The minima of the loss function <span class="arithmatex">\(L(\mathbf{\theta})\)</span> are precisely the <strong>low-energy, high-probability states</strong> of the system at equilibrium.</li>
+<li><strong>Sampling the Posterior:</strong> If we identify the loss <span class="arithmatex">\(L(\mathbf{\theta})\)</span> with the <strong>negative log-likelihood</strong> (Section 2.3), then running a stochastic optimizer for a long time at temperature <span class="arithmatex">\(T\)</span> is equivalent to <strong>sampling from the posterior probability distribution</strong> <span class="arithmatex">\(p(\mathbf{\theta})\)</span>. The optimizer is not just finding a single "best" point (the minimum); it is statistically characterizing the entire ensemble of plausible solutions.</li>
+<li><strong>Tuning Exploration:</strong> The temperature <span class="arithmatex">\(T\)</span> provides a control parameter for adjusting the <strong>exploration-exploitation trade-off</strong>. This forms the basis for the powerful global optimization method of <strong>Simulated Annealing</strong> (Section 7.3).</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Temperature as the Exploration Knob</p>
+<p>Temperature <span class="arithmatex">\(T\)</span> in the Langevin equation acts as a universal control parameter for optimization dynamics. At <span class="arithmatex">\(T=0\)</span>, we recover pure gradient descent (deterministic, exploitative). As <span class="arithmatex">\(T\)</span> increases, the noise term <span class="arithmatex">\(\sqrt{2T}\mathbf{\xi}\)</span> grows, enabling barrier crossing. This maps directly to learning rate schedules: high initial learning rate (high <span class="arithmatex">\(T\)</span>, exploration) gradually annealed to low values (low <span class="arithmatex">\(T\)</span>, exploitation). The Boltzmann distribution <span class="arithmatex">\(p \propto e^{-L/T}\)</span> shows that temperature broadens the probability density—high <span class="arithmatex">\(T\)</span> samples widely, low <span class="arithmatex">\(T\)</span> concentrates on minima.</p>
+</div>
+<hr />
+<h2 id="73-simulated-annealing-cooling-through-landscapes"><strong>7.3 Simulated Annealing — Cooling Through Landscapes</strong></h2>
+<p>The theory of Langevin dynamics (Section 7.2) establishes that by running an optimization at a constant temperature <span class="arithmatex">\(T\)</span>, the system will statistically visit low-loss regions <span class="arithmatex">\(L(\mathbf{\theta})\)</span> with a probability proportional to the Boltzmann factor <span class="arithmatex">\(e^{-L/T}\)</span>. However, maintaining a constant <span class="arithmatex">\(T\)</span> means the system never truly "settles"; it keeps jiggling around the minimum.</p>
+<p><strong>Simulated Annealing (SA)</strong> is a global optimization algorithm that harnesses this thermodynamic principle while introducing a strategy for precise convergence: <strong>slowly cooling the system</strong>.</p>
+<hr />
+<h3 id="physical-origin-the-metropolis-algorithm"><strong>Physical Origin: The Metropolis Algorithm</strong></h3>
+<p>Simulated Annealing is the direct computational analogue of the metallurgical process of <strong>annealing</strong>. Annealing involves heating a material (like steel) to a high temperature, allowing its atoms to freely rearrange, and then slowly cooling it. This process allows the system to escape high-energy, disordered configurations and settle into a low-energy, crystalline structure (the global minimum).</p>
+<p>The core mechanism of SA is the <strong>Metropolis algorithm</strong> (from Volume II), adapted from statistical physics. It defines a rule for accepting non-descending (uphill) moves in the energy landscape.</p>
+<hr />
+<h3 id="the-algorithm-controlled-uphill-moves"><strong>The Algorithm: Controlled Uphill Moves</strong></h3>
+<p>Simulated Annealing iteratively samples the loss landscape <span class="arithmatex">\(L(\mathbf{\theta})\)</span> using a temperature parameter <span class="arithmatex">\(T\)</span> that is decreased over the runtime.</p>
+<ol>
+<li><strong>Initialization:</strong> Start at an initial state <span class="arithmatex">\(\mathbf{\theta}_0\)</span> and a high temperature <span class="arithmatex">\(T_0\)</span>.</li>
+<li><strong>Proposal (<span class="arithmatex">\(\Delta\)</span>):</strong> Propose a small, random change to the current parameters, <span class="arithmatex">\(\mathbf{\theta}' = \mathbf{\theta} + \Delta\)</span>.</li>
+<li><strong>Acceptance Rule:</strong> Compute the change in loss, <span class="arithmatex">\(\Delta L = L(\mathbf{\theta}') - L(\mathbf{\theta})\)</span>.<ul>
+<li><strong>If <span class="arithmatex">\(\Delta L \le 0\)</span> (downhill move):</strong> The move is always accepted.</li>
+<li><strong>If <span class="arithmatex">\(\Delta L &gt; 0\)</span> (uphill move):</strong> The move is accepted with the Boltzmann probability:</li>
+</ul>
+</li>
+</ol>
+<p>$$
+P_{\text{acc}} = e^{-\Delta L/T}
+$$
+4.  <strong>Cooling Schedule:</strong> After a fixed number of steps, the temperature <span class="arithmatex">\(T\)</span> is slowly reduced (e.g., <span class="arithmatex">\(T_{t+1} = \alpha T_t\)</span>, with <span class="arithmatex">\(\alpha \approx 0.999\)</span>).
+5.  <strong>Termination:</strong> The process stops when <span class="arithmatex">\(T\)</span> reaches zero or a minimum tolerance.</p>
+<hr />
+<h3 id="the-guarantee-and-dynamics"><strong>The Guarantee and Dynamics</strong></h3>
+<p>The key to SA is the <strong>cooling schedule</strong> (or annealing schedule).</p>
+<ul>
+<li><strong>High <span class="arithmatex">\(T\)</span> (Fluid Phase):</strong> At the beginning, <span class="arithmatex">\(T\)</span> is large. Since <span class="arithmatex">\(P_{\text{acc}} \approx e^{-\Delta L/T} \to 1\)</span> (even for large <span class="arithmatex">\(\Delta L\)</span>), the optimizer accepts most uphill moves. The system <strong>roams freely</strong> across the rugged landscape, exploring global structure and crossing large energy barriers. This emphasizes <strong>exploration</strong>.</li>
+<li><strong>Decreasing <span class="arithmatex">\(T\)</span> (Cooling):</strong> As <span class="arithmatex">\(T\)</span> slowly decreases, the probability of accepting uphill moves drops exponentially. The system becomes increasingly selective, allowing only smaller and smaller <span class="arithmatex">\(\Delta L\)</span>.</li>
+<li><strong>Low <span class="arithmatex">\(T\)</span> (Solid Phase):</strong> When <span class="arithmatex">\(T \to 0\)</span>, the acceptance probability for uphill moves approaches zero. The process reverts to pure downhill descent (like GD), ensuring precise convergence into the bottom of the deepest basin it has found. This emphasizes <strong>exploitation</strong>.</li>
+</ul>
+<p>Theoretically, with a sufficiently slow (logarithmic) cooling schedule, <strong>Simulated Annealing is guaranteed to converge to the true global minimum</strong> of the loss landscape, a guarantee that no gradient-based local method possesses.</p>
+<hr />
+<h2 id="74-noise-induced-escapes-and-thermodynamic-analogies"><strong>7.4 Noise-Induced Escapes and Thermodynamic Analogies</strong></h2>
+<p>The success of Stochastic and Heuristic Optimization methods relies entirely on understanding how <strong>temperature (<span class="arithmatex">\(T\)</span>)</strong> controls the system's ability to overcome energy barriers. This process of <em>noise-induced escape</em> is formalized by concepts from <strong>non-equilibrium thermodynamics</strong>.</p>
+<hr />
+<h3 id="barrier-crossing-rate-kramers-theory"><strong>Barrier Crossing Rate (Kramers' Theory)</strong></h3>
+<p>In a rugged landscape (Section 7.1), the local minima are separated by energy barriers, <span class="arithmatex">\(\Delta E\)</span>. The question is: how quickly can a system with thermal energy <span class="arithmatex">\(T\)</span> escape a well to find a deeper one?</p>
+<p>The answer comes from <strong>Kramers' escape theory</strong>, which models the rate at which a particle escapes a potential well through thermal activation. The escape rate (<span class="arithmatex">\(\Gamma\)</span>) is exponentially dependent on the height of the energy barrier (<span class="arithmatex">\(\Delta E\)</span>) and the temperature (<span class="arithmatex">\(T\)</span>):</p>
+<div class="arithmatex">\[
+\Gamma \sim e^{-\Delta E / T}
+\]</div>
+<ul>
+<li><strong>Interpretation:</strong> For an optimization algorithm (like Simulated Annealing), this rate is the inverse of the expected <strong>waiting time</strong> before the optimizer can jump a ridge and find a new basin.<ul>
+<li><strong>High Barrier (<span class="arithmatex">\(\Delta E\)</span>):</strong> The rate is exponentially small; the optimizer is trapped.</li>
+<li><strong>High Temperature (<span class="arithmatex">\(T\)</span>):</strong> The rate is large; the optimizer escapes easily, promoting global search.</li>
+</ul>
+</li>
+</ul>
+<p>Kramers' theory confirms that for an optimization to reach the global minimum, it must possess enough effective thermal energy to overcome the largest energy barrier separating its current state from the global optimum.</p>
+<hr />
+<h3 id="the-entropyenergy-trade-off"><strong>The Entropy–Energy Trade-off</strong></h3>
+<p>The optimization process can be viewed as the continuous search for the minimum of the <strong>Helmholtz Free Energy (<span class="arithmatex">\(\mathcal{F}\)</span>)</strong>, which represents the fundamental trade-off between energy and entropy (Chapter 2.2, 7.2):</p>
+<div class="arithmatex">\[
+\mathcal{F} = E - T S
+\]</div>
+<p>In the context of the loss landscape, we can draw the following analogy:</p>
+<ul>
+<li><strong>Energy (<span class="arithmatex">\(E\)</span>):</strong> Analogous to the average <strong>Loss <span class="arithmatex">\(L(\mathbf{\theta})\)</span></strong>. The goal is to minimize this term (Exploitation).</li>
+<li><strong>Entropy (<span class="arithmatex">\(S\)</span>):</strong> Analogous to the <strong>volume of explored space</strong> or the diversity of the parameter distribution <span class="arithmatex">\(p(\mathbf{\theta})\)</span>. The system seeks to maximize this term (Exploration).</li>
+</ul>
+<p>The temperature <span class="arithmatex">\(T\)</span> acts as the <strong>Lagrange multiplier</strong> balancing these two competing goals:</p>
+<ul>
+<li><strong>High <span class="arithmatex">\(T\)</span>:</strong> The <span class="arithmatex">\(-TS\)</span> term dominates. The system prefers states with high entropy (wide parameter distribution), promoting <strong>exploration</strong> over accuracy. This is the phase of global search.</li>
+<li><strong>Low <span class="arithmatex">\(T\)</span>:</strong> The <span class="arithmatex">\(E\)</span> term dominates. The system collapses to states with minimal energy (minimal loss <span class="arithmatex">\(L\)</span>), promoting <strong>exploitation</strong> and precise local tuning. This is the phase of refinement.</li>
+</ul>
+<hr />
+<h3 id="analogy-to-learning-annealing-a-model"><strong>Analogy to Learning: Annealing a Model</strong></h3>
+<p>This thermodynamic analogy provides a physical justification for the best practices observed in machine learning:</p>
+<ul>
+<li><strong>Early Training <span class="arithmatex">\(\leftrightarrow\)</span> High Temperature:</strong> When models are initialized randomly, the uncertainty (entropy) is high. We use high learning rates (<span class="arithmatex">\(\eta\)</span>) and often high noise (small batch size) to explore broadly, acting as a high-temperature random search. This prevents the model from collapsing into a poor local minimum early on.</li>
+<li><strong>Late Training <span class="arithmatex">\(\leftrightarrow\)</span> Cooling Phase:</strong> As the model nears a minimum, we must reduce the learning rate (<span class="arithmatex">\(\eta \to 0\)</span>) (Section 5.7) or the effective temperature <span class="arithmatex">\(T\)</span> (Simulated Annealing). This gradual cooling allows the system to organize into a low-energy, highly structured state, achieving precise convergence.</li>
+</ul>
+<hr />
+<h2 id="75-genetic-algorithms-evolution-as-optimization"><strong>7.5 Genetic Algorithms — Evolution as Optimization</strong></h2>
+<p>While Stochastic Gradient Descent and Simulated Annealing (Sections 7.2–7.4) leverage the physics of <em>thermal fluctuations</em> to explore the optimization landscape, <strong>Genetic Algorithms (GAs)</strong> draw inspiration from a different, yet equally fundamental, natural process: <strong>biological evolution</strong>. GAs frame optimization as an ongoing, non-equilibrium competition for fitness.</p>
+<hr />
+<h3 id="inspiration-the-darwinian-algorithm"><strong>Inspiration: The Darwinian Algorithm</strong></h3>
+<p>The core idea of GAs is to model the search for an optimal solution <span class="arithmatex">\(\mathbf{\theta}^*\)</span> as the evolution of a population of candidate solutions, driven by natural selection.</p>
+<ul>
+<li><strong>Population:</strong> A set of candidate solutions <span class="arithmatex">\(\mathcal{P} = \{\mathbf{\theta}_1, \mathbf{\theta}_2, \dots, \mathbf{\theta}_N\}\)</span>, where each <span class="arithmatex">\(\mathbf{\theta}_i\)</span> is an individual (or genotype).</li>
+<li><strong>Fitness:</strong> The objective function is inverted: the loss function <span class="arithmatex">\(L(\mathbf{\theta})\)</span> becomes the <strong>cost</strong>, and the <strong>fitness</strong> <span class="arithmatex">\(F(\mathbf{\theta})\)</span> is defined such that it is maximized (e.g., <span class="arithmatex">\(F = -L\)</span> or <span class="arithmatex">\(F=1/(L+\epsilon)\)</span>).</li>
+<li><strong>Optimization:</strong> The algorithm iteratively applies the three pillars of evolution—<strong>Selection, Crossover, and Mutation</strong>—to evolve the population toward higher average fitness.</li>
+</ul>
+<hr />
+<h3 id="the-iterative-evolutionary-cycle"><strong>The Iterative Evolutionary Cycle</strong></h3>
+<p>A GA proceeds through repeated cycles (generations) to produce successively fitter solutions:</p>
+<ol>
+<li><strong>Initialization:</strong> Create a diverse starting population <span class="arithmatex">\(\mathcal{P}_0\)</span> of random parameter vectors <span class="arithmatex">\(\mathbf{\theta}_i\)</span>.</li>
+<li><strong>Evaluation:</strong> Calculate the fitness <span class="arithmatex">\(F_i\)</span> for every individual <span class="arithmatex">\(\mathbf{\theta}_i\)</span> in the current population <span class="arithmatex">\(\mathcal{P}_t\)</span>.</li>
+<li><strong>Selection:</strong> Choose a subset of individuals from <span class="arithmatex">\(\mathcal{P}_t\)</span> to be <strong>parents</strong> for the next generation. Selection methods (like tournament selection or roulette wheel selection) bias reproduction toward high-fitness individuals.</li>
+<li><strong>Crossover (Recombination):</strong> Selected parents <span class="arithmatex">\(\mathbf{\theta}_A\)</span> and <span class="arithmatex">\(\mathbf{\theta}_B\)</span> exchange large segments of their parameter vectors (their "genetic code") to create new offspring <span class="arithmatex">\(\mathbf{\theta}_{\text{offspring}}\)</span>. This explores new regions by combining successful existing features.</li>
+<li><strong>Mutation:</strong> Apply a small, random perturbation to the parameters of the offspring. This provides local <strong>exploration</strong> and prevents the population from stagnating at local optima.</li>
+<li><strong>Replacement:</strong> The new generation <span class="arithmatex">\(\mathcal{P}_{t+1}\)</span> replaces the old, and the process repeats.</li>
+</ol>
+<hr />
+<h3 id="mathematical-and-physical-view"><strong>Mathematical and Physical View</strong></h3>
+<p>GAs map the statistical mechanics of non-equilibrium systems onto the optimization task.</p>
+<ul>
+<li><strong>Non-Equilibrium Ensemble:</strong> A GA operates not on a single particle like gradient descent, but on an <strong>ensemble</strong> (the population). Since the environment (the fitness landscape) is fixed and the population constantly introduces mutations (energy flow), the system remains far from thermodynamic equilibrium.</li>
+<li><strong>Equation of Evolution:</strong> The mathematical underpinning is often related to the <strong>replicator equation</strong> in evolutionary game theory, where the change in the probability density <span class="arithmatex">\(p(\mathbf{\theta})\)</span> of a trait is proportional to the difference between its fitness <span class="arithmatex">\(F(\mathbf{\theta})\)</span> and the average fitness <span class="arithmatex">\(\bar{F}\)</span> of the population:</li>
+</ul>
+<div class="arithmatex">\[
+\dot{p}(\mathbf{\theta}) \propto p(\mathbf{\theta}) [F(\mathbf{\theta}) - \bar{F}]
+\]</div>
+<ul>
+<li><strong>Optimization as Selection Pressure:</strong> The entire process is a form of <strong>stochastic optimization</strong> under continuous <strong>selection pressure</strong>. Crossover efficiently transfers large blocks of successful parameters, accelerating convergence toward low-cost regions, while mutation ensures the system retains the <strong>entropy (diversity)</strong> necessary to jump small barriers. GAs are particularly effective on highly rugged or discrete landscapes where gradient information is non-existent or misleading.</li>
+</ul>
+<div class="admonition example">
+<p class="admonition-title">Genetic Algorithm as Population Dynamics</p>
+<p>Genetic Algorithms transform optimization into biological evolution: the parameter space becomes a gene pool, loss function becomes survival fitness, and optimization becomes natural selection. Consider optimizing a 100-dimensional binary vector (e.g., feature selection). GAs maintain a population of 50 candidates. Each generation: (1) Select top 25 by fitness (low loss); (2) Crossover pairs by swapping random 50-bit segments, creating 50 offspring; (3) Mutate 2% of bits randomly. High-fitness traits (good parameter combinations) spread through the population via crossover, while mutation maintains diversity to escape local traps. This ensemble search explores 50 locations simultaneously.</p>
+</div>
+<hr />
+<h2 id="76-swarm-and-population-methods"><strong>7.6 Swarm and Population Methods</strong></h2>
+<p>Moving beyond single-particle stochastic dynamics (Simulated Annealing) and population evolution (Genetic Algorithms), <strong>Swarm and Population Methods</strong> utilize the principle of <strong>collective intelligence</strong> for global optimization. These algorithms model the search process as a system of interacting agents or "particles" that share information to cooperatively seek the low-loss regions of the landscape.</p>
+<hr />
+<h3 id="particle-swarm-optimization-pso"><strong>Particle Swarm Optimization (PSO)</strong></h3>
+<p><strong>Particle Swarm Optimization (PSO)</strong>, inspired by the social behavior of bird flocks or fish schools, is the canonical example of this approach. Each particle is a complete candidate solution (<span class="arithmatex">\(\mathbf{x}_i \equiv \mathbf{\theta}_i\)</span>) that maintains both its current position and its velocity (<span class="arithmatex">\(\mathbf{v}_i\)</span>).</p>
+<p>A particle updates its velocity based on three weighted components in each iteration:</p>
+<ol>
+<li><strong>Inertia (<span class="arithmatex">\(\omega\)</span>):</strong> The particle's previous velocity, providing momentum for exploration.</li>
+<li><strong>Cognitive Component (<span class="arithmatex">\(c_1\)</span>):</strong> The influence of the particle's <strong>personal best</strong> past position (<span class="arithmatex">\(\mathbf{p}_i\)</span>), promoting <strong>exploitation</strong> of successful historical states.</li>
+<li><strong>Social Component (<span class="arithmatex">\(c_2\)</span>):</strong> The influence of the <strong>global best</strong> position (<span class="arithmatex">\(\mathbf{g}\)</span>) found by <em>any</em> particle in the entire swarm, promoting <strong>global exploration</strong> towards the best known point.</li>
+</ol>
+<p>The updated position and velocity are given by:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\mathbf{v}_i &amp;\leftarrow \omega \mathbf{v}_i + c_1 r_1 (\mathbf{p}_i - \mathbf{x}_i) + c_2 r_2 (\mathbf{g} - \mathbf{x}_i) \\
+\mathbf{x}_i &amp;\leftarrow \mathbf{x}_i + \mathbf{v}_i
+\end{aligned}
+\]</div>
+<p>(Where <span class="arithmatex">\(r_1\)</span> and <span class="arithmatex">\(r_2\)</span> are random numbers for stochasticity).</p>
+<hr />
+<h3 id="interpretation-collective-dynamics-and-emergence"><strong>Interpretation: Collective Dynamics and Emergence</strong></h3>
+<p>PSO transforms the optimization problem into a <strong>cooperative dynamical system</strong>.</p>
+<ul>
+<li><strong>Collective Intelligence:</strong> The particles' individual search efforts are amplified by sharing the global best position <span class="arithmatex">\(\mathbf{g}\)</span>. The best information is rapidly diffused throughout the entire ensemble, leading to fast convergence.</li>
+<li><strong>Analogy:</strong> PSO simulates <strong>interacting particles seeking low-energy states cooperatively</strong>. The parameters (<span class="arithmatex">\(\mathbf{x}_i\)</span>) are analogous to positions, and the fitness differential (<span class="arithmatex">\(\mathbf{p}_i - \mathbf{x}_i\)</span>) acts like a force or potential field.</li>
+<li><strong>Energy Minimization:</strong> The overall system minimizes energy (loss) by balancing its internal drive to return to past success (<span class="arithmatex">\(\mathbf{p}_i\)</span>) with its social drive to follow the group's best known position (<span class="arithmatex">\(\mathbf{g}\)</span>).</li>
+</ul>
+<hr />
+<h3 id="other-population-methods"><strong>Other Population Methods</strong></h3>
+<p>The swarm concept extends beyond PSO to other bio-inspired algorithms:</p>
+<ul>
+<li><strong>Ant Colony Optimization (ACO):</strong> Models the shortest path search (e.g., in graph problems) using agents that deposit <strong>pheromone trails</strong>. This models indirect, distributed communication—the strength of the pheromone on a path determines the probability of future agents following it.</li>
+<li><strong>Differential Evolution (DE):</strong> A population-based method that uses vector differences between members of the population to perturb and combine solutions, operating on mutation and selection.</li>
+</ul>
+<p>All these methods offer a robust alternative to gradient-based techniques by maintaining a diverse <strong>ensemble of solutions</strong>, ensuring broad exploration and resistance to individual local traps.</p>
+<hr />
+<h2 id="77-random-search-and-hybrid-strategies"><strong>7.7 Random Search and Hybrid Strategies</strong></h2>
+<p>Pure heuristic and population-based methods (Sections 7.3–7.6) thrive on rugged or discrete landscapes where gradient information is poor or absent. However, in continuous, differentiable spaces, the most potent optimization strategies often emerge by <strong>combining the efficiency of the gradient</strong> (exploitation) with the <strong>global reach of stochastic methods</strong> (exploration).</p>
+<hr />
+<h3 id="pure-random-search"><strong>Pure Random Search</strong></h3>
+<p>The conceptual baseline for all stochastic methods is <strong>Pure Random Search (RS)</strong>. This non-directional strategy simply samples points <span class="arithmatex">\(\mathbf{\theta}\)</span> uniformly (or from a simple distribution like a Gaussian) across the entire search space, evaluates the loss <span class="arithmatex">\(L(\mathbf{\theta})\)</span>, and keeps the best solution found.</p>
+<ul>
+<li><strong>Strengths:</strong> It is the ultimate global optimizer, guaranteed to find the global minimum if run for an infinite time. It is entirely unbiased by local features.</li>
+<li><strong>Weaknesses:</strong> It is exponentially inefficient in high-dimensional spaces, a victim of the curse of dimensionality (Chapter 2.4). The probability of blindly sampling a good minimum in a vast space is minuscule.</li>
+</ul>
+<hr />
+<h3 id="hybrid-strategies-best-of-both-worlds"><strong>Hybrid Strategies: Best of Both Worlds</strong></h3>
+<p>The practical success of most modern global optimizers comes from <strong>hybridizing</strong> stochastic and gradient-based components, using randomness to perform the expensive global search and using gradients for the cheap local refinement.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Hybrid Component</th>
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Analogy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Random Restart + GD</strong></td>
+<td style="text-align: left;">The algorithm runs multiple instances of Gradient Descent (GD) or Adam, each initialized from a random starting point (<span class="arithmatex">\(\mathbf{\theta}_0\)</span>). After each run converges to a local minimum, it is discarded, and a new random start is initiated.</td>
+<td style="text-align: left;">Random drops of a marble onto a mountain range. The random drop provides <strong>global exploration</strong>, while GD provides <strong>local exploitation</strong>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>SGD with Noise Annealing</strong></td>
+<td style="text-align: left;">This method explicitly combines the deterministic flow of the gradient with thermal noise. The dynamics are precisely the Langevin dynamics of Section 7.2: <span class="arithmatex">\(\dot{\mathbf{\theta}} = -\nabla L + \sqrt{2T}\mathbf{\xi}\)</span>. The optimizer <strong>anneals</strong> by slowly decaying the learning rate <span class="arithmatex">\(\eta \to 0\)</span> or the noise temperature <span class="arithmatex">\(T \to 0\)</span> (Section 7.4).</td>
+<td style="text-align: left;">A heated rod cooling in a viscous liquid. The noise term explores, and the gradient term pulls to the average local energy.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Evolutionary Gradient Hybrids</strong></td>
+<td style="text-align: left;">These combine Genetic Algorithms (GAs) with gradient steps. For example, after the GA performs mutation and crossover (global search), a small subset of the population might undergo a few steps of local Gradient Descent to fine-tune their parameters before the next selection phase.</td>
+<td style="text-align: left;">A blend of natural selection and individual learning.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="heuristic-insight-finding-flat-minima"><strong>Heuristic Insight: Finding Flat Minima</strong></h3>
+<p>Hybrid and noise-based strategies share a common philosophical outcome: they tend to find solutions that are not just deep, but <strong>flat</strong>.</p>
+<ul>
+<li>High noise and repeated restarts force the optimizer to explore a larger volume of the parameter space.</li>
+<li>Solutions residing in wide, shallow basins (flat minima) offer a larger <strong>basin of attraction</strong>.</li>
+<li>The system thus preferentially settles into these robust, wide regions rather than sharp, spiky local minima.</li>
+</ul>
+<p>This <strong>heuristic insight</strong> confirms the practical value of the thermal analogy (Chapter 7.4): the noise required for global exploration often yields better <strong>generalization</strong> by steering the optimizer towards thermodynamically stable solutions.</p>
+<hr />
+<h2 id="78-worked-example-simulated-annealing-on-a-rugged-function"><strong>7.8 Worked Example — Simulated Annealing on a Rugged Function</strong></h2>
+<p>To illustrate the critical advantage of stochastic methods (Chapter 7.1), this example contrasts the behavior of a deterministic gradient-based optimizer (Chapter 5) with the thermodynamic exploration of <strong>Simulated Annealing (SA)</strong> on a difficult, non-convex landscape.</p>
+<hr />
+<h3 id="the-rugged-test-function"><strong>The Rugged Test Function</strong></h3>
+<p>We use a 2D function that possesses both a discernible global structure (a wide, low-energy region) and high-frequency, smaller local traps. This function is an extension of the convex quadratic bowl (Chapter 4.7) with a high-frequency trigonometric perturbation:</p>
+<div class="arithmatex">\[
+L(x,y) = (x^2 - 1)^2 + (y^2 - 1)^2 + 0.3\sin(5x)\cos(5y)
+\]</div>
+<ul>
+<li><strong>Global Structure:</strong> The first term, <span class="arithmatex">\((x^2 - 1)^2 + (y^2 - 1)^2\)</span>, creates <strong>four deep wells</strong> centered roughly at <span class="arithmatex">\((\pm 1, \pm 1)\)</span>. These are the principal low-energy basins.</li>
+<li><strong>Ruggedness:</strong> The second term, <span class="arithmatex">\(0.3\sin(5x)\cos(5y)\)</span>, superimposes numerous small, high-frequency <strong>local minima and ridges</strong> across the entire surface.</li>
+</ul>
+<p>The goal of the optimization is to find the true <strong>global minimum</strong> among the four major wells, ideally converging to <span class="arithmatex">\(L(x,y)=0\)</span> (or near-zero).</p>
+<hr />
+<h3 id="comparative-dynamics"><strong>Comparative Dynamics</strong></h3>
+<p>We compare two distinct optimization dynamics, starting from a generic initial position, e.g., <span class="arithmatex">\(\mathbf{\theta}_0 = (2.5, 2.5)\)</span>:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Optimizer</th>
+<th style="text-align: left;">Dynamics</th>
+<th style="text-align: left;">Trajectory Observation</th>
+<th style="text-align: left;">Conclusion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Gradient Descent (GD)</strong></td>
+<td style="text-align: left;"><strong>Deterministic flow</strong> (<span class="arithmatex">\(T=0\)</span> limit).</td>
+<td style="text-align: left;">The trajectory will immediately descend into the <strong>nearest local minimum</strong> (the basin centered at <span class="arithmatex">\((1, 1)\)</span> or <span class="arithmatex">\((2, 2)\)</span> depending on starting point) and <strong>stall there permanently</strong>.</td>
+<td style="text-align: left;"><strong>Trapped.</strong> The optimizer lacks the energy to overcome the nearest energy barrier, failing to find the potentially deeper global minimum.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Simulated Annealing (SA)</strong></td>
+<td style="text-align: left;"><strong>Thermodynamic search</strong> (<span class="arithmatex">\(T \to 0\)</span> schedule).</td>
+<td style="text-align: left;">The trajectory will <strong>explore broadly</strong> at high <span class="arithmatex">\(T\)</span>, then <strong>cross high barriers</strong> separating the four main wells, and finally <strong>settle into the deepest basin</strong> (global minimum) as <span class="arithmatex">\(T \to 0\)</span>.</td>
+<td style="text-align: left;"><strong>Global Search.</strong> The temperature allows the particle to <em>tunnel through</em> or <em>hop over</em> the barriers, guaranteeing a near-optimal solution.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="observation-the-annealing-process"><strong>Observation: The Annealing Process</strong></h3>
+<p>The SA trajectory reveals the three thermodynamic phases (Section 7.4):
+1.  <strong>High <span class="arithmatex">\(T\)</span> (Exploration):</strong> The step size is randomized, allowing the optimizer to jump between the four major basins, sampling a large volume of parameter space. The system has high entropy.
+2.  <strong>Intermediate <span class="arithmatex">\(T\)</span> (Metastable Hopping):</strong> The system begins to preferentially visit the lowest energy wells but still has enough energy to occasionally jump between them, focusing the search on the global low-loss region.
+3.  <strong>Low <span class="arithmatex">\(T\)</span> (Freezing):</strong> As the cooling schedule takes over, the random steps are accepted only if they are downhill. The system "freezes" into the single deepest minimum it has found, dissipating its remaining thermal energy.</p>
+<p>This example proves that <strong>randomness is a necessary, strategic tool</strong> for global optimization on complex, high-barrier energy landscapes.</p>
+<details class="question">
+<summary>Why Does Cooling Schedule Matter?</summary>
+<p>The cooling schedule in Simulated Annealing controls the exploration-exploitation transition. Too fast cooling (e.g., <span class="arithmatex">\(T_{t+1} = 0.9 T_t\)</span>): the system freezes before exploring all basins, trapping in a suboptimal local minimum (quenching). Too slow cooling (e.g., <span class="arithmatex">\(T_{t+1} = 0.9999 T_t\)</span>): guaranteed global convergence but computationally prohibitive. Optimal schedules (logarithmic <span class="arithmatex">\(T \propto 1/\log(t)\)</span> theoretically, exponential <span class="arithmatex">\(T_{t+1} = \alpha T_t\)</span> with <span class="arithmatex">\(\alpha \approx 0.95-0.999\)</span> practically) balance: early high-<span class="arithmatex">\(T\)</span> phase allows barrier crossing via Kramers escape rate <span class="arithmatex">\(\Gamma \sim e^{-\Delta E/T}\)</span>, late low-<span class="arithmatex">\(T\)</span> phase ensures precise convergence into deepest discovered basin.</p>
+</details>
+<hr />
+<h2 id="79-code-demo-simulated-annealing"><strong>7.9 Code Demo — Simulated Annealing</strong></h2>
+<p>This demonstration implements the core mechanics of the <strong>Simulated Annealing (SA) algorithm</strong> (Section 7.3) on the highly <strong>rugged 2D test function</strong> defined in Section 7.8. The code simulates the particle's thermodynamic journey, showcasing how the gradually decreasing temperature <span class="arithmatex">\(T\)</span> transitions the optimization from broad global exploration to precise local exploitation.</p>
+<hr />
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># --- 1. Define the Rugged Loss Function (Energy Landscape) ---</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">def</span><span class="w"> </span><span class="nf">L</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;The non-convex loss function with four major wells and high-frequency ripples.&quot;&quot;&quot;</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="c1"># Global structure: four deep wells at (±1, ±1)</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="n">L_global</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="c1"># Local roughness: high-frequency perturbation</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="n">L_perturb</span> <span class="o">=</span> <span class="mf">0.3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">5</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">5</span><span class="o">*</span><span class="n">y</span><span class="p">)</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="k">return</span> <span class="n">L_global</span> <span class="o">+</span> <span class="n">L_perturb</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="c1"># --- 2. Simulated Annealing Implementation ---</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">])</span> <span class="c1"># Initial parameter vector (starting position)</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="n">T</span> <span class="o">=</span> <span class="mf">1.0</span>                      <span class="c1"># Initial high temperature (T0 = 1.0)</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="n">trajectory</span> <span class="o">=</span> <span class="p">[</span><span class="n">theta</span><span class="o">.</span><span class="n">copy</span><span class="p">()]</span>  <span class="c1"># List to store the history of theta</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2000</span><span class="p">):</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>    <span class="c1"># Propose a random move (Gaussian random walk)</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>    <span class="c1"># The magnitude of the random step (0.2) controls local exploration scale</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>    <span class="n">proposal</span> <span class="o">=</span> <span class="n">theta</span> <span class="o">+</span> <span class="mf">0.2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>    <span class="c1"># Calculate the change in Loss (dL = E&#39; - E)</span>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>    <span class="n">dL</span> <span class="o">=</span> <span class="n">L</span><span class="p">(</span><span class="o">*</span><span class="n">proposal</span><span class="p">)</span> <span class="o">-</span> <span class="n">L</span><span class="p">(</span><span class="o">*</span><span class="n">theta</span><span class="p">)</span>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>    <span class="c1"># Acceptance probability P_acc = min(1, exp(-dL / T))</span>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>    <span class="c1"># This is the core thermodynamic rule (Metropolis criterion)</span>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">dL</span> <span class="o">/</span> <span class="n">T</span><span class="p">):</span>
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>        <span class="n">theta</span> <span class="o">=</span> <span class="n">proposal</span> <span class="c1"># Accept the move (either downhill or lucky uphill)</span>
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>    <span class="n">trajectory</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">theta</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>    <span class="c1"># Annealing/Cooling Schedule (T gradually decays)</span>
+</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>    <span class="n">T</span> <span class="o">*=</span> <span class="mf">0.995</span>  <span class="c1"># Slow cooling rate</span>
+</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>
+</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a><span class="n">trajectory</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">trajectory</span><span class="p">)</span>
+</span><span id="__span-0-39"><a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>
+</span><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a><span class="c1"># --- 3. Visualization ---</span>
+</span><span id="__span-0-41"><a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a><span class="c1"># Define the contour space for the loss function L(x,y)</span>
+</span><span id="__span-0-42"><a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+</span><span id="__span-0-43"><a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+</span><span id="__span-0-44"><a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a><span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</span><span id="__span-0-45"><a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a><span class="n">Z</span> <span class="o">=</span> <span class="n">L</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+</span><span id="__span-0-46"><a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a>
+</span><span id="__span-0-47"><a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+</span><span id="__span-0-48"><a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a><span class="c1"># Plot the loss landscape contours</span>
+</span><span id="__span-0-49"><a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a><span class="n">plt</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
+</span><span id="__span-0-50"><a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a><span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Loss Value L(x,y)&#39;</span><span class="p">)</span>
+</span><span id="__span-0-51"><a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a>
+</span><span id="__span-0-52"><a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a><span class="c1"># Plot the SA trajectory</span>
+</span><span id="__span-0-53"><a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">trajectory</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">trajectory</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;SA Trajectory (T$_0$=</span><span class="si">{</span><span class="mf">1.0</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+</span><span id="__span-0-54"><a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">trajectory</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">trajectory</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Start (2.5, 2.5)&#39;</span><span class="p">)</span>
+</span><span id="__span-0-55"><a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">trajectory</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">trajectory</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gold&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;End/Converged State&#39;</span><span class="p">)</span>
+</span><span id="__span-0-56"><a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a>
+</span><span id="__span-0-57"><a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Simulated Annealing Trajectory on Rugged Loss Landscape&#39;</span><span class="p">)</span>
+</span><span id="__span-0-58"><a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Parameter $x$&#39;</span><span class="p">)</span>
+</span><span id="__span-0-59"><a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Parameter $y$&#39;</span><span class="p">)</span>
+</span><span id="__span-0-60"><a id="__codelineno-0-60" name="__codelineno-0-60" href="#__codelineno-0-60"></a><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</span><span id="__span-0-61"><a id="__codelineno-0-61" name="__codelineno-0-61" href="#__codelineno-0-61"></a><span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+</span><span id="__span-0-62"><a id="__codelineno-0-62" name="__codelineno-0-62" href="#__codelineno-0-62"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</span></code></pre></div>
+<hr />
+<p><strong>Interpretation:</strong></p>
+<p>The resulting plot visually captures the <strong>annealing process</strong>:</p>
+<ol>
+<li><strong>High-T Exploration (Beginning of Trajectory):</strong> The initial steps (near <span class="arithmatex">\(t=0\)</span>) show the trajectory wandering widely across the surface. The high temperature allows the particle to accept many uphill moves, easily escaping the local ripples and crossing the major ridges separating the four global wells. The system is in a high-entropy state.</li>
+<li><strong>Low-T Freezing (End of Trajectory):</strong> As <span class="arithmatex">\(T\)</span> decays (<span class="arithmatex">\(\alpha=0.995\)</span>), the probability of accepting uphill moves drops exponentially. The trajectory quickly confines itself to one of the deepest, low-energy wells. It performs precise, local steps within this final basin, effectively <strong>freezing</strong> into the deepest minimum found during the entire search.</li>
+</ol>
+<p>This demonstration is a digital simulation of thermal relaxation, where the optimizer's final state is the result of a <strong>thermodynamic cooling process</strong> designed to settle the system into its global ground state.</p>
+<hr />
+<hr />
+<h2 id="710-comparing-heuristic-methods"><strong>7.10 Comparing Heuristic Methods</strong></h2>
+<p>Heuristic optimization encompasses a diverse family of algorithms, each designed to tackle the global search problem on complex landscapes (Chapter 7.1) by embracing randomness and exploration. While they share the goal of finding a global minimum without relying on continuous gradients, they employ distinct mechanisms, drawing analogies from physics, biology, and collective behavior.</p>
+<hr />
+<h3 id="taxonomy-of-global-search-strategies"><strong>Taxonomy of Global Search Strategies</strong></h3>
+<p>We can categorize the primary stochastic and heuristic methods based on their driving metaphor and search strategy:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Method</th>
+<th style="text-align: left;">Core Mechanism</th>
+<th style="text-align: left;">Strengths</th>
+<th style="text-align: left;">Weaknesses</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Simulated Annealing (SA)</strong></td>
+<td style="text-align: left;"><strong>Thermal exploration</strong>. Single particle randomly moves, accepts uphill steps based on a Boltzmann probability <span class="arithmatex">\(e^{-\Delta L/T}\)</span>.</td>
+<td style="text-align: left;">Strong theoretical guarantee of convergence to the global minimum (if cooling is slow enough). Highly effective at <strong>escaping local minima</strong>.</td>
+<td style="text-align: left;">Convergence can be <strong>extremely slow</strong>; the cooling schedule is sensitive and hard to tune.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Genetic Algorithm (GA)</strong></td>
+<td style="text-align: left;"><strong>Population evolution</strong>. Uses selection pressure, crossover (recombination), and mutation (random perturbations).</td>
+<td style="text-align: left;">Inherently parallel and maintains population diversity, enabling simultaneous exploration of <strong>multiple basins</strong>. Robust on discrete and discontinuous problems.</td>
+<td style="text-align: left;">High number of hyperparameters (mutation rate, population size, crossover type). Can be slower than SA for fine-tuning.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Particle Swarm Optimization (PSO)</strong></td>
+<td style="text-align: left;"><strong>Collective communication</strong>. Particles follow their own best position (<span class="arithmatex">\(\mathbf{p}_i\)</span>) and the global best (<span class="arithmatex">\(\mathbf{g}\)</span>).</td>
+<td style="text-align: left;">Simple to implement and often exhibits <strong>fast convergence</strong> in the early stages due to rapid information sharing across the swarm.</td>
+<td style="text-align: left;">May prematurely <strong>stagnate</strong> (collapse to a single region) if the social component dominates the cognitive component.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Random Restart + GD</strong></td>
+<td style="text-align: left;"><strong>Hybrid deterministic–stochastic</strong>. Performs local descent from multiple, random initial positions.</td>
+<td style="text-align: left;">Simple, easy to implement, and often effective on landscapes with many local minima but no extremely high barriers.</td>
+<td style="text-align: left;">The deterministic descent phase is trapped by the nearest local trap. Needs a very large number of restarts in vast parameter spaces.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="unifying-design-principle-exploration-vs-exploitation"><strong>Unifying Design Principle: Exploration vs. Exploitation</strong></h3>
+<p>Despite their differing mechanisms, all heuristic methods are ultimately unified by how they manage the <strong>exploration–exploitation trade-off</strong>:</p>
+<ul>
+<li><strong>SA:</strong> Uses <strong>temperature (<span class="arithmatex">\(T\)</span>)</strong> as the control knob. High <span class="arithmatex">\(T\)</span> favors exploration (high entropy); low <span class="arithmatex">\(T\)</span> favors exploitation (low energy).</li>
+<li><strong>GA:</strong> Uses <strong>mutation rate</strong> and <strong>population diversity</strong> as control knobs. High mutation favors exploration; strong selection pressure favors exploitation.</li>
+<li><strong>PSO:</strong> Uses the <strong>inertia <span class="arithmatex">\(\omega\)</span></strong> and the social/cognitive coefficients (<span class="arithmatex">\(c_1, c_2\)</span>) as control knobs. High inertia and strong social influence favor exploration; strong cognitive pull favors exploitation.</li>
+</ul>
+<p>All these techniques trade time (computational cost) for robustness (likelihood of finding the true optimum). They generalize the concept of optimization beyond a single deterministic trajectory, suggesting that for complex problems, the solution is best found by exploring a broad <strong>ensemble of possible configurations</strong>.</p>
+<hr />
+<h2 id="711-connection-to-physical-ensembles"><strong>7.11 Connection to Physical Ensembles</strong></h2>
+<p>The stochastic and heuristic optimization methods discussed in this chapter, especially those involving populations or noise, establish a fundamental connection between computation and the <strong>thermodynamics of ensembles</strong> in statistical physics. The optimization process can be viewed as a numerical simulation of a large collection of particles (solutions) seeking a common, low-energy equilibrium state.</p>
+<hr />
+<h3 id="thermodynamic-analogy-annealing-ensembles"><strong>Thermodynamic Analogy: Annealing Ensembles</strong></h3>
+<p>Optimization is analogous to <strong>annealing a system from a high-entropy state to a low-entropy state</strong>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Optimization Concept</th>
+<th style="text-align: left;">Physical Ensemble Analogue</th>
+<th style="text-align: left;">Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Simulated Annealing (SA)</strong></td>
+<td style="text-align: left;"><strong>Canonical Ensemble</strong>.</td>
+<td style="text-align: left;">A single system explores all states at a fixed temperature <span class="arithmatex">\(T\)</span> before being cooled.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Genetic Algorithms (GA)</strong></td>
+<td style="text-align: left;"><strong>Non-Equilibrium Open System</strong>.</td>
+<td style="text-align: left;">A collection of particles (solutions) evolves under constant external energy flow (selection pressure/mutation).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Swarm Methods (PSO)</strong></td>
+<td style="text-align: left;"><strong>Interacting Particle Ensemble</strong>.</td>
+<td style="text-align: left;">Multiple particles (solutions) interact and communicate, leading to collective, coherent motion toward an attractor.</td>
+</tr>
+</tbody>
+</table>
+<p>In all cases, the optimization algorithm models the dynamics of a thermodynamic ensemble, where low loss is equivalent to low energy.</p>
+<hr />
+<h3 id="ensemble-interpretation-parallel-tempering"><strong>Ensemble Interpretation: Parallel Tempering</strong></h3>
+<p>Some advanced heuristic techniques explicitly mimic thermodynamic strategies designed to address the problem of local traps in complex energy landscapes.</p>
+<ul>
+<li><strong>Parallel Tempering (Exchange Monte Carlo):</strong> This physical sampling technique runs <strong>multiple replicas</strong> of the system simultaneously, each at a <strong>different, fixed temperature</strong> (<span class="arithmatex">\(T_1, T_2, \dots\)</span>). High-temperature replicas explore the entire space easily (high entropy), while low-temperature replicas converge precisely (low energy). Periodically, the replicas attempt to <strong>exchange states</strong> based on a Metropolis acceptance criterion.</li>
+<li><strong>Connection to Heuristics:</strong> The idea of maintaining multiple, parallel searches at different exploration levels is reflected in population-based methods like <strong>Genetic Algorithms</strong> and <strong>Particle Swarm Optimization</strong>. These methods achieve efficiency by exploiting the diversity of the ensemble: while some particles/individuals refine local solutions (exploitation), others explore distant, high-energy regions (exploration).</li>
+</ul>
+<hr />
+<h3 id="statistical-equilibrium-the-optimizers-distribution"><strong>Statistical Equilibrium: The Optimizer's Distribution</strong></h3>
+<p>The most profound connection lies in the <strong>stationary distribution</strong> of stochastic optimizers (Section 7.2).</p>
+<p>The continuous operation of a stochastic optimizer (like SGD or Simulated Annealing) on the loss landscape <span class="arithmatex">\(L(\mathbf{\theta})\)</span> does not result in a single, static solution, but in a fluctuating distribution of parameter states <span class="arithmatex">\(p(\mathbf{\theta})\)</span>. At equilibrium, this distribution is Boltzmann-like:</p>
+<div class="arithmatex">\[
+p(\mathbf{\theta}) \propto e^{-L(\mathbf{\theta})/T}
+\]</div>
+<p>This means that the optimizer does not simply find the most probable point (the minimum, <span class="arithmatex">\(\mathbf{\theta}_{\text{MAP}}\)</span>); it spends time proportional to the theoretical probability density of all possible good solutions.</p>
+<ul>
+<li><strong>Interpretation:</strong> The optimization process, especially when stochastic, is a continuous <strong>sampler</strong> of the solution space. The heuristics are simply the numerical rules governing the movement within this high-dimensional probability density. This firmly links the dynamics of learning to the fundamental laws of classical statistical physics.</li>
+</ul>
+<hr />
+<h2 id="712-takeaways-bridge-to-chapter-8"><strong>7.12 Takeaways &amp; Bridge to Chapter 8</strong></h2>
+<p>This chapter completed our exploration of how optimization dynamics can harness <strong>randomness</strong> to overcome the structural challenges (local minima, discrete states) inherent in complex energy landscapes. We established the deep, mathematical equivalence between optimization and thermodynamics.</p>
+<hr />
+<h3 id="key-insights-from-stochastic-optimization"><strong>Key Insights from Stochastic Optimization</strong></h3>
+<p>We transitioned from the deterministic dynamics of the gradient to the probabilistic dynamics of the <strong>ensemble</strong>.</p>
+<ul>
+<li><strong>Randomness as a Strategic Force:</strong> Noise is not a bug; it is a feature. Controlled stochasticity, proportional to the effective <strong>temperature (<span class="arithmatex">\(T\)</span>)</strong>, provides the energy necessary to <strong>hop over barriers</strong> and avoid local minima traps.</li>
+<li><strong>The Thermodynamic Framework:</strong> Methods like <strong>Simulated Annealing (SA)</strong> are literal implementations of the Metropolis algorithm. They leverage the <strong>Boltzmann distribution</strong> <span class="arithmatex">\(p(\mathbf{\theta}) \propto e^{-L(\mathbf{\theta})/T}\)</span> to ensure that the search process is statistically guaranteed to favor the global low-loss states if <span class="arithmatex">\(T\)</span> is cooled slowly (annealed).</li>
+<li><strong>Ensemble Search:</strong> Heuristics like <strong>Genetic Algorithms (GA)</strong> and <strong>Particle Swarm Optimization (PSO)</strong> utilize large populations to perform simultaneous, parallel searches across the landscape. This ensemble-based approach is robust against individual failures and accelerates global exploration through communication (PSO) or recombination (GA).</li>
+<li><strong>Generalization Insight:</strong> The thermal analogy explains why <strong>noise is regularization</strong>. Sufficient exploration ensures the optimizer settles into wide, <strong>thermodynamically stable</strong> basins (flat minima), which yield solutions that generalize better than sharp, overfit minima.</li>
+</ul>
+<hr />
+<h3 id="bridge-to-chapter-8-the-discrete-frontier"><strong>Bridge to Chapter 8: The Discrete Frontier</strong></h3>
+<p>While the methods in this chapter, particularly Simulated Annealing, can handle highly rugged continuous loss functions, they are especially crucial for problems in <strong>discrete parameter spaces</strong>.</p>
+<ul>
+<li>In continuous optimization (Chapters 5, 6), the loss function <span class="arithmatex">\(L\)</span> is differentiable, providing an explicit <strong>force</strong> (<span class="arithmatex">\(\nabla L\)</span>).</li>
+<li>In <strong>Combinatorial Optimization</strong>, variables are discrete (e.g., <span class="arithmatex">\(x_i \in \{0, 1\}\)</span> or <span class="arithmatex">\(\sigma_i \in \{-1, +1\}\)</span>), such as finding the optimal route in the Traveling Salesman Problem or the ground state of an Ising spin system.<ul>
+<li>Here, <span class="arithmatex">\(L\)</span> is defined only on an exponential number of discrete points; it is non-differentiable everywhere else. The gradient <span class="arithmatex">\(\nabla L\)</span> is zero or meaningless.</li>
+</ul>
+</li>
+</ul>
+<p>We must use pure stochastic search, which relies on state-flipping, to explore this space. The language of spin systems and energy minimization becomes the <strong>language of the problem itself</strong>.</p>
+<p>In <strong>Chapter 8: "Combinatorial Optimization and QUBO,"</strong> we will formalize this connection, showing how discrete problems can be universally mapped onto the <strong>Ising Model</strong> and its associated energy minimization problem, thus building a bridge toward specialized hardware like <strong>quantum annealers</strong>.</p>
+<h2 id="references"><strong>References</strong></h2>
+<p>[1] Kirkpatrick, S., Gelatt, C. D., &amp; Vecchi, M. P. (1983). Optimization by Simulated Annealing. <em>Science</em>, 220(4598), 671–676.</p>
+<p>[2] Metropolis, N., Rosenbluth, A. W., Rosenbluth, M. N., Teller, A. H., &amp; Teller, E. (1953). Equation of State Calculations by Fast Computing Machines. <em>Journal of Chemical Physics</em>, 21(6), 1087–1092.</p>
+<p>[3] Kramers, H. A. (1940). Brownian motion in a field of force and the diffusion model of chemical reactions. <em>Physica</em>, 7(4), 284–304.</p>
+<p>[4] Holland, J. H. (1992). <em>Adaptation in Natural and Artificial Systems</em>. MIT Press.</p>
+<p>[5] Kennedy, J., &amp; Eberhart, R. (1995). Particle swarm optimization. <em>Proceedings of ICNN'95 - International Conference on Neural Networks</em>, 4, 1942–1948.</p>
+<p>[6] Mandt, S., Hoffman, M. D., &amp; Blei, D. M. (2017). Stochastic Gradient Descent as Approximate Bayesian Inference. <em>JMLR</em>, 18(1), 4873–4907.</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../chapter-6/Chapter-6-Essay/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Chapter-6 Advanced Gradient Dynamics">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Chapter-6 Advanced Gradient Dynamics
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../chapter-8/Chapter-8-Essay/" class="md-footer__link md-footer__link--next" aria-label="Next: Chapter-8 Combinatorial Optimization and QUBO">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Chapter-8 Combinatorial Optimization and QUBO
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://bigbookofcomputing.github.io" target="_blank" rel="noopener" title="bigbookofcomputing.github.io" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/bigbookofcomputing" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256c0 120 82.7 220.8 194.2 248.5V334.2h-52.8V256h52.8v-33.7c0-87.1 39.4-127.5 125-127.5 16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H287v175.9C413.8 494.8 512 386.9 512 256"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.youtube.com/@big-book-of-computing" target="_blank" rel="noopener" title="www.youtube.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M549.7 124.1c-6.2-23.7-24.8-42.3-48.3-48.6C458.9 64 288.1 64 288.1 64S117.3 64 74.7 75.5c-23.5 6.3-42 24.9-48.3 48.6C15 167 15 256.4 15 256.4s0 89.4 11.4 132.3c6.3 23.6 24.8 41.5 48.3 47.8C117.3 448 288.1 448 288.1 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zM232.2 337.6V175.2l142.7 81.2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+  
+
+
+<h4>Cookie consent</h4>
+<p>We use cookies to recognize your repeated visits and preferences, as well as to measure the effectiveness of our documentation and whether users find what they're searching for. With your consent, you're helping us to make our documentation better.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="github" checked>
+      <span class="task-list-indicator"></span>
+      GitHub
+    </label>
+  </li>
+
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../static/mathjax-config.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
