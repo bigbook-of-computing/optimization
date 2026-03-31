@@ -2,7 +2,6 @@ site_name: Big Book of Computing | Optimization
 site_description: A comprehensive guide to the foundations of optimization algorithms and techniques
 site_author: Big Book of Computing
 site_url: https://bigbookofcomputing.github.io
-site_language: en
 
 repo_url: https://github.com/bigbookofcomputing/optimization
 
@@ -68,11 +67,9 @@ markdown_extensions:
       noclasses: true
       pygments_style: manni
 
-  
-
-  
 theme:
   name: 'material'
+  language: en
   #custom_dir: overrides
   highlightjs: true
   hljs_languages: [python]
@@ -185,159 +182,75 @@ extra:
 
 
 nav:
-- Home: index.md
+- Home: home.md
 - Contents: chapters/contents.md
 - Introduction: chapters/introduction.md
 
 
 - Chapters:
-  - Chapter-1 From Simulation to Data: chapters/chapter-1/Chapter-1-Essay.md
-  - Chapter-2 Statistics & Probability in High Dimensions: chapters/chapter-2/Chapter-2-Essay.md
-  - Chapter-3 Dimensionality Reduction & Clustering: chapters/chapter-3/Chapter-3-Essay.md
-  - Chapter-4 The Optimization Landscape: chapters/chapter-4/Chapter-4-Essay.md
-  - Chapter-5 Gradient Methods — The Workhorses: chapters/chapter-5/Chapter-5-Essay.md
-  - Chapter-6 Advanced Gradient Dynamics: chapters/chapter-6/Chapter-6-Essay.md
-  - Chapter-7 Stochastic & Heuristic Optimization: chapters/chapter-7/Chapter-7-Essay.md  
-  - Chapter-8 Combinatorial Optimization and QUBO: chapters/chapter-8/Chapter-8-Essay.md
-  - Chapter-9 Bayesian Thinking and Inference: chapters/chapter-9/Chapter-9-Essay.md
-  - Chapter-10 Regression & Classification — The Linear Family: chapters/chapter-10/Chapter-10-Essay.md
-  - Chapter-11 Graphical Models & Probabilistic Graphs: chapters/chapter-11/Chapter-11-Essay.md
-  - Chapter-12 The Perceptron and Neural Foundations: chapters/chapter-12/Chapter-12-Essay.md
-  - Chapter-13 Hierarchical Representation Learning: chapters/chapter-13/Chapter-13-Essay.md
-  - Chapter-14 Energy-Based and Generative Models: chapters/chapter-14/Chapter-14-Essay.md
-  - Chapter-15 Reinforcement Learning and Control: chapters/chapter-15/Chapter-15-Essay.md
-  - Chapter-16 Physics-Informed Neural Networks (PINNs): chapters/chapter-16/Chapter-16-Essay.md
-  - Chapter-17 Neural Quantum States (NQS): chapters/chapter-17/Chapter-17-Essay.md
-  - Chapter-18 Graph Neural Networks (GNNs): chapters/chapter-18/Chapter-18-Essay.md
-  - Chapter-19 Transformers and Global Correlation: chapters/chapter-19/Chapter-19-Essay.md
+  - Chapter-1 From Simulation to Data: chapters/chapter-1/essay.md
+  - Chapter-2 Statistics & Probability in High Dimensions: chapters/chapter-2/essay.md
+  - Chapter-3 Dimensionality Reduction & Clustering: chapters/chapter-3/essay.md
+  - Chapter-4 The Optimization Landscape: chapters/chapter-4/essay.md
+  - Chapter-5 Gradient Methods — The Workhorses: chapters/chapter-5/essay.md
+  - Chapter-6 Advanced Gradient Dynamics: chapters/chapter-6/essay.md
+  - Chapter-7 Stochastic & Heuristic Optimization: chapters/chapter-7/essay.md  
+  - Chapter-8 Combinatorial Optimization and QUBO: chapters/chapter-8/essay.md
+  - Chapter-9 Bayesian Thinking and Inference: chapters/chapter-9/essay.md
+  - Chapter-10 Regression & Classification — The Linear Family: chapters/chapter-10/essay.md
+  - Chapter-11 Graphical Models & Probabilistic Graphs: chapters/chapter-11/essay.md
+  - Chapter-12 The Perceptron and Neural Foundations: chapters/chapter-12/essay.md
+  - Chapter-13 Hierarchical Representation Learning: chapters/chapter-13/essay.md
+  - Chapter-14 Energy-Based and Generative Models: chapters/chapter-14/essay.md
+  - Chapter-15 Reinforcement Learning and Control: chapters/chapter-15/essay.md
+  - Chapter-16 Physics-Informed Neural Networks (PINNs): chapters/chapter-16/essay.md
+  - Chapter-17 Neural Quantum States (NQS): chapters/chapter-17/essay.md
+  - Chapter-18 Graph Neural Networks (GNNs): chapters/chapter-18/essay.md
+  - Chapter-19 Transformers and Global Correlation: chapters/chapter-19/essay.md
 
 
 - WorkBooks:
-  - Chapter-1 From Simulation to Data: chapters/chapter-1/Chapter-1-WorkBook.md
-  - Chapter-2 Statistics & Probability in High Dimensions: chapters/chapter-2/Chapter-2-WorkBook.md
-  - Chapter-3 Dimensionality Reduction & Clustering: chapters/chapter-3/Chapter-3-WorkBook.md
-  - Chapter-4 The Optimization Landscape: chapters/chapter-4/Chapter-4-WorkBook.md
-  - Chapter-5 Gradient Methods — The Workhorses: chapters/chapter-5/Chapter-5-WorkBook.md
-  - Chapter-6 Advanced Gradient Dynamics: chapters/chapter-6/Chapter-6-WorkBook.md
-  - Chapter-7 Stochastic & Heuristic Optimization: chapters/chapter-7/Chapter-7-WorkBook.md 
-  - Chapter-8 Combinatorial Optimization and QUBO: chapters/chapter-8/Chapter-8-WorkBook.md
-  - Chapter-9 Bayesian Thinking and Inference: chapters/chapter-9/Chapter-9-WorkBook.md
-  - Chapter-10 Regression & Classification — The Linear Family: chapters/chapter-10/Chapter-10-WorkBook.md
-  - Chapter-11 Graphical Models & Probabilistic Graphs: chapters/chapter-11/Chapter-11-WorkBook.md
-  - Chapter-12 The Perceptron and Neural Foundations: chapters/chapter-12/Chapter-12-WorkBook.md
-  - Chapter-13 Hierarchical Representation Learning: chapters/chapter-13/Chapter-13-WorkBook.md
-  - Chapter-14 Energy-Based and Generative Models: chapters/chapter-14/Chapter-14-WorkBook.md 
-  - Chapter-15 Reinforcement Learning and Control: chapters/chapter-15/Chapter-15-WorkBook.md
-  - Chapter-16 Physics-Informed Neural Networks (PINNs): chapters/chapter-16/Chapter-16-WorkBook.md
-  - Chapter-17 Neural Quantum States (NQS): chapters/chapter-17/Chapter-17-WorkBook.md
-  - Chapter-18 Graph Neural Networks (GNNs): chapters/chapter-18/Chapter-18-WorkBook.md
-  - Chapter-19 Transformers and Global Correlation: chapters/chapter-19/Chapter-19-WorkBook.md
+  - Chapter-1 From Simulation to Data: chapters/chapter-1/workbook.md
+  - Chapter-2 Statistics & Probability in High Dimensions: chapters/chapter-2/workbook.md
+  - Chapter-3 Dimensionality Reduction & Clustering: chapters/chapter-3/workbook.md
+  - Chapter-4 The Optimization Landscape: chapters/chapter-4/workbook.md
+  - Chapter-5 Gradient Methods — The Workhorses: chapters/chapter-5/workbook.md
+  - Chapter-6 Advanced Gradient Dynamics: chapters/chapter-6/workbook.md
+  - Chapter-7 Stochastic & Heuristic Optimization: chapters/chapter-7/workbook.md 
+  - Chapter-8 Combinatorial Optimization and QUBO: chapters/chapter-8/workbook.md
+  - Chapter-9 Bayesian Thinking and Inference: chapters/chapter-9/workbook.md
+  - Chapter-10 Regression & Classification — The Linear Family: chapters/chapter-10/workbook.md
+  - Chapter-11 Graphical Models & Probabilistic Graphs: chapters/chapter-11/workbook.md
+  - Chapter-12 The Perceptron and Neural Foundations: chapters/chapter-12/workbook.md
+  - Chapter-13 Hierarchical Representation Learning: chapters/chapter-13/workbook.md
+  - Chapter-14 Energy-Based and Generative Models: chapters/chapter-14/workbook.md 
+  - Chapter-15 Reinforcement Learning and Control: chapters/chapter-15/workbook.md
+  - Chapter-16 Physics-Informed Neural Networks (PINNs): chapters/chapter-16/workbook.md
+  - Chapter-17 Neural Quantum States (NQS): chapters/chapter-17/workbook.md
+  - Chapter-18 Graph Neural Networks (GNNs): chapters/chapter-18/workbook.md
+  - Chapter-19 Transformers and Global Correlation: chapters/chapter-19/workbook.md
 
 
 - CodeBooks:
-  - Chapter-1 From Simulation to Data: chapters/chapter-1/Chapter-1-CodeBook.md
-  - Chapter-2 Statistics & Probability in High Dimensions: chapters/chapter-2/Chapter-2-CodeBook.md
-  - Chapter-3 Dimensionality Reduction & Clustering: chapters/chapter-3/Chapter-3-CodeBook.md
-  - Chapter-4 The Optimization Landscape: chapters/chapter-4/Chapter-4-CodeBook.md
-  - Chapter-5 Gradient Methods — The Workhorses: chapters/chapter-5/Chapter-5-CodeBook.md
-  - Chapter-6 Advanced Gradient Dynamics: chapters/chapter-6/Chapter-6-CodeBook.md 
-  - Chapter-7 Stochastic & Heuristic Optimization: chapters/chapter-7/Chapter-7-CodeBook.md
-  - Chapter-8 Combinatorial Optimization and QUBO: chapters/chapter-8/Chapter-8-CodeBook.md
-  - Chapter-9 Bayesian Thinking and Inference: chapters/chapter-9/Chapter-9-CodeBook.md
-  - Chapter-10 Regression & Classification — The Linear Family: chapters/chapter-10/Chapter-10-CodeBook.md
-  - Chapter-11 Graphical Models & Probabilistic Graphs: chapters/chapter-11/Chapter-11-CodeBook.md
-  - Chapter-12 The Perceptron and Neural Foundations: chapters/chapter-12/Chapter-12-CodeBook.md
-  - Chapter-13 Hierarchical Representation Learning: chapters/chapter-13/Chapter-13-CodeBook.md
-  - Chapter-14 Energy-Based and Generative Models: chapters/chapter-14/Chapter-14-CodeBook.md
-  - Chapter-15 Reinforcement Learning and Control: chapters/chapter-15/Chapter-15-CodeBook.md 
-  - Chapter-16 Physics-Informed Neural Networks (PINNs): chapters/chapter-16/Chapter-16-CodeBook.md
-  - Chapter-17 Neural Quantum States (NQS): chapters/chapter-17/Chapter-17-CodeBook.md
-  - Chapter-18 Graph Neural Networks (GNNs): chapters/chapter-18/Chapter-18-CodeBook.md
-  - Chapter-19 Transformers and Global Correlation: chapters/chapter-19/Chapter-19-CodeBook.md
-
-- Quizes:
-  - Chapter-1 From Simulation to Data: chapters/chapter-1/Chapter-1-Quizes.md
-  - Chapter-2 Statistics & Probability in High Dimensions: chapters/chapter-2/Chapter-2-Quizes.md
-  - Chapter-3 Dimensionality Reduction & Clustering: chapters/chapter-3/Chapter-3-Quizes.md
-  - Chapter-4 The Optimization Landscape: chapters/chapter-4/Chapter-4-Quizes.md
-  - Chapter-5 Gradient Methods — The Workhorses: chapters/chapter-5/Chapter-5-Quizes.md
-  - Chapter-6 Advanced Gradient Dynamics: chapters/chapter-6/Chapter-6-Quizes.md 
-  - Chapter-7 Stochastic & Heuristic Optimization: chapters/chapter-7/Chapter-7-Quizes.md
-  - Chapter-8 Combinatorial Optimization and QUBO: chapters/chapter-8/Chapter-8-Quizes.md
-  - Chapter-9 Bayesian Thinking and Inference: chapters/chapter-9/Chapter-9-Quizes.md
-  - Chapter-10 Regression & Classification — The Linear Family: chapters/chapter-10/Chapter-10-Quizes.md
-  - Chapter-11 Graphical Models & Probabilistic Graphs: chapters/chapter-11/Chapter-11-Quizes.md
-  - Chapter-12 The Perceptron and Neural Foundations: chapters/chapter-12/Chapter-12-Quizes.md
-  - Chapter-13 Hierarchical Representation Learning: chapters/chapter-13/Chapter-13-Quizes.md
-  - Chapter-14 Energy-Based and Generative Models: chapters/chapter-14/Chapter-14-Quizes.md
-  - Chapter-15 Reinforcement Learning and Control: chapters/chapter-15/Chapter-15-Quizes.md 
-  - Chapter-16 Physics-Informed Neural Networks (PINNs): chapters/chapter-16/Chapter-16-Quizes.md
-  - Chapter-17 Neural Quantum States (NQS): chapters/chapter-17/Chapter-17-Quizes.md
-  - Chapter-18 Graph Neural Networks (GNNs): chapters/chapter-18/Chapter-18-Quizes.md
-  - Chapter-19 Transformers and Global Correlation: chapters/chapter-19/Chapter-19-Quizes.md
+  - Chapter-1 From Simulation to Data: chapters/chapter-1/codebook.md
+  - Chapter-2 Statistics & Probability in High Dimensions: chapters/chapter-2/codebook.md
+  - Chapter-3 Dimensionality Reduction & Clustering: chapters/chapter-3/codebook.md
+  - Chapter-4 The Optimization Landscape: chapters/chapter-4/codebook.md
+  - Chapter-5 Gradient Methods — The Workhorses: chapters/chapter-5/codebook.md
+  - Chapter-6 Advanced Gradient Dynamics: chapters/chapter-6/codebook.md 
+  - Chapter-7 Stochastic & Heuristic Optimization: chapters/chapter-7/codebook.md
+  - Chapter-8 Combinatorial Optimization and QUBO: chapters/chapter-8/codebook.md
+  - Chapter-9 Bayesian Thinking and Inference: chapters/chapter-9/codebook.md
+  - Chapter-10 Regression & Classification — The Linear Family: chapters/chapter-10/codebook.md
+  - Chapter-11 Graphical Models & Probabilistic Graphs: chapters/chapter-11/codebook.md
+  - Chapter-12 The Perceptron and Neural Foundations: chapters/chapter-12/codebook.md
+  - Chapter-13 Hierarchical Representation Learning: chapters/chapter-13/codebook.md
+  - Chapter-14 Energy-Based and Generative Models: chapters/chapter-14/codebook.md
+  - Chapter-15 Reinforcement Learning and Control: chapters/chapter-15/codebook.md 
+  - Chapter-16 Physics-Informed Neural Networks (PINNs): chapters/chapter-16/codebook.md
+  - Chapter-17 Neural Quantum States (NQS): chapters/chapter-17/codebook.md
+  - Chapter-18 Graph Neural Networks (GNNs): chapters/chapter-18/codebook.md
+  - Chapter-19 Transformers and Global Correlation: chapters/chapter-19/codebook.md
 
 
-- Interviews:
-  - Chapter-1 From Simulation to Data: chapters/chapter-1/Chapter-1-Interviews.md
-  - Chapter-2 Statistics & Probability in High Dimensions: chapters/chapter-2/Chapter-2-Interviews.md
-  - Chapter-3 Dimensionality Reduction & Clustering: chapters/chapter-3/Chapter-3-Interviews.md
-  - Chapter-4 The Optimization Landscape: chapters/chapter-4/Chapter-4-Interviews.md
-  - Chapter-5 Gradient Methods — The Workhorses: chapters/chapter-5/Chapter-5-Interviews.md
-  - Chapter-6 Advanced Gradient Dynamics: chapters/chapter-6/Chapter-6-Interviews.md 
-  - Chapter-7 Stochastic & Heuristic Optimization: chapters/chapter-7/Chapter-7-Interviews.md
-  - Chapter-8 Combinatorial Optimization and QUBO: chapters/chapter-8/Chapter-8-Interviews.md
-  - Chapter-9 Bayesian Thinking and Inference: chapters/chapter-9/Chapter-9-Interviews.md
-  - Chapter-10 Regression & Classification — The Linear Family: chapters/chapter-10/Chapter-10-Interviews.md
-  - Chapter-11 Graphical Models & Probabilistic Graphs: chapters/chapter-11/Chapter-11-Interviews.md
-  - Chapter-12 The Perceptron and Neural Foundations: chapters/chapter-12/Chapter-12-Interviews.md
-  - Chapter-13 Hierarchical Representation Learning: chapters/chapter-13/Chapter-13-Interviews.md
-  - Chapter-14 Energy-Based and Generative Models: chapters/chapter-14/Chapter-14-Interviews.md
-  - Chapter-15 Reinforcement Learning and Control: chapters/chapter-15/Chapter-15-Interviews.md 
-  - Chapter-16 Physics-Informed Neural Networks (PINNs): chapters/chapter-16/Chapter-16-Interviews.md
-  - Chapter-17 Neural Quantum States (NQS): chapters/chapter-17/Chapter-17-Interviews.md
-  - Chapter-18 Graph Neural Networks (GNNs): chapters/chapter-18/Chapter-18-Interviews.md
-  - Chapter-19 Transformers and Global Correlation: chapters/chapter-19/Chapter-19-Interviews.md
 
-
--Projects:
-  - Chapter-1 From Simulation to Data: chapters/chapter-1/Chapter-1-Projects.md
-  - Chapter-2 Statistics & Probability in High Dimensions: chapters/chapter-2/Chapter-2-Projects.md
-  - Chapter-3 Dimensionality Reduction & Clustering: chapters/chapter-3/Chapter-3-Projects.md
-  - Chapter-4 The Optimization Landscape: chapters/chapter-4/Chapter-4-Projects.md
-  - Chapter-5 Gradient Methods — The Workhorses: chapters/chapter-5/Chapter-5-Projects.md
-  - Chapter-6 Advanced Gradient Dynamics: chapters/chapter-6/Chapter-6-Projects.md 
-  - Chapter-7 Stochastic & Heuristic Optimization: chapters/chapter-7/Chapter-7-Projects.md
-  - Chapter-8 Combinatorial Optimization and QUBO: chapters/chapter-8/Chapter-8-Projects.md
-  - Chapter-9 Bayesian Thinking and Inference: chapters/chapter-9/Chapter-9-Projects.md
-  - Chapter-10 Regression & Classification — The Linear Family: chapters/chapter-10/Chapter-10-Projects.md
-  - Chapter-11 Graphical Models & Probabilistic Graphs: chapters/chapter-11/Chapter-11-Projects.md
-  - Chapter-12 The Perceptron and Neural Foundations: chapters/chapter-12/Chapter-12-Projects.md
-  - Chapter-13 Hierarchical Representation Learning: chapters/chapter-13/Chapter-13-Projects.md
-  - Chapter-14 Energy-Based and Generative Models: chapters/chapter-14/Chapter-14-Projects.md
-  - Chapter-15 Reinforcement Learning and Control: chapters/chapter-15/Chapter-15-Projects.md 
-  - Chapter-16 Physics-Informed Neural Networks (PINNs): chapters/chapter-16/Chapter-16-Projects.md
-  - Chapter-17 Neural Quantum States (NQS): chapters/chapter-17/Chapter-17-Projects.md
-  - Chapter-18 Graph Neural Networks (GNNs): chapters/chapter-18/Chapter-18-Projects.md
-  - Chapter-19 Transformers and Global Correlation: chapters/chapter-19/Chapter-19-Projects.md
-
-  - Research:
-    - Chapter-1 From Simulation to Data: chapters/chapter-1/Chapter-1-Research.md
-    - Chapter-2 Statistics & Probability in High Dimensions: chapters/chapter-2/Chapter-2-Research.md
-    - Chapter-3 Dimensionality Reduction & Clustering: chapters/chapter-3/Chapter-3-Research.md
-    - Chapter-4 The Optimization Landscape: chapters/chapter-4/Chapter-4-Research.md
-    - Chapter-5 Gradient Methods — The Workhorses: chapters/chapter-5/Chapter-5-Research.md
-    - Chapter-6 Advanced Gradient Dynamics: chapters/chapter-6/Chapter-6-Research.md 
-    - Chapter-7 Stochastic & Heuristic Optimization: chapters/chapter-7/Chapter-7-Research.md
-    - Chapter-8 Combinatorial Optimization and QUBO: chapters/chapter-8/Chapter-8-Research.md
-    - Chapter-9 Bayesian Thinking and Inference: chapters/chapter-9/Chapter-9-Research.md
-    - Chapter-10 Regression & Classification — The Linear Family: chapters/chapter-10/Chapter-10-Research.md
-    - Chapter-11 Graphical Models & Probabilistic Graphs: chapters/chapter-11/Chapter-11-Research.md
-    - Chapter-12 The Perceptron and Neural Foundations: chapters/chapter-12/Chapter-12-Research.md
-    - Chapter-13 Hierarchical Representation Learning: chapters/chapter-13/Chapter-13-Research.md
-    - Chapter-14 Energy-Based and Generative Models: chapters/chapter-14/Chapter-14-Research.md
-    - Chapter-15 Reinforcement Learning and Control: chapters/chapter-15/Chapter-15-Research.md 
-    - Chapter-16 Physics-Informed Neural Networks (PINNs): chapters/chapter-16/Chapter-16-Research.md
-    - Chapter-17 Neural Quantum States (NQS): chapters/chapter-17/Chapter-17-Research.md
-    - Chapter-18 Graph Neural Networks (GNNs): chapters/chapter-18/Chapter-18-Research.md
-    - Chapter-19 Transformers and Global Correlation: chapters/chapter-19/Chapter-19-Research.md
-  
