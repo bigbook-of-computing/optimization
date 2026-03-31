@@ -1,4 +1,4 @@
-# **Chapter 13: Hierarchical Representation Learning () () () (Workbook)**
+# **Chapter 13: Hierarchical Representation Learning (Workbook)**
 
 The goal of this chapter is to study specialized **deep architectures** that embed geometric knowledge (space, time) into their structure, revealing how networks build a hierarchy of abstraction analogous to physical coarse-graining.
 
@@ -24,34 +24,28 @@ The goal of this chapter is to study specialized **deep architectures** that emb
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The Universal Approximation Theorem proves that a single hidden layer (of sufficient size) and non-linear activation can approximate any continuous function. The added benefit of *stacking* layers (depth) is to facilitate:**
-
-* **A.** The loss of all variance.
-* **B.** **The hierarchical extraction of emergent features**. (**Correct**)
-* **C.** The reduction of the learning rate $\eta$.
-* **D.** The calculation of the geodesic distance.
-
-```
+    **1. The Universal Approximation Theorem proves that a single hidden layer (of sufficient size) and non-linear activation can approximate any continuous function. The added benefit of *stacking* layers (depth) is to facilitate:**
+    
+    * **A.** The loss of all variance.
+    * **B.** **The hierarchical extraction of emergent features**. (**Correct**)
+    * **C.** The reduction of the learning rate $\eta$.
+    * **D.** The calculation of the geodesic distance.
+    
 !!! note "Quiz"
-```
-**2. The process where a deep network iteratively removes microscopic details and redundancy to encode a new, effective state variable $\mathbf{h}^{(l+1)}$ is directly analogous to which physical framework?**
-
-* **A.** The Ising model Hamiltonian.
-* **B.** **The Renormalization Group (RG) framework**. (**Correct**)
-* **C.** Quantum tunneling.
-* **D.** Orthogonal projection.
-
-```
+    **2. The process where a deep network iteratively removes microscopic details and redundancy to encode a new, effective state variable $\mathbf{h}^{(l+1)}$ is directly analogous to which physical framework?**
+    
+    * **A.** The Ising model Hamiltonian.
+    * **B.** **The Renormalization Group (RG) framework**. (**Correct**)
+    * **C.** Quantum tunneling.
+    * **D.** Orthogonal projection.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** Explain the philosophical significance of viewing each layer of a deep neural network as a step of **coarse-graining** in the Renormalization Group sense?
-
-**Answer Strategy:** The significance is that it provides a physical justification for the network's structure. In physics, coarse-graining is necessary to reveal macroscopic laws by ignoring high-frequency, microscopic noise. By performing this iteratively, the network is automatically learning a **hierarchical theory of the data**; it progresses from raw input to abstract **order parameters** that genuinely describe the system's macroscopic state, without any human defining those intermediate features.
-
-```
+    **Question:** Explain the philosophical significance of viewing each layer of a deep neural network as a step of **coarse-graining** in the Renormalization Group sense?
+    
+    **Answer Strategy:** The significance is that it provides a physical justification for the network's structure. In physics, coarse-graining is necessary to reveal macroscopic laws by ignoring high-frequency, microscopic noise. By performing this iteratively, the network is automatically learning a **hierarchical theory of the data**; it progresses from raw input to abstract **order parameters** that genuinely describe the system's macroscopic state, without any human defining those intermediate features.
+    
 ---
 
 ---
@@ -63,34 +57,28 @@ The goal of this chapter is to study specialized **deep architectures** that emb
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The primary geometric goal of the successive transformations performed by the hidden layers in a deep network is to:**
-
-* **A.** Preserve the Euclidean distance between all points.
-* **B.** **Disentangle the structure and flatten the manifold for linear separation**. (**Correct**)
-* **C.** Increase the overall dimension $D$.
-* **D.** Maximize the total energy.
-
-```
+    **1. The primary geometric goal of the successive transformations performed by the hidden layers in a deep network is to:**
+    
+    * **A.** Preserve the Euclidean distance between all points.
+    * **B.** **Disentangle the structure and flatten the manifold for linear separation**. (**Correct**)
+    * **C.** Increase the overall dimension $D$.
+    * **D.** Maximize the total energy.
+    
 !!! note "Quiz"
-```
-**2. In the physical analogy, the process of hierarchical learning is compared to applying successive transformations that gradually flatten a curved potential surface. The final state of this flattening allows the solution to be found by:**
-
-* **A.** Introducing a high learning rate $\eta$.
-* **B.** **A simple linear classifier**. (**Correct**)
-* **C.** Quantum annealing.
-* **D.** Calculating the partition function.
-
-```
+    **2. In the physical analogy, the process of hierarchical learning is compared to applying successive transformations that gradually flatten a curved potential surface. The final state of this flattening allows the solution to be found by:**
+    
+    * **A.** Introducing a high learning rate $\eta$.
+    * **B.** **A simple linear classifier**. (**Correct**)
+    * **C.** Quantum annealing.
+    * **D.** Calculating the partition function.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** How does the design goal of a deep network (to flatten the data manifold) relate to the concept of the final output layer being a simple **linear classifier** (Chapter 10)?
-
-**Answer Strategy:** The high-level layers of a deep network are doing the hard work: they are warping the space through non-linearity until the data, which was highly complex in the raw input space, becomes **linearly separable** in the final hidden feature space. Once the data is linearly separable, the final classification layer only needs to apply a simple linear model (like Logistic Regression or a Perceptron) to draw a straight line or plane to separate the classes, making the final classification step computationally trivial.
-
-```
+    **Question:** How does the design goal of a deep network (to flatten the data manifold) relate to the concept of the final output layer being a simple **linear classifier** (Chapter 10)?
+    
+    **Answer Strategy:** The high-level layers of a deep network are doing the hard work: they are warping the space through non-linearity until the data, which was highly complex in the raw input space, becomes **linearly separable** in the final hidden feature space. Once the data is linearly separable, the final classification layer only needs to apply a simple linear model (like Logistic Regression or a Perceptron) to draw a straight line or plane to separate the classes, making the final classification step computationally trivial.
+    
 ---
 
 ---
@@ -102,36 +90,30 @@ The goal of this chapter is to study specialized **deep architectures** that emb
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The CNN feature of **Weight Sharing** is a computational mechanism that directly enforces the physical property of:**
-
-* **A.** Entropy reduction.
-* **B.** **Translation symmetry (invariance)**. (**Correct**)
-* **C.** Temporal recurrence.
-* **D.** Orthogonal projection.
-
-```
+    **1. The CNN feature of **Weight Sharing** is a computational mechanism that directly enforces the physical property of:**
+    
+    * **A.** Entropy reduction.
+    * **B.** **Translation symmetry (invariance)**. (**Correct**)
+    * **C.** Temporal recurrence.
+    * **D.** Orthogonal projection.
+    
 !!! note "Quiz"
-```
-**2. In the CNN analogy to physics, the small, local **kernel** in the convolution layer models which structural feature?**
-
-* **A.** Global correlation.
-* **B.** **Nearest-neighbor interaction**. (**Correct**)
-* **C.** The bias-variance trade-off.
-* **D.** The time step $\Delta t$.
-
-```
+    **2. In the CNN analogy to physics, the small, local **kernel** in the convolution layer models which structural feature?**
+    
+    * **A.** Global correlation.
+    * **B.** **Nearest-neighbor interaction**. (**Correct**)
+    * **C.** The bias-variance trade-off.
+    * **D.** The time step $\Delta t$.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** The CNN uses both **Convolution** and **Pooling** layers. Explain the respective function of each layer in terms of the **Renormalization Group (RG)** framework.
-
-**Answer Strategy:**
-1.  **Convolution $\leftrightarrow$ Feature Extraction:** The convolution layer applies local filters to extract fundamental patterns (e.g., edges, textures) from the neighborhood, identifying **short-range correlations**.
-2.  **Pooling $\leftrightarrow$ Coarse-Graining:** The pooling layer summarizes and reduces the spatial dimension (e.g., taking the maximum activation over a $2 \times 2$ block). This step is the direct analogue of **coarse-graining** in RG theory: removing high-frequency, microscopic noise and redundancy to reveal the simplified, lower-dimensional structure.
-
-```
+    **Question:** The CNN uses both **Convolution** and **Pooling** layers. Explain the respective function of each layer in terms of the **Renormalization Group (RG)** framework.
+    
+    **Answer Strategy:**
+    1.  **Convolution $\leftrightarrow$ Feature Extraction:** The convolution layer applies local filters to extract fundamental patterns (e.g., edges, textures) from the neighborhood, identifying **short-range correlations**.
+    2.  **Pooling $\leftrightarrow$ Coarse-Graining:** The pooling layer summarizes and reduces the spatial dimension (e.g., taking the maximum activation over a $2 \times 2$ block). This step is the direct analogue of **coarse-graining** in RG theory: removing high-frequency, microscopic noise and redundancy to reveal the simplified, lower-dimensional structure.
+    
 ---
 
 ---

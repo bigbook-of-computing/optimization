@@ -1,4 +1,4 @@
-# **Chapter 17: Neural Quantum States (NQS) () () (Codebook)**
+# **Chapter 17: Neural Quantum States (NQS) (Codebook)**
 
 ## Project 1: The Variational Principle (Ground State Energy)
 

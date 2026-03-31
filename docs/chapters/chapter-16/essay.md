@@ -152,10 +152,8 @@ $$
 The minimization of the total loss $L$ is analogous to balancing **empirical energy** (fitting the measurements) with **constraint energy** (obeying the conservation laws). The network must find the equilibrium configuration that is both accurate at the sampled points and compliant with the differential physics across the entire domain.
 
 !!! tip "Understanding the Physics Residual as Constraint Energy"
-```
-The physics loss term $L_{\text{phys}}$ measures how much the neural network solution *violates* the governing PDE. Think of this as a constraint energy penalty: when the residual $\mathcal{N}[u_{\mathbf{\theta}}] - f$ is large, the network pays a high energetic cost. By minimizing this term, the optimizer drives the solution toward the subspace of physically admissible functions—those that satisfy the conservation laws everywhere in the domain, not just at data points. This transforms the learning process from arbitrary curve-fitting into law-constrained variational optimization.
-
-```
+    The physics loss term $L_{\text{phys}}$ measures how much the neural network solution *violates* the governing PDE. Think of this as a constraint energy penalty: when the residual $\mathcal{N}[u_{\mathbf{\theta}}] - f$ is large, the network pays a high energetic cost. By minimizing this term, the optimizer drives the solution toward the subspace of physically admissible functions—those that satisfy the conservation laws everywhere in the domain, not just at data points. This transforms the learning process from arbitrary curve-fitting into law-constrained variational optimization.
+    
 ---
 
 ## **16.3 Automatic Differentiation — Neural Calculus**
@@ -309,10 +307,8 @@ The PINN approach is analogous to learning a **smooth continuum field** as a neu
 * **Physics Enforcement:** By training against the physics loss, the optimization implicitly enforces the laws across the domain, ensuring the output is a **physically consistent solution** to the PDE.
 
 !!! example "PINN Solving the 1D Heat Equation"
-```
-Consider a metal rod heated at one end. With only a few temperature measurements at scattered locations and times, a traditional data-driven model would struggle to predict the temperature field everywhere. However, a PINN trained with the heat equation residual ($L_{\text{phys}} = |u_t - \alpha u_{xx}|^2$) and boundary conditions ($u(0,t)=u(1,t)=0$) learns the complete continuous temperature field $u_{\mathbf{\theta}}(x,t)$. The physics loss forces the network to respect heat diffusion dynamics throughout the rod, enabling accurate predictions even in unobserved regions. The learned solution satisfies both the sparse data and the governing PDE everywhere.
-
-```
+    Consider a metal rod heated at one end. With only a few temperature measurements at scattered locations and times, a traditional data-driven model would struggle to predict the temperature field everywhere. However, a PINN trained with the heat equation residual ($L_{\text{phys}} = |u_t - \alpha u_{xx}|^2$) and boundary conditions ($u(0,t)=u(1,t)=0$) learns the complete continuous temperature field $u_{\mathbf{\theta}}(x,t)$. The physics loss forces the network to respect heat diffusion dynamics throughout the rod, enabling accurate predictions even in unobserved regions. The learned solution satisfies both the sparse data and the governing PDE everywhere.
+    
 ---
 
 ## **16.6 PINNs for Inverse Problems**
@@ -530,10 +526,8 @@ A PINN minimizes an **augmented energy functional** that combines two distinct t
 This process is a modern incarnation of the **least action principle**: the network searches for the function $u_{\mathbf{\theta}}$ that has the lowest total cost, achieving both empirical fidelity and theoretical consistency. The law acts as a rigorous form of **structural regularization** that guides the optimizer toward the correct physical manifold.
 
 ??? question "Why Does Physics-Constrained Learning Generalize Better Than Pure Data-Driven Learning?"
-```
-Pure data-driven models learn only correlations present in the training data. When extrapolating beyond the training distribution, they have no constraints and can produce physically nonsensical predictions (e.g., violating energy conservation, creating negative temperatures). In contrast, PINNs embed the governing PDE as a hard constraint in the loss function. This restricts the solution space to only functions that satisfy the physical law everywhere in the domain. Even with sparse data, the physics loss $L_{\text{phys}}$ forces the network to interpolate in a manner consistent with conservation laws and differential dynamics. The result: robust generalization because the learned function must simultaneously fit observations *and* obey the fundamental rules governing the system.
-
-```
+    Pure data-driven models learn only correlations present in the training data. When extrapolating beyond the training distribution, they have no constraints and can produce physically nonsensical predictions (e.g., violating energy conservation, creating negative temperatures). In contrast, PINNs embed the governing PDE as a hard constraint in the loss function. This restricts the solution space to only functions that satisfy the physical law everywhere in the domain. Even with sparse data, the physics loss $L_{\text{phys}}$ forces the network to interpolate in a manner consistent with conservation laws and differential dynamics. The result: robust generalization because the learned function must simultaneously fit observations *and* obey the fundamental rules governing the system.
+    
 ---
 
 ## **16.10 Advanced Topics — Adaptive and Hybrid PINNs**
@@ -599,10 +593,8 @@ PINNs transform scientific computation into an optimization problem. By providin
 The unifying perspective is that PINNs treat data, boundary conditions, and the differential law as components of a single, trainable **augmented energy functional**.
 
 !!! example "PINN Application: Fluid Flow Reconstruction from Sparse Sensors"
-```
-Consider monitoring flow around an aircraft wing using only a handful of pressure sensors. Traditional Computational Fluid Dynamics (CFD) requires solving the full Navier-Stokes equations on a dense mesh—computationally expensive. A PINN trained with the Navier-Stokes operator embedded in $L_{\text{phys}}$ can reconstruct the complete velocity and pressure fields $u_{\mathbf{\theta}}(\mathbf{x}, t)$ using only the sparse sensor measurements. The physics loss ensures the reconstructed flow satisfies momentum conservation everywhere, not just at sensor locations. The result: a continuous, differentiable flow field surrogate that runs orders of magnitude faster than traditional CFD while respecting the governing equations.
-
-```
+    Consider monitoring flow around an aircraft wing using only a handful of pressure sensors. Traditional Computational Fluid Dynamics (CFD) requires solving the full Navier-Stokes equations on a dense mesh—computationally expensive. A PINN trained with the Navier-Stokes operator embedded in $L_{\text{phys}}$ can reconstruct the complete velocity and pressure fields $u_{\mathbf{\theta}}(\mathbf{x}, t)$ using only the sparse sensor measurements. The physics loss ensures the reconstructed flow satisfies momentum conservation everywhere, not just at sensor locations. The result: a continuous, differentiable flow field surrogate that runs orders of magnitude faster than traditional CFD while respecting the governing equations.
+    
 ---
 
 ## **16.12 Theoretical View — PINNs as Energy Minimizers**
@@ -645,10 +637,8 @@ The training of a PINN is thus analogous to a physical system relaxing toward it
 This connection provides the rigorous justification for the PINN methodology: the problem of finding a physically consistent solution field $u(\mathbf{x}, t)$ is fundamentally equivalent to minimizing a **variational energy functional**. By utilizing the optimization engine of deep learning, PINNs efficiently solve this functional minimization problem.
 
 !!! tip "Interpreting PINN Training as Variational Energy Minimization"
-```
-PINN training is not just numerical optimization—it's a variational principle in action. The physics loss $L_{\text{phys}} = \sum_j |\mathcal{N}[u_{\mathbf{\theta}}](\mathbf{x}_j,t_j)|^2$ approximates the continuous energy functional $\mathcal{E}[u] = \int |\mathcal{N}[u]|^2 d\mathbf{x}$ that classical variational methods minimize. Each gradient descent step reduces this residual energy, driving the neural field $u_{\mathbf{\theta}}$ toward a stationary point that satisfies the PDE. This bridges centuries-old variational calculus (Euler-Lagrange equations, least action principle) with modern automatic differentiation and stochastic optimization.
-
-```
+    PINN training is not just numerical optimization—it's a variational principle in action. The physics loss $L_{\text{phys}} = \sum_j |\mathcal{N}[u_{\mathbf{\theta}}](\mathbf{x}_j,t_j)|^2$ approximates the continuous energy functional $\mathcal{E}[u] = \int |\mathcal{N}[u]|^2 d\mathbf{x}$ that classical variational methods minimize. Each gradient descent step reduces this residual energy, driving the neural field $u_{\mathbf{\theta}}$ toward a stationary point that satisfies the PDE. This bridges centuries-old variational calculus (Euler-Lagrange equations, least action principle) with modern automatic differentiation and stochastic optimization.
+    
 ---
 
 ## **16.13 Limitations and Challenges**
@@ -675,10 +665,8 @@ The challenges of PINN training can be viewed through the lens of disordered sys
 * **Optimization Goal:** Successfully training a PINN requires finding strategies (e.g., adaptive sampling, special activation functions) that provide the effective "thermal energy" or gradient stability needed to avoid these unphysical local solutions.
 
 !!! tip "Balancing Loss Weights in PINN Training"
-```
-The weights $\lambda_d, \lambda_p, \lambda_b$ in the total loss $L = \lambda_d L_{\text{data}} + \lambda_p L_{\text{phys}} + \lambda_b L_{\text{bc}}$ are critical hyperparameters. If $\lambda_d$ dominates, the network overfits sparse data and ignores physics, producing non-physical extrapolations. If $\lambda_p$ dominates, the network may satisfy the PDE at collocation points but fail to match observations. Dynamic weight adjustment strategies (e.g., adaptive weighting based on gradient magnitudes or loss term scales) can improve convergence by maintaining balanced contributions from data fidelity and physical consistency throughout training.
-
-```
+    The weights $\lambda_d, \lambda_p, \lambda_b$ in the total loss $L = \lambda_d L_{\text{data}} + \lambda_p L_{\text{phys}} + \lambda_b L_{\text{bc}}$ are critical hyperparameters. If $\lambda_d$ dominates, the network overfits sparse data and ignores physics, producing non-physical extrapolations. If $\lambda_p$ dominates, the network may satisfy the PDE at collocation points but fail to match observations. Dynamic weight adjustment strategies (e.g., adaptive weighting based on gradient magnitudes or loss term scales) can improve convergence by maintaining balanced contributions from data fidelity and physical consistency throughout training.
+    
 ---
 
 ## **16.14 Extensions — From PINNs to Beyond**

@@ -42,10 +42,8 @@ Once the simulation finishes, however, the dynamical "engine" turns off. We are 
 The transition from *simulation* to *data analysis* requires a fundamental shift in perspective. We must move from thinking about **dynamics** (how state $\mathbf{s}_t$ causes state $\mathbf{s}_{t+1}$) to thinking about **geometry** (how the set of all states $\{\mathbf{s}_i\}$ is arranged in high-dimensional space).
 
 !!! tip "The Paradigm Shift: Dynamics to Geometry"
-```
-In Volume II, we asked: "Given initial conditions and laws, what happens next?" This is the forward problem of simulation. In Volume III, we ask: "Given a cloud of observed states, what are the underlying laws?" This is the inverse problem of inference. The bridge is geometry: the shape of the data cloud encodes both the dynamics that created it and the probability distribution that governs it.
-
-```
+    In Volume II, we asked: "Given initial conditions and laws, what happens next?" This is the forward problem of simulation. In Volume III, we ask: "Given a cloud of observed states, what are the underlying laws?" This is the inverse problem of inference. The bridge is geometry: the shape of the data cloud encodes both the dynamics that created it and the probability distribution that governs it.
+    
 ---
 
 ### **Phase Space vs. Feature Space**
@@ -81,15 +79,11 @@ In computational physics, this is almost tautological. A gas of $N$ particles ha
 Machine learning algorithms (like PCA, t-SNE, or autoencoders) are essentially tools for **manifold discovery**. They attempt to find the coordinate system of $\mathcal{M}$ rather than $\mathbb{R}^D$. For a physicist, discovering this manifold is equivalent to discovering the *collective variables* or *generalized coordinates* that genuinely describe the system's macroscopic behavior.
 
 !!! example "Ising Model on a 16×16 Lattice"
-```
-Each spin configuration is a point in $\mathbb{R}^{256}$ (after flattening). But at temperature $T < T_c$, the system explores only two regions: states with mostly +1 spins (magnetization $M \approx +1$) and mostly -1 spins ($M \approx -1$). The data manifold is effectively **1-dimensional** (parameterized by total magnetization $M$), not 256-dimensional. PCA automatically discovers this: PC1 is $\mathbf{v}_1 = (1,1,1,\ldots,1)$, the sum of all spins.
-
-```
+    Each spin configuration is a point in $\mathbb{R}^{256}$ (after flattening). But at temperature $T < T_c$, the system explores only two regions: states with mostly +1 spins (magnetization $M \approx +1$) and mostly -1 spins ($M \approx -1$). The data manifold is effectively **1-dimensional** (parameterized by total magnetization $M$), not 256-dimensional. PCA automatically discovers this: PC1 is $\mathbf{v}_1 = (1,1,1,\ldots,1)$, the sum of all spins.
+    
 !!! tip "Conceptual Bridge from Dynamics to Geometry"
-```
-Simulation turns physical laws into data; analysis turns data back into physical insight. The first step in this conceptual flip is to stop seeing a trajectory as a movie, and start seeing it as a static geometry in high-dimensional space.
-
-```
+    Simulation turns physical laws into data; analysis turns data back into physical insight. The first step in this conceptual flip is to stop seeing a trajectory as a movie, and start seeing it as a static geometry in high-dimensional space.
+    
 ---
 
 ## **1.2 Representing Simulation Outputs**
@@ -294,10 +288,8 @@ $$
 This metric is 0 for perfectly correlated signals ($r=1$) and reaches its maximum of 2 for perfectly anti-correlated signals ($r=-1$). It is a powerful tool for finding *functionally* similar states, even if their raw values are different.
 
 ??? question "When Should You Use Correlation Distance vs. Euclidean Distance?"
-```
-Use **Euclidean distance** when absolute differences matter (e.g., comparing atomic positions where 1 Å displacement is physically meaningful). Use **correlation distance** when you care about patterns or shapes regardless of scale (e.g., comparing time-series signals where the trend matters more than the amplitude, or comparing molecular conformations where you want rotational/translational invariance). Correlation distance is essentially asking: "Do these two states vary together?" rather than "Are these two states numerically close?"
-
-```
+    Use **Euclidean distance** when absolute differences matter (e.g., comparing atomic positions where 1 Å displacement is physically meaningful). Use **correlation distance** when you care about patterns or shapes regardless of scale (e.g., comparing time-series signals where the trend matters more than the amplitude, or comparing molecular conformations where you want rotational/translational invariance). Correlation distance is essentially asking: "Do these two states vary together?" rather than "Are these two states numerically close?"
+    
 ---
 
 ### **Manifold Distance (Geodesic Distance)**
@@ -309,14 +301,12 @@ Use **Euclidean distance** when absolute differences matter (e.g., comparing ato
 The most profound limitation of the $L^2$ norm is that it measures distance "as the crow flies"—straight through the high-dimensional embedding space $\mathbb{R}^D$. But if the data lives on a curved manifold $\mathcal{M}$ (Section 1.1.2), the physically relevant distance is the **geodesic distance**: the shortest path between two points *while staying on the manifold*.
 
 !!! example "The Swiss Alps Analogy"
-```
-The Euclidean distance between two villages on opposite sides of a mountain may be 1 km. But the *geodesic* (hiking) distance, which must go up and over the mountain, might be 10 km. Euclidean distance fails to see the mountain—it measures straight through the obstacle rather than the actual traversable path.
-
-```
-Euclidean distance fails to see the mountain. A simulation trajectory from one metastable state to another (e.g., protein folding) traces a long path *on the manifold*. The $L^2$ distance between the start and end states is short, completely missing the massive energy barrier (the "mountain") between them.
-
-The geodesic distance $d_G(\mathbf{x}_i, \mathbf{x}_j)$ is the true measure of dissimilarity within the system's constrained state space. While difficult to compute directly, it is the conceptual foundation for all **nonlinear dimensionality reduction** techniques (like t-SNE and UMAP, discussed in Chapter 3), which are designed to "unroll" the manifold $\mathcal{M}$ into a flat space while preserving these local geodesic distances [6,9].
-
+    The Euclidean distance between two villages on opposite sides of a mountain may be 1 km. But the *geodesic* (hiking) distance, which must go up and over the mountain, might be 10 km. Euclidean distance fails to see the mountain—it measures straight through the obstacle rather than the actual traversable path.
+    
+    Euclidean distance fails to see the mountain. A simulation trajectory from one metastable state to another (e.g., protein folding) traces a long path *on the manifold*. The $L^2$ distance between the start and end states is short, completely missing the massive energy barrier (the "mountain") between them.
+    
+    The geodesic distance $d_G(\mathbf{x}_i, \mathbf{x}_j)$ is the true measure of dissimilarity within the system's constrained state space. While difficult to compute directly, it is the conceptual foundation for all **nonlinear dimensionality reduction** techniques (like t-SNE and UMAP, discussed in Chapter 3), which are designed to "unroll" the manifold $\mathcal{M}$ into a flat space while preserving these local geodesic distances [6,9].
+    
 ---
 
 ## **1.5 From Clouds to Structure**
@@ -472,12 +462,10 @@ The resulting scatter plot shows the 2D "shadow" of the 5D data cloud. Instead o
 * **PC2:** This second axis captures the next largest direction of independent variation.
 
 ??? question "Why does the 5D data appear elliptical in 2D projection?"
-```
-The engineered correlation between features 0 and 1 creates a dominant direction of variation in the data. When we project onto PC1 and PC2, we're looking at the data along its primary and secondary axes of variation. The elongated ellipse reveals that variance is not uniform across all directions—it's concentrated along the correlated features, exactly as our physical constraint dictated. This is the geometric signature of dimensional reduction: 5D data with internal structure compresses naturally onto a lower-dimensional manifold.
-
-```
-This plot is a "map" of the data's geometry. If this were a physical simulation, we would have just visually confirmed that the system's motion is not random but is dominated by one specific collective mode (PC1).
-
+    The engineered correlation between features 0 and 1 creates a dominant direction of variation in the data. When we project onto PC1 and PC2, we're looking at the data along its primary and secondary axes of variation. The elongated ellipse reveals that variance is not uniform across all directions—it's concentrated along the correlated features, exactly as our physical constraint dictated. This is the geometric signature of dimensional reduction: 5D data with internal structure compresses naturally onto a lower-dimensional manifold.
+    
+    This plot is a "map" of the data's geometry. If this were a physical simulation, we would have just visually confirmed that the system's motion is not random but is dominated by one specific collective mode (PC1).
+    
 ---
 
 ## **1.8 Takeaways & Bridge to Chapter 2**

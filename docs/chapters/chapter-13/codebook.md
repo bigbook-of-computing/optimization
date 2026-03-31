@@ -1,4 +1,4 @@
-# **Chapter 13: Hierarchical Representation Learning () () (Codebook)**
+# **Chapter 13: Hierarchical Representation Learning (Codebook)**
 
 ## Project 1: Simulating Coarse-Graining in a CNN (Feature Map)
 

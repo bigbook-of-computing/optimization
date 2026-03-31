@@ -183,10 +183,8 @@ The NAG update is analogous to a vehicle using **inertial navigation** or a skie
 The introduction of this **"anticipatory" force** makes the optimizer more efficient and stable, making NAG a widely used technique in high-performance deep learning.
 
 !!! tip "Momentum as Oscillation Damping"
-```
-Momentum's power comes from averaging out oscillatory forces. In a narrow ravine, the gradient alternates direction (pointing left, then right across the steep walls), but the accumulated velocity $\beta \mathbf{v}_t$ acts as a low-pass filter, canceling these perpendicular oscillations while reinforcing the consistent downward component along the valley floor. This transforms erratic zigzags into smooth, accelerated descent.
-
-```
+    Momentum's power comes from averaging out oscillatory forces. In a narrow ravine, the gradient alternates direction (pointing left, then right across the steep walls), but the accumulated velocity $\beta \mathbf{v}_t$ acts as a low-pass filter, canceling these perpendicular oscillations while reinforcing the consistent downward component along the valley floor. This transforms erratic zigzags into smooth, accelerated descent.
+    
 ---
 
 ## **6.4 RMSProp — Adaptive Step Sizes**
@@ -304,10 +302,8 @@ Adam's widespread adoption stems from its reliability across many domains.
 A noted limitation is that while Adam is superb at *finding* a low-loss region quickly, its default $\sqrt{v_{\text{hat}}}$ scaling can sometimes lead to convergence toward **sharp minima** (Section 4.4) that generalize slightly worse than the **flat minima** found by well-tuned, non-adaptive optimizers like SGD with Momentum. This issue is typically addressed with minor variants (e.g., AdamW) or specialized learning rate schedules (Chapter 6.10).
 
 !!! example "Adam as Unified Navigator"
-```
-Adam represents the synthesis of two fundamental ideas: momentum provides directional persistence (like a ball rolling with inertia), while adaptive scaling provides automatic brake adjustment (like ABS in a car). Consider navigating a mountain road with sharp turns (anisotropic ravine): momentum keeps you moving forward smoothly without jerking the wheel at every bump, while adaptive braking prevents skidding on steep sections. Together, they create a robust optimizer that handles diverse terrain without manual tuning.
-
-```
+    Adam represents the synthesis of two fundamental ideas: momentum provides directional persistence (like a ball rolling with inertia), while adaptive scaling provides automatic brake adjustment (like ABS in a car). Consider navigating a mountain road with sharp turns (anisotropic ravine): momentum keeps you moving forward smoothly without jerking the wheel at every bump, while adaptive braking prevents skidding on steep sections. Together, they create a robust optimizer that handles diverse terrain without manual tuning.
+    
 ---
 
 ## **6.6 Geometry of Adaptive Dynamics**
@@ -454,10 +450,8 @@ This comparison demonstrates that the difficulty of optimization lies in the **i
 Both approaches vastly outperform simple GD, confirming that modern optimization requires a model of motion richer than simple proportional friction.
 
 ??? question "Why Does Anisotropy Cause Zigzagging?"
-```
-In a ravine landscape, the gradient $\nabla L$ points perpendicular to the contour lines. For an elliptical ravine aligned with coordinate axes, the gradient has a large component in the steep $\theta_2$ direction and a small component in the flat $\theta_1$ direction. Since GD uses $\mathbf{\theta}_{t+1} = \mathbf{\theta}_t - \eta \nabla L$, it takes large steps perpendicular to the valley (overshooting across the steep walls) and tiny steps along the valley floor (slow progress toward minimum). The result is a zigzag path that wastes most updates correcting perpendicular overshoot rather than advancing toward the optimum.
-
-```
+    In a ravine landscape, the gradient $\nabla L$ points perpendicular to the contour lines. For an elliptical ravine aligned with coordinate axes, the gradient has a large component in the steep $\theta_2$ direction and a small component in the flat $\theta_1$ direction. Since GD uses $\mathbf{\theta}_{t+1} = \mathbf{\theta}_t - \eta \nabla L$, it takes large steps perpendicular to the valley (overshooting across the steep walls) and tiny steps along the valley floor (slow progress toward minimum). The result is a zigzag path that wastes most updates correcting perpendicular overshoot rather than advancing toward the optimum.
+    
 ---
 
 ## **6.9 Code Demo — Comparing GD, Momentum, and Adam**

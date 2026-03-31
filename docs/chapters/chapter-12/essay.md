@@ -644,20 +644,14 @@ The next step is to introduce **architectural inductive biases** that make the n
 ---
 
 !!! tip "Practical Advice: Start with Simple Activations"
-```
-When implementing a new neural network, begin with **ReLU** activations for hidden layers. ReLU's simplicity ($\max(0,z)$) prevents vanishing gradients, accelerates training, and induces sparse representations. Only switch to more complex activations (e.g., Swish, GELU) if empirical results suggest the need for smoother nonlinearities. The choice of activation is an **energetic constraint**—simpler functions create more navigable loss landscapes.
-
-```
+    When implementing a new neural network, begin with **ReLU** activations for hidden layers. ReLU's simplicity ($\max(0,z)$) prevents vanishing gradients, accelerates training, and induces sparse representations. Only switch to more complex activations (e.g., Swish, GELU) if empirical results suggest the need for smoother nonlinearities. The choice of activation is an **energetic constraint**—simpler functions create more navigable loss landscapes.
+    
 !!! example "Energy Minimization in Action: Hopfield Networks"
-```
-Consider a Hopfield network storing three binary patterns (e.g., simple images). The network's energy function $E = -\frac{1}{2}\sum_{ij} w_{ij}s_i s_j$ has local minima at these stored patterns. When presented with a corrupted input (e.g., image with noise), the network iteratively updates neuron states to minimize $E$, effectively "denoising" the input by converging to the nearest stored pattern. This demonstrates **energy relaxation** as computation: the final state is the attractor (memory) closest to the initial condition.
-
-```
+    Consider a Hopfield network storing three binary patterns (e.g., simple images). The network's energy function $E = -\frac{1}{2}\sum_{ij} w_{ij}s_i s_j$ has local minima at these stored patterns. When presented with a corrupted input (e.g., image with noise), the network iteratively updates neuron states to minimize $E$, effectively "denoising" the input by converging to the nearest stored pattern. This demonstrates **energy relaxation** as computation: the final state is the attractor (memory) closest to the initial condition.
+    
 ??? question "Why Do Deep Networks Generalize Despite Overparameterization?"
-```
-Modern deep networks often have more parameters than training samples, seemingly violating classical statistical learning theory. Yet they generalize well. Why? The **loss landscape geometry** provides insight: SGD's stochastic noise (Section 12.6) biases training toward **flat, wide minima** rather than sharp, narrow ones. Flat minima correspond to solutions robust to parameter perturbations—precisely the property needed for generalization. Additionally, implicit regularization from the optimization dynamics (momentum, learning rate schedules) acts as an entropic constraint, preventing the system from freezing into high-variance microstates. The answer lies in the **physics of the optimization process**, not just model capacity.
-
-```
+    Modern deep networks often have more parameters than training samples, seemingly violating classical statistical learning theory. Yet they generalize well. Why? The **loss landscape geometry** provides insight: SGD's stochastic noise (Section 12.6) biases training toward **flat, wide minima** rather than sharp, narrow ones. Flat minima correspond to solutions robust to parameter perturbations—precisely the property needed for generalization. Additionally, implicit regularization from the optimization dynamics (momentum, learning rate schedules) acts as an entropic constraint, preventing the system from freezing into high-variance microstates. The answer lies in the **physics of the optimization process**, not just model capacity.
+    
 ## **References**
 
 [1] Rosenblatt, F. (1958). The Perceptron: A Probabilistic Model for Information Storage and Organization in the Brain. *Psychological Review*, 65(6), 386-408.

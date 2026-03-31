@@ -1,4 +1,4 @@
-# **Chapter 5: Gradient Methods: The Workhorses () () (Codebook)**
+# **Chapter 5: Gradient Methods: The Workhorses (Codebook)**
 
 ## Project 1: Visualizing Learning Rate and Dynamics ($\mathcal{L(\theta) = \frac{1}{2}\theta^2}$)
 

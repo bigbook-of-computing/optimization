@@ -1,4 +1,4 @@
-# **Chapter 19: Transformers and Global Correlation () () () (Workbook)**
+# **Chapter 19: Transformers and Global Correlation (Workbook)**
 
 The goal of this chapter is to introduce the **Transformer** architecture and the **Self-Attention** mechanism, interpreting its global, dynamic interactions as a statistical field theory for modeling nonlocal correlations and emergence.
 
@@ -24,36 +24,30 @@ The goal of this chapter is to introduce the **Transformer** architecture and th
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The primary limitation of architectures like CNNs and GNNs that Transformers are designed to solve is their reliance on:**
-
-* **A.** Non-differentiable activation functions.
-* **B.** **Fixed, local constraints and sequential dependencies**. (**Correct**)
-* **C.** Stochastic gradient descent.
-* **D.** Low-dimensional embeddings.
-
-```
+    **1. The primary limitation of architectures like CNNs and GNNs that Transformers are designed to solve is their reliance on:**
+    
+    * **A.** Non-differentiable activation functions.
+    * **B.** **Fixed, local constraints and sequential dependencies**. (**Correct**)
+    * **C.** Stochastic gradient descent.
+    * **D.** Low-dimensional embeddings.
+    
 !!! note "Quiz"
-```
-**2. The Transformer's ability to model all-to-all interactions is analogous to which concept in statistical physics?**
-
-* **A.** Variational Principle.
-* **B.** Imaginary-time evolution.
-* **C.** **Mean-Field Theory (global field interaction)**. (**Correct**)
-* **D.** Overdamped Langevin dynamics.
-
-```
+    **2. The Transformer's ability to model all-to-all interactions is analogous to which concept in statistical physics?**
+    
+    * **A.** Variational Principle.
+    * **B.** Imaginary-time evolution.
+    * **C.** **Mean-Field Theory (global field interaction)**. (**Correct**)
+    * **D.** Overdamped Langevin dynamics.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** The problem of **nonlocal correlation** is central to both quantum physics and language processing. Provide a clear example of nonlocal correlation in each domain.
-
-**Answer Strategy:**
-1.  **Quantum Physics:** **Quantum Entanglement**. The states of two distant particles are instantly correlated, meaning measuring one instantly determines the state of the other, regardless of spatial distance.
-2.  **Language/Semantics:** **Semantic Context**. The meaning of a pronoun or an ambiguous word (e.g., "bank") may be determined by a related noun or concept located several tokens, or even sentences, away.
-
-```
+    **Question:** The problem of **nonlocal correlation** is central to both quantum physics and language processing. Provide a clear example of nonlocal correlation in each domain.
+    
+    **Answer Strategy:**
+    1.  **Quantum Physics:** **Quantum Entanglement**. The states of two distant particles are instantly correlated, meaning measuring one instantly determines the state of the other, regardless of spatial distance.
+    2.  **Language/Semantics:** **Semantic Context**. The meaning of a pronoun or an ambiguous word (e.g., "bank") may be determined by a related noun or concept located several tokens, or even sentences, away.
+    
 ---
 
 ---
@@ -65,34 +59,28 @@ The goal of this chapter is to introduce the **Transformer** architecture and th
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. In the Self-Attention mechanism, the raw interaction potential between two elements $i$ and $j$ is calculated by the dot product between which two projections?**
-
-* **A.** Key and Value ($\mathbf{K} \cdot \mathbf{V}$).
-* **B.** Query and Value ($\mathbf{Q} \cdot \mathbf{V}$).
-* **C.** **Query and Key ($\mathbf{Q} \cdot \mathbf{K}^T$)**. (**Correct**)
-* **D.** Value and Value ($\mathbf{V} \cdot \mathbf{V}$).
-
-```
+    **1. In the Self-Attention mechanism, the raw interaction potential between two elements $i$ and $j$ is calculated by the dot product between which two projections?**
+    
+    * **A.** Key and Value ($\mathbf{K} \cdot \mathbf{V}$).
+    * **B.** Query and Value ($\mathbf{Q} \cdot \mathbf{V}$).
+    * **C.** **Query and Key ($\mathbf{Q} \cdot \mathbf{K}^T$)**. (**Correct**)
+    * **D.** Value and Value ($\mathbf{V} \cdot \mathbf{V}$).
+    
 !!! note "Quiz"
-```
-**2. The Softmax function is applied to the raw similarity scores in the attention mechanism to convert the interaction potential into a final, normalized output that is analogous to a:**
-
-* **A.** Potential energy.
-* **B.** **Boltzmann distribution (or learned probability)**. (**Correct**)
-* **C.** Gradient vector.
-* **D.** Euclidean distance.
-
-```
+    **2. The Softmax function is applied to the raw similarity scores in the attention mechanism to convert the interaction potential into a final, normalized output that is analogous to a:**
+    
+    * **A.** Potential energy.
+    * **B.** **Boltzmann distribution (or learned probability)**. (**Correct**)
+    * **C.** Gradient vector.
+    * **D.** Euclidean distance.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** The output of self-attention is determined by the three roles: Query, Key, and Value. Explain the distinct informational function of the **Value ($\mathbf{V}$) vector** in the attention process.
-
-**Answer Strategy:** The Value vector ($\mathbf{V}$) represents the **content to be aggregated**. While the Query and Key projections are used to **calculate the relevance** (the attention weights $A$), the final output is obtained by taking the weighted sum of the Value vectors ($A\mathbf{V}$). Thus, the Value projection determines *what content* is transferred from the entire system to enrich the receiving element's contextual representation.
-
-```
+    **Question:** The output of self-attention is determined by the three roles: Query, Key, and Value. Explain the distinct informational function of the **Value ($\mathbf{V}$) vector** in the attention process.
+    
+    **Answer Strategy:** The Value vector ($\mathbf{V}$) represents the **content to be aggregated**. While the Query and Key projections are used to **calculate the relevance** (the attention weights $A$), the final output is obtained by taking the weighted sum of the Value vectors ($A\mathbf{V}$). Thus, the Value projection determines *what content* is transferred from the entire system to enrich the receiving element's contextual representation.
+    
 ---
 
 ---

@@ -73,10 +73,8 @@ The **Transformer** solves this by fundamentally redesigning the interaction mec
 * **Effect:** This removes all topological constraints. In a Transformer, **any element (token, atom, site) can attend to (interact with) every other element** in the sequence or set simultaneously. The interaction strength is dynamically **learned** from the data rather than being predefined.
 
 !!! tip "Self-Attention as Nonlocal Field Interaction"
-```
-Think of self-attention as implementing a **mean-field approximation** from statistical physics. Instead of each element interacting only with its nearest neighbors (like in a lattice model), every element simultaneously interacts with every other element through a learned coupling strength. The attention weights $a_{ij}$ serve as dynamic coupling constants, analogous to how the mean field $\bar{m}$ in the Ising model replaces explicit pairwise interactions with an effective global field. This allows the Transformer to capture long-range correlations (like quantum entanglement or semantic context) that would require many sequential steps in local models like RNNs or GNNs.
-
-```
+    Think of self-attention as implementing a **mean-field approximation** from statistical physics. Instead of each element interacting only with its nearest neighbors (like in a lattice model), every element simultaneously interacts with every other element through a learned coupling strength. The attention weights $a_{ij}$ serve as dynamic coupling constants, analogous to how the mean field $\bar{m}$ in the Ising model replaces explicit pairwise interactions with an effective global field. This allows the Transformer to capture long-range correlations (like quantum entanglement or semantic context) that would require many sequential steps in local models like RNNs or GNNs.
+    
 ---
 
 ### **Analogy: From Lattice Physics to Mean-Field Theory**
@@ -251,20 +249,18 @@ $$
 * **Analogy:** This is the exact form of the **Boltzmann distribution** (or Softmax function, Section 10.8). The attention weight $a_{ij}$ (the probability of element $i$ attending to $j$) is an exponential function of the negative energy.
 
 !!! example "Attention as Thermodynamic Probability"
-```
-Consider two tokens in a sentence: token $i$ ("king") and two candidate tokens $j_1$ ("queen") and $j_2$ ("apple"). If the Query-Key similarity yields energies $E_{i,j_1} = -2.0$ and $E_{i,j_2} = -0.5$, the Boltzmann-weighted attention probabilities become:
-
-$$
-a_{i,j_1} = \frac{e^{-(-2.0)}}{e^{-(-2.0)} + e^{-(-0.5)}} = \frac{e^{2.0}}{e^{2.0} + e^{0.5}} \approx 0.82
-$$
-
-$$
-a_{i,j_2} = \frac{e^{0.5}}{e^{2.0} + e^{0.5}} \approx 0.18
-$$
-
-Token $i$ attends 82% to "queen" (lower energy = higher probability) and only 18% to "apple." This mirrors how a physical system in thermal equilibrium favors low-energy states. The softmax "temperature" scaling factor $\sqrt{d_k}$ controls the sharpness of this distribution—smaller temperature yields sharper, more deterministic attention (analogous to zero-temperature limit in statistical mechanics).
-
-```
+    Consider two tokens in a sentence: token $i$ ("king") and two candidate tokens $j_1$ ("queen") and $j_2$ ("apple"). If the Query-Key similarity yields energies $E_{i,j_1} = -2.0$ and $E_{i,j_2} = -0.5$, the Boltzmann-weighted attention probabilities become:
+    
+    $$
+    a_{i,j_1} = \frac{e^{-(-2.0)}}{e^{-(-2.0)} + e^{-(-0.5)}} = \frac{e^{2.0}}{e^{2.0} + e^{0.5}} \approx 0.82
+    $$
+    
+    $$
+    a_{i,j_2} = \frac{e^{0.5}}{e^{2.0} + e^{0.5}} \approx 0.18
+    $$
+    
+    Token $i$ attends 82% to "queen" (lower energy = higher probability) and only 18% to "apple." This mirrors how a physical system in thermal equilibrium favors low-energy states. The softmax "temperature" scaling factor $\sqrt{d_k}$ controls the sharpness of this distribution—smaller temperature yields sharper, more deterministic attention (analogous to zero-temperature limit in statistical mechanics).
+    
 ---
 
 ### **Interpretation: Thermodynamic Relaxation**
@@ -456,10 +452,8 @@ Scaling laws describe the empirically observed relationship where the performanc
 More recently, research has revealed that not all capabilities emerge smoothly with scale. Instead, large Transformers often demonstrate **Emergent Phenomena**—new, complex capabilities that appear suddenly when the model size or data crosses a specific threshold.
 
 ??? question "Why do large Transformers exhibit sudden emergent capabilities analogous to phase transitions?"
-```
-Below a critical parameter threshold, the model behaves like a **disordered system**—a simple interpolator without coherent long-range structure. When the parameter count $N$ or data size $D$ crosses a critical threshold, the network density becomes sufficient to maintain **global coherence** (the ability to propagate correlations across the entire input via repeated attention layers). This is mathematically analogous to a **phase transition** in statistical physics: at the Curie temperature $T_c$, microscopic spin interactions suddenly yield macroscopic ferromagnetic order. Similarly, at the "capability threshold" $(N_c, D_c)$, the network's local gradient updates spontaneously organize into global, abstract reasoning patterns. The attention mechanism's all-to-all coupling acts as the long-range interaction kernel that enables this criticality—much like how mean-field interactions enable phase transitions in statistical mechanics (Section 19.1).
-
-```
+    Below a critical parameter threshold, the model behaves like a **disordered system**—a simple interpolator without coherent long-range structure. When the parameter count $N$ or data size $D$ crosses a critical threshold, the network density becomes sufficient to maintain **global coherence** (the ability to propagate correlations across the entire input via repeated attention layers). This is mathematically analogous to a **phase transition** in statistical physics: at the Curie temperature $T_c$, microscopic spin interactions suddenly yield macroscopic ferromagnetic order. Similarly, at the "capability threshold" $(N_c, D_c)$, the network's local gradient updates spontaneously organize into global, abstract reasoning patterns. The attention mechanism's all-to-all coupling acts as the long-range interaction kernel that enables this criticality—much like how mean-field interactions enable phase transitions in statistical mechanics (Section 19.1).
+    
 ---
 
 ### **Conclusion: Thermodynamics of Intelligence**
@@ -608,10 +602,8 @@ Attention weights (A = Softmax(Q K^T / sqrt(d_k))):
 This demo confirms that the Transformer is a universal relational model that learns a **dynamic coupling constant** for every pair of elements in the system.
 
 !!! tip "Understanding Attention Weights as Physical Coupling"
-```
-The attention matrix $A$ can be interpreted as a **time-dependent adjacency matrix** in a dynamically evolving graph. Each entry $a_{ij}$ represents the strength of the "edge" between elements $i$ and $j$ for this specific input configuration. Unlike static GNNs where $A$ is fixed by molecular bonds or network topology, Transformers **recompute** $A$ for every input, allowing the coupling structure to adapt to context. Think of this as a physical system where the interaction potential $\phi(i,j)$ is not a fixed function of distance, but depends on the instantaneous quantum state (features) of both particles. This flexibility is why Transformers excel at modeling systems with context-dependent interactions, like language (where word relationships change based on meaning) or molecular conformations (where atom interactions change based on 3D geometry).
-
-```
+    The attention matrix $A$ can be interpreted as a **time-dependent adjacency matrix** in a dynamically evolving graph. Each entry $a_{ij}$ represents the strength of the "edge" between elements $i$ and $j$ for this specific input configuration. Unlike static GNNs where $A$ is fixed by molecular bonds or network topology, Transformers **recompute** $A$ for every input, allowing the coupling structure to adapt to context. Think of this as a physical system where the interaction potential $\phi(i,j)$ is not a fixed function of distance, but depends on the instantaneous quantum state (features) of both particles. This flexibility is why Transformers excel at modeling systems with context-dependent interactions, like language (where word relationships change based on meaning) or molecular conformations (where atom interactions change based on 3D geometry).
+    
 ---
 
 ---
@@ -774,10 +766,8 @@ In-Context Learning is the ability of a large Transformer to learn a task—such
 * **Scale Dependence:** This phenomenon is a direct consequence of the network's **scale**. It only emerges reliably when the models are large enough to sustain the necessary **global correlation** (Section 19.10).
 
 !!! example "In-Context Learning as Dynamical Self-Organization"
-```
-Consider a large Transformer model prompted with: "translate English to French: cat -> chat, dog -> chien, bird -> ?" The model outputs "oiseau" (French for bird) without any weight updates. How? During training, the model learned a **meta-pattern**: how translation tasks are structured as input-output mappings. At inference, the self-attention mechanism treats the few-shot examples as a **temporary training set** within the context window. The attention weights dynamically reorganize to form a **transient attractor state** in the network's activation space that encodes the English→French mapping rule. This is analogous to a physical system undergoing **spontaneous symmetry breaking**: below a critical temperature (or above a critical model size), the disordered state (general language understanding) suddenly transitions to an ordered state (specific task execution) without external intervention. The forward pass becomes a form of **implicit inference**, where the network's dynamics settle into a low-energy configuration representing the learned task—demonstrating that intelligence emerges from global correlation maintenance, not just parameter memorization.
-
-```
+    Consider a large Transformer model prompted with: "translate English to French: cat -> chat, dog -> chien, bird -> ?" The model outputs "oiseau" (French for bird) without any weight updates. How? During training, the model learned a **meta-pattern**: how translation tasks are structured as input-output mappings. At inference, the self-attention mechanism treats the few-shot examples as a **temporary training set** within the context window. The attention weights dynamically reorganize to form a **transient attractor state** in the network's activation space that encodes the English→French mapping rule. This is analogous to a physical system undergoing **spontaneous symmetry breaking**: below a critical temperature (or above a critical model size), the disordered state (general language understanding) suddenly transitions to an ordered state (specific task execution) without external intervention. The forward pass becomes a form of **implicit inference**, where the network's dynamics settle into a low-energy configuration representing the learned task—demonstrating that intelligence emerges from global correlation maintenance, not just parameter memorization.
+    
 ---
 
 ### **Analogy: Self-Organization in Dynamic Systems**

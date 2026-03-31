@@ -1,4 +1,4 @@
-# **Chapter 11: Graphical Models & Probabilistic Graphs () () (Codebook)**
+# **Chapter 11: Graphical Models & Probabilistic Graphs (Codebook)**
 
 ## Project 1: Bayesian Network (BN) Factoring (Chain Dependency)
 

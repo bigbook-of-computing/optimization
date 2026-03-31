@@ -1,4 +1,4 @@
-# **Chapter 18: Graph Neural Networks (GNNs) () () () (Workbook)**
+# **Chapter 18: Graph Neural Networks (GNNs) (Workbook)**
 
 The goal of this chapter is to introduce **Graph Neural Networks (GNNs)** as the universal architectural template for modeling systems defined by **irregular, relational topology**, bridging statistical inference with coupled physical dynamics.
 
@@ -23,36 +23,30 @@ The goal of this chapter is to introduce **Graph Neural Networks (GNNs)** as the
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The primary structural characteristic of data that necessitates the use of GNNs over architectures like CNNs is:**
-
-* **A.** Translation invariance.
-* **B.** **Irregular, sparse connectivity (relational topology)**. (**Correct**)
-* **C.** Temporal ordering.
-* **D.** Continuous feature vectors.
-
-```
+    **1. The primary structural characteristic of data that necessitates the use of GNNs over architectures like CNNs is:**
+    
+    * **A.** Translation invariance.
+    * **B.** **Irregular, sparse connectivity (relational topology)**. (**Correct**)
+    * **C.** Temporal ordering.
+    * **D.** Continuous feature vectors.
+    
 !!! note "Quiz"
-```
-**2. The core idea that justifies the GNN architecture from a complex systems perspective is that:**
-
-* **A.** The loss must be convex.
-* **B.** **Local updates (interactions) drive the system toward emergent global order**. (**Correct**)
-* **C.** The adjacency matrix must be symmetric.
-* **D.** The graph must be acyclic.
-
-```
+    **2. The core idea that justifies the GNN architecture from a complex systems perspective is that:**
+    
+    * **A.** The loss must be convex.
+    * **B.** **Local updates (interactions) drive the system toward emergent global order**. (**Correct**)
+    * **C.** The adjacency matrix must be symmetric.
+    * **D.** The graph must be acyclic.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** The GNN framework is philosophically aligned with the perspective of a **local field theory**. Explain what the **nodes ($\mathbf{h}_i$)** and **edges ($\mathbf{e}_{ij}$)** represent in this context, in terms of physics.
-
-**Answer Strategy:**
-* **Nodes ($\mathbf{h}_i$):** Represent the local **state** or **field value** of the individual entity (e.g., the position, velocity, or spin state of a particle).
-* **Edges ($\mathbf{e}_{ij}$):** Represent the **coupling strength** or **interaction potential** between those entities. The GNN learns the laws that govern how these local states and couplings evolve through message passing, analogous to the exchange of forces in a physical field theory.
-
-```
+    **Question:** The GNN framework is philosophically aligned with the perspective of a **local field theory**. Explain what the **nodes ($\mathbf{h}_i$)** and **edges ($\mathbf{e}_{ij}$)** represent in this context, in terms of physics.
+    
+    **Answer Strategy:**
+    * **Nodes ($\mathbf{h}_i$):** Represent the local **state** or **field value** of the individual entity (e.g., the position, velocity, or spin state of a particle).
+    * **Edges ($\mathbf{e}_{ij}$):** Represent the **coupling strength** or **interaction potential** between those entities. The GNN learns the laws that govern how these local states and couplings evolve through message passing, analogous to the exchange of forces in a physical field theory.
+    
 ---
 
 ---

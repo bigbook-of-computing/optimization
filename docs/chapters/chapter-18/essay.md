@@ -72,11 +72,9 @@ The GNN architecture explicitly adopts the perspective of local interaction from
 The **core idea** is that **local updates yield emergent global order**. By defining the rules of interaction (the message functions), GNN training learns the necessary **microscopic rule** that reproduces the desired **macroscopic behavior**.
 
 !!! tip "Graph Topology as Physical Coupling Structure"
-
-```
-Think of the graph's adjacency matrix $A$ as encoding the **interaction Hamiltonian** of the system. Each edge $(i,j)$ represents a physical coupling term (like $J_{ij} \sigma_i \sigma_j$ in the Ising model), and the GNN's message-passing process simulates the flow of energy or information along these coupling channels. Just as spins on a lattice collectively minimize total energy through local interactions, GNN nodes iteratively update their states by aggregating neighbor messages until the network reaches computational equilibrium. This perspective unifies graph structure learning with statistical physics: the learned message functions $\phi_m$ are computational analogs of interaction potentials.
-
-```
+    
+    Think of the graph's adjacency matrix $A$ as encoding the **interaction Hamiltonian** of the system. Each edge $(i,j)$ represents a physical coupling term (like $J_{ij} \sigma_i \sigma_j$ in the Ising model), and the GNN's message-passing process simulates the flow of energy or information along these coupling channels. Just as spins on a lattice collectively minimize total energy through local interactions, GNN nodes iteratively update their states by aggregating neighbor messages until the network reaches computational equilibrium. This perspective unifies graph structure learning with statistical physics: the learned message functions $\phi_m$ are computational analogs of interaction potentials.
+    
 ---
 
 ## **18.2 Graph Representation and Notation**
@@ -279,11 +277,9 @@ The iterative update process of a GNN layer can be viewed as simulating a physic
 | **Conservation Law** | **Symmetry-invariant Aggregation**. | Aggregation functions (like summation or averaging) ensure the model's output is independent of node ordering, aligning with the necessity for physics-based models to respect **permutation symmetry**. |
 
 !!! example "Molecular Energy Prediction as Physical Relaxation"
-
-```
-Consider predicting the ground-state energy of a molecule using a GNN. Each atom (node) has features $\mathbf{h}_i$ encoding position and atomic type. Covalent bonds define edges $\mathbf{e}_{ij}$ with bond lengths. During message passing, each atom aggregates force-like messages from bonded neighbors: $\mathbf{m}_i = \sum_{j \in \mathcal{N}(i)} \phi_m(\mathbf{h}_i, \mathbf{h}_j, \mathbf{e}_{ij})$, where $\phi_m$ learns to encode pairwise potential energies (like Lennard-Jones or Coulomb interactions). After 3-5 layers, node features converge to equilibrium states encoding the molecule's electronic structure. A final readout sums all node energies: $E = \sum_i \phi_{\text{out}}(\mathbf{h}_i^{(L)})$. This process mirrors classical molecular dynamics: local interaction rules (learned $\phi_m$) drive collective relaxation to minimum energy, but executed symbolically via gradient descent rather than numerical integration of Newton's equations.
-
-```
+    
+    Consider predicting the ground-state energy of a molecule using a GNN. Each atom (node) has features $\mathbf{h}_i$ encoding position and atomic type. Covalent bonds define edges $\mathbf{e}_{ij}$ with bond lengths. During message passing, each atom aggregates force-like messages from bonded neighbors: $\mathbf{m}_i = \sum_{j \in \mathcal{N}(i)} \phi_m(\mathbf{h}_i, \mathbf{h}_j, \mathbf{e}_{ij})$, where $\phi_m$ learns to encode pairwise potential energies (like Lennard-Jones or Coulomb interactions). After 3-5 layers, node features converge to equilibrium states encoding the molecule's electronic structure. A final readout sums all node energies: $E = \sum_i \phi_{\text{out}}(\mathbf{h}_i^{(L)})$. This process mirrors classical molecular dynamics: local interaction rules (learned $\phi_m$) drive collective relaxation to minimum energy, but executed symbolically via gradient descent rather than numerical integration of Newton's equations.
+    
 ### **Insight: Learning the Microscopic Rule**
 
 ---
@@ -338,11 +334,9 @@ The drive for symmetric neural architectures is the computational analogue of **
 * **Neural Parallel:** Designing a **Symmetry-preserving** GNN is an attempt to embed these conservation laws into the learning process, ensuring the model's predictions are fundamentally consistent with the physics of the system.
 
 ??? question "Why does permutation invariance in GNNs guarantee physical correctness for molecular properties?"
-
-```
-Molecular properties like energy, dipole moment, and polarizability are intrinsic physical observables that cannot depend on how we arbitrarily label atoms in our computational representation. If swapping atom indices in the adjacency matrix changed the predicted energy, the model would violate a fundamental physics principle: identical particles are indistinguishable. Permutation invariance (enforced via summation aggregation $\mathbf{m}_i = \sum_{j} \phi_m(\mathbf{h}_j)$) ensures the GNN output remains unchanged under relabeling, exactly mirroring the symmetry of the quantum wavefunction under particle exchange. This is the neural network analog of the Pauli exclusion principle—computational architecture must respect the statistical symmetry of identical particles.
-
-```
+    
+    Molecular properties like energy, dipole moment, and polarizability are intrinsic physical observables that cannot depend on how we arbitrarily label atoms in our computational representation. If swapping atom indices in the adjacency matrix changed the predicted energy, the model would violate a fundamental physics principle: identical particles are indistinguishable. Permutation invariance (enforced via summation aggregation $\mathbf{m}_i = \sum_{j} \phi_m(\mathbf{h}_j)$) ensures the GNN output remains unchanged under relabeling, exactly mirroring the symmetry of the quantum wavefunction under particle exchange. This is the neural network analog of the Pauli exclusion principle—computational architecture must respect the statistical symmetry of identical particles.
+    
 ---
 
 ## **18.8 Graph Hamiltonian Networks**
@@ -555,11 +549,9 @@ tensor([[0.0000, 0.0000, 4.2726, 2.8220],
 4.  **Convergence:** The repeated updates continue this process, simulating the **relaxation dynamics** of a physical system. The final output matrix $H$ contains the features of the nodes after their states have been influenced and contextualized by the structure of the entire local graph. This process achieves a form of **statistical equilibrium**.
 
 !!! tip "Interpreting Matrix Multiplication as Neighborhood Aggregation"
-
-```
-The core GNN operation `A @ H` is elegant because it encodes message passing purely through linear algebra. Each row of the result $(AH)_i$ equals $\sum_j A_{ij} H_j$, which is exactly the sum of neighbor features (since $A_{ij} = 1$ for neighbors, $0$ otherwise). This means adjacency matrix multiplication *is* message aggregation. The subsequent transformation `@ W` and nonlinearity `relu()` allow the network to learn complex, nonlinear interaction rules. After $L$ layers, node $i$ has aggregated information from all nodes within $L$ hops—its $L$-hop neighborhood—mirroring how physical information propagates at finite speed through a lattice. The depth of the GNN thus controls the "receptive field" of each node, exactly analogous to how convolutional depth controls receptive field size in CNNs.
-
-```
+    
+    The core GNN operation `A @ H` is elegant because it encodes message passing purely through linear algebra. Each row of the result $(AH)_i$ equals $\sum_j A_{ij} H_j$, which is exactly the sum of neighbor features (since $A_{ij} = 1$ for neighbors, $0$ otherwise). This means adjacency matrix multiplication *is* message aggregation. The subsequent transformation `@ W` and nonlinearity `relu()` allow the network to learn complex, nonlinear interaction rules. After $L$ layers, node $i$ has aggregated information from all nodes within $L$ hops—its $L$-hop neighborhood—mirroring how physical information propagates at finite speed through a lattice. The depth of the GNN thus controls the "receptive field" of each node, exactly analogous to how convolutional depth controls receptive field size in CNNs.
+    
 ---
 
 ## **18.13 Energy-Based Perspective**
@@ -667,11 +659,9 @@ Each specialized neural architecture can be categorized by the **geometry of lea
 | **Transformer** | **Set/Global Correlation** | Dynamic, all-to-all interaction. | **Nonlocal Field Theory**. |
 
 !!! example "Comparing GNN and CNN on Molecular vs. Image Data"
-
-```
-Consider two prediction tasks: (1) predicting molecular energy from atomic structure, (2) classifying an image of a molecule. For task (1), a **GNN** is ideal: the molecule is naturally a graph (atoms = nodes, bonds = edges with irregular connectivity), and chemical properties depend on specific bonding patterns, not spatial grid positions. A CNN would fail because molecules have arbitrary topology—no regular 2D/3D grid exists. For task (2), a **CNN** excels: the image is a regular pixel grid with local spatial correlations (edges, textures). A GNN would be inefficient since every pixel would need edges to its neighbors, recreating a grid structure. The key insight: CNNs are GNNs on **regular lattices** with **weight sharing** (convolution), while GNNs handle **irregular topologies** with **node-specific aggregation**. This architectural choice encodes the inductive bias matching the data's intrinsic geometry.
-
-```
+    
+    Consider two prediction tasks: (1) predicting molecular energy from atomic structure, (2) classifying an image of a molecule. For task (1), a **GNN** is ideal: the molecule is naturally a graph (atoms = nodes, bonds = edges with irregular connectivity), and chemical properties depend on specific bonding patterns, not spatial grid positions. A CNN would fail because molecules have arbitrary topology—no regular 2D/3D grid exists. For task (2), a **CNN** excels: the image is a regular pixel grid with local spatial correlations (edges, textures). A GNN would be inefficient since every pixel would need edges to its neighbors, recreating a grid structure. The key insight: CNNs are GNNs on **regular lattices** with **weight sharing** (convolution), while GNNs handle **irregular topologies** with **node-specific aggregation**. This architectural choice encodes the inductive bias matching the data's intrinsic geometry.
+    
 ### **GNNs vs. Other Paradigms**
 
 ---

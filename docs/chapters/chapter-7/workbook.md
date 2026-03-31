@@ -1,4 +1,4 @@
-# **Chapter 7: Stochastic & Heuristic Optimization () () () (Workbook)**
+# **Chapter 7: Stochastic & Heuristic Optimization (Workbook)**
 
 The goal of this chapter is to study **global optimization** by embracing randomness and heuristics, modeling the search for the best solution as a **thermodynamic cooling process** designed to escape local minima.
 
@@ -22,34 +22,28 @@ The goal of this chapter is to study **global optimization** by embracing random
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The primary geometric feature in a non-convex loss landscape that causes deterministic optimization algorithms to fail is the presence of:**
-
-* **A.** A singular Hessian matrix.
-* **B.** **Numerous local minima traps separated by high energy barriers**. (**Correct**)
-* **C.** A high-frequency global gradient.
-* **D.** A very large learning rate $\eta$.
-
-```
+    **1. The primary geometric feature in a non-convex loss landscape that causes deterministic optimization algorithms to fail is the presence of:**
+    
+    * **A.** A singular Hessian matrix.
+    * **B.** **Numerous local minima traps separated by high energy barriers**. (**Correct**)
+    * **C.** A high-frequency global gradient.
+    * **D.** A very large learning rate $\eta$.
+    
 !!! note "Quiz"
-```
-**2. In the physical analogy of overcoming an energy barrier $\Delta E$, the probability of a particle gaining the necessary thermal energy is proportional to which factor?**
-
-* **A.** The inverse gradient, $1/\nabla L$.
-* **B.** The partition function $Z$.
-* **C.** **The Boltzmann factor, $P \propto e^{-\Delta E / k_B T}$**. (**Correct**)
-* **D.** The total entropy $S$.
-
-```
+    **2. In the physical analogy of overcoming an energy barrier $\Delta E$, the probability of a particle gaining the necessary thermal energy is proportional to which factor?**
+    
+    * **A.** The inverse gradient, $1/\nabla L$.
+    * **B.** The partition function $Z$.
+    * **C.** **The Boltzmann factor, $P \propto e^{-\Delta E / k_B T}$**. (**Correct**)
+    * **D.** The total entropy $S$.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** Explain why the **vanishing gradient** problem on vast, flat **plateaus** is a challenge that requires stochastic exploration, even if the plateaus are not true local minima?
-
-**Answer Strategy:** On a plateau, the gradient magnitude $\Vert \nabla L \Vert$ approaches zero. Since gradient descent moves are proportional to $-\nabla L$, the deterministic force vanishes, causing the optimizer to **stall** completely. Stochastic exploration (noise) is necessary because it provides a non-deterministic force, $\mathcal{\xi}(t)$, allowing the optimizer to **diffuse across the zero-gradient region** until it randomly stumbles upon a new area where the slope is meaningful again, thus continuing the global search.
-
-```
+    **Question:** Explain why the **vanishing gradient** problem on vast, flat **plateaus** is a challenge that requires stochastic exploration, even if the plateaus are not true local minima?
+    
+    **Answer Strategy:** On a plateau, the gradient magnitude $\Vert \nabla L \Vert$ approaches zero. Since gradient descent moves are proportional to $-\nabla L$, the deterministic force vanishes, causing the optimizer to **stall** completely. Stochastic exploration (noise) is necessary because it provides a non-deterministic force, $\mathcal{\xi}(t)$, allowing the optimizer to **diffuse across the zero-gradient region** until it randomly stumbles upon a new area where the slope is meaningful again, thus continuing the global search.
+    
 ---
 
 ---
@@ -61,36 +55,30 @@ The goal of this chapter is to study **global optimization** by embracing random
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The **Langevin equation** transforms optimization into a physical process by equating the stochastic noise term $\mathcal{\xi}(t)$ to:**
-
-* **A.** The deterministic gradient force.
-* **B.** **A source of thermal energy (temperature $T$)**. (**Correct**)
-* **C.** The gravitational constant $g$.
-* **D.** The momentum vector $\mathbf{v}$.
-
-```
+    **1. The **Langevin equation** transforms optimization into a physical process by equating the stochastic noise term $\mathcal{\xi}(t)$ to:**
+    
+    * **A.** The deterministic gradient force.
+    * **B.** **A source of thermal energy (temperature $T$)**. (**Correct**)
+    * **C.** The gravitational constant $g$.
+    * **D.** The momentum vector $\mathbf{v}$.
+    
 !!! note "Quiz"
-```
-**2. The significance of the **stationary distribution** $p(\mathcal{\theta}) \propto e^{-L(\mathcal{\theta})/T}$ is that it shows the equilibrium state of a stochastic optimizer is equivalent to:**
-
-* **A.** The maximum entropy state.
-* **B.** The partition function $Z$.
-* **C.** **The Boltzmann distribution, where low-loss states are statistically favored**. (**Correct**)
-* **D.** A uniform distribution.
-
-```
+    **2. The significance of the **stationary distribution** $p(\mathcal{\theta}) \propto e^{-L(\mathcal{\theta})/T}$ is that it shows the equilibrium state of a stochastic optimizer is equivalent to:**
+    
+    * **A.** The maximum entropy state.
+    * **B.** The partition function $Z$.
+    * **C.** **The Boltzmann distribution, where low-loss states are statistically favored**. (**Correct**)
+    * **D.** A uniform distribution.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** The Langevin equation contains two forces: the deterministic force $(-\nabla L)$ and the stochastic force $(\sqrt{2T}\mathcal{\xi}(t))$. In the context of the **exploration–exploitation trade-off**, what role does each force play in the overall dynamics?
-
-**Answer Strategy:**
-* **Deterministic Force ($-\nabla L$):** This represents **exploitation**. It provides the average force that pulls the system directly downhill, quickly refining the solution within the current basin.
-* **Stochastic Force ($\sqrt{2T}\mathcal{\xi}(t)$):** This represents **exploration**. It provides the random kicks that push the system *away* from the local minimum, allowing it to hop over energy barriers and discover distant, potentially deeper basins. The temperature $T$ controls the balance between these two actions.
-
-```
+    **Question:** The Langevin equation contains two forces: the deterministic force $(-\nabla L)$ and the stochastic force $(\sqrt{2T}\mathcal{\xi}(t))$. In the context of the **exploration–exploitation trade-off**, what role does each force play in the overall dynamics?
+    
+    **Answer Strategy:**
+    * **Deterministic Force ($-\nabla L$):** This represents **exploitation**. It provides the average force that pulls the system directly downhill, quickly refining the solution within the current basin.
+    * **Stochastic Force ($\sqrt{2T}\mathcal{\xi}(t)$):** This represents **exploration**. It provides the random kicks that push the system *away* from the local minimum, allowing it to hop over energy barriers and discover distant, potentially deeper basins. The temperature $T$ controls the balance between these two actions.
+    
 ---
 
 ---
@@ -102,34 +90,28 @@ The goal of this chapter is to study **global optimization** by embracing random
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. During the **high-temperature phase** of Simulated Annealing, the acceptance probability $P_{\text{acc}} \to 1$ for both uphill and downhill moves. This is done to achieve:**
-
-* **A.** Precise local exploitation.
-* **B.** **Broad global exploration across energy barriers**. (**Correct**)
-* **C.** Convergence to the nearest local minimum.
-* **D.** A zero gradient.
-
-```
+    **1. During the **high-temperature phase** of Simulated Annealing, the acceptance probability $P_{\text{acc}} \to 1$ for both uphill and downhill moves. This is done to achieve:**
+    
+    * **A.** Precise local exploitation.
+    * **B.** **Broad global exploration across energy barriers**. (**Correct**)
+    * **C.** Convergence to the nearest local minimum.
+    * **D.** A zero gradient.
+    
 !!! note "Quiz"
-```
-**2. In the Simulated Annealing algorithm, the process of slowly decreasing the temperature $T$ according to a fixed rule is known as the:**
-
-* **A.** Partition function.
-* **B.** Metropolis criterion.
-* **C.** **Cooling schedule (or annealing schedule)**. (**Correct**)
-* **D.** Kramers' escape theory.
-
-```
+    **2. In the Simulated Annealing algorithm, the process of slowly decreasing the temperature $T$ according to a fixed rule is known as the:**
+    
+    * **A.** Partition function.
+    * **B.** Metropolis criterion.
+    * **C.** **Cooling schedule (or annealing schedule)**. (**Correct**)
+    * **D.** Kramers' escape theory.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** Simulated Annealing is mathematically guaranteed to find the true global minimum *only* if the cooling schedule is sufficiently slow. Explain what might happen computationally if the cooling schedule is too fast.
-
-**Answer Strategy:** If the cooling schedule is too fast, the system will **\"quench\"** or solidify prematurely. The temperature will drop before the optimizer has had enough time to accumulate the thermal energy necessary to jump over the largest energy barriers. Consequently, the optimizer will become **trapped in a high-loss local minimum**, preventing it from reaching the global ground state.
-
-```
+    **Question:** Simulated Annealing is mathematically guaranteed to find the true global minimum *only* if the cooling schedule is sufficiently slow. Explain what might happen computationally if the cooling schedule is too fast.
+    
+    **Answer Strategy:** If the cooling schedule is too fast, the system will **\"quench\"** or solidify prematurely. The temperature will drop before the optimizer has had enough time to accumulate the thermal energy necessary to jump over the largest energy barriers. Consequently, the optimizer will become **trapped in a high-loss local minimum**, preventing it from reaching the global ground state.
+    
 ---
 
 ---
@@ -141,34 +123,28 @@ The goal of this chapter is to study **global optimization** by embracing random
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The statistical physics principle that models the escape rate ($\Gamma$) of a particle over an energy barrier ($\Delta E$) is called:**
-
-* **A.** The Law of Least Action.
-* **B.** The Langevin equation.
-* **C.** **Kramers' escape theory**. (**Correct**)
-* **D.** The Hebbian learning rule.
-
-```
+    **1. The statistical physics principle that models the escape rate ($\Gamma$) of a particle over an energy barrier ($\Delta E$) is called:**
+    
+    * **A.** The Law of Least Action.
+    * **B.** The Langevin equation.
+    * **C.** **Kramers' escape theory**. (**Correct**)
+    * **D.** The Hebbian learning rule.
+    
 !!! note "Quiz"
-```
-**2. The **Helmholtz Free Energy ($\mathcal{F}$) principle** provides the thermodynamic justification for the exploration-exploitation trade-off by showing that optimization minimizes a quantity that balances:**
-
-* **A.** The Boltzmann factor and the partition function.
-* **B.** **The loss (energy $E$) and the exploration volume (entropy $S$)**. (**Correct**)
-* **C.** The friction coefficient and the noise term.
-* **D.** The steepest descent and the shallowest descent.
-
-```
+    **2. The **Helmholtz Free Energy ($\mathcal{F}$) principle** provides the thermodynamic justification for the exploration-exploitation trade-off by showing that optimization minimizes a quantity that balances:**
+    
+    * **A.** The Boltzmann factor and the partition function.
+    * **B.** **The loss (energy $E$) and the exploration volume (entropy $S$)**. (**Correct**)
+    * **C.** The friction coefficient and the noise term.
+    * **D.** The steepest descent and the shallowest descent.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** In the free-energy minimization $\mathcal{F} = E - TS$, explain why the optimization should use **high temperature ($T$)** early in training.
-
-**Answer Strategy:** High $T$ favors the **entropy term ($T S$)** in the free energy equation. Entropy represents the volume of parameter space explored. Early in training, the priority is to avoid collapsing into a poor local minimum, so the system must maximize its search volume. By giving the system high thermal energy ($T$), it promotes the exploration of wide regions over minimal energy, ensuring the global structure of the landscape is thoroughly sampled.
-
-```
+    **Question:** In the free-energy minimization $\mathcal{F} = E - TS$, explain why the optimization should use **high temperature ($T$)** early in training.
+    
+    **Answer Strategy:** High $T$ favors the **entropy term ($T S$)** in the free energy equation. Entropy represents the volume of parameter space explored. Early in training, the priority is to avoid collapsing into a poor local minimum, so the system must maximize its search volume. By giving the system high thermal energy ($T$), it promotes the exploration of wide regions over minimal energy, ensuring the global structure of the landscape is thoroughly sampled.
+    
 ---
 
 ---
@@ -180,36 +156,30 @@ The goal of this chapter is to study **global optimization** by embracing random
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. In the context of Genetic Algorithms, the parameter vector $\mathcal{\theta}_i$ of a candidate solution is analogous to the population's:**
-
-* **A.** Fitness $F$.
-* **B.** **Genotype (genetic code)**. (**Correct**)
-* **C.** Mutation rate.
-* **D.** Partition function.
-
-```
+    **1. In the context of Genetic Algorithms, the parameter vector $\mathcal{\theta}_i$ of a candidate solution is analogous to the population's:**
+    
+    * **A.** Fitness $F$.
+    * **B.** **Genotype (genetic code)**. (**Correct**)
+    * **C.** Mutation rate.
+    * **D.** Partition function.
+    
 !!! note "Quiz"
-```
-**2. The primary role of the **Mutation** step in the Genetic Algorithm is to:**
-
-* **A.** Accelerate convergence toward the population mean.
-* **B.** **Introduce local exploration (diversity/entropy) and prevent stagnation at a local optimum**. (**Correct**)
-* **C.** Combine parameters from two parents.
-* **D.** Calculate the stochastic gradient.
-
-```
+    **2. The primary role of the **Mutation** step in the Genetic Algorithm is to:**
+    
+    * **A.** Accelerate convergence toward the population mean.
+    * **B.** **Introduce local exploration (diversity/entropy) and prevent stagnation at a local optimum**. (**Correct**)
+    * **C.** Combine parameters from two parents.
+    * **D.** Calculate the stochastic gradient.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** Contrast the **search space exploration strategy** of a single **Simulated Annealing (SA)** particle versus a **Genetic Algorithm (GA)** population.
-
-**Answer Strategy:**
-* **SA (Thermal):** Uses **temporal exploration**. A single particle moves through time, sampling the search space sequentially. It achieves global reach by accepting *uphill moves* based on temperature.
-* **GA (Evolutionary):** Uses **population exploration**. Multiple solutions (the population) explore the search space **in parallel**. It achieves global search by **recombining** successful parameter blocks (crossover) and randomizing them (mutation).
-
-```
+    **Question:** Contrast the **search space exploration strategy** of a single **Simulated Annealing (SA)** particle versus a **Genetic Algorithm (GA)** population.
+    
+    **Answer Strategy:**
+    * **SA (Thermal):** Uses **temporal exploration**. A single particle moves through time, sampling the search space sequentially. It achieves global reach by accepting *uphill moves* based on temperature.
+    * **GA (Evolutionary):** Uses **population exploration**. Multiple solutions (the population) explore the search space **in parallel**. It achieves global search by **recombining** successful parameter blocks (crossover) and randomizing them (mutation).
+    
 ---
 
 ### 💡 Hands-On Project Ideas 🛠️

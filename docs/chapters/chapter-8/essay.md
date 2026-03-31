@@ -111,10 +111,8 @@ s_i = 2x_i - 1 \quad \text{and} \quad x_i = \frac{s_i + 1}{2}
 $$
 
 !!! tip "Binary ↔ Spin Conversion as Universal Bridge"
-```
-The linear transformation $s_i = 2x_i - 1$ is more than algebra—it's the key that unlocks the physics of discrete optimization. Every computational problem (TSP, scheduling, ML feature selection) formulated in binary variables $x_i \in \{0,1\}$ can instantly become a magnetic spin system $s_i \in \{-1,+1\}$, allowing us to apply decades of statistical physics research (thermal annealing, quantum tunneling, ensemble methods) to solve NP-hard computational problems.
-
-```
+    The linear transformation $s_i = 2x_i - 1$ is more than algebra—it's the key that unlocks the physics of discrete optimization. Every computational problem (TSP, scheduling, ML feature selection) formulated in binary variables $x_i \in \{0,1\}$ can instantly become a magnetic spin system $s_i \in \{-1,+1\}$, allowing us to apply decades of statistical physics research (thermal annealing, quantum tunneling, ensemble methods) to solve NP-hard computational problems.
+    
 ---
 
 ### **The General Energy Function: QUBO**
@@ -358,12 +356,10 @@ A TSP solution corresponds to a configuration of the $N^2$ spin variables where 
 * **Energy Landscape:** The physical solver (e.g., Simulated Annealing or Quantum Annealing) searches the discrete landscape, trying to find a configuration that falls into a deep energy well corresponding to a minimum-distance tour. The constraints ensure that only valid tours lie in the low-energy region.
 
 !!! example "TSP as Constrained Spin Dynamics"
-```
-For a 5-city TSP, we have $N=5$ cities and $N=5$ positions, yielding $N^2 = 25$ binary variables $x_{i,t}$. The optimal tour (say, city order 1→2→4→3→5→1) corresponds to exactly 5 active spins: $x_{1,1}=1, x_{2,2}=1, x_{4,3}=1, x_{3,4}=1, x_{5,5}=1$, all others zero. The penalty constraints force this "one-hot per row and column" structure, while the objective cost $\sum D_{i,j} x_{i,t}x_{j,t+1}$ measures the total distance traveled. The physics solver navigates the $2^{25}$ configuration space to find this low-energy traveling spin wave.
-
-```
-The TSP is thus transformed from a routing challenge into a problem of finding the **ground state of a constrained, $N^2$-variable Ising system**.
-
+    For a 5-city TSP, we have $N=5$ cities and $N=5$ positions, yielding $N^2 = 25$ binary variables $x_{i,t}$. The optimal tour (say, city order 1→2→4→3→5→1) corresponds to exactly 5 active spins: $x_{1,1}=1, x_{2,2}=1, x_{4,3}=1, x_{3,4}=1, x_{5,5}=1$, all others zero. The penalty constraints force this "one-hot per row and column" structure, while the objective cost $\sum D_{i,j} x_{i,t}x_{j,t+1}$ measures the total distance traveled. The physics solver navigates the $2^{25}$ configuration space to find this low-energy traveling spin wave.
+    
+    The TSP is thus transformed from a routing challenge into a problem of finding the **ground state of a constrained, $N^2$-variable Ising system**.
+    
 ## **8.7 Graph Coloring and Partitioning**
 
 The QUBO formalism excels at representing optimization problems that are fundamentally defined by the structure of a **graph** (a network of nodes and edges). This section examines two canonical graph theory problems that directly map to the Ising energy model: **Graph Coloring** and **Graph Partitioning**.
@@ -638,12 +634,10 @@ The failure of classical methods on large QUBO problems is often due to high, wi
 * **Quantum Barrier Crossing:** The system uses **quantum uncertainty (fluctuations, $\Gamma$)** to tunnel *through* the barrier. Tunneling does not depend on the height of the barrier, but rather its thickness.
 
 ??? question "Why Can Quantum Tunneling Outperform Thermal Hopping?"
-```
-Classical SA must wait for rare thermal fluctuations to provide enough energy $E \geq \Delta E_{\text{barrier}}$ to hop over tall barriers, with escape rate $\Gamma_{\text{thermal}} \sim e^{-\Delta E/T}$ exponentially suppressed by barrier height. Quantum tunneling bypasses this: the transverse field $\Gamma$ creates quantum superpositions that allow the system to explore configurations on *both sides* of the barrier simultaneously. The tunneling rate depends on barrier *width* (energy gap), not height. For wide, tall barriers, QA can be exponentially faster. However, for problems where barriers are narrow or landscape is extremely rugged (dense local minima), thermal SA can sometimes outperform QA due to better ergodic exploration. The advantage is problem-dependent.
-
-```
-The introduction of the quantum field effectively adds **zero-point energy** to the system, enabling global exploration even at zero temperature.
-
+    Classical SA must wait for rare thermal fluctuations to provide enough energy $E \geq \Delta E_{\text{barrier}}$ to hop over tall barriers, with escape rate $\Gamma_{\text{thermal}} \sim e^{-\Delta E/T}$ exponentially suppressed by barrier height. Quantum tunneling bypasses this: the transverse field $\Gamma$ creates quantum superpositions that allow the system to explore configurations on *both sides* of the barrier simultaneously. The tunneling rate depends on barrier *width* (energy gap), not height. For wide, tall barriers, QA can be exponentially faster. However, for problems where barriers are narrow or landscape is extremely rugged (dense local minima), thermal SA can sometimes outperform QA due to better ergodic exploration. The advantage is problem-dependent.
+    
+    The introduction of the quantum field effectively adds **zero-point energy** to the system, enabling global exploration even at zero temperature.
+    
 ---
 
 ### **The Quantum Ising Hamiltonian**

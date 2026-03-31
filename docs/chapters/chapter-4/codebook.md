@@ -1,4 +1,4 @@
-# **Chapter 4: The Optimization Landscape () () (Codebook)**
+# **Chapter 4: The Optimization Landscape (Codebook)**
 
 ---
 

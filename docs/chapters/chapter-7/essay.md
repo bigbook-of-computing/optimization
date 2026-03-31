@@ -124,10 +124,8 @@ This formulation achieves the core goal of Part III: it equates **optimization w
 * **Tuning Exploration:** The temperature $T$ provides a control parameter for adjusting the **exploration-exploitation trade-off**. This forms the basis for the powerful global optimization method of **Simulated Annealing** (Section 7.3).
 
 !!! tip "Temperature as the Exploration Knob"
-```
-Temperature $T$ in the Langevin equation acts as a universal control parameter for optimization dynamics. At $T=0$, we recover pure gradient descent (deterministic, exploitative). As $T$ increases, the noise term $\sqrt{2T}\mathbf{\xi}$ grows, enabling barrier crossing. This maps directly to learning rate schedules: high initial learning rate (high $T$, exploration) gradually annealed to low values (low $T$, exploitation). The Boltzmann distribution $p \propto e^{-L/T}$ shows that temperature broadens the probability density—high $T$ samples widely, low $T$ concentrates on minima.
-
-```
+    Temperature $T$ in the Langevin equation acts as a universal control parameter for optimization dynamics. At $T=0$, we recover pure gradient descent (deterministic, exploitative). As $T$ increases, the noise term $\sqrt{2T}\mathbf{\xi}$ grows, enabling barrier crossing. This maps directly to learning rate schedules: high initial learning rate (high $T$, exploration) gradually annealed to low values (low $T$, exploitation). The Boltzmann distribution $p \propto e^{-L/T}$ shows that temperature broadens the probability density—high $T$ samples widely, low $T$ concentrates on minima.
+    
 ---
 
 ## **7.3 Simulated Annealing — Cooling Through Landscapes**
@@ -272,10 +270,8 @@ $$
 * **Optimization as Selection Pressure:** The entire process is a form of **stochastic optimization** under continuous **selection pressure**. Crossover efficiently transfers large blocks of successful parameters, accelerating convergence toward low-cost regions, while mutation ensures the system retains the **entropy (diversity)** necessary to jump small barriers. GAs are particularly effective on highly rugged or discrete landscapes where gradient information is non-existent or misleading.
 
 !!! example "Genetic Algorithm as Population Dynamics"
-```
-Genetic Algorithms transform optimization into biological evolution: the parameter space becomes a gene pool, loss function becomes survival fitness, and optimization becomes natural selection. Consider optimizing a 100-dimensional binary vector (e.g., feature selection). GAs maintain a population of 50 candidates. Each generation: (1) Select top 25 by fitness (low loss); (2) Crossover pairs by swapping random 50-bit segments, creating 50 offspring; (3) Mutate 2% of bits randomly. High-fitness traits (good parameter combinations) spread through the population via crossover, while mutation maintains diversity to escape local traps. This ensemble search explores 50 locations simultaneously.
-
-```
+    Genetic Algorithms transform optimization into biological evolution: the parameter space becomes a gene pool, loss function becomes survival fitness, and optimization becomes natural selection. Consider optimizing a 100-dimensional binary vector (e.g., feature selection). GAs maintain a population of 50 candidates. Each generation: (1) Select top 25 by fitness (low loss); (2) Crossover pairs by swapping random 50-bit segments, creating 50 offspring; (3) Mutate 2% of bits randomly. High-fitness traits (good parameter combinations) spread through the population via crossover, while mutation maintains diversity to escape local traps. This ensemble search explores 50 locations simultaneously.
+    
 ---
 
 ## **7.6 Swarm and Population Methods**
@@ -409,10 +405,8 @@ The SA trajectory reveals the three thermodynamic phases (Section 7.4):
 This example proves that **randomness is a necessary, strategic tool** for global optimization on complex, high-barrier energy landscapes.
 
 ??? question "Why Does Cooling Schedule Matter?"
-```
-The cooling schedule in Simulated Annealing controls the exploration-exploitation transition. Too fast cooling (e.g., $T_{t+1} = 0.9 T_t$): the system freezes before exploring all basins, trapping in a suboptimal local minimum (quenching). Too slow cooling (e.g., $T_{t+1} = 0.9999 T_t$): guaranteed global convergence but computationally prohibitive. Optimal schedules (logarithmic $T \propto 1/\log(t)$ theoretically, exponential $T_{t+1} = \alpha T_t$ with $\alpha \approx 0.95-0.999$ practically) balance: early high-$T$ phase allows barrier crossing via Kramers escape rate $\Gamma \sim e^{-\Delta E/T}$, late low-$T$ phase ensures precise convergence into deepest discovered basin.
-
-```
+    The cooling schedule in Simulated Annealing controls the exploration-exploitation transition. Too fast cooling (e.g., $T_{t+1} = 0.9 T_t$): the system freezes before exploring all basins, trapping in a suboptimal local minimum (quenching). Too slow cooling (e.g., $T_{t+1} = 0.9999 T_t$): guaranteed global convergence but computationally prohibitive. Optimal schedules (logarithmic $T \propto 1/\log(t)$ theoretically, exponential $T_{t+1} = \alpha T_t$ with $\alpha \approx 0.95-0.999$ practically) balance: early high-$T$ phase allows barrier crossing via Kramers escape rate $\Gamma \sim e^{-\Delta E/T}$, late low-$T$ phase ensures precise convergence into deepest discovered basin.
+    
 ---
 
 ## **7.9 Code Demo — Simulated Annealing**

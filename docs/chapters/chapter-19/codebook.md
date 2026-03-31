@@ -1,4 +1,4 @@
-# **Chapter 19: Transformers and Global Correlation () () (Codebook)**
+# **Chapter 19: Transformers and Global Correlation (Codebook)**
 
 ---
 

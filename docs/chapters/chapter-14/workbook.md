@@ -1,4 +1,4 @@
-# **Chapter 14: Energy-Based and Generative Models () () () (Workbook)**
+# **Chapter 14: Energy-Based and Generative Models (Workbook)**
 
 The goal of this chapter is to introduce generative modeling, establishing the equivalence between learning a full data distribution and **sculpting a statistical energy landscape ($E_{\theta}$) ** governed by the laws of thermodynamics.
 
@@ -23,34 +23,28 @@ The goal of this chapter is to introduce generative modeling, establishing the e
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The rigorous test of whether a generative model genuinely understands the data's structure is its ability to:**
-
-* **A.** Predict a discrete label $y$.
-* **B.** **Produce new samples consistent with the observed distribution**. (**Correct**)
-* **C.** Find the single point estimate $\mathcal{\theta}^*$.
-* **D.** Compute the gradient of the loss.
-
-```
+    **1. The rigorous test of whether a generative model genuinely understands the data's structure is its ability to:**
+    
+    * **A.** Predict a discrete label $y$.
+    * **B.** **Produce new samples consistent with the observed distribution**. (**Correct**)
+    * **C.** Find the single point estimate $\mathcal{\theta}^*$.
+    * **D.** Compute the gradient of the loss.
+    
 !!! note "Quiz"
-```
-**2. In an Energy-Based Model (EBM), a high-probability state $P(\mathbf{x})$ must correspond to a state with:**
-
-* **A.** A high partition function $Z_{\theta}$.
-* **B.** **Low energy $E_{\theta}(\mathbf{x})$**. (**Correct**)
-* **C.** High temperature $T$.
-* **D.** High variance.
-
-```
+    **2. In an Energy-Based Model (EBM), a high-probability state $P(\mathbf{x})$ must correspond to a state with:**
+    
+    * **A.** A high partition function $Z_{\theta}$.
+    * **B.** **Low energy $E_{\theta}(\mathbf{x})$**. (**Correct**)
+    * **C.** High temperature $T$.
+    * **D.** High variance.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** The Partition Function, $Z_{\theta} = \int e^{-E_{\theta}(\mathbf{x})}d\mathbf{x}$, is crucial for EBMs. Explain the primary computational challenge presented by $Z_{\theta}$, and how it forces EBMs to rely on sampling methods.
-
-**Answer Strategy:** The challenge is that $Z_{\theta}$ is typically **intractable**. It requires summing or integrating over an exponentially large or infinite state space. Since $Z_{\theta}$ is needed to calculate the distribution's gradient (the **model term**), EBMs cannot use direct maximum likelihood optimization. Instead, they must employ **sampling methods** (like MCMC or contrastive divergence) to numerically estimate the expectations involving $Z_{\theta}$.
-
-```
+    **Question:** The Partition Function, $Z_{\theta} = \int e^{-E_{\theta}(\mathbf{x})}d\mathbf{x}$, is crucial for EBMs. Explain the primary computational challenge presented by $Z_{\theta}$, and how it forces EBMs to rely on sampling methods.
+    
+    **Answer Strategy:** The challenge is that $Z_{\theta}$ is typically **intractable**. It requires summing or integrating over an exponentially large or infinite state space. Since $Z_{\theta}$ is needed to calculate the distribution's gradient (the **model term**), EBMs cannot use direct maximum likelihood optimization. Instead, they must employ **sampling methods** (like MCMC or contrastive divergence) to numerically estimate the expectations involving $Z_{\theta}$.
+    
 ---
 
 ---
@@ -62,34 +56,28 @@ The goal of this chapter is to introduce generative modeling, establishing the e
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. In the EBM learning rule, the **Data Term** ($-\nabla_{\theta} E_{\theta}(\mathbf{x})$) serves the purpose of:**
-
-* **A.** Increasing the energy of all samples.
-* **B.** **Pushing the model parameters to decrease the energy of the observed data manifold**. (**Correct**)
-* **C.** Estimating the partition function $Z_{\theta}$.
-* **D.** Normalizing the distribution.
-
-```
+    **1. In the EBM learning rule, the **Data Term** ($-\nabla_{\theta} E_{\theta}(\mathbf{x})$) serves the purpose of:**
+    
+    * **A.** Increasing the energy of all samples.
+    * **B.** **Pushing the model parameters to decrease the energy of the observed data manifold**. (**Correct**)
+    * **C.** Estimating the partition function $Z_{\theta}$.
+    * **D.** Normalizing the distribution.
+    
 !!! note "Quiz"
-```
-**2. The training process for an EBM is described as a constant competition because the model must simultaneously perform which two opposing actions?**
-
-* **A.** Maximize $Z_{\theta}$ and minimize $E_{\theta}$.
-* **B.** Sample with MCMC and sample with importance weighting.
-* **C.** **Decrease energy on data and increase energy on non-data samples**. (**Correct**)
-* **D.** Maximize the KL divergence and minimize the log-likelihood.
-
-```
+    **2. The training process for an EBM is described as a constant competition because the model must simultaneously perform which two opposing actions?**
+    
+    * **A.** Maximize $Z_{\theta}$ and minimize $E_{\theta}$.
+    * **B.** Sample with MCMC and sample with importance weighting.
+    * **C.** **Decrease energy on data and increase energy on non-data samples**. (**Correct**)
+    * **D.** Maximize the KL divergence and minimize the log-likelihood.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** The gradient of the log-probability for an EBM is often written as a difference between two expectations: $\nabla_{\theta} \log p_{\theta}(\mathbf{x}) = \langle \dots \rangle_{\text{data}} - \langle \dots \rangle_{\text{model}}$. Explain what computational technique is necessary to estimate the **Model Term** ($\langle \dots \rangle_{\text{model}}$), and why?
-
-**Answer Strategy:** The Model Term requires computing an expectation over the **model's own distribution** $p_{\theta}(\mathbf{x})$, which is unknown due to the intractable $Z_{\theta}$. Therefore, the term must be estimated numerically using a **sampling method**, typically **Markov Chain Monte Carlo (MCMC)** (like Contrastive Divergence). The MCMC sampler generates representative configurations from $p_{\theta}$ (the current energy surface), allowing the expected gradient to be approximated by the average over those samples.
-
-```
+    **Question:** The gradient of the log-probability for an EBM is often written as a difference between two expectations: $\nabla_{\theta} \log p_{\theta}(\mathbf{x}) = \langle \dots \rangle_{\text{data}} - \langle \dots \rangle_{\text{model}}$. Explain what computational technique is necessary to estimate the **Model Term** ($\langle \dots \rangle_{\text{model}}$), and why?
+    
+    **Answer Strategy:** The Model Term requires computing an expectation over the **model's own distribution** $p_{\theta}(\mathbf{x})$, which is unknown due to the intractable $Z_{\theta}$. Therefore, the term must be estimated numerically using a **sampling method**, typically **Markov Chain Monte Carlo (MCMC)** (like Contrastive Divergence). The MCMC sampler generates representative configurations from $p_{\theta}$ (the current energy surface), allowing the expected gradient to be approximated by the average over those samples.
+    
 ---
 
 ---

@@ -1,4 +1,4 @@
-# **Chapter 16: Physics-Informed Neural Networks (PINNs) () () (Codebook)**
+# **Chapter 16: Physics-Informed Neural Networks (PINNs) (Codebook)**
 
 ---
 

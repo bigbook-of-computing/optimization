@@ -37,10 +37,8 @@ In Chapter 1, we established a **geometric** picture of our simulation data. We 
 This geometric summary, however, is incomplete. It provides the first and second moments but tells us little about the *density* of the cloud. Is the cloud solid, hollow, or clustered in multiple 'blobs'? To answer this, we must move from geometry (the *shape* of the data) to **probability** (the *distribution* that populates that shape). Our goal is no longer just to describe the data, but to infer the **generative process** $P(\mathbf{x})$ from which our samples $\{\mathbf{x}_i\}$ were drawn.
 
 !!! tip "From Shape to Distribution"
-```
-The mean and covariance tell us *where* the data is and *how it's oriented*, but not *how densely* it's packed. Probability density is the missing piece that transforms geometric description into predictive modeling.
-
-```
+    The mean and covariance tell us *where* the data is and *how it's oriented*, but not *how densely* it's packed. Probability density is the missing piece that transforms geometric description into predictive modeling.
+    
 ---
 
 ### **The Empirical Distribution**
@@ -84,12 +82,10 @@ $$
 This reframes our entire task. The goal of "learning a distribution" $p(\mathbf{x})$ from data is equivalent to the physical goal of "finding the energy landscape" $E_{\text{eff}}(\mathbf{x})$ that would produce that distribution.
 
 !!! example "Energy-Probability Duality"
-```
-In the Ising model at low temperature, the two ground states (all spins up or all spins down) have $E = -JN$ and dominate the probability $p(\mathbf{s}) \propto e^{+\beta JN}$. High-energy configurations with mixed spins are exponentially suppressed. This direct mapping between energy minima and probability maxima is the foundation of statistical mechanics.
-
-```
-This also connects directly to the core concept of **log-likelihood** in statistics. The log-likelihood of observing a state $\mathbf{x}$ is $\ln p(\mathbf{x})$. Therefore, **maximizing the log-likelihood is equivalent to minimizing the energy**. This duality—between statistics and physics, between likelihood and energy—is the central theme of this volume.
-
+    In the Ising model at low temperature, the two ground states (all spins up or all spins down) have $E = -JN$ and dominate the probability $p(\mathbf{s}) \propto e^{+\beta JN}$. High-energy configurations with mixed spins are exponentially suppressed. This direct mapping between energy minima and probability maxima is the foundation of statistical mechanics.
+    
+    This also connects directly to the core concept of **log-likelihood** in statistics. The log-likelihood of observing a state $\mathbf{x}$ is $\ln p(\mathbf{x})$. Therefore, **maximizing the log-likelihood is equivalent to minimizing the energy**. This duality—between statistics and physics, between likelihood and energy—is the central theme of this volume.
+    
 ---
 
 ### **Goal**
@@ -124,10 +120,8 @@ $$
 This single equation, $p \propto e^{-E}$, is the core of statistical mechanics, Bayesian inference, and energy-based machine learning. The central challenge of these fields is often the intractability of $Z(\mathbf{\theta})$, which requires summing over an exponentially large state space.
 
 ??? question "Why is the partition function so hard to compute?"
-```
-For a system with $N$ binary variables (like spins), there are $2^N$ possible states. Computing $Z$ requires summing $\exp[-E(\mathbf{x})]$ over all of them. For just $N=300$ spins, this is $2^{300} \approx 10^{90}$ terms—more than the number of atoms in the universe. This exponential complexity makes exact calculation impossible, forcing us to use approximations (mean-field theory) or sampling methods (MCMC).
-
-```
+    For a system with $N$ binary variables (like spins), there are $2^N$ possible states. Computing $Z$ requires summing $\exp[-E(\mathbf{x})]$ over all of them. For just $N=300$ spins, this is $2^{300} \approx 10^{90}$ terms—more than the number of atoms in the universe. This exponential complexity makes exact calculation impossible, forcing us to use approximations (mean-field theory) or sampling methods (MCMC).
+    
 ---
 
 ### **Moments and Cumulants**
@@ -314,10 +308,8 @@ $$
 This is a stunning result: **virtually all of the volume of a high-dimensional sphere is concentrated in an infinitesimally thin shell near its surface.** The "core" of the sphere is, for all practical purposes, empty.
 
 !!! example "Volume Concentration in High Dimensions"
-```
-For a 10,000-dimensional unit hypersphere, 99.99% of the volume lies in a shell between radius 0.99 and 1.0—a shell that is only 1% thick. This is why naive sampling fails: uniformly distributed points would almost never land in this critical shell where the probability mass is concentrated.
-
-```
+    For a 10,000-dimensional unit hypersphere, 99.99% of the volume lies in a shell between radius 0.99 and 1.0—a shell that is only 1% thick. This is why naive sampling fails: uniformly distributed points would almost never land in this critical shell where the probability mass is concentrated.
+    
 ---
 
 ### **Consequences for Data**
@@ -512,10 +504,8 @@ $$
 $I(X;Y)$ can also be expressed in terms of entropies, $I(X;Y) = S(X) - S(X|Y)$, which reads as "the uncertainty of $X$ minus the uncertainty of $X$ given $Y$." It is also equivalent to the KL divergence (Section 2.2) between the joint distribution and the product of its marginals: $I(X;Y) = D_{\mathrm{KL}}(p(x,y) || p(x)p(y))$.
 
 ??? question "When should you use mutual information vs. correlation?"
-```
-Correlation measures only *linear* relationships between variables and ranges from -1 to +1. Mutual information captures *any* statistical dependence (linear or nonlinear) and is always non-negative. For example, if $Y = X^2$ where $X$ is centered, the Pearson correlation is zero, but $I(X;Y)$ is large. Use MI when you suspect complex, nonlinear dependencies.
-
-```
+    Correlation measures only *linear* relationships between variables and ranges from -1 to +1. Mutual information captures *any* statistical dependence (linear or nonlinear) and is always non-negative. For example, if $Y = X^2$ where $X$ is centered, the Pearson correlation is zero, but $I(X;Y)$ is large. Use MI when you suspect complex, nonlinear dependencies.
+    
 ---
 
 ### **Application: Discovering Order Parameters**

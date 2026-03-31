@@ -1,4 +1,4 @@
-# **Chapter 8: Combinatorial Optimization and QUBO () () (Codebook)**
+# **Chapter 8: Combinatorial Optimization and QUBO (Codebook)**
 
 ## Project 1: The Core Ising-to-QUBO Mapping ($\mathcal{s_i \leftrightarrow 2x_i - 1}$)
 

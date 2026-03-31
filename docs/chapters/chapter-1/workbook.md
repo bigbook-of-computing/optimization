@@ -1,4 +1,4 @@
-# **Chapter 1: From Simulation to Data () () () (Workbook)**
+# **Chapter 1: From Simulation to Data (Workbook)**
 
 The goal of this chapter is to establish the foundation of data analysis by showing how time-ordered physical trajectories are transformed into static, high-dimensional geometric objects suitable for machine learning.
 
@@ -20,37 +20,31 @@ The goal of this chapter is to establish the foundation of data analysis by show
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. According to the text, the conceptual shift required for Volume III is the transition from viewing a simulation as a time-ordered trajectory to seeing it as a static object of study called a(n):**
-
-* **A.** Hamiltonian.
-* **B.** **Dataset**. (**Correct**)
-* **C.** Order parameter.
-* **D.** Symplectic integrator.
-
-```
+    **1. According to the text, the conceptual shift required for Volume III is the transition from viewing a simulation as a time-ordered trajectory to seeing it as a static object of study called a(n):**
+    
+    * **A.** Hamiltonian.
+    * **B.** **Dataset**. (**Correct**)
+    * **C.** Order parameter.
+    * **D.** Symplectic integrator.
+    
 !!! note "Quiz"
-```
-**2. The belief that real-world high-dimensional data is constrained by physical laws to lie on or near a lower-dimensional surface is known as the:**
-
-* **A.** Ergodic Hypothesis.
-* **B.** Partition Principle.
-* **C.** **Manifold Hypothesis**. (**Correct**)
-* **D.** Least Action Principle.
-
-```
+    **2. The belief that real-world high-dimensional data is constrained by physical laws to lie on or near a lower-dimensional surface is known as the:**
+    
+    * **A.** Ergodic Hypothesis.
+    * **B.** Partition Principle.
+    * **C.** **Manifold Hypothesis**. (**Correct**)
+    * **D.** Least Action Principle.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** Explain the difference between **phase space** ($\Gamma$) in classical physics and **feature space** ($\mathbb{R}^D$) in data science, and how a protein folding simulation relates to both.
-
-**Answer Strategy:**
-* **Phase Space ($\Gamma$):** This is the abstract, $6N$-dimensional space defined by the $N$ particles' positions ($\mathbf{r}$) and momenta ($\mathbf{p}$). A simulation traces a **continuous trajectory** through this space, governed by the Hamiltonian.
-* **Feature Space ($\mathbb{R}^D$):** This is the space used for analysis, where a snapshot is simply treated as a **point**. For a protein, the $3N$ positional coordinates are **flattened** into a single vector $\mathbf{x} \in \mathbb{R}^{3N}$ (where $D=3N$).
-* The entire simulation output, viewed as a dataset, is a **cloud of static points** in feature space that we analyze geometrically.
-
-```
+    **Question:** Explain the difference between **phase space** ($\Gamma$) in classical physics and **feature space** ($\mathbb{R}^D$) in data science, and how a protein folding simulation relates to both.
+    
+    **Answer Strategy:**
+    * **Phase Space ($\Gamma$):** This is the abstract, $6N$-dimensional space defined by the $N$ particles' positions ($\mathbf{r}$) and momenta ($\mathbf{p}$). A simulation traces a **continuous trajectory** through this space, governed by the Hamiltonian.
+    * **Feature Space ($\mathbb{R}^D$):** This is the space used for analysis, where a snapshot is simply treated as a **point**. For a protein, the $3N$ positional coordinates are **flattened** into a single vector $\mathbf{x} \in \mathbb{R}^{3N}$ (where $D=3N$).
+    * The entire simulation output, viewed as a dataset, is a **cloud of static points** in feature space that we analyze geometrically.
+    
 ---
 
 ---
@@ -62,37 +56,31 @@ The goal of this chapter is to establish the foundation of data analysis by show
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. In the context of data preparation, the process of taking a 2D spin lattice ($16 \times 16$) and converting it into a single vector of length 256 is called: **
-
-* **A.** Standardization.
-* **B.** **Flattening**. (**Correct**)
-* **C.** Ensemble averaging.
-* **D.** Eigendecomposition.
-
-```
+    **1. In the context of data preparation, the process of taking a 2D spin lattice ($16 \times 16$) and converting it into a single vector of length 256 is called: **
+    
+    * **A.** Standardization.
+    * **B.** **Flattening**. (**Correct**)
+    * **C.** Ensemble averaging.
+    * **D.** Eigendecomposition.
+    
 !!! note "Quiz"
-```
-**2. The purpose of **standardization (Z-score normalization)** in data preparation is to:**
-
-* **A.** Discard the continuous time variable.
-* **B.** Convert the data from time averages to ensemble averages.
-* **C.** **Center each feature at zero mean and scale it to unit variance, ensuring no feature numerically dominates the analysis**. (**Correct**)
-* **D.** Compute the non-linear geodesic distance.
-
-```
+    **2. The purpose of **standardization (Z-score normalization)** in data preparation is to:**
+    
+    * **A.** Discard the continuous time variable.
+    * **B.** Convert the data from time averages to ensemble averages.
+    * **C.** **Center each feature at zero mean and scale it to unit variance, ensuring no feature numerically dominates the analysis**. (**Correct**)
+    * **D.** Compute the non-linear geodesic distance.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** The **covariance matrix ($\Sigma$)** is described as the key to geometric analysis. What specific types of information does the off-diagonal element $\Sigma_{jk}$ encode about the relationship between features $j$ and $k$?
-
-**Answer Strategy:** The off-diagonal element $\Sigma_{jk}$ of the covariance matrix encodes the **linear correlation** between feature $j$ and feature $k$.
-* If $\Sigma_{jk} > 0$, the features are positively correlated (they tend to move up or down together).
-* If $\Sigma_{jk} < 0$, the features are anti-correlated (one moves up, the other moves down).
-* If $\Sigma_{jk} \approx 0$, the features are linearly independent (or uncorrelated). This reveals how different parts of the physical system (e.g., two different atoms or regions of a lattice) move together.
-
-```
+    **Question:** The **covariance matrix ($\Sigma$)** is described as the key to geometric analysis. What specific types of information does the off-diagonal element $\Sigma_{jk}$ encode about the relationship between features $j$ and $k$?
+    
+    **Answer Strategy:** The off-diagonal element $\Sigma_{jk}$ of the covariance matrix encodes the **linear correlation** between feature $j$ and feature $k$.
+    * If $\Sigma_{jk} > 0$, the features are positively correlated (they tend to move up or down together).
+    * If $\Sigma_{jk} < 0$, the features are anti-correlated (one moves up, the other moves down).
+    * If $\Sigma_{jk} \approx 0$, the features are linearly independent (or uncorrelated). This reveals how different parts of the physical system (e.g., two different atoms or regions of a lattice) move together.
+    
 ---
 
 ---
@@ -104,34 +92,28 @@ The goal of this chapter is to establish the foundation of data analysis by show
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. In Principal Component Analysis (PCA), the **eigenvectors ($\mathbf{v}_k$)** of the covariance matrix represent the data's:**
-
-* **A.** Mean position.
-* **B.** Total energy.
-* **C.** **Principal axes or directions of greatest variance**. (**Correct**)
-* **D.** Shannon entropy.
-
-```
+    **1. In Principal Component Analysis (PCA), the **eigenvectors ($\mathbf{v}_k$)** of the covariance matrix represent the data's:**
+    
+    * **A.** Mean position.
+    * **B.** Total energy.
+    * **C.** **Principal axes or directions of greatest variance**. (**Correct**)
+    * **D.** Shannon entropy.
+    
 !!! note "Quiz"
-```
-**2. When analyzing molecular dynamics (MD) data, a physicist interprets the first principal component ($\mathbf{v}_1$) as the system's dominant mode of motion. This mode is described as a **collective variable** because it:**
-
-* **A.** Only involves a single, isolated atom.
-* **B.** **Represents a highly coordinated motion (e.g., hinging of two domains) across many features**. (**Correct**)
-* **C.** Is guaranteed to be non-linear.
-* **D.** Is exactly equal to the total magnetization $M$.
-
-```
+    **2. When analyzing molecular dynamics (MD) data, a physicist interprets the first principal component ($\mathbf{v}_1$) as the system's dominant mode of motion. This mode is described as a **collective variable** because it:**
+    
+    * **A.** Only involves a single, isolated atom.
+    * **B.** **Represents a highly coordinated motion (e.g., hinging of two domains) across many features**. (**Correct**)
+    * **C.** Is guaranteed to be non-linear.
+    * **D.** Is exactly equal to the total magnetization $M$.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** A physicist performs PCA on simulation data and finds that the first three eigenvalues ($\lambda_1, \lambda_2, \lambda_3$) account for 98% of the total variance, while the remaining $D-3$ eigenvalues are near zero. What does this result tell them about the data's dimensionality, and how does it relate to the **manifold hypothesis**?
-
-**Answer Strategy:** This tells the physicist that the data's **intrinsic dimensionality is very low** ($d=3$), even though it lives in a high-dimensional feature space $\mathbb{R}^D$. The result directly supports the **manifold hypothesis**. It means the system's complex fluctuations are constrained to a low-dimensional surface ($\mathcal{M}$), and the first three principal axes ($\mathbf{v}_1, \mathbf{v}_2, \mathbf{v}_3$) form the linear coordinate system that best approximates that manifold.
-
-```
+    **Question:** A physicist performs PCA on simulation data and finds that the first three eigenvalues ($\lambda_1, \lambda_2, \lambda_3$) account for 98% of the total variance, while the remaining $D-3$ eigenvalues are near zero. What does this result tell them about the data's dimensionality, and how does it relate to the **manifold hypothesis**?
+    
+    **Answer Strategy:** This tells the physicist that the data's **intrinsic dimensionality is very low** ($d=3$), even though it lives in a high-dimensional feature space $\mathbb{R}^D$. The result directly supports the **manifold hypothesis**. It means the system's complex fluctuations are constrained to a low-dimensional surface ($\mathcal{M}$), and the first three principal axes ($\mathbf{v}_1, \mathbf{v}_2, \mathbf{v}_3$) form the linear coordinate system that best approximates that manifold.
+    
 ---
 
 ---
@@ -143,35 +125,29 @@ The goal of this chapter is to establish the foundation of data analysis by show
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The main physical drawback of using the standard **Euclidean ($L^2$) distance** to compare two molecular snapshots is that:**
-
-* **A.** It is too slow to compute.
-* **B.** **It loses information about the original 3D rotational and translational symmetries**. (**Correct**)
-* **C.** It only works for uncorrelated data.
-* **D.** It requires the prior to be Gaussian.
-
-```
+    **1. The main physical drawback of using the standard **Euclidean ($L^2$) distance** to compare two molecular snapshots is that:**
+    
+    * **A.** It is too slow to compute.
+    * **B.** **It loses information about the original 3D rotational and translational symmetries**. (**Correct**)
+    * **C.** It only works for uncorrelated data.
+    * **D.** It requires the prior to be Gaussian.
+    
 !!! note "Quiz"
-```
-**2. The type of distance that measures the shortest path between two states *while accounting for the physical constraints (curved surface)* of the low-dimensional manifold $\mathcal{M}$ is called the:**
-
-* **A.** Euclidean distance ($L^2$).
-* **B.** Correlation distance.
-* **C.** **Geodesic distance**. (**Correct**)
-* **D.** Mahalanobis distance.
-
-```
+    **2. The type of distance that measures the shortest path between two states *while accounting for the physical constraints (curved surface)* of the low-dimensional manifold $\mathcal{M}$ is called the:**
+    
+    * **A.** Euclidean distance ($L^2$).
+    * **B.** Correlation distance.
+    * **C.** **Geodesic distance**. (**Correct**)
+    * **D.** Mahalanobis distance.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** Two time-series signals from two different simulation runs show the exact same fluctuation pattern (e.g., the same oscillations and peaks) but one has a much larger amplitude. The Euclidean distance between them is large. Propose an alternative distance metric that would correctly identify them as highly *similar* and explain why it works.
-
-**Answer Strategy:** The best alternative is a **correlation distance**, such as $d_C(\mathbf{x}_i, \mathbf{x}_j) = \sqrt{2(1 - r_{ij})}$, based on the Pearson correlation coefficient ($r$).
-* **Why it works:** The Pearson correlation coefficient measures the **shape of the linear relationship**, not the magnitude or offset of the signals. Since the pattern is the same (high correlation), $r$ would be close to $+1$, and the distance $d_C$ would be near $0$, correctly identifying the functional similarity despite the amplitude difference.
-
-```
+    **Question:** Two time-series signals from two different simulation runs show the exact same fluctuation pattern (e.g., the same oscillations and peaks) but one has a much larger amplitude. The Euclidean distance between them is large. Propose an alternative distance metric that would correctly identify them as highly *similar* and explain why it works.
+    
+    **Answer Strategy:** The best alternative is a **correlation distance**, such as $d_C(\mathbf{x}_i, \mathbf{x}_j) = \sqrt{2(1 - r_{ij})}$, based on the Pearson correlation coefficient ($r$).
+    * **Why it works:** The Pearson correlation coefficient measures the **shape of the linear relationship**, not the magnitude or offset of the signals. Since the pattern is the same (high correlation), $r$ would be close to $+1$, and the distance $d_C$ would be near $0$, correctly identifying the functional similarity despite the amplitude difference.
+    
 ---
 
 ---
@@ -183,37 +159,31 @@ The goal of this chapter is to establish the foundation of data analysis by show
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. In the context of mapping a potential energy landscape from simulation data, a large, empty void in the high-dimensional data cloud corresponds to a(n):**
-
-* **A.** Time-reversible trajectory.
-* **B.** **High-energy barrier**. (**Correct**)
-* **C.** Low-entropy, ordered state.
-* **D.** Non-linear embedding.
-
-```
+    **1. In the context of mapping a potential energy landscape from simulation data, a large, empty void in the high-dimensional data cloud corresponds to a(n):**
+    
+    * **A.** Time-reversible trajectory.
+    * **B.** **High-energy barrier**. (**Correct**)
+    * **C.** Low-entropy, ordered state.
+    * **D.** Non-linear embedding.
+    
 !!! note "Quiz"
-```
-**2. What is the physical interpretation of a data cloud that is highly concentrated in one small, dense region (low entropy)?**
-
-* **A.** A high-temperature, disordered state.
-* **B.** A fast transition path.
-* **C.** **A low-temperature, ordered state**. (**Correct**)
-* **D.** A complex chemical reaction.
-
-```
+    **2. What is the physical interpretation of a data cloud that is highly concentrated in one small, dense region (low entropy)?**
+    
+    * **A.** A high-temperature, disordered state.
+    * **B.** A fast transition path.
+    * **C.** **A low-temperature, ordered state**. (**Correct**)
+    * **D.** A complex chemical reaction.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** If you are analyzing a molecular dynamics trajectory of a protein that is known to exist in two distinct stable states ("open" and "closed"), what characteristic shape and topology would you expect to see when plotting the data onto its first two principal components?
-
-**Answer Strategy:** I would expect to see a plot with **two distinct, dense clusters** of data points.
-* Each cluster represents one of the two **metastable phases** (the open and closed basins of attraction).
-* The clusters would be separated by a **sparse void** of points, confirming the presence of a **high energy barrier** between the two states.
-* The entire topology would be a map of the protein's conformational **free-energy landscape**.
-
-```
+    **Question:** If you are analyzing a molecular dynamics trajectory of a protein that is known to exist in two distinct stable states ("open" and "closed"), what characteristic shape and topology would you expect to see when plotting the data onto its first two principal components?
+    
+    **Answer Strategy:** I would expect to see a plot with **two distinct, dense clusters** of data points.
+    * Each cluster represents one of the two **metastable phases** (the open and closed basins of attraction).
+    * The clusters would be separated by a **sparse void** of points, confirming the presence of a **high energy barrier** between the two states.
+    * The entire topology would be a map of the protein's conformational **free-energy landscape**.
+    
 ---
 
 ---

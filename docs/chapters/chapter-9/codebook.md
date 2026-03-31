@@ -1,4 +1,4 @@
-# **Chapter 9: Bayesian Thinking and Inference () () (Codebook)**
+# **Chapter 9: Bayesian Thinking and Inference (Codebook)**
 
 ## Project 1: Visualizing Prior, Likelihood, and Posterior
 

@@ -517,18 +517,16 @@ The success of the Logistic Regression model provides a powerful **physical insi
 * **Free-Energy Parallel:** The decision boundary separates regions of high probability for the ordered state from regions of high probability for the disordered state. This boundary is directly analogous to the line in the state space where the **free energy** of the two phases is equal ($F_{\text{ordered}} = F_{\text{disordered}}$). The logistic model has implicitly learned the most statistically robust linear approximation of this underlying free-energy separation.
 
 !!! example "Logistic Regression as Phase Transition Detector"
-```
-Training logistic regression on Ising simulation data with features $[M, T, E]$ automatically discovers the critical temperature $T_c$:
-
-* Below $T_c$: High magnetization $M$, low energy $E$ → model predicts $y=1$ (ordered phase)
-* Above $T_c$: Near-zero $M$, high $E$ → model predicts $y=0$ (disordered phase)
-* Decision boundary: $\mathbf{w}^\top \mathbf{x} = 0$ maps the critical line where free energies balance
-
-This demonstrates ML automating physics discovery—the learned boundary is the data-driven phase diagram.
-
-```
-Logistic Regression, therefore, serves as an effective method for **automating the discovery of phase transitions** using supervised learning principles.
-
+    Training logistic regression on Ising simulation data with features $[M, T, E]$ automatically discovers the critical temperature $T_c$:
+    
+    * Below $T_c$: High magnetization $M$, low energy $E$ → model predicts $y=1$ (ordered phase)
+    * Above $T_c$: Near-zero $M$, high $E$ → model predicts $y=0$ (disordered phase)
+    * Decision boundary: $\mathbf{w}^\top \mathbf{x} = 0$ maps the critical line where free energies balance
+    
+    This demonstrates ML automating physics discovery—the learned boundary is the data-driven phase diagram.
+    
+    Logistic Regression, therefore, serves as an effective method for **automating the discovery of phase transitions** using supervised learning principles.
+    
 ## **10.10 Code Demo — Linear Regression & Logistic Classification**
 
 This demo provides a practical implementation of the two fundamental linear models, showing how the principles of **Maximum Likelihood (ML) estimation** translate into distinct geometric solutions for continuous (Regression) and discrete (Classification) data.
@@ -631,16 +629,14 @@ $$
 3.  **Irreducible Error ($\sigma^2$):** The inherent noise or complexity in the data itself (e.g., measurement error) that no model can eliminate.
 
 !!! tip "Regularization Controls the Bias-Variance Tradeoff"
-```
-The regularization strength $\lambda$ directly controls the bias-variance balance:
-
-* **High $\lambda$** (strong regularization): Adds stiffness → high bias, low variance → underfitting
-* **Low $\lambda$** (weak regularization): Allows flexibility → low bias, high variance → overfitting
-* **Optimal $\lambda$**: Minimizes total error $= (\text{Bias})^2 + \text{Variance} + \sigma^2$
-
-This is the statistical manifestation of the stiffness-fluctuation duality in physics.
-
-```
+    The regularization strength $\lambda$ directly controls the bias-variance balance:
+    
+    * **High $\lambda$** (strong regularization): Adds stiffness → high bias, low variance → underfitting
+    * **Low $\lambda$** (weak regularization): Allows flexibility → low bias, high variance → overfitting
+    * **Optimal $\lambda$**: Minimizes total error $= (\text{Bias})^2 + \text{Variance} + \sigma^2$
+    
+    This is the statistical manifestation of the stiffness-fluctuation duality in physics.
+    
 ---
 
 ### **The Trade-off and Physical Analogy**
@@ -665,20 +661,18 @@ This statistical tension directly mirrors physical dynamics:
 The goal of regularization (Section 10.4) is precisely to control this trade-off. By setting the regularization strength ($\lambda$), we balance the **potential energy** associated with the error (low bias) against the **penalty energy** associated with complexity (low variance). The optimal model is the one that minimizes the **total expected energy (error)**, achieving the best possible compromise between rigidity and flexibility.
 
 ??? question "Why Can't We Eliminate Both Bias and Variance?"
-```
-The bias-variance tradeoff is fundamental because reducing one typically increases the other:
-
-* **Reducing bias** requires a more flexible model (more parameters, lower $\lambda$)
-* **More flexibility** increases sensitivity to training data variations (higher variance)
-* **Reducing variance** requires constraints (higher $\lambda$, simpler model)
-* **More constraints** reduce the model's ability to fit the true function (higher bias)
-
-This is not a limitation of algorithms but a fundamental property of finite data:
-$\text{Complexity}(\text{Model}) \times \text{Size}(\text{Data}) = \text{const}$
-
-```
-The Bias–Variance Tradeoff reappears throughout every layer of machine learning, from linear models (this chapter) to neural networks (Chapter 12–13) to reinforcement learning (Chapter 15).
-
+    The bias-variance tradeoff is fundamental because reducing one typically increases the other:
+    
+    * **Reducing bias** requires a more flexible model (more parameters, lower $\lambda$)
+    * **More flexibility** increases sensitivity to training data variations (higher variance)
+    * **Reducing variance** requires constraints (higher $\lambda$, simpler model)
+    * **More constraints** reduce the model's ability to fit the true function (higher bias)
+    
+    This is not a limitation of algorithms but a fundamental property of finite data:
+    $\text{Complexity}(\text{Model}) \times \text{Size}(\text{Data}) = \text{const}$
+    
+    The Bias–Variance Tradeoff reappears throughout every layer of machine learning, from linear models (this chapter) to neural networks (Chapter 12–13) to reinforcement learning (Chapter 15).
+    
 ## **10.12 Takeaways & Bridge to Chapter 11**
 
 This chapter successfully applied the principles of **probabilistic inference** (Chapter 9) and **optimization** (Part II) to the foundational predictive models: **Linear Regression** and **Logistic Regression**.

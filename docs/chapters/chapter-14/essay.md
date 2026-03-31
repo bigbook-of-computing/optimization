@@ -75,10 +75,8 @@ Z_\theta = \int e^{-E_\theta(\mathbf{x})}d\mathbf{x}
 $$
 
 !!! tip "Energy Landscape Sculpting"
-```
-Training a generative model is equivalent to sculpting an energy landscape: adjust parameters to create deep potential wells at data locations and high barriers in empty regions. Sampling from the learned distribution explores these sculpted basins.
-
-```
+    Training a generative model is equivalent to sculpting an energy landscape: adjust parameters to create deep potential wells at data locations and high barriers in empty regions. Sampling from the learned distribution explores these sculpted basins.
+    
 ---
 
 ### **Analogy: Finding the Equilibrium Distribution**
@@ -339,10 +337,8 @@ This objective provides a clear thermodynamic interpretation:
 The VAE training process is thus a continuous effort in **free-energy minimization**, balancing the fidelity of reconstruction (energy) with the simplicity and regularity of the latent code (entropy).
 
 !!! example "VAE Latent Space Structure"
-```
-In a trained VAE on MNIST digits, the 2D latent space $\mathbf{z}$ forms distinct clusters for each digit class (0-9), with smooth interpolations between clusters generating plausible intermediate shapes, demonstrating continuous manifold learning.
-
-```
+    In a trained VAE on MNIST digits, the 2D latent space $\mathbf{z}$ forms distinct clusters for each digit class (0-9), with smooth interpolations between clusters generating plausible intermediate shapes, demonstrating continuous manifold learning.
+    
 ---
 
 ## **14.7 Generative Adversarial Networks (GANs)**
@@ -383,10 +379,8 @@ $$
 GANs are exceptionally effective at generating sharp, realistic samples because the Discriminator provides a highly effective, dynamically learned loss function that is often superior to simple pixel-wise error metrics.
 
 ??? question "Why Do GANs Often Generate Sharper Images Than VAEs?"
-```
-GANs use an adversarial discriminator as a learned loss function that emphasizes perceptual quality, while VAEs optimize pixel-wise reconstruction (like MSE) which tends to produce blurry averages. The dynamic game-theoretic training of GANs better captures high-frequency details.
-
-```
+    GANs use an adversarial discriminator as a learned loss function that emphasizes perceptual quality, while VAEs optimize pixel-wise reconstruction (like MSE) which tends to produce blurry averages. The dynamic game-theoretic training of GANs better captures high-frequency details.
+    
 ---
 
 ## **14.8 Diffusion Models and Score Matching**

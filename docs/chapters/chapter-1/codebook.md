@@ -1,4 +1,4 @@
-# **Chapter 1: From Simulation to Data () () (Codebook)**
+# **Chapter 1: From Simulation to Data (Codebook)**
 
 ## Project 1: Data Preparation and Standardization
 

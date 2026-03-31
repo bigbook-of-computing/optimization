@@ -1,4 +1,4 @@
-# **Chapter 3: Dimensionality Reduction & Clustering () () (Codebook)**
+# **Chapter 3: Dimensionality Reduction & Clustering (Codebook)**
 
 ## Project 1: Quantifying Dimensionality (Explained Variance)
 

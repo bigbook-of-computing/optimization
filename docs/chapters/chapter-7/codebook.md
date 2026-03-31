@@ -1,4 +1,4 @@
-# **Chapter 7: Physics III: Molecular Dynamics (MD) () () (Codebook)**
+# **Chapter 7: Physics III: Molecular Dynamics (MD) (Codebook)**
 
 ## Project 1: Implementing the Velocity–Verlet Integrator (The Engine)
 

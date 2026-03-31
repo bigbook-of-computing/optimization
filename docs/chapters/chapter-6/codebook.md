@@ -1,4 +1,4 @@
-# **Chapter 6: Advanced Monte Carlo Methods () () (Codebook)**
+# **Chapter 6: Advanced Monte Carlo Methods (Codebook)**
 
 ## Project 1: Quantifying Critical Slowing Down
 

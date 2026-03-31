@@ -86,10 +86,8 @@ where $\eta$ is the "learning rate," analogous to a time step or mobility.
 Therefore, **training a machine learning model *is* a simulated physical relaxation.** We place a fictitious particle (our model $\mathbf{\theta}$) on a high-dimensional energy landscape (the loss $L$) and follow its dynamical trajectory as it seeks a low-energy equilibrium state (a minimum).
 
 !!! tip "Training as Simulated Annealing"
-```
-The energy-to-loss analogy is not just metaphorical—it's mathematically precise. Training a neural network with stochastic gradient descent (SGD) is equivalent to simulating a physical system undergoing Langevin dynamics at finite temperature. The mini-batch noise acts as thermal fluctuations that help the system escape shallow local minima and find deeper, more robust solutions. This connection inspires optimization algorithms like Simulated Annealing (Chapter 7), which explicitly use temperature schedules borrowed from statistical mechanics.
-
-```
+    The energy-to-loss analogy is not just metaphorical—it's mathematically precise. Training a neural network with stochastic gradient descent (SGD) is equivalent to simulating a physical system undergoing Langevin dynamics at finite temperature. The mini-batch noise acts as thermal fluctuations that help the system escape shallow local minima and find deeper, more robust solutions. This connection inspires optimization algorithms like Simulated Annealing (Chapter 7), which explicitly use temperature schedules borrowed from statistical mechanics.
+    
 ---
 
 ### **Examples of Landscapes**
@@ -197,10 +195,8 @@ Non-convex landscapes are defined by their complexity. They may contain:
 For an optimization algorithm, this landscape is a treacherous terrain. A simple gradient-descent algorithm will get "stuck" in the first local minimum it finds, which may be a very poor solution. Overcoming this is the central goal of modern optimization.
 
 !!! example "The Spin Glass Energy Landscape"
-```
-Consider a spin glass: an alloy with randomly distributed magnetic impurities. Each spin wants to align with some neighbors but anti-align with others—a fundamental frustration. The resulting energy landscape $E[\mathbf{s}]$ has ~$2^N$ metastable states for $N$ spins, separated by energy barriers. Finding the true ground state is NP-hard. Deep neural network loss landscapes share this structure: exponentially many local minima, glassy barriers, and no efficient algorithm guaranteed to find the global optimum. This connection suggests that techniques from statistical mechanics (simulated annealing, replica theory) may help understand and optimize deep networks.
-
-```
+    Consider a spin glass: an alloy with randomly distributed magnetic impurities. Each spin wants to align with some neighbors but anti-align with others—a fundamental frustration. The resulting energy landscape $E[\mathbf{s}]$ has ~$2^N$ metastable states for $N$ spins, separated by energy barriers. Finding the true ground state is NP-hard. Deep neural network loss landscapes share this structure: exponentially many local minima, glassy barriers, and no efficient algorithm guaranteed to find the global optimum. This connection suggests that techniques from statistical mechanics (simulated annealing, replica theory) may help understand and optimize deep networks.
+    
 ---
 
 ### **Landscape Topology and Critical Points**
@@ -264,10 +260,8 @@ However, the modern deep learning perspective suggests this concern may be overs
 A growing body of research suggests that the *width* or *flatness* of a minimum is more important for generalization than its *depth* [5]. Flatter, wider basins correspond to solutions that are less sensitive to small changes in the parameters (and the data), and these solutions often generalize better. Therefore, finding a "good, flat" local minimum is often the practical goal, not finding the "sharpest, global" one.
 
 ??? question "Why Do Flat Minima Generalize Better?"
-```
-A "sharp" minimum requires precise parameter values—small perturbations dramatically increase loss. Such precision typically arises from memorizing training data details. A "flat" minimum tolerates parameter perturbations, suggesting the solution captures robust, general features rather than noise. Physically, flat minima correspond to wide basins with large entropic contributions to free energy. Statistically, flat minima are more probable under Bayesian inference. This connection between basin geometry and generalization is central to modern understanding of why neural networks work.
-
-```
+    A "sharp" minimum requires precise parameter values—small perturbations dramatically increase loss. Such precision typically arises from memorizing training data details. A "flat" minimum tolerates parameter perturbations, suggesting the solution captures robust, general features rather than noise. Physically, flat minima correspond to wide basins with large entropic contributions to free energy. Statistically, flat minima are more probable under Bayesian inference. This connection between basin geometry and generalization is central to modern understanding of why neural networks work.
+    
 ---
 
 ### **Energy Landscape Insight: Escaping Traps**

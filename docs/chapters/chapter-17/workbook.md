@@ -1,4 +1,4 @@
-# **Chapter 17: Neural Quantum States (NQS) () () () (Workbook)**
+# **Chapter 17: Neural Quantum States (NQS) (Workbook)**
 
 The goal of this chapter is to establish the deepest fusion of physics and AI: representing the intractable quantum wavefunction using neural networks and solving for the ground state energy via classical optimization.
 
@@ -24,36 +24,30 @@ The goal of this chapter is to establish the deepest fusion of physics and AI: r
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The primary challenge in solving the quantum many-body problem that necessitates the use of NQS is:**
-
-* **A.** The linearity of the Schrödinger equation.
-* **B.** **The exponential scaling of the Hilbert space dimension with the number of particles ($2^N$)**. (**Correct**)
-* **C.** The complexity of the classical Hamiltonian.
-* **D.** The difficulty of calculating the partition function $Z$.
-
-```
+    **1. The primary challenge in solving the quantum many-body problem that necessitates the use of NQS is:**
+    
+    * **A.** The linearity of the Schrödinger equation.
+    * **B.** **The exponential scaling of the Hilbert space dimension with the number of particles ($2^N$)**. (**Correct**)
+    * **C.** The complexity of the classical Hamiltonian.
+    * **D.** The difficulty of calculating the partition function $Z$.
+    
 !!! note "Quiz"
-```
-**2. The single variable that links the NQS neural network output $\psi(\mathbf{s})$ to the observable, classical world is:**
-
-* **A.** The complex phase $\Phi(\mathbf{s})$.
-* **B.** The total expected energy $E$.
-* **C.** **The probability distribution $P(\mathbf{s}) = |\psi(\mathbf{s})|^2$**. (**Correct**)
-* **D.** The local energy $E_{\text{loc}}(\mathbf{s})$.
-
-```
+    **2. The single variable that links the NQS neural network output $\psi(\mathbf{s})$ to the observable, classical world is:**
+    
+    * **A.** The complex phase $\Phi(\mathbf{s})$.
+    * **B.** The total expected energy $E$.
+    * **C.** **The probability distribution $P(\mathbf{s}) = |\psi(\mathbf{s})|^2$**. (**Correct**)
+    * **D.** The local energy $E_{\text{loc}}(\mathbf{s})$.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** The NQS approach is analogous to a powerful form of **generative modeling** (Chapter 14). Explain how the training goal of NQS differs philosophically from that of a standard GAN or VAE trained on image data.
-
-**Answer Strategy:**
-* **GAN/VAE (Data-Driven):** The network is trained on an **empirical dataset** (observed images). The goal is to maximize the likelihood of the **observed distribution**.
-* **NQS (Law-Constrained):** The network is trained purely on the **theoretical law** (the Hamiltonian, $\hat{H}$). The goal is to minimize the expected energy, finding the theoretical **lowest-energy state**. The network is not fitting observed data, but the unobserved **quantum reality** dictated by the physical law.
-
-```
+    **Question:** The NQS approach is analogous to a powerful form of **generative modeling** (Chapter 14). Explain how the training goal of NQS differs philosophically from that of a standard GAN or VAE trained on image data.
+    
+    **Answer Strategy:**
+    * **GAN/VAE (Data-Driven):** The network is trained on an **empirical dataset** (observed images). The goal is to maximize the likelihood of the **observed distribution**.
+    * **NQS (Law-Constrained):** The network is trained purely on the **theoretical law** (the Hamiltonian, $\hat{H}$). The goal is to minimize the expected energy, finding the theoretical **lowest-energy state**. The network is not fitting observed data, but the unobserved **quantum reality** dictated by the physical law.
+    
 ---
 
 ---
@@ -65,34 +59,28 @@ The goal of this chapter is to establish the deepest fusion of physics and AI: r
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The formal learning objective for training a Neural Quantum State (NQS) network is to minimize the expected energy $E[\psi_{\mathcal{\theta}}]$, which is derived from which foundational quantum mechanics theorem?**
-
-* **A.** Heisenberg Uncertainty Principle.
-* **B.** **The Variational Principle**. (**Correct**)
-* **C.** The Equipartition Theorem.
-* **D.** The Bellman Optimality Equation.
-
-```
+    **1. The formal learning objective for training a Neural Quantum State (NQS) network is to minimize the expected energy $E[\psi_{\mathcal{\theta}}]$, which is derived from which foundational quantum mechanics theorem?**
+    
+    * **A.** Heisenberg Uncertainty Principle.
+    * **B.** **The Variational Principle**. (**Correct**)
+    * **C.** The Equipartition Theorem.
+    * **D.** The Bellman Optimality Equation.
+    
 !!! note "Quiz"
-```
-**2. In the NQS energy functional, $E = \frac{\langle \psi | \hat{H} | \psi \rangle}{\langle \psi | \psi \rangle}$, the role of the **Hamiltonian operator ($\hat{H}$)** is analogous to which concept in machine learning?**
-
-* **A.** The policy $\pi$.
-* **B.** The learning rate $\eta$.
-* **C.** **The loss function operator**. (**Correct**)
-* **D.** The normalization constant $Z$.
-
-```
+    **2. In the NQS energy functional, $E = \frac{\langle \psi | \hat{H} | \psi \rangle}{\langle \psi | \psi \rangle}$, the role of the **Hamiltonian operator ($\hat{H}$)** is analogous to which concept in machine learning?**
+    
+    * **A.** The policy $\pi$.
+    * **B.** The learning rate $\eta$.
+    * **C.** **The loss function operator**. (**Correct**)
+    * **D.** The normalization constant $Z$.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** The NQS approach requires minimizing energy using gradient descent. The final equation shows that the gradient of the expected energy is proportional to the difference $E_{\text{loc}} - E$. Explain the role of the **local energy ($E_{\text{loc}}$)** term in calculating this gradient.
-
-**Answer Strategy:** The **local energy ($E_{\text{loc}}$)**, defined as $E_{\text{loc}}(\mathbf{s}) = \frac{(\hat{H}\psi_{\mathcal{\theta}})(\mathbf{s})}{\psi_{\mathcal{\theta}}(\mathbf{s})}$, is the exact energy of a specific configuration $\mathbf{s}$ under the current trial wavefunction $\psi_{\mathcal{\theta}}$. The gradient term uses $E_{\text{loc}}$ as the error signal. If $E_{\text{loc}}$ is much higher than the average energy $E$, the gradient pushes the parameters to reduce the amplitude of that configuration (reduce its energy cost), driving the system toward the true energy minimum.
-
-```
+    **Question:** The NQS approach requires minimizing energy using gradient descent. The final equation shows that the gradient of the expected energy is proportional to the difference $E_{\text{loc}} - E$. Explain the role of the **local energy ($E_{\text{loc}}$)** term in calculating this gradient.
+    
+    **Answer Strategy:** The **local energy ($E_{\text{loc}}$)**, defined as $E_{\text{loc}}(\mathbf{s}) = \frac{(\hat{H}\psi_{\mathcal{\theta}})(\mathbf{s})}{\psi_{\mathcal{\theta}}(\mathbf{s})}$, is the exact energy of a specific configuration $\mathbf{s}$ under the current trial wavefunction $\psi_{\mathcal{\theta}}$. The gradient term uses $E_{\text{loc}}$ as the error signal. If $E_{\text{loc}}$ is much higher than the average energy $E$, the gradient pushes the parameters to reduce the amplitude of that configuration (reduce its energy cost), driving the system toward the true energy minimum.
+    
 ---
 
 ---

@@ -1,4 +1,4 @@
-# **Chapter 2: Statistics & Probability in High Dimensions () () (Codebook)**
+# **Chapter 2: Statistics & Probability in High Dimensions (Codebook)**
 
 ## Project 1: Testing the Curse of Dimensionality (Distance Concentration)
 

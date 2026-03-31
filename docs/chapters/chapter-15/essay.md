@@ -92,10 +92,8 @@ RL is deeply analogous to a **thermodynamic process** where utility is maximized
 This framework merges optimization (finding the optimal policy) with control theory (dynamic action planning) and probabilistic reasoning (handling uncertainty).
 
 !!! tip "Understanding the Markov Property"
-```
-The Markov property simplifies RL dramatically: the future depends only on the current state, not on the entire history. This "memoryless" assumption allows us to compress an infinite sequence of past states into a single sufficient statistic (the current state $s$). Think of it as the system "forgetting" its past trajectory—only the present configuration matters for predicting future evolution, just like a particle's position and velocity completely determine its future trajectory in classical mechanics.
-
-```
+    The Markov property simplifies RL dramatically: the future depends only on the current state, not on the entire history. This "memoryless" assumption allows us to compress an infinite sequence of past states into a single sufficient statistic (the current state $s$). Think of it as the system "forgetting" its past trajectory—only the present configuration matters for predicting future evolution, just like a particle's position and velocity completely determine its future trajectory in classical mechanics.
+    
 ---
 
 ## **15.2 Markov Decision Processes (MDPs)**
@@ -264,10 +262,8 @@ The convergence of Dynamic Programming methods to the optimal value function is 
 In essence, DP efficiently solves the planning problem by simulating the statistical dynamics of the environment until a stable, optimal potential field ($V^*$) is discovered.
 
 !!! example "Value Iteration in Discrete Gridworld"
-```
-Consider a 5×5 grid where an agent starts at the top-left corner and must reach the bottom-right goal. Using value iteration, we initialize all states with $V_0(s) = 0$. At each iteration, we update values: $V_{k+1}(s) = \max_a [R(s,a) + \gamma \sum_{s'} P(s'|s,a) V_k(s')]$. After the first iteration, only the goal state has non-zero value. After iteration 2, states adjacent to the goal update their values. Information propagates backward like a wave: iteration 3 reaches states 2 steps from the goal, iteration 4 reaches 3 steps away, and so on. After ~10 iterations, the entire grid stabilizes to a smooth potential landscape where every state knows its optimal distance (in reward terms) to the goal. The optimal policy simply follows the steepest gradient downhill on this landscape.
-
-```
+    Consider a 5×5 grid where an agent starts at the top-left corner and must reach the bottom-right goal. Using value iteration, we initialize all states with $V_0(s) = 0$. At each iteration, we update values: $V_{k+1}(s) = \max_a [R(s,a) + \gamma \sum_{s'} P(s'|s,a) V_k(s')]$. After the first iteration, only the goal state has non-zero value. After iteration 2, states adjacent to the goal update their values. Information propagates backward like a wave: iteration 3 reaches states 2 steps from the goal, iteration 4 reaches 3 steps away, and so on. After ~10 iterations, the entire grid stabilizes to a smooth potential landscape where every state knows its optimal distance (in reward terms) to the goal. The optimal policy simply follows the steepest gradient downhill on this landscape.
+    
 ---
 
 ## **15.5 Q-Learning — Learning Without a Model**
@@ -363,10 +359,8 @@ Policy Gradient methods have a deep analogy in **stochastic thermodynamics**:
 * **Entropy and Exploration:** Policy Gradient methods, especially modern variants like Soft Actor-Critic (SAC), often explicitly include an **entropy regularization term ($\mathcal{H}$) ** in the objective. This encourages **policy diversity** (high entropy), ensuring the policy follows the reward gradients while simultaneously preserving a sufficient **exploration temperature ($T$)** to prevent the agent from getting stuck in local, suboptimal behavior patterns.
 
 ??? question "Why Does the Discount Factor Matter in Long-Horizon Tasks?"
-```
-The discount factor $\gamma \in [0,1]$ serves multiple critical roles in RL. First, it ensures mathematical convergence: without discounting ($\gamma=1$), the infinite-horizon sum $\sum_{t=0}^\infty r_t$ could diverge. Second, it models uncertainty about the future—distant rewards are inherently less certain than immediate ones. Third, it shapes the agent's planning horizon: $\gamma=0.9$ means rewards 10 steps away are worth only $0.9^{10} \approx 0.35$ of their face value, while $\gamma=0.99$ preserves 90% of value even at 10 steps ($0.99^{10} \approx 0.90$). In physical terms, $\gamma$ acts like a temporal "temperature" that controls how far into the future the agent "sees." Low $\gamma$ creates myopic policies optimizing short-term gains (like a high-temperature system with rapid decay), while high $\gamma$ enables far-sighted planning (low-temperature, long-range correlations). The choice of $\gamma$ is thus a fundamental design parameter balancing computational tractability, environmental uncertainty, and task horizon.
-
-```
+    The discount factor $\gamma \in [0,1]$ serves multiple critical roles in RL. First, it ensures mathematical convergence: without discounting ($\gamma=1$), the infinite-horizon sum $\sum_{t=0}^\infty r_t$ could diverge. Second, it models uncertainty about the future—distant rewards are inherently less certain than immediate ones. Third, it shapes the agent's planning horizon: $\gamma=0.9$ means rewards 10 steps away are worth only $0.9^{10} \approx 0.35$ of their face value, while $\gamma=0.99$ preserves 90% of value even at 10 steps ($0.99^{10} \approx 0.90$). In physical terms, $\gamma$ acts like a temporal "temperature" that controls how far into the future the agent "sees." Low $\gamma$ creates myopic policies optimizing short-term gains (like a high-temperature system with rapid decay), while high $\gamma$ enables far-sighted planning (low-temperature, long-range correlations). The choice of $\gamma$ is thus a fundamental design parameter balancing computational tractability, environmental uncertainty, and task horizon.
+    
 ---
 
 ## **15.7 Actor–Critic Architecture**
@@ -460,10 +454,8 @@ Deep RL is analogous to the physics problem of **learning a complex, high-dimens
 * The learning process involves stochastic forces (gradients) that guide the control field's parameters toward the minimal energy (maximal reward) configuration, enabling the system to adapt and generalize its behavior across the vast complexity of the continuous state space.
 
 !!! tip "Stabilizing Deep RL: The Target Network Trick"
-```
-Deep RL faces a chicken-and-egg problem: the Q-network predicts target values to update itself, but those targets change as the network updates, creating a non-stationary optimization landscape (like chasing a moving target). The target network solution is elegant: maintain two identical networks—the primary Q-network $Q_{\theta}$ (updated every step) and the frozen target network $Q_{\theta^-}$ (updated only every C steps, e.g., C=10,000). Compute TD targets using the frozen network: $y_t = r_t + \gamma \max_{a'} Q_{\theta^-}(s',a')$, then train the primary network to minimize $(Q_{\theta}(s,a) - y_t)^2$. This decouples the target from immediate updates, temporarily stabilizing the optimization landscape. Think of it as allowing the "goalposts" to stay fixed for many gradient steps before moving, preventing the catastrophic divergence that plagued early Deep RL attempts. This simple trick was crucial to DeepMind's breakthrough DQN algorithm learning to play Atari games from pixels.
-
-```
+    Deep RL faces a chicken-and-egg problem: the Q-network predicts target values to update itself, but those targets change as the network updates, creating a non-stationary optimization landscape (like chasing a moving target). The target network solution is elegant: maintain two identical networks—the primary Q-network $Q_{\theta}$ (updated every step) and the frozen target network $Q_{\theta^-}$ (updated only every C steps, e.g., C=10,000). Compute TD targets using the frozen network: $y_t = r_t + \gamma \max_{a'} Q_{\theta^-}(s',a')$, then train the primary network to minimize $(Q_{\theta}(s,a) - y_t)^2$. This decouples the target from immediate updates, temporarily stabilizing the optimization landscape. Think of it as allowing the "goalposts" to stay fixed for many gradient steps before moving, preventing the catastrophic divergence that plagued early Deep RL attempts. This simple trick was crucial to DeepMind's breakthrough DQN algorithm learning to play Atari games from pixels.
+    
 ---
 
 ## **15.9 Exploration vs. Exploitation**
@@ -618,10 +610,8 @@ $$
 * **Bridge:** This connects **thermodynamics, information theory (entropy), and optimal control**. The learning process finds the policy that is most efficient (lowest cost) while remaining as uncertain as possible (highest entropy), consistent with the evidence.
 
 !!! example "Entropy-Regularized RL in Robot Manipulation"
-```
-Consider a robotic arm learning to grasp diverse objects. A standard RL approach (no entropy regularization) might converge to a single brittle grasping strategy that works for the training objects but fails on novel shapes. With entropy-regularized RL (e.g., SAC with temperature $T=0.2$), the policy $\pi(a|s) \propto e^{Q(s,a)/T}$ maintains diversity: even suboptimal grasps retain non-zero probability. During training, the robot explores multiple grasping strategies—power grips, precision grips, side approaches—weighted by their Q-values but not collapsing to a single mode. The result: a robust policy that generalizes better to unseen objects. The entropy term $-T \mathcal{H}[\pi]$ acts as a regularizer, preventing overfitting to the training distribution. At test time, you can "anneal" the temperature: start with $T=0.2$ for robust exploration, then lower to $T=0.05$ to sharpen the policy toward the highest-value actions once the object is identified. This mirrors how physical systems balance energy minimization with entropic exploration, achieving both efficiency and adaptability.
-
-```
+    Consider a robotic arm learning to grasp diverse objects. A standard RL approach (no entropy regularization) might converge to a single brittle grasping strategy that works for the training objects but fails on novel shapes. With entropy-regularized RL (e.g., SAC with temperature $T=0.2$), the policy $\pi(a|s) \propto e^{Q(s,a)/T}$ maintains diversity: even suboptimal grasps retain non-zero probability. During training, the robot explores multiple grasping strategies—power grips, precision grips, side approaches—weighted by their Q-values but not collapsing to a single mode. The result: a robust policy that generalizes better to unseen objects. The entropy term $-T \mathcal{H}[\pi]$ acts as a regularizer, preventing overfitting to the training distribution. At test time, you can "anneal" the temperature: start with $T=0.2$ for robust exploration, then lower to $T=0.05$ to sharpen the policy toward the highest-value actions once the object is identified. This mirrors how physical systems balance energy minimization with entropic exploration, achieving both efficiency and adaptability.
+    
 ---
 
 ## **15.12 Worked Example — Gridworld with Q-Learning**

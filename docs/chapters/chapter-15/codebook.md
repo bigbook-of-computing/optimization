@@ -1,4 +1,4 @@
-# **Chapter 15: Reinforcement Learning and Control () () (Codebook)**
+# **Chapter 15: Reinforcement Learning and Control (Codebook)**
 
 ## Project 1: Q-Learning Convergence (Value Iteration)
 

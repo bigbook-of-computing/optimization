@@ -1,4 +1,4 @@
-# **Chapter 12: The Perceptron and Neural Foundations () () () (Workbook)**
+# **Chapter 12: The Perceptron and Neural Foundations (Workbook)**
 
 The goal of this chapter is to establish the theoretical atom of deep learning, showing how the local optimization of a single neuron's parameters leads to the non-linear, hierarchical architectures of modern AI.
 
@@ -24,34 +24,28 @@ The goal of this chapter is to establish the theoretical atom of deep learning, 
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The radical methodological shift introduced by deep learning is replacing handcrafted statistical models (like those in Part III) with the search for:**
-
-* **A.** A pure linear function.
-* **B.** **The optimal non-linear function that learns abstract internal features**. (**Correct**)
-* **C.** The partition function $Z$.
-* **D.** A single, non-adaptive parameter.
-
-```
+    **1. The radical methodological shift introduced by deep learning is replacing handcrafted statistical models (like those in Part III) with the search for:**
+    
+    * **A.** A pure linear function.
+    * **B.** **The optimal non-linear function that learns abstract internal features**. (**Correct**)
+    * **C.** The partition function $Z$.
+    * **D.** A single, non-adaptive parameter.
+    
 !!! note "Quiz"
-```
-**2. When viewed as a physics system, the training process of a neural network is an analogy for the system undergoing:**
-
-* **A.** Newtonian projectile motion.
-* **B.** Quantum tunneling.
-* **C.** **Global relaxation toward minimal prediction error (low-loss equilibrium)**. (**Correct**)
-* **D.** Continuous energy conservation.
-
-```
+    **2. When viewed as a physics system, the training process of a neural network is an analogy for the system undergoing:**
+    
+    * **A.** Newtonian projectile motion.
+    * **B.** Quantum tunneling.
+    * **C.** **Global relaxation toward minimal prediction error (low-loss equilibrium)**. (**Correct**)
+    * **D.** Continuous energy conservation.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** The challenge of deep learning is managing optimization dynamics on **highly non-convex loss landscapes**. What is the primary cause of this non-convexity in a Multilayer Perceptron (MLP)?
-
-**Answer Strategy:** Non-convexity is caused by the **successive application of non-linear activation functions** (Section 12.3) between linear layers. If the layers were all linear, the total function would be linear (convex). By introducing non-linearity (e.g., ReLU or Sigmoid), the function gains the necessary expressive power to model complex, twisted boundaries, which inherently creates the rugged, non-convex topography of local minima and saddle points.
-
-```
+    **Question:** The challenge of deep learning is managing optimization dynamics on **highly non-convex loss landscapes**. What is the primary cause of this non-convexity in a Multilayer Perceptron (MLP)?
+    
+    **Answer Strategy:** Non-convexity is caused by the **successive application of non-linear activation functions** (Section 12.3) between linear layers. If the layers were all linear, the total function would be linear (convex). By introducing non-linearity (e.g., ReLU or Sigmoid), the function gains the necessary expressive power to model complex, twisted boundaries, which inherently creates the rugged, non-convex topography of local minima and saddle points.
+    
 ---
 
 ---
@@ -63,37 +57,31 @@ The goal of this chapter is to establish the theoretical atom of deep learning, 
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The core operation of a Perceptron that defines its linear separating boundary is:**
-
-* **A.** Minimizing the KL divergence.
-* **B.** **Computing a weighted linear sum ($\mathbf{w}^T \mathbf{x} + b$)**. (**Correct**)
-* **C.** Applying a continuous Gaussian kernel.
-* **D.** Averaging all neighboring inputs.
-
-```
+    **1. The core operation of a Perceptron that defines its linear separating boundary is:**
+    
+    * **A.** Minimizing the KL divergence.
+    * **B.** **Computing a weighted linear sum ($\mathbf{w}^T \mathbf{x} + b$)**. (**Correct**)
+    * **C.** Applying a continuous Gaussian kernel.
+    * **D.** Averaging all neighboring inputs.
+    
 !!! note "Quiz"
-```
-**2. The **Perceptron Convergence Theorem** guarantees that the algorithm will find a separating hyperplane if and only if the data is:**
-
-* **A.** Non-convex.
-* **B.** **Linearly separable**. (**Correct**)
-* **C.** Defined by continuous activations.
-* **D.** Stochastic.
-
-```
+    **2. The **Perceptron Convergence Theorem** guarantees that the algorithm will find a separating hyperplane if and only if the data is:**
+    
+    * **A.** Non-convex.
+    * **B.** **Linearly separable**. (**Correct**)
+    * **C.** Defined by continuous activations.
+    * **D.** Stochastic.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** The training rule for the Perceptron is fundamentally a **force balance** mechanism. Describe the two opposing actions involved when a single point is **misclassified**, and how this leads to the **rotation** of the decision boundary.
-
-**Answer Strategy:** A misclassified point generates a **corrective impulse** (force). The weight vector $\mathbf{w}$ (which is perpendicular to the boundary) is adjusted:
-1.  The impulse is proportional to the **input vector $\mathbf{x}$** and the sign of the error.
-2.  This adjustment causes a **small rotation of the decision boundary**.
-The process is repeated until the total corrective force exerted by all misclassified points is zero (equilibrium), meaning the boundary is perfectly aligned with the separation in the data.
-
-```
+    **Question:** The training rule for the Perceptron is fundamentally a **force balance** mechanism. Describe the two opposing actions involved when a single point is **misclassified**, and how this leads to the **rotation** of the decision boundary.
+    
+    **Answer Strategy:** A misclassified point generates a **corrective impulse** (force). The weight vector $\mathbf{w}$ (which is perpendicular to the boundary) is adjusted:
+    1.  The impulse is proportional to the **input vector $\mathbf{x}$** and the sign of the error.
+    2.  This adjustment causes a **small rotation of the decision boundary**.
+    The process is repeated until the total corrective force exerted by all misclassified points is zero (equilibrium), meaning the boundary is perfectly aligned with the separation in the data.
+    
 ---
 
 ---
@@ -105,37 +93,31 @@ The process is repeated until the total corrective force exerted by all misclass
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The primary mathematical reason why the single Perceptron's rigid step function must be replaced by a continuous activation function in modern networks is because the step function is:**
-
-* **A.** Too slow to compute.
-* **B.** **Non-differentiable (or has a derivative of zero everywhere else)**. (**Correct**)
-* **C.** Causes weight instability.
-* **D.** Only works for positive inputs.
-
-```
+    **1. The primary mathematical reason why the single Perceptron's rigid step function must be replaced by a continuous activation function in modern networks is because the step function is:**
+    
+    * **A.** Too slow to compute.
+    * **B.** **Non-differentiable (or has a derivative of zero everywhere else)**. (**Correct**)
+    * **C.** Causes weight instability.
+    * **D.** Only works for positive inputs.
+    
 !!! note "Quiz"
-```
-**2. The shift from a rigid step function to a continuous activation function is analogous to transforming a physical system from a state of **zero temperature** ($T=0$) to a state of:**
-
-* **A.** Divergence.
-* **B.** **Finite temperature ($T>0$)**. (**Correct**)
-* **C.** Infinite mass.
-* **D.** Perfect linearity.
-
-```
+    **2. The shift from a rigid step function to a continuous activation function is analogous to transforming a physical system from a state of **zero temperature** ($T=0$) to a state of:**
+    
+    * **A.** Divergence.
+    * **B.** **Finite temperature ($T>0$)**. (**Correct**)
+    * **C.** Infinite mass.
+    * **D.** Perfect linearity.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** Explain the trade-off that occurs when designing a neural network's activation function: the need for **nonlinearity** versus the need for **differentiability**.
-
-**Answer Strategy:**
-1.  **Nonlinearity is required for expressive power**. Without it, the network collapses into a single linear map (Section 12.8). The non-linear break allows the network to approximate arbitrary, complex functions.
-2.  **Differentiability is required for optimization**. The entire optimization framework (Gradient Descent, Backpropagation) relies on being able to compute the derivative of the loss with respect to all weights.
-The solution is a function like ReLU or Tanh, which provides the necessary non-linear break while remaining differentiable almost everywhere, satisfying both computational requirements simultaneously.
-
-```
+    **Question:** Explain the trade-off that occurs when designing a neural network's activation function: the need for **nonlinearity** versus the need for **differentiability**.
+    
+    **Answer Strategy:**
+    1.  **Nonlinearity is required for expressive power**. Without it, the network collapses into a single linear map (Section 12.8). The non-linear break allows the network to approximate arbitrary, complex functions.
+    2.  **Differentiability is required for optimization**. The entire optimization framework (Gradient Descent, Backpropagation) relies on being able to compute the derivative of the loss with respect to all weights.
+    The solution is a function like ReLU or Tanh, which provides the necessary non-linear break while remaining differentiable almost everywhere, satisfying both computational requirements simultaneously.
+    
 ---
 
 ### 💡 Hands-On Project Ideas 🛠️

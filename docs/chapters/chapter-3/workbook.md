@@ -1,4 +1,4 @@
-# **Chapter 3: Dimensionality Reduction & Clustering () () () (Workbook)**
+# **Chapter 3: Dimensionality Reduction & Clustering (Workbook)**
 
 The goal of this chapter is to develop the essential toolkit for extracting interpretable, low-dimensional structure from high-dimensional simulation data, allowing for automated discovery of a system's core physics (collective variables and metastable states).
 
@@ -23,34 +23,28 @@ The goal of this chapter is to develop the essential toolkit for extracting inte
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. Dimensionality reduction is considered a **necessary** preprocessing step for high-dimensional data primarily because the Curse of Dimensionality results in data being:**
-
-* **A.** Linearly separable.
-* **B.** **Intractably sparse**. (**Correct**)
-* **C.** Orthogonally correlated.
-* **D.** Non-convex.
-
-```
+    **1. Dimensionality reduction is considered a **necessary** preprocessing step for high-dimensional data primarily because the Curse of Dimensionality results in data being:**
+    
+    * **A.** Linearly separable.
+    * **B.** **Intractably sparse**. (**Correct**)
+    * **C.** Orthogonally correlated.
+    * **D.** Non-convex.
+    
 !!! note "Quiz"
-```
-**2. For a physicist, the process of dimensionality reduction is conceptually equivalent to the process of:**
-
-* **A.** Monte Carlo sampling.
-* **B.** **Coarse-graining**. (**Correct**)
-* **C.** Calculating the partition function.
-* **D.** Calculating Euclidean distance.
-
-```
+    **2. For a physicist, the process of dimensionality reduction is conceptually equivalent to the process of:**
+    
+    * **A.** Monte Carlo sampling.
+    * **B.** **Coarse-graining**. (**Correct**)
+    * **C.** Calculating the partition function.
+    * **D.** Calculating Euclidean distance.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** The text states that the discovery of a system's latent manifold is equivalent to automating the discovery of its optimal **collective variables**. Provide a brief physical analogy for a molecular system.
-
-**Answer Strategy:** For a complex molecule, the raw embedding dimension $D$ might be $3N$ (e.g., $3 \times 1000$ coordinates). However, the essential physics, like a protein folding or a hinge opening, involves only a few **slow, collective modes**. PCA or UMAP automation finds these latent variables (e.g., a "hinge angle" or "end-to-end distance") from the data alone, just as a theoretical physicist would manually define the necessary coarse-grained variables.
-
-```
+    **Question:** The text states that the discovery of a system's latent manifold is equivalent to automating the discovery of its optimal **collective variables**. Provide a brief physical analogy for a molecular system.
+    
+    **Answer Strategy:** For a complex molecule, the raw embedding dimension $D$ might be $3N$ (e.g., $3 \times 1000$ coordinates). However, the essential physics, like a protein folding or a hinge opening, involves only a few **slow, collective modes**. PCA or UMAP automation finds these latent variables (e.g., a "hinge angle" or "end-to-end distance") from the data alone, just as a theoretical physicist would manually define the necessary coarse-grained variables.
+    
 ---
 
 ---
@@ -62,34 +56,28 @@ The goal of this chapter is to develop the essential toolkit for extracting inte
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. PCA is the optimal linear method for dimensionality reduction in the sense that it minimizes the least-squares error of the projection while maximizing the preservation of:**
-
-* **A.** Geodesic distances.
-* **B.** **Total data variance**. (**Correct**)
-* **C.** Log-likelihood.
-* **D.** Local neighborhood continuity.
-
-```
+    **1. PCA is the optimal linear method for dimensionality reduction in the sense that it minimizes the least-squares error of the projection while maximizing the preservation of:**
+    
+    * **A.** Geodesic distances.
+    * **B.** **Total data variance**. (**Correct**)
+    * **C.** Log-likelihood.
+    * **D.** Local neighborhood continuity.
+    
 !!! note "Quiz"
-```
-**2. Which mathematical operation forms the core of the PCA algorithm?**
-
-* **A.** Logarithmic transformation of the data.
-* **B.** **Eigendecomposition of the covariance matrix ($\Sigma$)**. (**Correct**)
-* **C.** Calculation of the Student's t-distribution.
-* **D.** Mean-field approximation.
-
-```
+    **2. Which mathematical operation forms the core of the PCA algorithm?**
+    
+    * **A.** Logarithmic transformation of the data.
+    * **B.** **Eigendecomposition of the covariance matrix ($\Sigma$)**. (**Correct**)
+    * **C.** Calculation of the Student's t-distribution.
+    * **D.** Mean-field approximation.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** In the context of the eigenvalue equation $\Sigma \mathbf{v}_k = \lambda_k \mathbf{v}_k$, explain the precise meaning of the **eigenvalue $\lambda_k$** after a PCA analysis has been performed.
-
-**Answer Strategy:** The eigenvalue $\lambda_k$ has a direct, quantitative physical meaning: it represents the **exact amount of variance** in the dataset when the data is projected onto the direction defined by the corresponding eigenvector $\mathbf{v}_k$. In a system like a protein, $\lambda_k$ tells you the **amplitude** or "size" of the collective motion represented by $\mathbf{v}_k$. By summing the largest $\lambda_k$, one can determine the **cumulative explained variance**.
-
-```
+    **Question:** In the context of the eigenvalue equation $\Sigma \mathbf{v}_k = \lambda_k \mathbf{v}_k$, explain the precise meaning of the **eigenvalue $\lambda_k$** after a PCA analysis has been performed.
+    
+    **Answer Strategy:** The eigenvalue $\lambda_k$ has a direct, quantitative physical meaning: it represents the **exact amount of variance** in the dataset when the data is projected onto the direction defined by the corresponding eigenvector $\mathbf{v}_k$. In a system like a protein, $\lambda_k$ tells you the **amplitude** or "size" of the collective motion represented by $\mathbf{v}_k$. By summing the largest $\lambda_k$, one can determine the **cumulative explained variance**.
+    
 ---
 
 ---
@@ -101,36 +89,30 @@ The goal of this chapter is to develop the essential toolkit for extracting inte
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The primary structural limitation of the data manifold $\mathcal{M}$ that necessitates the use of nonlinear methods like t-SNE or UMAP is when the manifold is:**
-
-* **A.** Too large (high $D$).
-* **B.** **Curved, twisted, or non-convex**. (**Correct**)
-* **C.** Dominated by a single collective mode.
-* **D.** Linearly separable.
-
-```
+    **1. The primary structural limitation of the data manifold $\mathcal{M}$ that necessitates the use of nonlinear methods like t-SNE or UMAP is when the manifold is:**
+    
+    * **A.** Too large (high $D$).
+    * **B.** **Curved, twisted, or non-convex**. (**Correct**)
+    * **C.** Dominated by a single collective mode.
+    * **D.** Linearly separable.
+    
 !!! note "Quiz"
-```
-**2. Both t-SNE and UMAP, while mathematically distinct, share the core objective of minimizing the difference between the data's high-dimensional and low-dimensional:**
-
-* **A.** Total variance.
-* **B.** **Neighborhood probability distributions**. (**Correct**)
-* **C.** Mean vector.
-* **D.** Principal component axes.
-
-```
+    **2. Both t-SNE and UMAP, while mathematically distinct, share the core objective of minimizing the difference between the data's high-dimensional and low-dimensional:**
+    
+    * **A.** Total variance.
+    * **B.** **Neighborhood probability distributions**. (**Correct**)
+    * **C.** Mean vector.
+    * **D.** Principal component axes.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** Explain the trade-off inherent in interpreting a UMAP or t-SNE visualization compared to a simple PCA projection. What aspect of the original data is accurately preserved, and what aspect is intentionally distorted?
-
-**Answer Strategy:**
-* **Preserved:** Nonlinear methods accurately preserve the **local topology** (i.e., local neighborhood relationships and the continuity of the manifold). Points that were close together on the curved $\mathcal{M}$ remain close together in the 2D map.
-* **Distorted:** The **global geometry** is often distorted. Specifically, the **distance between distant clusters** and the **size of individual clusters** are frequently artifacts of the projection algorithm and should not be interpreted as accurate high-dimensional Euclidean distances or densities.
-
-```
+    **Question:** Explain the trade-off inherent in interpreting a UMAP or t-SNE visualization compared to a simple PCA projection. What aspect of the original data is accurately preserved, and what aspect is intentionally distorted?
+    
+    **Answer Strategy:**
+    * **Preserved:** Nonlinear methods accurately preserve the **local topology** (i.e., local neighborhood relationships and the continuity of the manifold). Points that were close together on the curved $\mathcal{M}$ remain close together in the 2D map.
+    * **Distorted:** The **global geometry** is often distorted. Specifically, the **distance between distant clusters** and the **size of individual clusters** are frequently artifacts of the projection algorithm and should not be interpreted as accurate high-dimensional Euclidean distances or densities.
+    
 ---
 
 ---
@@ -142,34 +124,28 @@ The goal of this chapter is to develop the essential toolkit for extracting inte
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. Why is the **geodesic distance** conceptually the most accurate metric for comparing two different configurations (points) on a curved data manifold $\mathcal{M}$?**
-
-* **A.** It always uses the correlation coefficient.
-* **B.** It is insensitive to rotational symmetries.
-* **C.** **It measures the shortest distance while remaining constrained to the curved surface, capturing the energetic cost (barrier) between states**. (**Correct**)
-* **D.** It scales all features to unit variance.
-
-```
+    **1. Why is the **geodesic distance** conceptually the most accurate metric for comparing two different configurations (points) on a curved data manifold $\mathcal{M}$?**
+    
+    * **A.** It always uses the correlation coefficient.
+    * **B.** It is insensitive to rotational symmetries.
+    * **C.** **It measures the shortest distance while remaining constrained to the curved surface, capturing the energetic cost (barrier) between states**. (**Correct**)
+    * **D.** It scales all features to unit variance.
+    
 !!! note "Quiz"
-```
-**2. A quantitative way to evaluate the quality of a low-dimensional embedding (e.g., a 2D UMAP map) is to measure the statistical correlation between:**
-
-* **A.** The mean vector and the covariance matrix.
-* **B.** **The high-dimensional distance matrix ($D_{high}$) and the low-dimensional distance matrix ($D_{low}$)**. (**Correct**)
-* **C.** The explained variance ratio and the number of clusters.
-* **D.** The Gaussian kernel and the Student's t-distribution.
-
-```
+    **2. A quantitative way to evaluate the quality of a low-dimensional embedding (e.g., a 2D UMAP map) is to measure the statistical correlation between:**
+    
+    * **A.** The mean vector and the covariance matrix.
+    * **B.** **The high-dimensional distance matrix ($D_{high}$) and the low-dimensional distance matrix ($D_{low}$)**. (**Correct**)
+    * **C.** The explained variance ratio and the number of clusters.
+    * **D.** The Gaussian kernel and the Student's t-distribution.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** Your simulation data contains two groups of points: Cluster A and Cluster B. You know, from a theoretical standpoint, that they should be far apart. You find that the $L^2$ Euclidean distance between their centers is $d_E=5$. However, the true **geodesic distance** is likely much larger, $d_G=50$. What physical feature is likely responsible for this large difference?
-
-**Answer Strategy:** The large difference between the Euclidean and geodesic distance implies that the manifold between the clusters is highly **curved** or contains a **high-energy barrier**. The Euclidean distance ($d_E$) measures the straight path *through* the unphysical high-D space, bypassing the barrier. The geodesic distance ($d_G$) measures the shortest path *along* the manifold, which correctly reflects the long, curved path the system must follow to cross the high-energy ridge (the "mountain") between the two stable states.
-
-```
+    **Question:** Your simulation data contains two groups of points: Cluster A and Cluster B. You know, from a theoretical standpoint, that they should be far apart. You find that the $L^2$ Euclidean distance between their centers is $d_E=5$. However, the true **geodesic distance** is likely much larger, $d_G=50$. What physical feature is likely responsible for this large difference?
+    
+    **Answer Strategy:** The large difference between the Euclidean and geodesic distance implies that the manifold between the clusters is highly **curved** or contains a **high-energy barrier**. The Euclidean distance ($d_E$) measures the straight path *through* the unphysical high-D space, bypassing the barrier. The geodesic distance ($d_G$) measures the shortest path *along* the manifold, which correctly reflects the long, curved path the system must follow to cross the high-energy ridge (the "mountain") between the two stable states.
+    
 ---
 
 ---
@@ -181,36 +157,30 @@ The goal of this chapter is to develop the essential toolkit for extracting inte
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. For the computational physicist, the algorithmic task of **clustering** a data cloud is conceptually equivalent to the physical task of identifying the system's:**
-
-* **A.** Partition function $Z$.
-* **B.** **Metastable states or distinct phases**. (**Correct**)
-* **C.** Time-reversible dynamics.
-* **D.** Random initialization.
-
-```
+    **1. For the computational physicist, the algorithmic task of **clustering** a data cloud is conceptually equivalent to the physical task of identifying the system's:**
+    
+    * **A.** Partition function $Z$.
+    * **B.** **Metastable states or distinct phases**. (**Correct**)
+    * **C.** Time-reversible dynamics.
+    * **D.** Random initialization.
+    
 !!! note "Quiz"
-```
-**2. A density-based clustering algorithm like DBSCAN excels at finding which types of clusters that K-Means typically fails to identify?**
-
-* **A.** Centroid-based clusters.
-* **B.** **Clusters of arbitrary shape** (e.g., S-shaped or nested rings). (**Correct**)
-* **C.** Clusters with uniform density.
-* **D.** Clusters with exactly $K$ members.
-
-```
+    **2. A density-based clustering algorithm like DBSCAN excels at finding which types of clusters that K-Means typically fails to identify?**
+    
+    * **A.** Centroid-based clusters.
+    * **B.** **Clusters of arbitrary shape** (e.g., S-shaped or nested rings). (**Correct**)
+    * **C.** Clusters with uniform density.
+    * **D.** Clusters with exactly $K$ members.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** The K-Means objective function $J$ minimizes the sum of squared errors ($J = \sum_{i} ||\mathbf{x}_i - \mathcal{\mu}_{c_i}||^2$). Explain the physical analogy of this function and the resulting limitation of the algorithm.
-
-**Answer Strategy:**
-* **Physical Analogy:** The function $J$ is mathematically analogous to the **potential energy** of a system where every data point (particle) is attached to its assigned cluster centroid (center of mass) by a spring (harmonic potential, $E \propto x^2$). K-Means seeks the minimum energy configuration where all springs are relaxed.
-* **Limitation:** Because it uses Euclidean distance squared, K-Means assumes the clusters are **spherical and compact**. It fails when the true physical phases are shaped as long, curved filaments because minimizing the spherical distance would falsely break up the curved cluster.
-
-```
+    **Question:** The K-Means objective function $J$ minimizes the sum of squared errors ($J = \sum_{i} ||\mathbf{x}_i - \mathcal{\mu}_{c_i}||^2$). Explain the physical analogy of this function and the resulting limitation of the algorithm.
+    
+    **Answer Strategy:**
+    * **Physical Analogy:** The function $J$ is mathematically analogous to the **potential energy** of a system where every data point (particle) is attached to its assigned cluster centroid (center of mass) by a spring (harmonic potential, $E \propto x^2$). K-Means seeks the minimum energy configuration where all springs are relaxed.
+    * **Limitation:** Because it uses Euclidean distance squared, K-Means assumes the clusters are **spherical and compact**. It fails when the true physical phases are shaped as long, curved filaments because minimizing the spherical distance would falsely break up the curved cluster.
+    
 ---
 
 ---

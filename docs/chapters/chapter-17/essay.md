@@ -78,10 +78,8 @@ The NQS method is analogous to a powerful form of generative modeling (Chapter 1
 The network learns the structural features and correlations (entanglement) required by the physical law, effectively fitting the underlying probabilistic structure of the system itself.
 
 !!! tip "Quantum State as Probability Compressor"
-```
-Unlike classical machine learning where we fit a model to observed data, NQS compresses the exponential Hilbert space ($2^N$ amplitudes) into a polynomial-parameter neural network ($\approx N^2$ weights). This compression preserves the essential quantum correlations (entanglement) needed to represent the ground state. Think of the network as learning the "code" that reconstructs the full quantum distribution from minimal information—analogous to how a deep generative model learns the latent structure underlying high-dimensional data.
-
-```
+    Unlike classical machine learning where we fit a model to observed data, NQS compresses the exponential Hilbert space ($2^N$ amplitudes) into a polynomial-parameter neural network ($\approx N^2$ weights). This compression preserves the essential quantum correlations (entanglement) needed to represent the ground state. Think of the network as learning the "code" that reconstructs the full quantum distribution from minimal information—analogous to how a deep generative model learns the latent structure underlying high-dimensional data.
+    
 ---
 
 ## **17.2 The Variational Principle as Learning Objective**
@@ -239,10 +237,8 @@ VMC is the direct equivalent of **Stochastic Gradient Descent (SGD)** (Chapter 5
 * **Energy Minimization:** VMC is the optimization procedure for training the energy-based model on a **quantum potential surface**. The network learns the distribution that minimizes the expected energy, successfully bridging classical statistical sampling with quantum mechanical optimization.
 
 !!! example "VMC for the Hydrogen Molecule Ground State"
-```
-Consider computing the ground state of H$_2$. The exact wavefunction requires integrating over all electron coordinates—intractable for classical computers. VMC with an NQS ansatz samples electron configurations $\mathbf{s}_i$ from $|\psi_{\mathbf{\theta}}(\mathbf{s})|^2$ using MCMC (Metropolis sampling). For each sample, compute the local energy $E_{\text{loc}}(\mathbf{s}_i) = (\hat{H}\psi_{\mathbf{\theta}})(\mathbf{s}_i)/\psi_{\mathbf{\theta}}(\mathbf{s}_i)$ where $\hat{H}$ includes kinetic energy and Coulomb interactions. Average these local energies to estimate $E[\psi_{\mathbf{\theta}}]$, then update network weights via gradient descent. After optimization, the learned $\psi_{\mathbf{\theta}}$ predicts molecular binding energy and electron density to chemical accuracy.
-
-```
+    Consider computing the ground state of H$_2$. The exact wavefunction requires integrating over all electron coordinates—intractable for classical computers. VMC with an NQS ansatz samples electron configurations $\mathbf{s}_i$ from $|\psi_{\mathbf{\theta}}(\mathbf{s})|^2$ using MCMC (Metropolis sampling). For each sample, compute the local energy $E_{\text{loc}}(\mathbf{s}_i) = (\hat{H}\psi_{\mathbf{\theta}})(\mathbf{s}_i)/\psi_{\mathbf{\theta}}(\mathbf{s}_i)$ where $\hat{H}$ includes kinetic energy and Coulomb interactions. Average these local energies to estimate $E[\psi_{\mathbf{\theta}}]$, then update network weights via gradient descent. After optimization, the learned $\psi_{\mathbf{\theta}}$ predicts molecular binding energy and electron density to chemical accuracy.
+    
 ---
 
 ## **17.5 Example — Transverse-Field Ising Model**
@@ -420,10 +416,8 @@ The relationship is summarized by viewing NQS as **quantum generalizations of EB
 NQS fundamentally extends the powerful EBM idea to the domain where **probability becomes amplitude**.
 
 ??? question "Why Do Quantum Amplitudes Require Complex Numbers While Classical Probabilities Don't?"
-```
-Classical probabilities are always positive real numbers that add directly. Quantum mechanics, however, requires **interference**—the ability for probability amplitudes to cancel (destructive interference) or reinforce (constructive interference). This interference is impossible with real numbers alone. Complex numbers provide the necessary phase $e^{i\Phi}$ that allows amplitudes to point in different "directions" in the complex plane. When computing probabilities $|\psi|^2$, these phases interact: $|\psi_1 + \psi_2|^2 \neq |\psi_1|^2 + |\psi_2|^2$. This phase-dependent interference is the signature of quantum mechanics and requires the wavefunction to be fundamentally complex-valued.
-
-```
+    Classical probabilities are always positive real numbers that add directly. Quantum mechanics, however, requires **interference**—the ability for probability amplitudes to cancel (destructive interference) or reinforce (constructive interference). This interference is impossible with real numbers alone. Complex numbers provide the necessary phase $e^{i\Phi}$ that allows amplitudes to point in different "directions" in the complex plane. When computing probabilities $|\psi|^2$, these phases interact: $|\psi_1 + \psi_2|^2 \neq |\psi_1|^2 + |\psi_2|^2$. This phase-dependent interference is the signature of quantum mechanics and requires the wavefunction to be fundamentally complex-valued.
+    
 ---
 
 ## **17.9 Stochastic Reconfiguration — Quantum Natural Gradient**
@@ -537,11 +531,9 @@ Just as hierarchical networks efficiently model complexity in classical data (Ch
 * **Transformer-NQS:** These leverage the **Self-Attention** mechanism (Chapter 19) to model **long-range quantum correlations**. They can dynamically capture complex, nonlocal entanglement patterns without the connectivity limitations of local lattice models.
 
 !!! tip "Matching Architecture to Physics: The Power of Inductive Bias"
-
-```
-The best neural quantum architecture is not necessarily the most complex, but the one whose **inductive bias** (built-in structural assumptions) aligns with the physical symmetries and correlations of the quantum system. For lattice systems with local interactions, CNNs exploit translational symmetry efficiently. For ordered phases with sequential dependencies, autoregressive models excel. For systems with long-range entanglement, Transformers provide the necessary global context. This principle mirrors the lesson from PINNs (Chapter 16): embedding physical structure into the model architecture dramatically reduces the parameters needed and accelerates convergence. The lesson: design your neural ansatz to mirror the quantum Hamiltonian's structure.
-
-```
+    
+    The best neural quantum architecture is not necessarily the most complex, but the one whose **inductive bias** (built-in structural assumptions) aligns with the physical symmetries and correlations of the quantum system. For lattice systems with local interactions, CNNs exploit translational symmetry efficiently. For ordered phases with sequential dependencies, autoregressive models excel. For systems with long-range entanglement, Transformers provide the necessary global context. This principle mirrors the lesson from PINNs (Chapter 16): embedding physical structure into the model architecture dramatically reduces the parameters needed and accelerates convergence. The lesson: design your neural ansatz to mirror the quantum Hamiltonian's structure.
+    
 ### **Analogy: Multi-Scale Quantum Interactions**
 
 ---
@@ -620,13 +612,11 @@ The primary impact of NQS is to provide an efficient, polynomial-scaling alterna
 | **Quantum Hardware** | Variational Quantum Eigensolvers (VQE). | **Hybrid Classical–Quantum Training:** The NQS serves as the classical optimizer that efficiently guides the quantum computation performed on a quantum computer. |
 
 !!! example "Real-World Application: Solving the Hubbard Model for High-Temperature Superconductivity"
-
-```
-The Hubbard model describes interacting electrons on a lattice and is central to understanding high-temperature superconductors. Traditional methods (exact diagonalization, DMRG) fail for large 2D lattices due to exponential complexity. NQS with CNN architecture (Section 17.11) has successfully computed ground state energies for 10×10 lattices with accuracy matching or exceeding tensor network methods. The CNN's translational symmetry naturally captures the lattice periodicity, while hidden units encode electron correlations (entanglement). This breakthrough demonstrates NQS can tackle problems at the frontier of condensed matter physics, providing insights into the mechanism of superconductivity that could guide material design.
-
-```
-The **Unifying Impact** is that NQS transforms the calculation of high-dimensional quantum observables into a problem of **statistical inference** (Variational Monte Carlo, Section 17.4), which can be scaled effectively on classical hardware.
-
+    
+    The Hubbard model describes interacting electrons on a lattice and is central to understanding high-temperature superconductors. Traditional methods (exact diagonalization, DMRG) fail for large 2D lattices due to exponential complexity. NQS with CNN architecture (Section 17.11) has successfully computed ground state energies for 10×10 lattices with accuracy matching or exceeding tensor network methods. The CNN's translational symmetry naturally captures the lattice periodicity, while hidden units encode electron correlations (entanglement). This breakthrough demonstrates NQS can tackle problems at the frontier of condensed matter physics, providing insights into the mechanism of superconductivity that could guide material design.
+    
+    The **Unifying Impact** is that NQS transforms the calculation of high-dimensional quantum observables into a problem of **statistical inference** (Variational Monte Carlo, Section 17.4), which can be scaled effectively on classical hardware.
+    
 ---
 
 ## **17.14 Physical Interpretation — Learning as Quantum Relaxation**

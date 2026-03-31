@@ -1,4 +1,4 @@
-# **Chapter 18: Graph Neural Networks (GNNs) () () (Codebook)**
+# **Chapter 18: Graph Neural Networks (GNNs) (Codebook)**
 
 ## Project 1: The Core GCN Aggregation (Matrix $\mathcal{\tilde{A}}$)
 

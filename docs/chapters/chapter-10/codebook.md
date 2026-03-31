@@ -1,4 +1,4 @@
-# **Chapter 10: Regression & Classification: The Linear Family () () (Codebook)**
+# **Chapter 10: Regression & Classification: The Linear Family (Codebook)**
 
 ## Project 1: Linear Regression as Maximum Likelihood (Closed-Form Solution)
 

@@ -191,17 +191,15 @@ This MAP objective reveals the profound connection between Bayesian inference an
 For instance, minimizing the $L^2$ penalty (weight decay in neural networks or **Ridge Regression** in linear models) is the direct result of selecting a Gaussian prior distribution $p(\mathbf{\theta})$. Minimizing the $L^1$ penalty (**LASSO**) is the result of selecting a Laplace prior.
 
 !!! tip "MAP as Regularized Optimization"
-```
-The MAP estimate reveals a profound connection: **every regularized optimization problem implicitly assumes a prior distribution**. For example:
-
-* **$L^2$ regularization** ($\|\mathbf{\theta}\|^2$ penalty) corresponds to a **Gaussian prior** $p(\mathbf{\theta}) \propto e^{-\|\mathbf{\theta}\|^2/2\sigma^2}$.
-* **$L^1$ regularization** ($\|\mathbf{\theta}\|_1$ penalty) corresponds to a **Laplace prior** $p(\mathbf{\theta}) \propto e^{-\|\mathbf{\theta}\|_1/\lambda}$.
-
-Regularization is not just a mathematical trick—it is the **log-prior energy** shaping the solution.
-
-```
-**Conclusion:** The choice of regularization in optimization is simply the explicit introduction of a **Bayesian prior**—an initial, energetic constraint that biases the system's search away from overly complex solutions.
-
+    The MAP estimate reveals a profound connection: **every regularized optimization problem implicitly assumes a prior distribution**. For example:
+    
+    * **$L^2$ regularization** ($\|\mathbf{\theta}\|^2$ penalty) corresponds to a **Gaussian prior** $p(\mathbf{\theta}) \propto e^{-\|\mathbf{\theta}\|^2/2\sigma^2}$.
+    * **$L^1$ regularization** ($\|\mathbf{\theta}\|_1$ penalty) corresponds to a **Laplace prior** $p(\mathbf{\theta}) \propto e^{-\|\mathbf{\theta}\|_1/\lambda}$.
+    
+    Regularization is not just a mathematical trick—it is the **log-prior energy** shaping the solution.
+    
+    **Conclusion:** The choice of regularization in optimization is simply the explicit introduction of a **Bayesian prior**—an initial, energetic constraint that biases the system's search away from overly complex solutions.
+    
 ## **9.4 Priors, Likelihoods, and Posteriors**
 
 Bayesian inference is the iterative process of combining the **prior belief** with the **likelihood of the evidence** to produce an updated **posterior belief**. The mathematical choice of these distributions carries both statistical utility and physical significance.
@@ -278,20 +276,18 @@ The integral nature of the evidence automatically enforces **Occam's Principle**
 The evidence ensures models compete not just by *fit* but by **simplicity and explanatory power**.
 
 ??? question "Why Does the Evidence Integral Prefer Simple Models?"
-```
-The **model evidence** $p(\mathcal{D}|M) = \int p(\mathcal{D}|\mathbf{\theta}, M) p(\mathbf{\theta}|M) d\mathbf{\theta}$ naturally penalizes complexity through the **prior volume** effect.
-
-**Intuition:**
-
-* A **complex model** has many parameters $\mathbf{\theta}$, spreading its prior probability $p(\mathbf{\theta}|M)$ thinly over a large hypothesis space.
-* A **simple model** has fewer parameters, concentrating its prior probability over a smaller space.
-* When both models fit the data equally well (similar likelihood $p(\mathcal{D}|\mathbf{\theta})$), the simple model's concentrated prior yields **higher evidence**.
-
-**Physical Analogy:** Think of the prior as a fixed amount of "probability mass" distributed over parameter space. A complex model dilutes this mass over many dimensions, while a simple model concentrates it. The evidence integral rewards concentration.
-
-This is **Occam's Razor emerging from probability theory**: the simplest hypothesis consistent with the data is favored, not by philosophical preference, but by mathematical necessity.
-
-```
+    The **model evidence** $p(\mathcal{D}|M) = \int p(\mathcal{D}|\mathbf{\theta}, M) p(\mathbf{\theta}|M) d\mathbf{\theta}$ naturally penalizes complexity through the **prior volume** effect.
+    
+    **Intuition:**
+    
+    * A **complex model** has many parameters $\mathbf{\theta}$, spreading its prior probability $p(\mathbf{\theta}|M)$ thinly over a large hypothesis space.
+    * A **simple model** has fewer parameters, concentrating its prior probability over a smaller space.
+    * When both models fit the data equally well (similar likelihood $p(\mathcal{D}|\mathbf{\theta})$), the simple model's concentrated prior yields **higher evidence**.
+    
+    **Physical Analogy:** Think of the prior as a fixed amount of "probability mass" distributed over parameter space. A complex model dilutes this mass over many dimensions, while a simple model concentrates it. The evidence integral rewards concentration.
+    
+    This is **Occam's Razor emerging from probability theory**: the simplest hypothesis consistent with the data is favored, not by philosophical preference, but by mathematical necessity.
+    
 ---
 
 ### **Analogy: Free Energy Minimization**
@@ -468,17 +464,15 @@ This example confirms that Bayesian learning is a continuous process of **entrop
 * **Shrinking Uncertainty:** The posterior variance shrinks with each new toss, demonstrating that the system's uncertainty about the true bias decreases as the evidence accumulates. The posterior distribution becomes more concentrated, corresponding to a lower informational energy state.
 
 !!! example "Coin Toss: Bayesian Learning as Symmetry Breaking"
-```
-Consider starting with a **uniform prior** $\text{Beta}(1,1)$, representing complete ignorance about the coin's bias.
-
-After observing **7 heads in 10 tosses**, the posterior becomes $\text{Beta}(8,4)$:
-
-* **Posterior mean:** $\mathbb{E}[\theta] = \frac{8}{8+4} = 0.667$ (close to empirical frequency $7/10 = 0.7$).
-* **Posterior concentration:** The distribution is now sharply peaked around 0.667, with variance reduced from the prior's broad uncertainty.
-
-This is **learning as entropy reduction**: the data breaks the initial symmetry, concentrating probability mass around the evidence-supported bias. The wide prior collapses into a sharp posterior through the Bayesian update.
-
-```
+    Consider starting with a **uniform prior** $\text{Beta}(1,1)$, representing complete ignorance about the coin's bias.
+    
+    After observing **7 heads in 10 tosses**, the posterior becomes $\text{Beta}(8,4)$:
+    
+    * **Posterior mean:** $\mathbb{E}[\theta] = \frac{8}{8+4} = 0.667$ (close to empirical frequency $7/10 = 0.7$).
+    * **Posterior concentration:** The distribution is now sharply peaked around 0.667, with variance reduced from the prior's broad uncertainty.
+    
+    This is **learning as entropy reduction**: the data breaks the initial symmetry, concentrating probability mass around the evidence-supported bias. The wide prior collapses into a sharp posterior through the Bayesian update.
+    
 ## **9.10 Code Demo — Bayesian Inference on Coin Bias**
 
 This demonstration visually confirms the process of **Bayesian belief refinement** (Section 9.2, 9.9) by plotting the transformation of the **Prior** distribution into the **Posterior** distribution for a coin's bias ($\theta$). The code utilizes the analytical solution derived from the conjugate pairing of the Beta prior and the Binomial likelihood.

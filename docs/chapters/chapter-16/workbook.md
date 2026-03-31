@@ -1,4 +1,4 @@
-# **Chapter 16: Physics-Informed Neural Networks (PINNs) () () () (Workbook)**
+# **Chapter 16: Physics-Informed Neural Networks (PINNs) (Workbook)**
 
 The goal of this chapter is to introduce the methodology of **Physics-Informed Neural Networks (PINNs)**, which formally embed differential physical laws into the optimization objective, transforming data-fitting into **law-constrained learning**.
 
@@ -19,37 +19,31 @@ The goal of this chapter is to introduce the methodology of **Physics-Informed N
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. Which concept or phenomenon does the PINN framework primarily address and attempt to mitigate in scientific ML applications?**
-
-* **A.** The high number of saddle points in the loss landscape.
-* **B.** **Poor extrapolation and physical inconsistency arising from sparse training data**. (**Correct**)
-* **C.** The computational cost of quantum annealing.
-* **D.** The need for continuous activation functions.
-
-```
+    **1. Which concept or phenomenon does the PINN framework primarily address and attempt to mitigate in scientific ML applications?**
+    
+    * **A.** The high number of saddle points in the loss landscape.
+    * **B.** **Poor extrapolation and physical inconsistency arising from sparse training data**. (**Correct**)
+    * **C.** The computational cost of quantum annealing.
+    * **D.** The need for continuous activation functions.
+    
 !!! note "Quiz"
-```
-**2. The single mathematical expression that represents the system's governing physical law, which PINNs seek to drive to zero, is called the:**
-
-* **A.** Total Loss $L_{\text{total}}$.
-* **B.** **Differential operator residual ($\mathcal{N}[u] - f$)**. (**Correct**)
-* **C.** Boundary condition ($L_{\text{bc}}$).
-* **D.** Variational Free Energy ($\mathcal{F}$).
-
-```
+    **2. The single mathematical expression that represents the system's governing physical law, which PINNs seek to drive to zero, is called the:**
+    
+    * **A.** Total Loss $L_{\text{total}}$.
+    * **B.** **Differential operator residual ($\mathcal{N}[u] - f$)**. (**Correct**)
+    * **C.** Boundary condition ($L_{\text{bc}}$).
+    * **D.** Variational Free Energy ($\mathcal{F}$).
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** Explain the philosophical significance of the PINN loss function, $L = L_{\text{data}} + \lambda L_{\text{physics}}$, using the analogy of **Energy Minimization and Conservation Laws**.
-
-**Answer Strategy:** This loss structure is a form of **constrained energy minimization**.
-1.  **$L_{\text{data}}$ $\leftrightarrow$ Empirical Energy:** This term drives the system toward minimizing the observed error (fitting the data).
-2.  **$L_{\text{physics}}$ $\leftrightarrow$ Constraint Energy:** This term ensures the solution is restricted to the subspace of functions that are physically viable (e.g., that conserve energy or momentum).
-By minimizing the total functional, the PINN finds the solution that is the best fit for the measurements while being fundamentally **consistent with the rules of the universe**.
-
-```
+    **Question:** Explain the philosophical significance of the PINN loss function, $L = L_{\text{data}} + \lambda L_{\text{physics}}$, using the analogy of **Energy Minimization and Conservation Laws**.
+    
+    **Answer Strategy:** This loss structure is a form of **constrained energy minimization**.
+    1.  **$L_{\text{data}}$ $\leftrightarrow$ Empirical Energy:** This term drives the system toward minimizing the observed error (fitting the data).
+    2.  **$L_{\text{physics}}$ $\leftrightarrow$ Constraint Energy:** This term ensures the solution is restricted to the subspace of functions that are physically viable (e.g., that conserve energy or momentum).
+    By minimizing the total functional, the PINN finds the solution that is the best fit for the measurements while being fundamentally **consistent with the rules of the universe**.
+    
 ---
 
 ---
@@ -61,37 +55,31 @@ By minimizing the total functional, the PINN finds the solution that is the best
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The primary challenge in PINNs that is solved by using **Automatic Differentiation (AD)** instead of traditional finite difference methods is:**
-
-* **A.** Discretizing the spatial domain.
-* **B.** **Computing high-order partial derivatives of the network output with machine precision**. (**Correct**)
-* **C.** Selecting the optimal optimizer (e.g., Adam).
-* **D.** Balancing the loss weighting factors ($\mathcal{\lambda}$).
-
-```
+    **1. The primary challenge in PINNs that is solved by using **Automatic Differentiation (AD)** instead of traditional finite difference methods is:**
+    
+    * **A.** Discretizing the spatial domain.
+    * **B.** **Computing high-order partial derivatives of the network output with machine precision**. (**Correct**)
+    * **C.** Selecting the optimal optimizer (e.g., Adam).
+    * **D.** Balancing the loss weighting factors ($\mathcal{\lambda}$).
+    
 !!! note "Quiz"
-```
-**2. The loss component that ensures the PDE's solution is unique by enforcing known values at $t=0$ and spatial edges is:**
-
-* **A.** $L_{\text{data}}$.
-* **B.** $L_{\text{phys}}$.
-* **C.** **$L_{\text{bc}}$ (Boundary/Initial Condition Loss)**. (**Correct**)
-* **D.** The total residual.
-
-```
+    **2. The loss component that ensures the PDE's solution is unique by enforcing known values at $t=0$ and spatial edges is:**
+    
+    * **A.** $L_{\text{data}}$.
+    * **B.** $L_{\text{phys}}$.
+    * **C.** **$L_{\text{bc}}$ (Boundary/Initial Condition Loss)**. (**Correct**)
+    * **D.** The total residual.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** Automatic Differentiation (AD) is required to compute the second derivative $u_{xx}$. Explain the conceptual process of computing a second derivative using AD, referencing the mechanism of the chain rule.
-
-**Answer Strategy:** AD computes derivatives by iteratively applying the chain rule.
-1.  **First Derivative:** AD is first applied to the output $u(\mathbf{x})$ with respect to the input $\mathbf{x}$ to compute the result $u_x$.
-2.  **Second Derivative:** AD is then applied **a second time** to the intermediate output $u_x$ with respect to the input $\mathbf{x}$ to compute $u_{xx}$.
-The process is exact because the network is fully differentiable, essentially providing the PINN with an **exact microscopic calculus**.
-
-```
+    **Question:** Automatic Differentiation (AD) is required to compute the second derivative $u_{xx}$. Explain the conceptual process of computing a second derivative using AD, referencing the mechanism of the chain rule.
+    
+    **Answer Strategy:** AD computes derivatives by iteratively applying the chain rule.
+    1.  **First Derivative:** AD is first applied to the output $u(\mathbf{x})$ with respect to the input $\mathbf{x}$ to compute the result $u_x$.
+    2.  **Second Derivative:** AD is then applied **a second time** to the intermediate output $u_x$ with respect to the input $\mathbf{x}$ to compute $u_{xx}$.
+    The process is exact because the network is fully differentiable, essentially providing the PINN with an **exact microscopic calculus**.
+    
 ---
 
 ---
@@ -103,36 +91,30 @@ The process is exact because the network is fully differentiable, essentially pr
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. When using a PINN to solve a **forward problem**, the points scattered throughout the domain where the physics loss is enforced are called:**
-
-* **A.** Boundary points.
-* **B.** Activation points.
-* **C.** **Collocation points**. (**Correct**)
-* **D.** Initial condition points.
-
-```
+    **1. When using a PINN to solve a **forward problem**, the points scattered throughout the domain where the physics loss is enforced are called:**
+    
+    * **A.** Boundary points.
+    * **B.** Activation points.
+    * **C.** **Collocation points**. (**Correct**)
+    * **D.** Initial condition points.
+    
 !!! note "Quiz"
-```
-**2. In a PINN-based **inverse problem**, the physical constants (e.g., diffusivity $\alpha$ or viscosity $\nu$) are optimized by:**
-
-* **A.** Setting them equal to the learning rate $\eta$.
-* **B.** **Treating them as trainable variables alongside the network weights $\mathcal{\theta}$**. (**Correct**)
-* **C.** Minimizing the $L_{\text{data}}$ term only.
-* **D.** Using a separate analytical solver.
-
-```
+    **2. In a PINN-based **inverse problem**, the physical constants (e.g., diffusivity $\alpha$ or viscosity $\nu$) are optimized by:**
+    
+    * **A.** Setting them equal to the learning rate $\eta$.
+    * **B.** **Treating them as trainable variables alongside the network weights $\mathcal{\theta}$**. (**Correct**)
+    * **C.** Minimizing the $L_{\text{data}}$ term only.
+    * **D.** Using a separate analytical solver.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** Contrast the computational difficulty and final product of solving a PDE using a PINN versus a traditional numerical method (e.g., Finite Difference).
-
-**Answer Strategy:**
-* **Traditional Solver:** The difficulty is **discretization**. It solves the PDE at discrete grid points, requiring complex logic for handling non-linear terms and ensuring stability. The final product is a **discrete set of values** on a mesh.
-* **PINN:** The difficulty is **optimization**. It solves the PDE by minimizing a loss functional. The final product is a **single, continuous, and differentiable function** $u_{\mathcal{\theta}}(\mathbf{x}, t)$ that satisfies the law everywhere in the domain.
-
-```
+    **Question:** Contrast the computational difficulty and final product of solving a PDE using a PINN versus a traditional numerical method (e.g., Finite Difference).
+    
+    **Answer Strategy:**
+    * **Traditional Solver:** The difficulty is **discretization**. It solves the PDE at discrete grid points, requiring complex logic for handling non-linear terms and ensuring stability. The final product is a **discrete set of values** on a mesh.
+    * **PINN:** The difficulty is **optimization**. It solves the PDE by minimizing a loss functional. The final product is a **single, continuous, and differentiable function** $u_{\mathcal{\theta}}(\mathbf{x}, t)$ that satisfies the law everywhere in the domain.
+    
 ---
 
 ---

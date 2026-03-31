@@ -1,4 +1,4 @@
-# **Chapter 15: Reinforcement Learning and Control () () () (Workbook)**
+# **Chapter 15: Reinforcement Learning and Control (Workbook)**
 
 The goal of this chapter is to frame learning as **dynamic decision-making**, introducing the mathematical structure of the Markov Decision Process (MDP) and unifying the maximization of reward with the thermodynamic minimization of Free Energy.
 
@@ -26,36 +26,30 @@ The goal of this chapter is to frame learning as **dynamic decision-making**, in
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. In the RL framework, the mathematical object that represents the agent's strategy or a mapping from states to actions is called the:**
-
-* **A.** Value function ($V$).
-* **B.** **Policy ($\pi$)**. (**Correct**)
-* **C.** Discount factor ($\gamma$).
-* **D.** Transition kernel ($P$).
-
-```
+    **1. In the RL framework, the mathematical object that represents the agent's strategy or a mapping from states to actions is called the:**
+    
+    * **A.** Value function ($V$).
+    * **B.** **Policy ($\pi$)**. (**Correct**)
+    * **C.** Discount factor ($\gamma$).
+    * **D.** Transition kernel ($P$).
+    
 !!! note "Quiz"
-```
-**2. The single component that distinguishes the RL objective from the static optimization objective (Part II) is the explicit inclusion of the concept of a:**
-
-* **A.** Single loss function $L$.
-* **B.** **Temporal trajectory or sequence of states**. (**Correct**)
-* **C.** Fixed set of parameters $\mathcal{\theta}$.
-* **D.** Non-convex landscape.
-
-```
+    **2. The single component that distinguishes the RL objective from the static optimization objective (Part II) is the explicit inclusion of the concept of a:**
+    
+    * **A.** Single loss function $L$.
+    * **B.** **Temporal trajectory or sequence of states**. (**Correct**)
+    * **C.** Fixed set of parameters $\mathcal{\theta}$.
+    * **D.** Non-convex landscape.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** The RL objective function $J(\pi)$ maximizes the expected *discounted* reward, using a discount factor $\gamma \in [0, 1]$. What is the dual purpose of including this discount factor in the calculation?
-
-**Answer Strategy:** The discount factor $\gamma$ has two primary purposes:
-1.  **Mathematical Stability:** It prevents the infinite sum of future rewards from **diverging**.
-2.  **Uncertainty/Time Preference:** It weights immediate rewards more heavily than distant future rewards. This models the real-world preference for immediate utility and the **uncertainty** of future environmental states.
-
-```
+    **Question:** The RL objective function $J(\pi)$ maximizes the expected *discounted* reward, using a discount factor $\gamma \in [0, 1]$. What is the dual purpose of including this discount factor in the calculation?
+    
+    **Answer Strategy:** The discount factor $\gamma$ has two primary purposes:
+    1.  **Mathematical Stability:** It prevents the infinite sum of future rewards from **diverging**.
+    2.  **Uncertainty/Time Preference:** It weights immediate rewards more heavily than distant future rewards. This models the real-world preference for immediate utility and the **uncertainty** of future environmental states.
+    
 ---
 
 ---
@@ -67,34 +61,28 @@ The goal of this chapter is to frame learning as **dynamic decision-making**, in
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The constraint that simplifies the environment structure by stating the next state is independent of the entire history of past states is known as the:**
-
-* **A.** Principle of Least Action.
-* **B.** **Markov Property**. (**Correct**)
-* **C.** Contraction Mapping.
-* **D.** Policy Gradient Theorem.
-
-```
+    **1. The constraint that simplifies the environment structure by stating the next state is independent of the entire history of past states is known as the:**
+    
+    * **A.** Principle of Least Action.
+    * **B.** **Markov Property**. (**Correct**)
+    * **C.** Contraction Mapping.
+    * **D.** Policy Gradient Theorem.
+    
 !!! note "Quiz"
-```
-**2. The **Bellman Optimality Equation** recursively defines the optimal value of a state $V^*(s)$ by relating it to the maximum expected value achievable from:**
-
-* **A.** The initial starting state.
-* **B.** The total lifetime reward.
-* **C.** **The immediate reward plus the discounted maximum future value from the succeeding states**. (**Correct**)
-* **D.** The average value of all surrounding states.
-
-```
+    **2. The **Bellman Optimality Equation** recursively defines the optimal value of a state $V^*(s)$ by relating it to the maximum expected value achievable from:**
+    
+    * **A.** The initial starting state.
+    * **B.** The total lifetime reward.
+    * **C.** **The immediate reward plus the discounted maximum future value from the succeeding states**. (**Correct**)
+    * **D.** The average value of all surrounding states.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** The Value Function $V(s)$ is analogous to the negative potential energy of a state. In the Gridworld worked example (Section 15.12), the reward function is $r=-1$ per step, and $r=0$ at the goal. Describe the shape of the learned $V(s)$ potential landscape.
-
-**Answer Strategy:** Since the agent is minimizing cost (negative reward), the optimal value function $V^*(s)$ forms a **potential well**. The shape will be a **monotonically increasing surface** (approaching zero from the negative side) centered at the goal state. The goal state itself will have the highest value ($V^*=0$), and the value will decrease (become more negative, e.g., $V^*=-1, -2, -3, \dots$) as the state moves farther away from the goal, creating a clear **potential gradient** that attracts the agent.
-
-```
+    **Question:** The Value Function $V(s)$ is analogous to the negative potential energy of a state. In the Gridworld worked example (Section 15.12), the reward function is $r=-1$ per step, and $r=0$ at the goal. Describe the shape of the learned $V(s)$ potential landscape.
+    
+    **Answer Strategy:** Since the agent is minimizing cost (negative reward), the optimal value function $V^*(s)$ forms a **potential well**. The shape will be a **monotonically increasing surface** (approaching zero from the negative side) centered at the goal state. The goal state itself will have the highest value ($V^*=0$), and the value will decrease (become more negative, e.g., $V^*=-1, -2, -3, \dots$) as the state moves farther away from the goal, creating a clear **potential gradient** that attracts the agent.
+    
 ---
 
 ---

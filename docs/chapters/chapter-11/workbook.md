@@ -1,4 +1,4 @@
-# **Chapter 11: Graphical Models & Probabilistic Graphs () () () (Workbook)**
+# **Chapter 11: Graphical Models & Probabilistic Graphs (Workbook)**
 
 The goal of this chapter is to generalize inference to complex, coupled systems, using graph theory to model dependencies and local message passing to achieve global statistical equilibrium.
 
@@ -23,36 +23,30 @@ The goal of this chapter is to generalize inference to complex, coupled systems,
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The primary conceptual role of a graphical model (BN or MRF) is to simplify the complex **joint probability distribution** $P(\mathbf{x})$ by:**
-
-* **A.** Normalizing it using the partition function $Z$.
-* **B.** **Factorizing it into a product of simpler, local probability terms**. (**Correct**)
-* **C.** Converting the distribution to an energy function $E$.
-* **D.** Calculating the model evidence $p(\mathcal{D})$.
-
-```
+    **1. The primary conceptual role of a graphical model (BN or MRF) is to simplify the complex **joint probability distribution** $P(\mathbf{x})$ by:**
+    
+    * **A.** Normalizing it using the partition function $Z$.
+    * **B.** **Factorizing it into a product of simpler, local probability terms**. (**Correct**)
+    * **C.** Converting the distribution to an energy function $E$.
+    * **D.** Calculating the model evidence $p(\mathcal{D})$.
+    
 !!! note "Quiz"
-```
-**2. Which type of graphical model encodes **symmetric interactions** or mutual dependencies without implying a direction or causal hierarchy?**
-
-* **A.** Dynamic Bayesian Networks (DBNs).
-* **B.** **Markov Random Fields (MRFs)**. (**Correct**)
-* **C.** Bayesian Networks (BNs).
-* **D.** Recurrent Neural Networks (RNNs).
-
-
-```
+    **2. Which type of graphical model encodes **symmetric interactions** or mutual dependencies without implying a direction or causal hierarchy?**
+    
+    * **A.** Dynamic Bayesian Networks (DBNs).
+    * **B.** **Markov Random Fields (MRFs)**. (**Correct**)
+    * **C.** Bayesian Networks (BNs).
+    * **D.** Recurrent Neural Networks (RNNs).
+    
+    
 !!! question "Interview Practice"
-```
-**Question:** The text uses the analogy of **information flow** for BNs and **exchange of forces** for MRFs. Explain how this physical distinction relates to the visual difference between the two graph types.
-
-**Answer Strategy:**
-* **BNs (Information Flow):** BNs use **directed edges** ($\to$) to model a clear causal hierarchy. This visually represents the **unidirectional flow of information** or influence from cause to effect, like an input signal propagating through a system.
-* **MRFs (Exchange of Forces):** MRFs use **undirected edges** ($\leftrightarrow$) to model **symmetric coupling**. This visually represents a mutual, reciprocal relationship, analogous to the exchange of forces or interaction energy between two coupled physical entities.
-
-
-```
+    **Question:** The text uses the analogy of **information flow** for BNs and **exchange of forces** for MRFs. Explain how this physical distinction relates to the visual difference between the two graph types.
+    
+    **Answer Strategy:**
+    * **BNs (Information Flow):** BNs use **directed edges** ($\to$) to model a clear causal hierarchy. This visually represents the **unidirectional flow of information** or influence from cause to effect, like an input signal propagating through a system.
+    * **MRFs (Exchange of Forces):** MRFs use **undirected edges** ($\leftrightarrow$) to model **symmetric coupling**. This visually represents a mutual, reciprocal relationship, analogous to the exchange of forces or interaction energy between two coupled physical entities.
+    
+    
 ### 11.2 Bayesian Networks — Directed Acyclic Graphs (DAGs)
 
 > **Summary:** Bayesian Networks (BNs) use a **Directed Acyclic Graph (DAG)** to enforce a clear **causal hierarchy** or flow of information. The joint probability is factored into a product of local **Conditional Probability Distributions (CPDs)** for each variable given its **parents**. The primary task is **inference**, which involves the propagation of evidence (messages) along the directed edges of the graph.
@@ -60,34 +54,28 @@ The goal of this chapter is to generalize inference to complex, coupled systems,
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The constraint that a Bayesian Network must adhere to a **Directed Acyclic Graph (DAG)** enforces which structural property?**
-
-* **A.** That the edges must be symmetric.
-* **B.** **A clear, unambiguous causal order with no directed loops**. (**Correct**)
-* **C.** The equivalence to an Ising spin system.
-* **D.** That the system is always in statistical equilibrium.
-
-```
+    **1. The constraint that a Bayesian Network must adhere to a **Directed Acyclic Graph (DAG)** enforces which structural property?**
+    
+    * **A.** That the edges must be symmetric.
+    * **B.** **A clear, unambiguous causal order with no directed loops**. (**Correct**)
+    * **C.** The equivalence to an Ising spin system.
+    * **D.** That the system is always in statistical equilibrium.
+    
 !!! note "Quiz"
-```
-**2. In the BN factorization, the probability of a node $x_i$ is conditioned only on the state of its:**
-
-* **A.** Children.
-* **B.** Co-parents.
-* **C.** **Parents**. (**Correct**)
-* **D.** All other nodes.
-
-
-```
+    **2. In the BN factorization, the probability of a node $x_i$ is conditioned only on the state of its:**
+    
+    * **A.** Children.
+    * **B.** Co-parents.
+    * **C.** **Parents**. (**Correct**)
+    * **D.** All other nodes.
+    
+    
 !!! question "Interview Practice"
-```
-**Question:** The final joint probability of a BN is a product of simple local CPDs, $p(x_i|\text{parents}(x_i))$. Explain the computational advantage of this local factorization over having to model the single, massive joint probability distribution directly.
-
-**Answer Strategy:** The advantage is **exponential computational savings**. For a system with $N$ binary variables, the direct joint probability table requires $2^N$ entries. By factoring the distribution, we only need to specify the CPDs for each node given its small number of parents. This turns the problem from exponentially complex to one that scales polynomially with the graph's complexity, making the problem tractable for modern inference algorithms.
-
-
-```
+    **Question:** The final joint probability of a BN is a product of simple local CPDs, $p(x_i|\text{parents}(x_i))$. Explain the computational advantage of this local factorization over having to model the single, massive joint probability distribution directly.
+    
+    **Answer Strategy:** The advantage is **exponential computational savings**. For a system with $N$ binary variables, the direct joint probability table requires $2^N$ entries. By factoring the distribution, we only need to specify the CPDs for each node given its small number of parents. This turns the problem from exponentially complex to one that scales polynomially with the graph's complexity, making the problem tractable for modern inference algorithms.
+    
+    
 ### 11.3 Markov Random Fields (MRFs)
 
 > **Summary:** Markov Random Fields (MRFs) use an **undirected graph** to model **symmetric interactions** and mutual dependencies. The joint probability is defined by **potential functions ($\psi_C$)** over graph cliques, yielding the **Gibbs distribution**, $p(\mathbf{x}) = \frac{1}{Z} e^{-E(\mathbf{x})}$. MRFs are the statistical generalization of **Ising and Potts spin networks**, where the potentials map directly to the system's coupling energy.
@@ -95,37 +83,31 @@ The goal of this chapter is to generalize inference to complex, coupled systems,
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The primary structural characteristic of a Markov Random Field (MRF) is that its edges:**
-
-* **A.** Must enforce a clear causal direction.
-* **B.** **Are undirected, encoding symmetric dependencies**. (**Correct**)
-* **C.** Must form an acyclic graph.
-* **D.** Must be non-negative.
-
-```
+    **1. The primary structural characteristic of a Markov Random Field (MRF) is that its edges:**
+    
+    * **A.** Must enforce a clear causal direction.
+    * **B.** **Are undirected, encoding symmetric dependencies**. (**Correct**)
+    * **C.** Must form an acyclic graph.
+    * **D.** Must be non-negative.
+    
 !!! note "Quiz"
-```
-**2. The exponential form of the MRF factorization directly relates the probability $p(\mathbf{x})$ to the system's total energy $E(\mathbf{x})$ via which physical distribution?**
-
-* **A.** The Student's t-distribution.
-* **B.** The Binomial distribution.
-* **C.** **The Gibbs (Boltzmann) distribution**. (**Correct**)
-* **D.** The Gaussian Mixture Model.
-
-
-```
+    **2. The exponential form of the MRF factorization directly relates the probability $p(\mathbf{x})$ to the system's total energy $E(\mathbf{x})$ via which physical distribution?**
+    
+    * **A.** The Student's t-distribution.
+    * **B.** The Binomial distribution.
+    * **C.** **The Gibbs (Boltzmann) distribution**. (**Correct**)
+    * **D.** The Gaussian Mixture Model.
+    
+    
 !!! question "Interview Practice"
-```
-**Question:** The MRF and the Ising Model (Chapter 8) share the same mathematical foundation. Explain how the MRF structure is used in **image denoising** as an analogy to a physical system seeking its ground state.
-
-**Answer Strategy:**
-* **Mapping:** Each pixel in the image is a node in the MRF, and its gray value (color) is the variable. Edges connect neighboring pixels.
-* **Energy (Loss):** The total energy $E(\mathbf{x})$ is constructed with two penalty terms: 1) **Data fidelity** (cost for the pixel being different from its observed noisy value), and 2) **Smoothness/Coupling** (cost for neighboring pixels being different).
-* **Ground State:** The algorithm (e.g., using MCMC) finds the minimum energy configuration $E_{\min}$, which is the state where the image is both close to the observed data and locally smooth (denoised), analogous to the physical system reaching its most stable, ordered configuration.
-
-
-```
+    **Question:** The MRF and the Ising Model (Chapter 8) share the same mathematical foundation. Explain how the MRF structure is used in **image denoising** as an analogy to a physical system seeking its ground state.
+    
+    **Answer Strategy:**
+    * **Mapping:** Each pixel in the image is a node in the MRF, and its gray value (color) is the variable. Edges connect neighboring pixels.
+    * **Energy (Loss):** The total energy $E(\mathbf{x})$ is constructed with two penalty terms: 1) **Data fidelity** (cost for the pixel being different from its observed noisy value), and 2) **Smoothness/Coupling** (cost for neighboring pixels being different).
+    * **Ground State:** The algorithm (e.g., using MCMC) finds the minimum energy configuration $E_{\min}$, which is the state where the image is both close to the observed data and locally smooth (denoised), analogous to the physical system reaching its most stable, ordered configuration.
+    
+    
 ### 11.4 Conditional Independence and Markov Blankets
 
 > **Summary:** The network structure reveals **conditional independencies**, a key property for decoupling the system. The **Markov Blanket ($\text{MB}_i$)** is the minimal set of surrounding variables that makes $x_i$ conditionally independent of all other nodes. In MRFs, the $\text{MB}_i$ is simply the **direct neighbors** of $x_i$. This property is the foundation for local, distributed computation, as distant influences are **screened out** by the local neighborhood.
@@ -133,35 +115,29 @@ The goal of this chapter is to generalize inference to complex, coupled systems,
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The primary utility of the **Markov Blanket ($\text{MB}_i$)** in global inference is that it: **
-
-* **A.** Guarantees the graph has no cycles.
-* **B.** **Renders variable $x_i$ conditionally independent of the rest of the network**. (**Correct**)
-* **C.** Increases the total number of cliques.
-* **D.** Solves the partition function.
-
-```
+    **1. The primary utility of the **Markov Blanket ($\text{MB}_i$)** in global inference is that it: **
+    
+    * **A.** Guarantees the graph has no cycles.
+    * **B.** **Renders variable $x_i$ conditionally independent of the rest of the network**. (**Correct**)
+    * **C.** Increases the total number of cliques.
+    * **D.** Solves the partition function.
+    
 !!! note "Quiz"
-```
-**2. In an Undirected Graphical Model (MRF), the Markov Blanket of a variable $x_i$ consists only of:**
-
-* **A.** Its parents and children.
-* **B.** All other nodes in the graph.
-* **C.** **Its set of direct neighbors**. (**Correct**)
-* **D.** The factor nodes connected to it.
-
-
-```
+    **2. In an Undirected Graphical Model (MRF), the Markov Blanket of a variable $x_i$ consists only of:**
+    
+    * **A.** Its parents and children.
+    * **B.** All other nodes in the graph.
+    * **C.** **Its set of direct neighbors**. (**Correct**)
+    * **D.** The factor nodes connected to it.
+    
+    
 !!! question "Interview Practice"
-```
-**Question:** Explain the computational significance of the $\text{MB}_i$ concept using the analogy of **screening** in statistical physics.
-
-**Answer Strategy:** In statistical physics, the influence of a charge or spin in a medium is screened out by the local, surrounding particles. The Markov Blanket provides the minimal **local boundary** that performs the same function.
-* **Significance:** For inference, to calculate the probability of $x_i$, we don't need to model the entire system; we only need information about $x_i$ and its $\text{MB}_i$. This property allows the complex global inference problem to be broken down into a set of highly efficient **local computations**, making distributed message passing possible.
-
-
-```
+    **Question:** Explain the computational significance of the $\text{MB}_i$ concept using the analogy of **screening** in statistical physics.
+    
+    **Answer Strategy:** In statistical physics, the influence of a charge or spin in a medium is screened out by the local, surrounding particles. The Markov Blanket provides the minimal **local boundary** that performs the same function.
+    * **Significance:** For inference, to calculate the probability of $x_i$, we don't need to model the entire system; we only need information about $x_i$ and its $\text{MB}_i$. This property allows the complex global inference problem to be broken down into a set of highly efficient **local computations**, making distributed message passing possible.
+    
+    
 ### 11.5 Factor Graphs — Unified Representation
 
 > **Summary:** **Factor Graphs** provide a clear, unified representation for both BNs and MRFs using a **bipartite graph**. Nodes are split into **variable nodes ($x_i$)** and **factor nodes ($f_a$)**. The joint distribution is the explicit product of all local factor functions: $p(\mathbf{x}) = \frac{1}{Z}\prod_a f_a(\mathbf{x}_a)$. This structure simplifies the equations for iterative inference algorithms like **Belief Propagation**.
@@ -169,34 +145,28 @@ The goal of this chapter is to generalize inference to complex, coupled systems,
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. A Factor Graph is categorized as a **bipartite graph** because its nodes are exclusively divided into which two types?**
-
-* **A.** Directed and Undirected.
-* **B.** Parents and Children.
-* **C.** **Variable nodes ($x_i$) and Factor nodes ($f_a$)**. (**Correct**)
-* **D.** Clustered and Independent.
-
-```
+    **1. A Factor Graph is categorized as a **bipartite graph** because its nodes are exclusively divided into which two types?**
+    
+    * **A.** Directed and Undirected.
+    * **B.** Parents and Children.
+    * **C.** **Variable nodes ($x_i$) and Factor nodes ($f_a$)**. (**Correct**)
+    * **D.** Clustered and Independent.
+    
 !!! note "Quiz"
-```
-**2. In the Factor Graph formulation, the explicit function that represents the "forces" or coupling rules acting between a subset of variables is the:**
-
-* **A.** Final belief vector.
-* **B.** Partition function $Z$.
-* **C.** **Factor node $f_a$**. (**Correct**)
-* **D.** Message from the variable.
-
-
-```
+    **2. In the Factor Graph formulation, the explicit function that represents the "forces" or coupling rules acting between a subset of variables is the:**
+    
+    * **A.** Final belief vector.
+    * **B.** Partition function $Z$.
+    * **C.** **Factor node $f_a$**. (**Correct**)
+    * **D.** Message from the variable.
+    
+    
 !!! question "Interview Practice"
-```
-**Question:** Explain the geometric advantage of the Factor Graph representation for the purpose of **Belief Propagation (BP)**?
-
-**Answer Strategy:** The advantage is **algorithmic clarity**. By explicitly separating variables from the functions that couple them, the Factor Graph provides a simplified geometry where message passing only needs to occur between two clear entities: variable $\leftrightarrow$ factor. This eliminates the ambiguity found in complex MRFs with large cliques, providing a **straightforward and easy-to-implement framework** for the iterative message-passing equations of BP.
-
-
-```
+    **Question:** Explain the geometric advantage of the Factor Graph representation for the purpose of **Belief Propagation (BP)**?
+    
+    **Answer Strategy:** The advantage is **algorithmic clarity**. By explicitly separating variables from the functions that couple them, the Factor Graph provides a simplified geometry where message passing only needs to occur between two clear entities: variable $\leftrightarrow$ factor. This eliminates the ambiguity found in complex MRFs with large cliques, providing a **straightforward and easy-to-implement framework** for the iterative message-passing equations of BP.
+    
+    
 ### 11.6 Belief Propagation (BP)
 
 > **Summary:** **Belief Propagation (BP)** is the iterative inference procedure that computes the **marginal probability** (final belief) for each node. It works by exchanging **messages** between neighboring nodes, which summarize the influence of distant parts of the network. The process continues until the beliefs are **self-consistent** (convergence). BP is the computational analogue of **distributed relaxation to statistical equilibrium**.
@@ -204,34 +174,28 @@ The goal of this chapter is to generalize inference to complex, coupled systems,
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The primary statistical quantity that Belief Propagation is designed to compute for every node in the network is the:**
-
-* **A.** Joint probability $P(\mathbf{x})$.
-* **B.** **Marginal probability $P(x_i)$ (the node's final belief)**. (**Correct**)
-* **C.** Model evidence $P(\mathcal{D})$.
-* **D.** KL divergence $D_{\mathrm{KL}}$.
-
-```
+    **1. The primary statistical quantity that Belief Propagation is designed to compute for every node in the network is the:**
+    
+    * **A.** Joint probability $P(\mathbf{x})$.
+    * **B.** **Marginal probability $P(x_i)$ (the node's final belief)**. (**Correct**)
+    * **C.** Model evidence $P(\mathcal{D})$.
+    * **D.** KL divergence $D_{\mathrm{KL}}$.
+    
 !!! note "Quiz"
-```
-**2. For what specific type of graph structure is the Belief Propagation algorithm guaranteed to converge to the exact marginal probabilities?**
-
-* **A.** Loopy graphs.
-* **B.** Undirected graphs.
-* **C.** **Tree-structured graphs (graphs without cycles)**. (**Correct**)
-* **D.** Fully connected graphs.
-
-
-```
+    **2. For what specific type of graph structure is the Belief Propagation algorithm guaranteed to converge to the exact marginal probabilities?**
+    
+    * **A.** Loopy graphs.
+    * **B.** Undirected graphs.
+    * **C.** **Tree-structured graphs (graphs without cycles)**. (**Correct**)
+    * **D.** Fully connected graphs.
+    
+    
 !!! question "Interview Practice"
-```
-**Question:** BP is often said to model the network's relaxation to statistical equilibrium. Explain how the **message-passing dynamics** enforce this self-consistency in the system's beliefs.
-
-**Answer Strategy:** The message-passing equations enforce a state of **local self-consistency**. A node's updated belief must be consistent with the weighted influences (messages) received from all its neighbors. By iterating this local update across the entire graph, the system achieves a **global fixed point** where no node can reduce its uncertainty or change its marginal probability based on new information. This stable state is the global statistical equilibrium imposed by the network's structure and potentials.
-
-
-```
+    **Question:** BP is often said to model the network's relaxation to statistical equilibrium. Explain how the **message-passing dynamics** enforce this self-consistency in the system's beliefs.
+    
+    **Answer Strategy:** The message-passing equations enforce a state of **local self-consistency**. A node's updated belief must be consistent with the weighted influences (messages) received from all its neighbors. By iterating this local update across the entire graph, the system achieves a **global fixed point** where no node can reduce its uncertainty or change its marginal probability based on new information. This stable state is the global statistical equilibrium imposed by the network's structure and potentials.
+    
+    
 ### 11.7 Variational Inference and Free Energy Minimization
 
 > **Summary:** When the true posterior $p(\mathcal{\theta})$ is intractable, **Variational Inference (VI)** seeks the best tractable approximation $q(\mathcal{\theta})$ by minimizing the **Kullback-Leibler (KL) divergence** $D_{\mathrm{KL}}(q||p)$. This minimization is equivalent to minimizing the **Variational Free Energy functional ($\mathcal{F}(q)$)**. This approach is the statistical analog of the **mean-field approximation** in physics, which simplifies complex interactions to make the problem solvable.

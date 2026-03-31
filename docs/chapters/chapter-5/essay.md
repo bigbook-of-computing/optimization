@@ -142,10 +142,8 @@ The learning rate $\eta$ acts as the **damping coefficient** in our physical ana
 * **Optimal $\eta$ ("Critically Damped"):** The ideal $\eta$ is one that balances speed and stability, moving as fast as possible without oscillating out of control.
 
 !!! tip "Learning Rate as Temperature Control"
-```
-The learning rate $\eta$ in gradient descent plays a dual role: it sets the time step size (affecting stability) and acts as an effective "temperature" in the dynamics. Like cooling a physical system, learning rate annealing schedules (Section 5.7) gradually reduce $\eta$ over time, allowing the optimizer to first explore broadly with large steps (high temperature) and then settle precisely into a minimum with small steps (low temperature). This mirrors the simulated annealing algorithm from statistical physics.
-
-```
+    The learning rate $\eta$ in gradient descent plays a dual role: it sets the time step size (affecting stability) and acts as an effective "temperature" in the dynamics. Like cooling a physical system, learning rate annealing schedules (Section 5.7) gradually reduce $\eta$ over time, allowing the optimizer to first explore broadly with large steps (high temperature) and then settle precisely into a minimum with small steps (low temperature). This mirrors the simulated annealing algorithm from statistical physics.
+    
 ---
 
 ### **Practical Note: The Challenge in High Dimensions**
@@ -266,10 +264,8 @@ In the rugged, non-convex landscapes of Chapter 4, a "cold" BGD optimizer will g
 The SGD optimizer, however, behaves like a physical particle at $T > 0$. The noise-induced "kicks" provide an effective thermal energy that allows the optimizer to **"jump" over small energy barriers**. This enables it to escape shallow local minima and continue exploring the landscape, settling into the deeper, wider basins that (as argued in Section 4.4) correspond to more robust and generalizable solutions [2].
 
 !!! example "SGD as Barrier Crossing"
-```
-Consider a simple 1D landscape with two minima: a shallow local minimum at $\theta=1$ with loss $L=0.5$ and a deep global minimum at $\theta=5$ with loss $L=0.1$, separated by a barrier at $\theta=3$ with $L=1.0$. Batch gradient descent (BGD) starting from $\theta=0$ will roll into the shallow minimum at $\theta=1$ and freeze there forever—it has zero thermal energy to climb the barrier. SGD with mini-batch noise, however, receives random kicks. Occasionally, a lucky sequence of positive kicks will boost the optimizer over the barrier at $\theta=3$, allowing it to discover and settle into the superior global minimum at $\theta=5$. The probability of crossing scales exponentially with barrier height and inversely with noise magnitude (effective temperature), exactly like the Arrhenius law for thermal activation in chemistry.
-
-```
+    Consider a simple 1D landscape with two minima: a shallow local minimum at $\theta=1$ with loss $L=0.5$ and a deep global minimum at $\theta=5$ with loss $L=0.1$, separated by a barrier at $\theta=3$ with $L=1.0$. Batch gradient descent (BGD) starting from $\theta=0$ will roll into the shallow minimum at $\theta=1$ and freeze there forever—it has zero thermal energy to climb the barrier. SGD with mini-batch noise, however, receives random kicks. Occasionally, a lucky sequence of positive kicks will boost the optimizer over the barrier at $\theta=3$, allowing it to discover and settle into the superior global minimum at $\theta=5$. The probability of crossing scales exponentially with barrier height and inversely with noise magnitude (effective temperature), exactly like the Arrhenius law for thermal activation in chemistry.
+    
 ---
 
 ## **5.5 Mini-Batch and Variance Trade-Off**
@@ -364,10 +360,8 @@ Here, $\mathbf{\xi}(t)$ is a stochastic noise term (typically white noise) whose
 * **Stochastic Gradient Descent (SGD)** (Section 5.4) is the **finite-temperature ($T>0$)** version. The gradient noise from mini-batch sampling (Section 5.5) plays the role of the thermal noise $\mathbf{\xi}(t)$ [3].
 
 ??? question "Why Does SGD Find Flatter Minima?"
-```
-The connection between SGD and finite-temperature dynamics explains a puzzling empirical observation: SGD-trained models generalize better than those trained with large-batch (nearly deterministic) gradient descent. The reason lies in thermodynamics. At temperature $T>0$, the equilibrium Boltzmann distribution $p(\mathbf{\theta}) \propto e^{-L/T}$ assigns higher probability to states with higher *entropy*—meaning wider basins in parameter space. A sharp minimum (narrow basin) has low entropy and is thermodynamically disfavored at finite $T$. A flat minimum (wide basin) has high entropy and is favored. SGD's noise acts as thermal fluctuations that allow the optimizer to "sample" the landscape and preferentially settle into these high-entropy, wide basins. These flat minima correspond to solutions that are robust to parameter perturbations, which translates to better generalization on new data.
-
-```
+    The connection between SGD and finite-temperature dynamics explains a puzzling empirical observation: SGD-trained models generalize better than those trained with large-batch (nearly deterministic) gradient descent. The reason lies in thermodynamics. At temperature $T>0$, the equilibrium Boltzmann distribution $p(\mathbf{\theta}) \propto e^{-L/T}$ assigns higher probability to states with higher *entropy*—meaning wider basins in parameter space. A sharp minimum (narrow basin) has low entropy and is thermodynamically disfavored at finite $T$. A flat minimum (wide basin) has high entropy and is favored. SGD's noise acts as thermal fluctuations that allow the optimizer to "sample" the landscape and preferentially settle into these high-entropy, wide basins. These flat minima correspond to solutions that are robust to parameter perturbations, which translates to better generalization on new data.
+    
 ---
 
 ### **Bridge to Thermodynamics and Bayesian Inference**

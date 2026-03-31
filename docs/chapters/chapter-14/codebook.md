@@ -1,4 +1,4 @@
-# **Chapter 14: Energy-Based and Generative Models () () (Codebook)**
+# **Chapter 14: Energy-Based and Generative Models (Codebook)**
 
 ## Project 1: VAE: Quantifying the Energy–Entropy Trade-Off (Conceptual)
 

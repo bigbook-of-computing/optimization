@@ -602,20 +602,14 @@ The next step is to use the powerful hierarchical representations we've learned 
 ---
 
 !!! tip "Architectural Design Principle: Match Structure to Data"
-```
-When designing a deep architecture, choose inductive biases that match the data's intrinsic structure. For **spatial data** (images, physical fields), use CNNs with local kernels and pooling to exploit translation invariance. For **sequential data** (time series, language), use RNNs or Transformers to capture temporal dependencies. For **unstructured tabular data**, fully connected MLPs remain effective. Mismatched architectures force the network to learn structure from scratch, wasting capacity and requiring exponentially more data. The right architectural prior accelerates learning and improves generalization.
-
-```
+    When designing a deep architecture, choose inductive biases that match the data's intrinsic structure. For **spatial data** (images, physical fields), use CNNs with local kernels and pooling to exploit translation invariance. For **sequential data** (time series, language), use RNNs or Transformers to capture temporal dependencies. For **unstructured tabular data**, fully connected MLPs remain effective. Mismatched architectures force the network to learn structure from scratch, wasting capacity and requiring exponentially more data. The right architectural prior accelerates learning and improves generalization.
+    
 !!! example "t-SNE Visualization of Learned Manifolds"
-```
-Consider a deep autoencoder trained on MNIST digits (Section 13.6). Extract the 2D latent code $\mathbf{z}$ for all test images and plot them. The t-SNE projection reveals **10 distinct clusters**, each corresponding to a digit class (0-9). This demonstrates successful **manifold disentanglement**: the encoder has discovered intrinsic coordinates where digit identity becomes a simple, linearly separable property. The latent space acts as a **phase diagram**, with each cluster representing a distinct macrostate. Interpolating between clusters generates smooth morphs (e.g., 3→4), revealing the continuous manifold structure.
-
-```
+    Consider a deep autoencoder trained on MNIST digits (Section 13.6). Extract the 2D latent code $\mathbf{z}$ for all test images and plot them. The t-SNE projection reveals **10 distinct clusters**, each corresponding to a digit class (0-9). This demonstrates successful **manifold disentanglement**: the encoder has discovered intrinsic coordinates where digit identity becomes a simple, linearly separable property. The latent space acts as a **phase diagram**, with each cluster representing a distinct macrostate. Interpolating between clusters generates smooth morphs (e.g., 3→4), revealing the continuous manifold structure.
+    
 ??? question "Why Do CNNs Outperform MLPs on Images Despite Fewer Parameters?"
-```
-A fully connected MLP treating a $28\times28$ image as a 784-dimensional vector has no awareness of spatial structure—pixel correlations must be learned from scratch. A CNN with $3\times3$ kernels embeds **local correlation** and **translation invariance** as architectural priors. This reduces parameter count (weight sharing) while enforcing the physical reality that neighboring pixels are strongly correlated. The CNN's inductive bias matches the **2D lattice structure** of images, enabling efficient learning with less data. This principle generalizes: architectural priors that mirror data geometry provide powerful regularization, analogous to imposing symmetry constraints in physical theories.
-
-```
+    A fully connected MLP treating a $28\times28$ image as a 784-dimensional vector has no awareness of spatial structure—pixel correlations must be learned from scratch. A CNN with $3\times3$ kernels embeds **local correlation** and **translation invariance** as architectural priors. This reduces parameter count (weight sharing) while enforcing the physical reality that neighboring pixels are strongly correlated. The CNN's inductive bias matches the **2D lattice structure** of images, enabling efficient learning with less data. This principle generalizes: architectural priors that mirror data geometry provide powerful regularization, analogous to imposing symmetry constraints in physical theories.
+    
 ## **References**
 
 [1] LeCun, Y., Bottou, L., Bengio, Y., & Haffner, P. (1998). Gradient-Based Learning Applied to Document Recognition. *Proceedings of the IEEE*, 86(11), 2278-2324.
@@ -641,16 +635,10 @@ A fully connected MLP treating a $28\times28$ image as a 784-dimensional vector 
 ---
 
 !!! tip "Architectural Design Principle: Match Structure to Data"
-```
-When designing a deep architecture, choose inductive biases that match the data's intrinsic structure. For **spatial data** (images, physical fields), use CNNs with local kernels and pooling to exploit translation invariance. For **sequential data** (time series, language), use RNNs or Transformers to capture temporal dependencies. For **unstructured tabular data**, fully connected MLPs remain effective. Mismatched architectures force the network to learn structure from scratch, wasting capacity and requiring exponentially more data. The right architectural prior accelerates learning and improves generalization.
-
-```
+    When designing a deep architecture, choose inductive biases that match the data's intrinsic structure. For **spatial data** (images, physical fields), use CNNs with local kernels and pooling to exploit translation invariance. For **sequential data** (time series, language), use RNNs or Transformers to capture temporal dependencies. For **unstructured tabular data**, fully connected MLPs remain effective. Mismatched architectures force the network to learn structure from scratch, wasting capacity and requiring exponentially more data. The right architectural prior accelerates learning and improves generalization.
+    
 !!! example "t-SNE Visualization of Learned Manifolds"
-```
-Consider a deep autoencoder trained on MNIST digits (Section 13.6). Extract the 2D latent code $\mathbf{z}$ for all test images and plot them. The t-SNE projection reveals **10 distinct clusters**, each corresponding to a digit class (0-9). This demonstrates successful **manifold disentanglement**: the encoder has discovered intrinsic coordinates where digit identity becomes a simple, linearly separable property. The latent space acts as a **phase diagram**, with each cluster representing a distinct macrostate. Interpolating between clusters generates smooth morphs (e.g., 3→4), revealing the continuous manifold structure.
-
-```
+    Consider a deep autoencoder trained on MNIST digits (Section 13.6). Extract the 2D latent code $\mathbf{z}$ for all test images and plot them. The t-SNE projection reveals **10 distinct clusters**, each corresponding to a digit class (0-9). This demonstrates successful **manifold disentanglement**: the encoder has discovered intrinsic coordinates where digit identity becomes a simple, linearly separable property. The latent space acts as a **phase diagram**, with each cluster representing a distinct macrostate. Interpolating between clusters generates smooth morphs (e.g., 3→4), revealing the continuous manifold structure.
+    
 ??? question "Why Do CNNs Outperform MLPs on Images Despite Fewer Parameters?"
-```
-A fully connected MLP treating a $28\times28$ image as a 784-dimensional vector has no awareness of spatial structure—pixel correlations must be learned from scratch. A CNN with $3\times3$ kernels embeds **local correlation** and **translation invariance** as architectural priors. This reduces parameter count (weight sharing) while enforcing the physical reality that neighboring pixels are strongly correlated. The CNN's inductive bias matches the **2D lattice structure** of images, enabling efficient learning with less data. This principle generalizes: architectural priors that mirror data geometry provide powerful regularization, analogous to imposing symmetry constraints in physical theories.
-```
+    A fully connected MLP treating a $28\times28$ image as a 784-dimensional vector has no awareness of spatial structure—pixel correlations must be learned from scratch. A CNN with $3\times3$ kernels embeds **local correlation** and **translation invariance** as architectural priors. This reduces parameter count (weight sharing) while enforcing the physical reality that neighboring pixels are strongly correlated. The CNN's inductive bias matches the **2D lattice structure** of images, enabling efficient learning with less data. This principle generalizes: architectural priors that mirror data geometry provide powerful regularization, analogous to imposing symmetry constraints in physical theories.

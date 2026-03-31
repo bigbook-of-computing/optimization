@@ -1,4 +1,4 @@
-# **Chapter 6: Advanced Gradient Dynamics () () () (Workbook)**
+# **Chapter 6: Advanced Gradient Dynamics (Workbook)**
 
 The goal of this chapter is to upgrade the optimization process from simple, friction-dominated dynamics to a **second-order, damped dynamical system** by introducing **inertia (momentum)** and **adaptive scaling (friction)** to efficiently navigate anisotropic loss landscapes.
 
@@ -22,36 +22,30 @@ The goal of this chapter is to upgrade the optimization process from simple, fri
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The primary cause of the **zigzagging** behavior in simple Gradient Descent when optimizing in a ravine function is:**
-
-* **A.** The loss of momentum.
-* **B.** The introduction of too much thermal noise.
-* **C.** **The anisotropic geometry, causing the gradient to point repeatedly across the steep walls**. (**Correct**)
-* **D.** A very small learning rate $\eta$.
-
-```
+    **1. The primary cause of the **zigzagging** behavior in simple Gradient Descent when optimizing in a ravine function is:**
+    
+    * **A.** The loss of momentum.
+    * **B.** The introduction of too much thermal noise.
+    * **C.** **The anisotropic geometry, causing the gradient to point repeatedly across the steep walls**. (**Correct**)
+    * **D.** A very small learning rate $\eta$.
+    
 !!! note "Quiz"
-```
-**2. Which term in the generalized equation of motion, $m\frac{d^2\mathcal{\theta}}{dt^2} = -\gamma m \frac{d\mathcal{\theta}}{dt} - \nabla L(\mathcal{\theta})$, is missing from the simplified, overdamped model of Gradient Descent?**
-
-* **A.** The Potential Force ($-\nabla L$).
-* **B.** The Damping Force ($-\gamma m \frac{d\mathcal{\theta}}{dt}$).
-* **C.** **The Inertia term ($m\frac{d^2\mathcal{\theta}}{dt^2}$) **. (**Correct**)
-* **D.** The velocity ($\frac{d\mathcal{\theta}}{dt}$).
-
-```
+    **2. Which term in the generalized equation of motion, $m\frac{d^2\mathcal{\theta}}{dt^2} = -\gamma m \frac{d\mathcal{\theta}}{dt} - \nabla L(\mathcal{\theta})$, is missing from the simplified, overdamped model of Gradient Descent?**
+    
+    * **A.** The Potential Force ($-\nabla L$).
+    * **B.** The Damping Force ($-\gamma m \frac{d\mathcal{\theta}}{dt}$).
+    * **C.** **The Inertia term ($m\frac{d^2\mathcal{\theta}}{dt^2}$) **. (**Correct**)
+    * **D.** The velocity ($\frac{d\mathcal{\theta}}{dt}$).
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** Explain how the introduction of **Inertia (Momentum)** solves the two core failures of Gradient Descent: **zigzagging** and **stalling**?
-
-**Answer Strategy:**
-1.  **Zigzagging:** Inertia solves zigzagging by allowing the optimizer to **average out the orthogonal oscillations**. The momentum term accumulates the small, consistent gradient along the valley floor while the oscillating gradients across the ravine walls tend to cancel each other out.
-2.  **Stalling:** Inertia solves stalling by providing **kinetic energy**. When the gradient becomes infinitesimally small in flat regions (stalling), the accumulated velocity allows the optimizer to **coast across the plateau**.
-
-```
+    **Question:** Explain how the introduction of **Inertia (Momentum)** solves the two core failures of Gradient Descent: **zigzagging** and **stalling**?
+    
+    **Answer Strategy:**
+    1.  **Zigzagging:** Inertia solves zigzagging by allowing the optimizer to **average out the orthogonal oscillations**. The momentum term accumulates the small, consistent gradient along the valley floor while the oscillating gradients across the ravine walls tend to cancel each other out.
+    2.  **Stalling:** Inertia solves stalling by providing **kinetic energy**. When the gradient becomes infinitesimally small in flat regions (stalling), the accumulated velocity allows the optimizer to **coast across the plateau**.
+    
 ---
 
 ### 6.2 Momentum — Learning with Inertia
@@ -61,34 +55,28 @@ The goal of this chapter is to upgrade the optimization process from simple, fri
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. In the Momentum update rule, $\mathbf{v}_{t+1} = \beta \mathbf{v}_t - \eta \nabla L(\mathcal{\theta}_t)$, the hyperparameter $\beta$ primarily controls the system's:**
-
-* **A.** Total energy dissipation.
-* **B.** **Persistence or memory (damping factor)**. (**Correct**)
-* **C.** Step size in the stiff direction.
-* **D.** Convergence rate along the $\theta_2$ axis.
-
-```
+    **1. In the Momentum update rule, $\mathbf{v}_{t+1} = \beta \mathbf{v}_t - \eta \nabla L(\mathcal{\theta}_t)$, the hyperparameter $\beta$ primarily controls the system's:**
+    
+    * **A.** Total energy dissipation.
+    * **B.** **Persistence or memory (damping factor)**. (**Correct**)
+    * **C.** Step size in the stiff direction.
+    * **D.** Convergence rate along the $\theta_2$ axis.
+    
 !!! note "Quiz"
-```
-**2. The physical analogy of the Momentum update that describes its benefit is that the accumulated velocity allows the optimizer to:**
-
-* **A.** Diverge quickly.
-* **B.** **Coast across plateaus and roll over small energy barriers**. (**Correct**)
-* **C.** Only use the instantaneous gradient.
-* **D.** Transform the landscape into a spherical bowl.
-
-```
+    **2. The physical analogy of the Momentum update that describes its benefit is that the accumulated velocity allows the optimizer to:**
+    
+    * **A.** Diverge quickly.
+    * **B.** **Coast across plateaus and roll over small energy barriers**. (**Correct**)
+    * **C.** Only use the instantaneous gradient.
+    * **D.** Transform the landscape into a spherical bowl.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** Standard Momentum improves dynamics but fails to solve the root problem of anisotropy. Explain what critical component of the optimization landscape Momentum *does not* address, and why this limits its overall efficiency.
-
-**Answer Strategy:** Momentum does **not** address the **anisotropy** (the differing curvatures in the ravine) or the need for **adaptive scaling**. It still relies on a **single, global learning rate $\eta$**. This single $\eta$ must be constrained by the stiffest direction ($\lambda_{\max}$), which means the optimizer is still forced to move too slowly in the flat (sloppy) directions. Momentum smooths the path, but it doesn't change the underlying geometry that restricts the global step size.
-
-```
+    **Question:** Standard Momentum improves dynamics but fails to solve the root problem of anisotropy. Explain what critical component of the optimization landscape Momentum *does not* address, and why this limits its overall efficiency.
+    
+    **Answer Strategy:** Momentum does **not** address the **anisotropy** (the differing curvatures in the ravine) or the need for **adaptive scaling**. It still relies on a **single, global learning rate $\eta$**. This single $\eta$ must be constrained by the stiffest direction ($\lambda_{\max}$), which means the optimizer is still forced to move too slowly in the flat (sloppy) directions. Momentum smooths the path, but it doesn't change the underlying geometry that restricts the global step size.
+    
 ---
 
 ### 6.3 Nesterov Accelerated Gradient (NAG)
@@ -98,34 +86,28 @@ The goal of this chapter is to upgrade the optimization process from simple, fri
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The core difference between the Nesterov Accelerated Gradient (NAG) method and standard Momentum lies in:**
-
-* **A.** The momentum coefficient $\beta$ being set to zero.
-* **B.** **Calculating the gradient at a lookahead position, $\mathcal{\theta}_t + \beta \mathbf{v}_t$**. (**Correct**)
-* **C.** The removal of the velocity vector $\mathbf{v}_t$.
-* **D.** The division by the inverse Hessian.
-
-```
+    **1. The core difference between the Nesterov Accelerated Gradient (NAG) method and standard Momentum lies in:**
+    
+    * **A.** The momentum coefficient $\beta$ being set to zero.
+    * **B.** **Calculating the gradient at a lookahead position, $\mathcal{\theta}_t + \beta \mathbf{v}_t$**. (**Correct**)
+    * **C.** The removal of the velocity vector $\mathbf{v}_t$.
+    * **D.** The division by the inverse Hessian.
+    
 !!! note "Quiz"
-```
-**2. The NAG algorithm is analogous to a vehicle using **predictive steering** because it:**
-
-* **A.** Randomly samples the next gradient.
-* **B.** **Corrects the momentum vector based on the curvature detected at the predicted future position**. (**Correct**)
-* **C.** Only works on convex functions.
-* **D.** Slows down when the gradient is small.
-
-```
+    **2. The NAG algorithm is analogous to a vehicle using **predictive steering** because it:**
+    
+    * **A.** Randomly samples the next gradient.
+    * **B.** **Corrects the momentum vector based on the curvature detected at the predicted future position**. (**Correct**)
+    * **C.** Only works on convex functions.
+    * **D.** Slows down when the gradient is small.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** Why does calculating the gradient at the predicted future position ($\mathcal{\theta}_t + \beta \mathbf{v}_t$) help the Momentum optimizer "turn the corner" earlier in a curved ravine?
-
-**Answer Strategy:** In a ravine, the gradient at the current position $\mathcal{\theta}_t$ is dominated by the steep side wall. The predicted future position, however, is already closer to the center of the valley floor. By sampling the gradient there, NAG obtains a force vector that is less perpendicular to the valley and more aligned with the true direction of the minimum. This allows the system to apply the corrective force sooner, mitigating the overshoot and leading to a smoother, more **geodesic** path along the curved manifold.
-
-```
+    **Question:** Why does calculating the gradient at the predicted future position ($\mathcal{\theta}_t + \beta \mathbf{v}_t$) help the Momentum optimizer "turn the corner" earlier in a curved ravine?
+    
+    **Answer Strategy:** In a ravine, the gradient at the current position $\mathcal{\theta}_t$ is dominated by the steep side wall. The predicted future position, however, is already closer to the center of the valley floor. By sampling the gradient there, NAG obtains a force vector that is less perpendicular to the valley and more aligned with the true direction of the minimum. This allows the system to apply the corrective force sooner, mitigating the overshoot and leading to a smoother, more **geodesic** path along the curved manifold.
+    
 ---
 
 ### 6.4 RMSProp — Adaptive Step Sizes
@@ -135,34 +117,28 @@ The goal of this chapter is to upgrade the optimization process from simple, fri
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. In the RMSProp update rule, the accumulated variable $s_t$ for a specific parameter $\theta_i$ measures that parameter's historical:**
-
-* **A.** Velocity.
-* **B.** **Magnitude of squared gradients (historical stiffness)**. (**Correct**)
-* **C.** Rate of divergence.
-* **D.** Effective mass.
-
-```
+    **1. In the RMSProp update rule, the accumulated variable $s_t$ for a specific parameter $\theta_i$ measures that parameter's historical:**
+    
+    * **A.** Velocity.
+    * **B.** **Magnitude of squared gradients (historical stiffness)**. (**Correct**)
+    * **C.** Rate of divergence.
+    * **D.** Effective mass.
+    
 !!! note "Quiz"
-```
-**2. RMSProp overcomes the problem of anisotropy by applying a physical analogy where the optimizer uses:**
-
-* **A.** Inertia to coast over flat terrain.
-* **B.** **An adaptive, coordinate-dependent friction coefficient (or brake)**. (**Correct**)
-* **C.** A fixed learning rate $\eta$ for all parameters.
-* **D.** A second-order Hessian matrix.
-
-```
+    **2. RMSProp overcomes the problem of anisotropy by applying a physical analogy where the optimizer uses:**
+    
+    * **A.** Inertia to coast over flat terrain.
+    * **B.** **An adaptive, coordinate-dependent friction coefficient (or brake)**. (**Correct**)
+    * **C.** A fixed learning rate $\eta$ for all parameters.
+    * **D.** A second-order Hessian matrix.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** RMSProp is said to **sphericize the loss landscape on the fly**. Explain this geometric transformation.
-
-**Answer Strategy:** The loss landscape is initially anisotropic (elliptical contours, high condition number $\kappa$). RMSProp achieves sphericization by transforming the coordinates such that the axes appear to have equal curvature. It does this by **stretching the sloppy (flat) dimensions** (where $\frac{1}{\sqrt{s_t}}$ is large) and **compressing the stiff (steep) dimensions** (where $\frac{1}{\sqrt{s_t}}$ is small). In this transformed space, the optimizer sees a uniform, isotropic bowl, and a single step size $\eta$ works optimally in all directions.
-
-```
+    **Question:** RMSProp is said to **sphericize the loss landscape on the fly**. Explain this geometric transformation.
+    
+    **Answer Strategy:** The loss landscape is initially anisotropic (elliptical contours, high condition number $\kappa$). RMSProp achieves sphericization by transforming the coordinates such that the axes appear to have equal curvature. It does this by **stretching the sloppy (flat) dimensions** (where $\frac{1}{\sqrt{s_t}}$ is large) and **compressing the stiff (steep) dimensions** (where $\frac{1}{\sqrt{s_t}}$ is small). In this transformed space, the optimizer sees a uniform, isotropic bowl, and a single step size $\eta$ works optimally in all directions.
+    
 ---
 
 ### 6.5 Adam — Adaptive Moment Estimation
@@ -172,36 +148,30 @@ The goal of this chapter is to upgrade the optimization process from simple, fri
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The **Adam** optimizer is a synthesis of which two primary mechanisms for improving gradient descent dynamics?**
-
-* **A.** Nesterov acceleration and $\chi^2$ minimization.
-* **B.** **Momentum (first moment, $m_t$) and Adaptive Scaling (second moment, $v_t$)**. (**Correct**)
-* **C.** Gradient flow and batch size increase.
-* **D.** Damping and zero bias.
-
-```
+    **1. The **Adam** optimizer is a synthesis of which two primary mechanisms for improving gradient descent dynamics?**
+    
+    * **A.** Nesterov acceleration and $\chi^2$ minimization.
+    * **B.** **Momentum (first moment, $m_t$) and Adaptive Scaling (second moment, $v_t$)**. (**Correct**)
+    * **C.** Gradient flow and batch size increase.
+    * **D.** Damping and zero bias.
+    
 !!! note "Quiz"
-```
-**2. The primary reason for including the **bias correction** step in the Adam algorithm is to:**
-
-* **A.** Reduce the overall gradient noise.
-* **B.** Guarantee convergence to a flat minimum.
-* **C.** **Compensate for the fact that the initial moment estimates ($m_t, v_t$) are biased toward zero**. (**Correct**)
-* **D.** Reset the velocity periodically.
-
-```
+    **2. The primary reason for including the **bias correction** step in the Adam algorithm is to:**
+    
+    * **A.** Reduce the overall gradient noise.
+    * **B.** Guarantee convergence to a flat minimum.
+    * **C.** **Compensate for the fact that the initial moment estimates ($m_t, v_t$) are biased toward zero**. (**Correct**)
+    * **D.** Reset the velocity periodically.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** Adam is often described as performing optimization using a **self-adjusting mass and damping** system. Which component of the Adam update determines the **direction/inertia (effective mass)**, and which determines the **adaptive damping (friction)**?
-
-**Answer Strategy:**
-* **Direction/Inertia (Effective Mass):** This is determined by the **bias-corrected first moment, $m_{\text{hat}}$**. This term averages past gradients, setting the general direction of momentum.
-* **Adaptive Damping (Friction):** This is determined by the **inverse square root of the bias-corrected second moment, $1/\sqrt{v_{\text{hat}}}$**. This term acts as the dynamic friction coefficient, applying a stronger brake in steep directions (where $v_{\text{hat}}$ is large).
-
-```
+    **Question:** Adam is often described as performing optimization using a **self-adjusting mass and damping** system. Which component of the Adam update determines the **direction/inertia (effective mass)**, and which determines the **adaptive damping (friction)**?
+    
+    **Answer Strategy:**
+    * **Direction/Inertia (Effective Mass):** This is determined by the **bias-corrected first moment, $m_{\text{hat}}$**. This term averages past gradients, setting the general direction of momentum.
+    * **Adaptive Damping (Friction):** This is determined by the **inverse square root of the bias-corrected second moment, $1/\sqrt{v_{\text{hat}}}$**. This term acts as the dynamic friction coefficient, applying a stronger brake in steep directions (where $v_{\text{hat}}$ is large).
+    
 ---
 
 ### 💡 Hands-On Project Ideas 🛠️

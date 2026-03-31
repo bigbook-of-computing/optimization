@@ -1,4 +1,4 @@
-# **Chapter 12: The Perceptron and Neural Foundations () () (Codebook)**
+# **Chapter 12: The Perceptron and Neural Foundations (Codebook)**
 
 ## Project 1: Perceptron Convergence (The Delta Rule)
 

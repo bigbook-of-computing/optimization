@@ -1,4 +1,4 @@
-# **Chapter 8: Combinatorial Optimization and QUBO () () () (Workbook)**
+# **Chapter 8: Combinatorial Optimization and QUBO (Workbook)**
 
 The goal of this chapter is to formalize **discrete optimization** by mapping all combinatorial problems onto the physical language of the **Ising Model**, enabling solutions via specialized stochastic and quantum-inspired search techniques.
 
@@ -22,34 +22,28 @@ The goal of this chapter is to formalize **discrete optimization** by mapping al
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The primary characteristic of a Combinatorial Optimization problem that invalidates the use of gradient descent (Chapters 5 and 6) is:**
-
-* **A.** The high number of local minima.
-* **B.** **The discontinuous, discrete loss landscape with no meaningful gradient**. (**Correct**)
-* **C.** The presence of external fields.
-* **D.** The time-dependence of the variables.
-
-```
+    **1. The primary characteristic of a Combinatorial Optimization problem that invalidates the use of gradient descent (Chapters 5 and 6) is:**
+    
+    * **A.** The high number of local minima.
+    * **B.** **The discontinuous, discrete loss landscape with no meaningful gradient**. (**Correct**)
+    * **C.** The presence of external fields.
+    * **D.** The time-dependence of the variables.
+    
 !!! note "Quiz"
-```
-**2. The search for the optimal solution $\mathbf{x}^*$ in a combinatorial problem is physically equivalent to the fundamental physics problem of finding the system's:**
-
-* **A.** Partition function.
-* **B.** **Ground state (minimum energy configuration)**. (**Correct**)
-* **C.** Critical temperature.
-* **D.** Linear momentum.
-
-```
+    **2. The search for the optimal solution $\mathbf{x}^*$ in a combinatorial problem is physically equivalent to the fundamental physics problem of finding the system's:**
+    
+    * **A.** Partition function.
+    * **B.** **Ground state (minimum energy configuration)**. (**Correct**)
+    * **C.** Critical temperature.
+    * **D.** Linear momentum.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** The combinatorial search space grows as $2^N$. Explain the significance of this exponential growth for a practical logistics problem like the Traveling Salesman Problem (TSP) with $N=100$ cities?
-
-**Answer Strategy:** The growth is so rapid that even for a relatively small $N=100$, the total number of possible solutions ($2^{100} \approx 10^{30}$) exceeds the computational capacity of any known classical computer, making **exhaustive search (brute force enumeration)** completely impossible. This confirms that the TSP is an **NP-hard problem** and requires approximate heuristic search methods or specialized quantum hardware.
-
-```
+    **Question:** The combinatorial search space grows as $2^N$. Explain the significance of this exponential growth for a practical logistics problem like the Traveling Salesman Problem (TSP) with $N=100$ cities?
+    
+    **Answer Strategy:** The growth is so rapid that even for a relatively small $N=100$, the total number of possible solutions ($2^{100} \approx 10^{30}$) exceeds the computational capacity of any known classical computer, making **exhaustive search (brute force enumeration)** completely impossible. This confirms that the TSP is an **NP-hard problem** and requires approximate heuristic search methods or specialized quantum hardware.
+    
 ---
 
 ### 8.2 From Continuous to Discrete Energy (QUBO)
@@ -59,34 +53,28 @@ The goal of this chapter is to formalize **discrete optimization** by mapping al
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The QUBO function is characterized by its reliance on which type of mathematical term to model the interaction energy between two variables $x_i$ and $x_j$?**
-
-* **A.** A linear term ($x_i + x_j$).
-* **B.** **A quadratic term ($x_i x_j$)**. (**Correct**)
-* **C.** An external field $h_i$.
-* **D.** A constant offset.
-
-```
+    **1. The QUBO function is characterized by its reliance on which type of mathematical term to model the interaction energy between two variables $x_i$ and $x_j$?**
+    
+    * **A.** A linear term ($x_i + x_j$).
+    * **B.** **A quadratic term ($x_i x_j$)**. (**Correct**)
+    * **C.** An external field $h_i$.
+    * **D.** A constant offset.
+    
 !!! note "Quiz"
-```
-**2. The single-variable term $\sum_i a_i x_i$ in the QUBO energy function is analogous to which term in the standard Ising Hamiltonian?**
-
-* **A.** The interaction term ($J_{ij}$).
-* **B.** The partition function ($Z$).
-* **C.** **The external field ($h_i$)**. (**Correct**)
-* **D.** The system temperature ($T$).
-
-```
+    **2. The single-variable term $\sum_i a_i x_i$ in the QUBO energy function is analogous to which term in the standard Ising Hamiltonian?**
+    
+    * **A.** The interaction term ($J_{ij}$).
+    * **B.** The partition function ($Z$).
+    * **C.** **The external field ($h_i$)**. (**Correct**)
+    * **D.** The system temperature ($T$).
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** In the QUBO formalism, explain the physical meaning of a **negative coefficient** in the quadratic term, $b_{ij} < 0$, when modeling a decision problem.
-
-**Answer Strategy:** A negative coefficient in $b_{ij}$ (or a positive coupling $J_{ij}$ in the equivalent Ising model) represents an **attractive or beneficial interaction**. The system minimizes the cost (energy), so $b_{ij} x_i x_j$ is maximized when $x_i = x_j = 1$. This means the cost is lowest (energy is most negative) when the two variables are **aligned**. For a decision problem, $b_{ij} < 0$ means that selecting variable $x_i$ and $x_j$ **together** is highly desirable (low cost).
-
-```
+    **Question:** In the QUBO formalism, explain the physical meaning of a **negative coefficient** in the quadratic term, $b_{ij} < 0$, when modeling a decision problem.
+    
+    **Answer Strategy:** A negative coefficient in $b_{ij}$ (or a positive coupling $J_{ij}$ in the equivalent Ising model) represents an **attractive or beneficial interaction**. The system minimizes the cost (energy), so $b_{ij} x_i x_j$ is maximized when $x_i = x_j = 1$. This means the cost is lowest (energy is most negative) when the two variables are **aligned**. For a decision problem, $b_{ij} < 0$ means that selecting variable $x_i$ and $x_j$ **together** is highly desirable (low cost).
+    
 ---
 
 ### 8.3 QUBO $\leftrightarrow$ Ising Mapping
@@ -96,34 +84,28 @@ The goal of this chapter is to formalize **discrete optimization** by mapping al
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. Which mathematical object, derived from the QUBO cost function, serves as the native input structure for specialized solvers, such as quantum annealers?**
-
-* **A.** The linear bias term $\sum a_i x_i$.
-* **B.** The **QUBO matrix $Q$**. (**Correct**)
-* **C.** The partition function $Z$.
-* **D.** The spin vector $\mathbf{s}$.
-
-```
+    **1. Which mathematical object, derived from the QUBO cost function, serves as the native input structure for specialized solvers, such as quantum annealers?**
+    
+    * **A.** The linear bias term $\sum a_i x_i$.
+    * **B.** The **QUBO matrix $Q$**. (**Correct**)
+    * **C.** The partition function $Z$.
+    * **D.** The spin vector $\mathbf{s}$.
+    
 !!! note "Quiz"
-```
-**2. When converting the Ising model to the QUBO model, the spin variable $s_i \in \{-1, +1\}$ is mapped to the binary variable $x_i \in \{0, 1\}$ using which linear relationship?**
-
-* **A.** $x_i = s_i + 1$.
-* **B.** $x_i = 2s_i + 1$.
-* **C.** **$x_i = (s_i + 1) / 2$**. (**Correct**)
-* **D.** $x_i = s_i / 2$.
-
-```
+    **2. When converting the Ising model to the QUBO model, the spin variable $s_i \in \{-1, +1\}$ is mapped to the binary variable $x_i \in \{0, 1\}$ using which linear relationship?**
+    
+    * **A.** $x_i = s_i + 1$.
+    * **B.** $x_i = 2s_i + 1$.
+    * **C.** **$x_i = (s_i + 1) / 2$**. (**Correct**)
+    * **D.** $x_i = s_i / 2$.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** The QUBO $\leftrightarrow$ Ising mapping is described as providing a **universal intermediary** for optimization. What practical benefit does this universality offer to a computer scientist facing a new, difficult combinatorial problem?
-
-**Answer Strategy:** The universality means the scientist doesn't need to invent a new solver for every problem. Instead, they focus solely on the (difficult) task of translating the problem's logic and constraints into the QUBO matrix $Q$. Once $Q$ is found, they can immediately use any existing **Ising ground state solver**—classical heuristics (Simulated Annealing) or specialized hardware (Quantum Annealers)—as a black-box optimizer, dramatically simplifying the solution pipeline.
-
-```
+    **Question:** The QUBO $\leftrightarrow$ Ising mapping is described as providing a **universal intermediary** for optimization. What practical benefit does this universality offer to a computer scientist facing a new, difficult combinatorial problem?
+    
+    **Answer Strategy:** The universality means the scientist doesn't need to invent a new solver for every problem. Instead, they focus solely on the (difficult) task of translating the problem's logic and constraints into the QUBO matrix $Q$. Once $Q$ is found, they can immediately use any existing **Ising ground state solver**—classical heuristics (Simulated Annealing) or specialized hardware (Quantum Annealers)—as a black-box optimizer, dramatically simplifying the solution pipeline.
+    
 ---
 
 ### 8.4 Constraint Encoding
@@ -133,36 +115,30 @@ The goal of this chapter is to formalize **discrete optimization** by mapping al
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. When encoding constraints in the QUBO model, the objective function is augmented with penalty terms that are typically squared. This is done to ensure the penalty is:**
-
-* **A.** Reducible to a linear term.
-* **B.** **Non-negative, ensuring that any violation increases the total energy**. (**Correct**)
-* **C.** Equal to the partition function.
-* **D.** Always minimized by the solver.
-
-```
+    **1. When encoding constraints in the QUBO model, the objective function is augmented with penalty terms that are typically squared. This is done to ensure the penalty is:**
+    
+    * **A.** Reducible to a linear term.
+    * **B.** **Non-negative, ensuring that any violation increases the total energy**. (**Correct**)
+    * **C.** Equal to the partition function.
+    * **D.** Always minimized by the solver.
+    
 !!! note "Quiz"
-```
-**2. In the augmented energy $E'(\mathbf{x})$, the large coefficient $\lambda$ multiplying the penalty term $C_k(\mathbf{x})^2$ serves the physical purpose of:**
-
-* **A.** Allowing the system to explore uphill moves.
-* **B.** **Acting as a spring constant that enforces feasibility by creating a massive energy wall**. (**Correct**)
-* **C.** Normalizing the total energy $E'$.
-* **D.** Defining the optimal route distance.
-
-```
+    **2. In the augmented energy $E'(\mathbf{x})$, the large coefficient $\lambda$ multiplying the penalty term $C_k(\mathbf{x})^2$ serves the physical purpose of:**
+    
+    * **A.** Allowing the system to explore uphill moves.
+    * **B.** **Acting as a spring constant that enforces feasibility by creating a massive energy wall**. (**Correct**)
+    * **C.** Normalizing the total energy $E'$.
+    * **D.** Defining the optimal route distance.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** The simplest constraint, the **"one-hot" constraint** (a set of variables must sum to exactly one, $\sum x_i = 1$), is essential for many problems. Explain why this constraint, when squared as a penalty, is reducible to the required QUBO matrix form?
-
-**Answer Strategy:** The penalty term is $C^2 = (\sum x_i - 1)^2$. When expanded, this yields:
-$$C^2 = (\sum x_i)^2 - 2 \sum x_i + 1$$
-This contains three types of terms: $\sum x_i x_j$ (quadratic), $\sum x_i$ (linear), and a constant. These are the only three forms required to construct the QUBO matrix $Q$, meaning the constraint can be perfectly mapped onto the Ising energy structure.
-
-```
+    **Question:** The simplest constraint, the **"one-hot" constraint** (a set of variables must sum to exactly one, $\sum x_i = 1$), is essential for many problems. Explain why this constraint, when squared as a penalty, is reducible to the required QUBO matrix form?
+    
+    **Answer Strategy:** The penalty term is $C^2 = (\sum x_i - 1)^2$. When expanded, this yields:
+    $$C^2 = (\sum x_i)^2 - 2 \sum x_i + 1$$
+    This contains three types of terms: $\sum x_i x_j$ (quadratic), $\sum x_i$ (linear), and a constant. These are the only three forms required to construct the QUBO matrix $Q$, meaning the constraint can be perfectly mapped onto the Ising energy structure.
+    
 ---
 
 ### 💡 Hands-On Project Ideas 🛠️

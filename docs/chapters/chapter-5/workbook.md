@@ -1,4 +1,4 @@
-# **Chapter 5: Gradient Methods: The Workhorses () () () (Workbook)**
+# **Chapter 5: Gradient Methods: The Workhorses (Workbook)**
 
 The goal of this chapter is to establish **gradient descent** as the fundamental law of motion for optimization, interpreting the learning rate, convergence, and noise as essential components of a physical dynamical system.
 
@@ -22,38 +22,32 @@ The goal of this chapter is to establish **gradient descent** as the fundamental
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The gradient descent update rule $\mathcal{\theta}_{t+1} = \mathcal{\theta}_t - \eta \nabla L(\mathcal{\theta}_t)$ is the numerical integration of which continuous physical process?**
-
-* **A.** The $F=ma$ law.
-* **B.** **Gradient flow, $\frac{d\mathcal{\theta}}{dt} = -\nabla L(\mathcal{\theta})$**. (**Correct**)
-* **C.** Conservation of momentum.
-* **D.** The Hamiltonian dynamics.
-
-```
+    **1. The gradient descent update rule $\mathcal{\theta}_{t+1} = \mathcal{\theta}_t - \eta \nabla L(\mathcal{\theta}_t)$ is the numerical integration of which continuous physical process?**
+    
+    * **A.** The $F=ma$ law.
+    * **B.** **Gradient flow, $\frac{d\mathcal{\theta}}{dt} = -\nabla L(\mathcal{\theta})$**. (**Correct**)
+    * **C.** Conservation of momentum.
+    * **D.** The Hamiltonian dynamics.
+    
 !!! note "Quiz"
-```
-**2. In the physical analogy of optimization, the term **overdamped relaxation** is used because the particle's motion is assumed to be dominated by which physical force?**
-
-* **A.** Inertia.
-* **B.** Gravity.
-* **C.** **Friction (viscosity)**. (**Correct**)
-* **D.** Magnetic force.
-
-```
+    **2. In the physical analogy of optimization, the term **overdamped relaxation** is used because the particle's motion is assumed to be dominated by which physical force?**
+    
+    * **A.** Inertia.
+    * **B.** Gravity.
+    * **C.** **Friction (viscosity)**. (**Correct**)
+    * **D.** Magnetic force.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** Gradient Descent transforms the algebraic problem of solving $\nabla L = 0$ into a **dynamical system**. What are the key components of this dynamical system in terms of optimization terminology?
-
-**Answer Strategy:**
-* **State Space:** The parameter space $\mathbb{R}^{D_\theta}$.
-* **State:** The parameter vector $\mathcal{\theta}(t)$.
-* **Potential/Energy:** The loss function $L(\mathcal{\theta})$.
-* **Equation of Motion:** The gradient descent algorithm itself.
-
-```
+    **Question:** Gradient Descent transforms the algebraic problem of solving $\nabla L = 0$ into a **dynamical system**. What are the key components of this dynamical system in terms of optimization terminology?
+    
+    **Answer Strategy:**
+    * **State Space:** The parameter space $\mathbb{R}^{D_\theta}$.
+    * **State:** The parameter vector $\mathcal{\theta}(t)$.
+    * **Potential/Energy:** The loss function $L(\mathcal{\theta})$.
+    * **Equation of Motion:** The gradient descent algorithm itself.
+    
 ---
 
 ### 5.2 Learning Rate and Stability
@@ -63,34 +57,28 @@ The goal of this chapter is to establish **gradient descent** as the fundamental
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. Based on the 1D stability analysis of $L(\theta) = a\theta^2$, which condition causes the optimization trajectory to oscillate with **explosively growing** amplitude?**
-
-* **A.** $0 < \eta < 1/(2a)$.
-* **B.** $\eta = 1/(2a)$.
-* **C.** **$\eta > 1/a$**. (**Correct**)
-* **D.** $\eta$ is set to zero.
-
-```
+    **1. Based on the 1D stability analysis of $L(\theta) = a\theta^2$, which condition causes the optimization trajectory to oscillate with **explosively growing** amplitude?**
+    
+    * **A.** $0 < \eta < 1/(2a)$.
+    * **B.** $\eta = 1/(2a)$.
+    * **C.** **$\eta > 1/a$**. (**Correct**)
+    * **D.** $\eta$ is set to zero.
+    
 !!! note "Quiz"
-```
-**2. A physical system that is **overdamped** in the context of gradient descent is analogous to a simulation where the learning rate ($\eta$) is:**
-
-* **A.** Too large, causing instability.
-* **B.** **Too small, causing the optimization to "creep" slowly towards the minimum**. (**Correct**)
-* **C.** Exactly equal to 1.
-* **D.** Oscillating around the minimum.
-
-```
+    **2. A physical system that is **overdamped** in the context of gradient descent is analogous to a simulation where the learning rate ($\eta$) is:**
+    
+    * **A.** Too large, causing instability.
+    * **B.** **Too small, causing the optimization to "creep" slowly towards the minimum**. (**Correct**)
+    * **C.** Exactly equal to 1.
+    * **D.** Oscillating around the minimum.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** The stability analysis dictates that the learning rate $\eta$ must be smaller than $1/a$, where $a$ is the curvature. How does this requirement create a speed bottleneck when the optimization landscape is **anisotropic** (containing both stiff and sloppy directions)?.
-
-**Answer Strategy:** The global learning rate $\eta$ must be set small enough to be stable in the **stiffest direction** (the direction with the largest curvature, $\lambda_{\max}$). If $\eta$ is too large, the optimizer would diverge along this steep wall. However, this same small $\eta$ is then **far too small** for the flat, **sloppy directions** ($\lambda_{\min}$). Consequently, the optimizer makes agonisingly slow progress along the solution path (the valley floor), and convergence is bottlenecked by the high condition number $\kappa = \lambda_{\max}/\lambda_{\min}$.
-
-```
+    **Question:** The stability analysis dictates that the learning rate $\eta$ must be smaller than $1/a$, where $a$ is the curvature. How does this requirement create a speed bottleneck when the optimization landscape is **anisotropic** (containing both stiff and sloppy directions)?.
+    
+    **Answer Strategy:** The global learning rate $\eta$ must be set small enough to be stable in the **stiffest direction** (the direction with the largest curvature, $\lambda_{\max}$). If $\eta$ is too large, the optimizer would diverge along this steep wall. However, this same small $\eta$ is then **far too small** for the flat, **sloppy directions** ($\lambda_{\min}$). Consequently, the optimizer makes agonisingly slow progress along the solution path (the valley floor), and convergence is bottlenecked by the high condition number $\kappa = \lambda_{\max}/\lambda_{\min}$.
+    
 ---
 
 ### 5.3 Gradient Descent in Vector Spaces
@@ -100,34 +88,28 @@ The goal of this chapter is to establish **gradient descent** as the fundamental
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The primary structural issue that causes the gradient descent path to exhibit a severe "zigzagging" behavior is:**
-
-* **A.** A noisy gradient estimate.
-* **B.** **Anisotropic curvature (ravines)**. (**Correct**)
-* **C.** A zero gradient norm.
-* **D.** A very large learning rate $\eta$.
-
-```
+    **1. The primary structural issue that causes the gradient descent path to exhibit a severe "zigzagging" behavior is:**
+    
+    * **A.** A noisy gradient estimate.
+    * **B.** **Anisotropic curvature (ravines)**. (**Correct**)
+    * **C.** A zero gradient norm.
+    * **D.** A very large learning rate $\eta$.
+    
 !!! note "Quiz"
-```
-**2. For an anisotropic loss landscape, the difficulty of the optimization is numerically quantified by the **condition number ($\kappa$)**, defined as:**
-
-* **A.** The step size $\eta$ divided by the gradient $\nabla L$.
-* **B.** The mean $\mu$ divided by the standard deviation $\sigma$.
-* **C.** **The ratio of the largest to the smallest eigenvalue of the Hessian, $\lambda_{\max}/\lambda_{\min}$**. (**Correct**)
-* **D.** The learning rate multiplied by the iteration count.
-
-```
+    **2. For an anisotropic loss landscape, the difficulty of the optimization is numerically quantified by the **condition number ($\kappa$)**, defined as:**
+    
+    * **A.** The step size $\eta$ divided by the gradient $\nabla L$.
+    * **B.** The mean $\mu$ divided by the standard deviation $\sigma$.
+    * **C.** **The ratio of the largest to the smallest eigenvalue of the Hessian, $\lambda_{\max}/\lambda_{\min}$**. (**Correct**)
+    * **D.** The learning rate multiplied by the iteration count.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** The concept of **preconditioning** seeks to normalize the geometry of the optimization landscape. Explain this process using the analogy of a parameter space ruler.
-
-**Answer Strategy:** Preconditioning is the process of finding a linear transformation that converts the anisotropic ravine geometry into a perfect, isotropic (spherical) bowl. The analogy is that we are **renormalizing the parameter space ruler**. In the stiff directions (large $\lambda_k$), we use a shorter, slower ruler (small effective $\eta$); in the sloppy directions (small $\lambda_k$), we use a longer, faster ruler (large effective $\eta$). The goal is to make a standard unit step move the same "effective distance" in all directions, making the solution path direct and eliminating zigzagging.
-
-```
+    **Question:** The concept of **preconditioning** seeks to normalize the geometry of the optimization landscape. Explain this process using the analogy of a parameter space ruler.
+    
+    **Answer Strategy:** Preconditioning is the process of finding a linear transformation that converts the anisotropic ravine geometry into a perfect, isotropic (spherical) bowl. The analogy is that we are **renormalizing the parameter space ruler**. In the stiff directions (large $\lambda_k$), we use a shorter, slower ruler (small effective $\eta$); in the sloppy directions (small $\lambda_k$), we use a longer, faster ruler (large effective $\eta$). The goal is to make a standard unit step move the same "effective distance" in all directions, making the solution path direct and eliminating zigzagging.
+    
 ---
 
 ### 5.4 Stochastic Gradient Descent (SGD)
@@ -137,34 +119,28 @@ The goal of this chapter is to establish **gradient descent** as the fundamental
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The BGD algorithm requires computing the gradient over the entire dataset ($N$). Why is SGD's noisy gradient estimate, based on a single sample, still statistically valid?**
-
-* **A.** Because the single step always points directly to the global minimum.
-* **B.** **Because the expected value of the stochastic gradient is equal to the true full-batch gradient**. (**Correct**)
-* **C.** Because the Hessian matrix is zero.
-* **D.** Because it is only used on convex functions.
-
-```
+    **1. The BGD algorithm requires computing the gradient over the entire dataset ($N$). Why is SGD's noisy gradient estimate, based on a single sample, still statistically valid?**
+    
+    * **A.** Because the single step always points directly to the global minimum.
+    * **B.** **Because the expected value of the stochastic gradient is equal to the true full-batch gradient**. (**Correct**)
+    * **C.** Because the Hessian matrix is zero.
+    * **D.** Because it is only used on convex functions.
+    
 !!! note "Quiz"
-```
-**2. In the SGD analogy, the primary benefit of the **gradient noise** is that it provides the optimizer with:**
-
-* **A.** Reduced variance near the minimum.
-* **B.** **Effective thermal energy to jump over small energy barriers**. (**Correct**)
-* **C.** Guaranteed convergence to the global minimum.
-* **D.** A lower condition number $\kappa$.
-
-```
+    **2. In the SGD analogy, the primary benefit of the **gradient noise** is that it provides the optimizer with:**
+    
+    * **A.** Reduced variance near the minimum.
+    * **B.** **Effective thermal energy to jump over small energy barriers**. (**Correct**)
+    * **C.** Guaranteed convergence to the global minimum.
+    * **D.** A lower condition number $\kappa$.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** Gradient Descent (BGD) is a deterministic relaxation, analogous to a system at $T=0$. SGD is a stochastic relaxation, analogous to a system at $T>0$. Describe the major functional consequence of the **zero-temperature** environment for BGD in the non-convex landscapes of Chapter 4.
-
-**Answer Strategy:** In a non-convex landscape, a $T=0$ (zero noise) BGD optimizer has **no thermal energy** to overcome barriers. Consequently, it is deterministically guaranteed to **get permanently stuck** in the very first shallow local minimum it rolls into, preventing it from exploring the landscape to find the deeper, better quality minima that often lead to better generalization.
-
-```
+    **Question:** Gradient Descent (BGD) is a deterministic relaxation, analogous to a system at $T=0$. SGD is a stochastic relaxation, analogous to a system at $T>0$. Describe the major functional consequence of the **zero-temperature** environment for BGD in the non-convex landscapes of Chapter 4.
+    
+    **Answer Strategy:** In a non-convex landscape, a $T=0$ (zero noise) BGD optimizer has **no thermal energy** to overcome barriers. Consequently, it is deterministically guaranteed to **get permanently stuck** in the very first shallow local minimum it rolls into, preventing it from exploring the landscape to find the deeper, better quality minima that often lead to better generalization.
+    
 ---
 
 ### 5.5 Mini-Batch and Variance Trade-Off
@@ -174,34 +150,28 @@ The goal of this chapter is to establish **gradient descent** as the fundamental
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. In the physical analogy where batch size $B$ controls the effective temperature $T$ of optimization, which characteristic is associated with a **low $T$ (large $B$)** optimization?**
-
-* **A.** High variance and better exploration.
-* **B.** **Low variance and risk of getting trapped in sharp minima**. (**Correct**)
-* **C.** The ability to use a very small learning rate $\eta$.
-* **D.** Very high gradient noise.
-
-```
+    **1. In the physical analogy where batch size $B$ controls the effective temperature $T$ of optimization, which characteristic is associated with a **low $T$ (large $B$)** optimization?**
+    
+    * **A.** High variance and better exploration.
+    * **B.** **Low variance and risk of getting trapped in sharp minima**. (**Correct**)
+    * **C.** The ability to use a very small learning rate $\eta$.
+    * **D.** Very high gradient noise.
+    
 !!! note "Quiz"
-```
-**2. The primary reason practitioners often prefer to use a small mini-batch size ($B$) over the full batch ($N$) is because the noise acts as a regularizer that helps the optimizer find solutions that:**
-
-* **A.** Converge faster along the valley floor.
-* **B.** **Generalize better to unseen data**. (**Correct**)
-* **C.** Have a lower condition number $\kappa$.
-* **D.** Are mathematically guaranteed to be the global minimum.
-
-```
+    **2. The primary reason practitioners often prefer to use a small mini-batch size ($B$) over the full batch ($N$) is because the noise acts as a regularizer that helps the optimizer find solutions that:**
+    
+    * **A.** Converge faster along the valley floor.
+    * **B.** **Generalize better to unseen data**. (**Correct**)
+    * **C.** Have a lower condition number $\kappa$.
+    * **D.** Are mathematically guaranteed to be the global minimum.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** The noise variance in SGD scales roughly as $\text{Var}(\nabla L_B) \propto 1/B$. Explain why this relationship justifies calling the mini-batch size $B$ the **thermostat** for the optimization process.
-
-**Answer Strategy:** The noise variance $\text{Var}(\nabla L_B)$ dictates the magnitude of the random "thermal kicks" the optimizer receives. Since thermal energy ($T$) is proportional to fluctuations, **$\text{Var}(\nabla L_B)$ directly controls the effective temperature $T$**. Therefore, by simply increasing $B$, the system becomes "colder" (less noise, less exploration); by decreasing $B$, the system becomes "hotter" (more noise, more exploration), allowing $B$ to function as a precise control knob for the energy dynamics of the system.
-
-```
+    **Question:** The noise variance in SGD scales roughly as $\text{Var}(\nabla L_B) \propto 1/B$. Explain why this relationship justifies calling the mini-batch size $B$ the **thermostat** for the optimization process.
+    
+    **Answer Strategy:** The noise variance $\text{Var}(\nabla L_B)$ dictates the magnitude of the random "thermal kicks" the optimizer receives. Since thermal energy ($T$) is proportional to fluctuations, **$\text{Var}(\nabla L_B)$ directly controls the effective temperature $T$**. Therefore, by simply increasing $B$, the system becomes "colder" (less noise, less exploration); by decreasing $B$, the system becomes "hotter" (more noise, more exploration), allowing $B$ to function as a precise control knob for the energy dynamics of the system.
+    
 ---
 
 ### 💡 Hands-On Project Ideas 🛠️

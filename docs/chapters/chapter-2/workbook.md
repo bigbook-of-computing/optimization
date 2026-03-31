@@ -1,4 +1,4 @@
-# **Chapter 2: Statistics & Probability in High Dimensions () () () (Workbook)**
+# **Chapter 2: Statistics & Probability in High Dimensions (Workbook)**
 
 The goal of this chapter is to formalize the probabilistic view of simulation data, confronting the mathematical challenges of high-dimensional space and establishing strategies for sampling, inference, and uncertainty quantification.
 
@@ -22,34 +22,28 @@ The goal of this chapter is to formalize the probabilistic view of simulation da
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. What is the fundamental concept in physics that is mathematically equivalent to maximizing the statistical log-likelihood, $\ln P(\mathbf{x})$?**
-
-* **A.** Maximizing the partition function $Z$.
-* **B.** **Minimizing the effective energy, $E_{\text{eff}}(\mathbf{x})$**. (**Correct**)
-* **C.** Minimizing the KL divergence.
-* **D.** Maximizing the thermal energy $k_B T$.
-
-```
+    **1. What is the fundamental concept in physics that is mathematically equivalent to maximizing the statistical log-likelihood, $\ln P(\mathbf{x})$?**
+    
+    * **A.** Maximizing the partition function $Z$.
+    * **B.** **Minimizing the effective energy, $E_{\text{eff}}(\mathbf{x})$**. (**Correct**)
+    * **C.** Minimizing the KL divergence.
+    * **D.** Maximizing the thermal energy $k_B T$.
+    
 !!! note "Quiz"
-```
-**2. The empirical distribution $\hat{p}(\mathbf{x})$ is defined as a sum of which mathematical functions centered on each data point $\mathbf{x}_i$?**
-
-* **A.** Gaussian kernels.
-* **B.** **Dirac delta functions**. (**Correct**)
-* **C.** Exponential family functions.
-* **D.** Covariance functions.
-
-```
+    **2. The empirical distribution $\hat{p}(\mathbf{x})$ is defined as a sum of which mathematical functions centered on each data point $\mathbf{x}_i$?**
+    
+    * **A.** Gaussian kernels.
+    * **B.** **Dirac delta functions**. (**Correct**)
+    * **C.** Exponential family functions.
+    * **D.** Covariance functions.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** The Boltzmann distribution $P(\mathbf{s}) \propto e^{-E[\mathbf{s}]/k_B T}$ links energy to probability. If a physical simulation samples two configurations, $\mathbf{x}_A$ and $\mathbf{x}_B$, and $\mathbf{x}_A$ is observed 100 times more often than $\mathbf{x}_B$, what does this tell you about their effective energies?
-
-**Answer Strategy:** This means the probability $P(\mathbf{x}_A)$ is 100 times higher than $P(\mathbf{x}_B)$. Since probability is exponentially related to energy ($P \propto e^{-E}$), the log-likelihood of $\mathbf{x}_A$ must be higher. Specifically, the effective energy of $\mathbf{x}_A$ must be **lower** than $\mathbf{x}_B$ by an amount equal to $k_B T \ln(100)$. The data confirms that $\mathbf{x}_A$ lies in a much deeper, more stable basin of the potential energy landscape.
-
-```
+    **Question:** The Boltzmann distribution $P(\mathbf{s}) \propto e^{-E[\mathbf{s}]/k_B T}$ links energy to probability. If a physical simulation samples two configurations, $\mathbf{x}_A$ and $\mathbf{x}_B$, and $\mathbf{x}_A$ is observed 100 times more often than $\mathbf{x}_B$, what does this tell you about their effective energies?
+    
+    **Answer Strategy:** This means the probability $P(\mathbf{x}_A)$ is 100 times higher than $P(\mathbf{x}_B)$. Since probability is exponentially related to energy ($P \propto e^{-E}$), the log-likelihood of $\mathbf{x}_A$ must be higher. Specifically, the effective energy of $\mathbf{x}_A$ must be **lower** than $\mathbf{x}_B$ by an amount equal to $k_B T \ln(100)$. The data confirms that $\mathbf{x}_A$ lies in a much deeper, more stable basin of the potential energy landscape.
+    
 ---
 
 ---
@@ -61,34 +55,28 @@ The goal of this chapter is to formalize the probabilistic view of simulation da
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The quantity $Z(\mathcal{\theta}) = \int \exp[-E(\mathbf{x}; \mathcal{\theta})] d\mathbf{x}$ is the normalization constant in the exponential family, which in physics is known as the:**
-
-* **A.** Correlation Function.
-* **B.** **Partition Function**. (**Correct**)
-* **C.** Maximum Likelihood Estimate.
-* **D.** Fisher Information.
-
-```
+    **1. The quantity $Z(\mathcal{\theta}) = \int \exp[-E(\mathbf{x}; \mathcal{\theta})] d\mathbf{x}$ is the normalization constant in the exponential family, which in physics is known as the:**
+    
+    * **A.** Correlation Function.
+    * **B.** **Partition Function**. (**Correct**)
+    * **C.** Maximum Likelihood Estimate.
+    * **D.** Fisher Information.
+    
 !!! note "Quiz"
-```
-**2. For a Multivariate Gaussian distribution, all statistical cumulants of order greater than two are exactly zero. Therefore, higher-order cumulants are useful for measuring:**
-
-* **A.** The mean of the distribution.
-* **B.** The partition function $Z$.
-* **C.** **The non-Gaussianity of a distribution**. (**Correct**)
-* **D.** The time average.
-
-```
+    **2. For a Multivariate Gaussian distribution, all statistical cumulants of order greater than two are exactly zero. Therefore, higher-order cumulants are useful for measuring:**
+    
+    * **A.** The mean of the distribution.
+    * **B.** The partition function $Z$.
+    * **C.** **The non-Gaussianity of a distribution**. (**Correct**)
+    * **D.** The time average.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** Define the **Kullback-Leibler (KL) divergence** $D_{\mathrm{KL}}(p||q)$, and explain why, despite its usefulness, it is often called a pseudo-distance or **not a true distance metric** in mathematics.
-
-**Answer Strategy:** The KL divergence is defined as $D_{\mathrm{KL}}(p||q) = \int p(\mathbf{x}) \ln\left(\frac{p(\mathbf{x})}{q(\mathbf{x})}\right) d\mathbf{x}$. It quantifies the information lost when distribution $q$ is used to approximate $p$. It is not a true distance metric because it **is asymmetric**: $D_{\mathrm{KL}}(p||q) \neq D_{\mathrm{KL}}(q||p)$. A true metric must satisfy symmetry and the triangle inequality.
-
-```
+    **Question:** Define the **Kullback-Leibler (KL) divergence** $D_{\mathrm{KL}}(p||q)$, and explain why, despite its usefulness, it is often called a pseudo-distance or **not a true distance metric** in mathematics.
+    
+    **Answer Strategy:** The KL divergence is defined as $D_{\mathrm{KL}}(p||q) = \int p(\mathbf{x}) \ln\left(\frac{p(\mathbf{x})}{q(\mathbf{x})}\right) d\mathbf{x}$. It quantifies the information lost when distribution $q$ is used to approximate $p$. It is not a true distance metric because it **is asymmetric**: $D_{\mathrm{KL}}(p||q) \neq D_{\mathrm{KL}}(q||p)$. A true metric must satisfy symmetry and the triangle inequality.
+    
 ---
 
 ---
@@ -100,37 +88,31 @@ The goal of this chapter is to formalize the probabilistic view of simulation da
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. Maximizing the log-likelihood function is numerically preferred over maximizing the likelihood function itself because it converts the computationally unstable **product of probabilities** into a(n):**
-
-* **A.** Quotient of cumulants.
-* **B.** **Sum of log-probabilities**. (**Correct**)
-* **C.** Deterministic energy function.
-* **D.** Euclidean distance.
-
-```
+    **1. Maximizing the log-likelihood function is numerically preferred over maximizing the likelihood function itself because it converts the computationally unstable **product of probabilities** into a(n):**
+    
+    * **A.** Quotient of cumulants.
+    * **B.** **Sum of log-probabilities**. (**Correct**)
+    * **C.** Deterministic energy function.
+    * **D.** Euclidean distance.
+    
 !!! note "Quiz"
-```
-**2. In statistical physics, the principle of **least-squares fitting** is formally justified as finding the Maximum Likelihood Estimate (MLE) under the fundamental assumption of:**
-
-* **A.** Maximum entropy.
-* **B.** **Independent Gaussian (Normal) noise**. (**Correct**)
-* **C.** Low-dimensional correlation.
-* **D.** The partition function being unity.
-
-```
+    **2. In statistical physics, the principle of **least-squares fitting** is formally justified as finding the Maximum Likelihood Estimate (MLE) under the fundamental assumption of:**
+    
+    * **A.** Maximum entropy.
+    * **B.** **Independent Gaussian (Normal) noise**. (**Correct**)
+    * **C.** Low-dimensional correlation.
+    * **D.** The partition function being unity.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** Explain the philosophical difference between the **Maximum Likelihood Estimate (MLE)** and the **Maximum A Posteriori (MAP)** estimate, and how the concept of *regularization* links the two.
-
-**Answer Strategy:**
-* **MLE** is a frequentist approach that selects the parameters $\mathcal{\theta}$ that make the observed data $X$ most probable, ignoring any prior belief about $\mathcal{\theta}$.
-* **MAP** is a Bayesian approach that selects the parameters $\mathcal{\theta}$ that maximize the posterior probability, thereby incorporating prior belief.
-* **Link to Regularization:** Mathematically, finding the MAP estimate (maximizing $\ln \mathcal{L} + \ln p(\mathcal{\theta})$) is identical to maximizing the likelihood with an added penalty. The **log-prior, $\ln p(\mathcal{\theta})$, serves as a regularization term** that penalizes complex or improbable parameters, steering the fit away from extreme values favored by the data alone.
-
-```
+    **Question:** Explain the philosophical difference between the **Maximum Likelihood Estimate (MLE)** and the **Maximum A Posteriori (MAP)** estimate, and how the concept of *regularization* links the two.
+    
+    **Answer Strategy:**
+    * **MLE** is a frequentist approach that selects the parameters $\mathcal{\theta}$ that make the observed data $X$ most probable, ignoring any prior belief about $\mathcal{\theta}$.
+    * **MAP** is a Bayesian approach that selects the parameters $\mathcal{\theta}$ that maximize the posterior probability, thereby incorporating prior belief.
+    * **Link to Regularization:** Mathematically, finding the MAP estimate (maximizing $\ln \mathcal{L} + \ln p(\mathcal{\theta})$) is identical to maximizing the likelihood with an added penalty. The **log-prior, $\ln p(\mathcal{\theta})$, serves as a regularization term** that penalizes complex or improbable parameters, steering the fit away from extreme values favored by the data alone.
+    
 ---
 
 ---
@@ -142,34 +124,28 @@ The goal of this chapter is to formalize the probabilistic view of simulation da
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. Which phenomenon of high-dimensional space causes all pairwise distances between data points to converge to nearly the same value, rendering nearest-neighbor methods ineffective?**
-
-* **A.** Data Sparsity.
-* **B.** **Distance Concentration**. (**Correct**)
-* **C.** The Manifold Hypothesis.
-* **D.** The KL divergence.
-
-```
+    **1. Which phenomenon of high-dimensional space causes all pairwise distances between data points to converge to nearly the same value, rendering nearest-neighbor methods ineffective?**
+    
+    * **A.** Data Sparsity.
+    * **B.** **Distance Concentration**. (**Correct**)
+    * **C.** The Manifold Hypothesis.
+    * **D.** The KL divergence.
+    
 !!! note "Quiz"
-```
-**2. The single most compelling reason why we **cannot** rely on simple histogram methods (naïve density estimation) in high dimensions is:**
-
-* **A.** We need to maximize the log-likelihood.
-* **B.** **The volume of the space grows exponentially, requiring an impossible number of samples ($10^D$) to fill the bins**. (**Correct**)
-* **C.** The partition function is zero.
-* **D.** The energy is too high.
-
-```
+    **2. The single most compelling reason why we **cannot** rely on simple histogram methods (naïve density estimation) in high dimensions is:**
+    
+    * **A.** We need to maximize the log-likelihood.
+    * **B.** **The volume of the space grows exponentially, requiring an impossible number of samples ($10^D$) to fill the bins**. (**Correct**)
+    * **C.** The partition function is zero.
+    * **D.** The energy is too high.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** How does the realization that "all of the volume of a high-dimensional sphere is concentrated in an infinitesimally thin shell near its surface" influence the computational strategy for solving scientific problems where $D$ is large?
-
-**Answer Strategy:** This failure of intuition (the **volume paradox**) means that any local sampling or calculation must account for the fact that the space is mostly empty. It provides the primary **motivation for dimensionality reduction**. We cannot work in $\mathbb{R}^D$; we must assume the data lies on a lower-dimensional **manifold** ($\mathcal{M}$), and the computational strategy must shift to finding the coordinates of $\mathcal{M}$ first (Chapter 3), where the data becomes dense enough for statistical inference.
-
-```
+    **Question:** How does the realization that "all of the volume of a high-dimensional sphere is concentrated in an infinitesimally thin shell near its surface" influence the computational strategy for solving scientific problems where $D$ is large?
+    
+    **Answer Strategy:** This failure of intuition (the **volume paradox**) means that any local sampling or calculation must account for the fact that the space is mostly empty. It provides the primary **motivation for dimensionality reduction**. We cannot work in $\mathbb{R}^D$; we must assume the data lies on a lower-dimensional **manifold** ($\mathcal{M}$), and the computational strategy must shift to finding the coordinates of $\mathcal{M}$ first (Chapter 3), where the data becomes dense enough for statistical inference.
+    
 ---
 
 ---
@@ -181,34 +157,28 @@ The goal of this chapter is to formalize the probabilistic view of simulation da
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The primary advantage of using **Markov Chain Monte Carlo (MCMC)** for sampling from a complex distribution $P(\mathbf{x})$ is that it:**
-
-* **A.** Produces independent samples.
-* **B.** **Allows sampling from $P(\mathbf{x})$ even if the partition function $Z$ is unknown (intractable)**. (**Correct**)
-* **C.** Only works for Gaussian distributions.
-* **D.** Guarantees the variance will be zero.
-
-```
+    **1. The primary advantage of using **Markov Chain Monte Carlo (MCMC)** for sampling from a complex distribution $P(\mathbf{x})$ is that it:**
+    
+    * **A.** Produces independent samples.
+    * **B.** **Allows sampling from $P(\mathbf{x})$ even if the partition function $Z$ is unknown (intractable)**. (**Correct**)
+    * **C.** Only works for Gaussian distributions.
+    * **D.** Guarantees the variance will be zero.
+    
 !!! note "Quiz"
-```
-**2. In **Importance Sampling**, the samples drawn from the proposal distribution $q(\mathbf{x})$ are multiplied by **importance weights** $w(\mathbf{x})$ defined as:**
-
-* **A.** $w(\mathbf{x}) = q(\mathbf{x}) / P(\mathbf{x})$.
-* **B.** $w(\mathbf{x}) = \ln P(\mathbf{x})$.
-* **C.** $w(\mathbf{x}) = P(\mathbf{x}) / \sum P(\mathbf{x})$.
-* **D.** **$w(\mathbf{x}) = P(\mathbf{x}) / q(\mathbf{x})$**. (**Correct**)
-
-```
+    **2. In **Importance Sampling**, the samples drawn from the proposal distribution $q(\mathbf{x})$ are multiplied by **importance weights** $w(\mathbf{x})$ defined as:**
+    
+    * **A.** $w(\mathbf{x}) = q(\mathbf{x}) / P(\mathbf{x})$.
+    * **B.** $w(\mathbf{x}) = \ln P(\mathbf{x})$.
+    * **C.** $w(\mathbf{x}) = P(\mathbf{x}) / \sum P(\mathbf{x})$.
+    * **D.** **$w(\mathbf{x}) = P(\mathbf{x}) / q(\mathbf{x})$**. (**Correct**)
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** MCMC samples are generated sequentially and are **correlated** in time, which inflates the final statistical error. Conversely, samples generated by **Importance Sampling** are typically **independent**. Despite this drawback, why is MCMC almost always preferred over importance sampling for complex, high-dimensional energy landscapes?
-
-**Answer Strategy:** MCMC is preferred because **Importance Sampling (IS) requires finding a good proposal distribution $q(\mathbf{x})$**. For a complex, high-dimensional $P(\mathbf{x})$ concentrated in irregular low-energy basins, it is nearly impossible to find a simple $q(\mathbf{x})$ that closely matches $P(\mathbf{x})$. If $q$ is a poor match, the variance of the IS estimator explodes. MCMC bypasses this difficulty by using a Markov chain that is **guaranteed to converge** to the correct distribution $P(\mathbf{x})$ through local moves, regardless of the distribution's complexity.
-
-```
+    **Question:** MCMC samples are generated sequentially and are **correlated** in time, which inflates the final statistical error. Conversely, samples generated by **Importance Sampling** are typically **independent**. Despite this drawback, why is MCMC almost always preferred over importance sampling for complex, high-dimensional energy landscapes?
+    
+    **Answer Strategy:** MCMC is preferred because **Importance Sampling (IS) requires finding a good proposal distribution $q(\mathbf{x})$**. For a complex, high-dimensional $P(\mathbf{x})$ concentrated in irregular low-energy basins, it is nearly impossible to find a simple $q(\mathbf{x})$ that closely matches $P(\mathbf{x})$. If $q$ is a poor match, the variance of the IS estimator explodes. MCMC bypasses this difficulty by using a Markov chain that is **guaranteed to converge** to the correct distribution $P(\mathbf{x})$ through local moves, regardless of the distribution's complexity.
+    
 ---
 
 ---
@@ -220,37 +190,31 @@ The goal of this chapter is to formalize the probabilistic view of simulation da
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. A **Kernel Density Estimate (KDE)** is a nonparametric density model that is computed by placing and summing a smooth **kernel** (e.g., a small Gaussian bump) on which data feature?**
-
-* **A.** The mean vector $\mathcal{\mu}$.
-* **B.** The total partition function $Z$.
-* **C.** **Each individual data point (sample) $\mathbf{x}_i$**. (**Correct**)
-* **D.** The KL divergence term.
-
-```
+    **1. A **Kernel Density Estimate (KDE)** is a nonparametric density model that is computed by placing and summing a smooth **kernel** (e.g., a small Gaussian bump) on which data feature?**
+    
+    * **A.** The mean vector $\mathcal{\mu}$.
+    * **B.** The total partition function $Z$.
+    * **C.** **Each individual data point (sample) $\mathbf{x}_i$**. (**Correct**)
+    * **D.** The KL divergence term.
+    
 !!! note "Quiz"
-```
-**2. In KDE, the parameter known as the **bandwidth ($h$)** controls which fundamental trade-off of the density estimate?**
-
-* **A.** The KL-divergence vs. the $L^2$ norm.
-* **B.** The mean vector vs. the covariance matrix.
-* **C.** **The bias (oversmoothing) versus the variance (spikiness)**. (**Correct**)
-* **D.** The time average vs. the ensemble average.
-
-```
+    **2. In KDE, the parameter known as the **bandwidth ($h$)** controls which fundamental trade-off of the density estimate?**
+    
+    * **A.** The KL-divergence vs. the $L^2$ norm.
+    * **B.** The mean vector vs. the covariance matrix.
+    * **C.** **The bias (oversmoothing) versus the variance (spikiness)**. (**Correct**)
+    * **D.** The time average vs. the ensemble average.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** GMMs are a common **parametric** model for multi-modal density estimation. Explain how the components of a GMM (means, covariances, and mixing coefficients) physically map to the properties of a molecular simulation displaying two distinct stable states.
-
-**Answer Strategy:**
-* **Mixing Coefficients ($\pi_k$):** These are the weights for each Gaussian component. They represent the **relative population (or probability)** of each stable state.
-* **Means ($\mathcal{\mu}_k$):** These are the centers of the Gaussian components. They represent the **average configuration (or central structure)** of the atoms in each stable state (e.g., the open conformation vs. the closed conformation).
-* **Covariances ($\Sigma_k$):** These define the shape and spread of each Gaussian component. They represent the **local flexibility or vibrational modes** within that single stable state.
-
-```
+    **Question:** GMMs are a common **parametric** model for multi-modal density estimation. Explain how the components of a GMM (means, covariances, and mixing coefficients) physically map to the properties of a molecular simulation displaying two distinct stable states.
+    
+    **Answer Strategy:**
+    * **Mixing Coefficients ($\pi_k$):** These are the weights for each Gaussian component. They represent the **relative population (or probability)** of each stable state.
+    * **Means ($\mathcal{\mu}_k$):** These are the centers of the Gaussian components. They represent the **average configuration (or central structure)** of the atoms in each stable state (e.g., the open conformation vs. the closed conformation).
+    * **Covariances ($\Sigma_k$):** These define the shape and spread of each Gaussian component. They represent the **local flexibility or vibrational modes** within that single stable state.
+    
 ---
 
 ---
@@ -262,36 +226,30 @@ The goal of this chapter is to formalize the probabilistic view of simulation da
 #### Quiz Questions
 
 !!! note "Quiz"
-```
-**1. The **Principle of Maximum Entropy** justifies model choice by stating that the most unbiased probability distribution consistent with known constraints (like fixed mean and variance) is the one that:**
-
-* **A.** Minimizes the $\chi^2$ statistic.
-* **B.** **Maximizes the Shannon entropy $S[p]$**. (**Correct**)
-* **C.** Minimizes the number of samples $N$.
-* **D.** Maximizes the KL divergence.
-
-```
+    **1. The **Principle of Maximum Entropy** justifies model choice by stating that the most unbiased probability distribution consistent with known constraints (like fixed mean and variance) is the one that:**
+    
+    * **A.** Minimizes the $\chi^2$ statistic.
+    * **B.** **Maximizes the Shannon entropy $S[p]$**. (**Correct**)
+    * **C.** Minimizes the number of samples $N$.
+    * **D.** Maximizes the KL divergence.
+    
 !!! note "Quiz"
-```
-**2. **Mutual Information** $I(X;Y)$ is a statistical measure that quantifies the:**
-
-* **A.** Total variance of variable $X$.
-* **B.** **Amount of shared information (dependence) between variable $X$ and variable $Y$**. (**Correct**)
-* **C.** Minimum Euclidean distance between them.
-* **D.** Number of components in a GMM.
-
-```
+    **2. **Mutual Information** $I(X;Y)$ is a statistical measure that quantifies the:**
+    
+    * **A.** Total variance of variable $X$.
+    * **B.** **Amount of shared information (dependence) between variable $X$ and variable $Y$**. (**Correct**)
+    * **C.** Minimum Euclidean distance between them.
+    * **D.** Number of components in a GMM.
+    
 ---
 
 !!! question "Interview Practice"
-```
-**Question:** In the context of a phase transition simulation (like the Ising model), explain how maximizing **Mutual Information** between a candidate order parameter $O(\mathbf{x})$ and the known phase label could automatically verify if $O(\mathbf{x})$ is physically relevant.
-
-**Answer Strategy:** Mutual information $I(O; \text{Label})$ measures how much the uncertainty about the phase label (e.g., 'ordered' or 'disordered') is reduced by observing the value of the candidate parameter $O(\mathbf{x})$.
-* If $O(\mathbf{x})$ is a good order parameter (like total magnetization $M$), its value changes sharply and uniquely at the phase boundary. Thus, knowing $M$ tells you exactly what the phase is, making the MI value **large**.
-* If $O(\mathbf{x})$ is irrelevant (like the energy of a single atom), it provides no information about the phase label, and the MI value is **near zero**. Maximizing MI is an automated way to computationally discover the physical variable that best captures the macroscopic state of the system.
-
-```
+    **Question:** In the context of a phase transition simulation (like the Ising model), explain how maximizing **Mutual Information** between a candidate order parameter $O(\mathbf{x})$ and the known phase label could automatically verify if $O(\mathbf{x})$ is physically relevant.
+    
+    **Answer Strategy:** Mutual information $I(O; \text{Label})$ measures how much the uncertainty about the phase label (e.g., 'ordered' or 'disordered') is reduced by observing the value of the candidate parameter $O(\mathbf{x})$.
+    * If $O(\mathbf{x})$ is a good order parameter (like total magnetization $M$), its value changes sharply and uniquely at the phase boundary. Thus, knowing $M$ tells you exactly what the phase is, making the MI value **large**.
+    * If $O(\mathbf{x})$ is irrelevant (like the energy of a single atom), it provides no information about the phase label, and the MI value is **near zero**. Maximizing MI is an automated way to computationally discover the physical variable that best captures the macroscopic state of the system.
+    
 ---
 
 ## 💡 Hands-On Simulation Projects (Chapter Conclusion) 🛠️
