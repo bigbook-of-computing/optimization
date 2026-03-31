@@ -1,0 +1,3079 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A comprehensive guide to the foundations of optimization algorithms and techniques">
+      
+      
+        <meta name="author" content="Big Book of Computing">
+      
+      
+        <link rel="canonical" href="https://bigbookofcomputing.github.io/chapters/originals/chapter-1/essay/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Chapter 1: From Simulation to Data - Big Book of Computing | Optimization</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+      <link rel="stylesheet" href="../../../../static/styles.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-ECS7B3X8JM"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-ECS7B3X8JM",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-ECS7B3X8JM",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-1-from-simulation-to-data" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="Big Book of Computing | Optimization" class="md-header__button md-logo" aria-label="Big Book of Computing | Optimization" data-md-component="logo">
+      
+  <img src="../../../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Big Book of Computing | Optimization
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter 1: From Simulation to Data
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1M8 13h8v-2H8zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4a5 5 0 0 0 5-5 5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5M7 15a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/bigbookofcomputing/optimization" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../home/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../contents/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../introduction/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Introduction
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../chapter-1/essay/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../chapter-1/workbook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  WorkBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../chapter-1/codebook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  CodeBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Big Book of Computing | Optimization" class="md-nav__button md-logo" aria-label="Big Book of Computing | Optimization" data-md-component="logo">
+      
+  <img src="../../../../assets/logo.png" alt="logo">
+
+    </a>
+    Big Book of Computing | Optimization
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/bigbookofcomputing/optimization" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../home/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapters
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Chapters
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-1/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-2/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-3/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-4/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-5/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-6/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-7/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-8/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-9/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-10/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-11/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-12/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-13/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-14/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-15/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-16/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-17/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-18/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-19/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WorkBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    WorkBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-1/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-2/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-3/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-4/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-5/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-6/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-7/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-8/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-9/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-10/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-11/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-12/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-13/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-14/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-15/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-16/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-17/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-18/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-19/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CodeBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CodeBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-1/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-2/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-3/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-4/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-5/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-6/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-7/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-8/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-9/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-10/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-11/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-12/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-13/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-14/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-15/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-16/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-17/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-18/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-19/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/bigbookofcomputing/optimization/edit/master/docs/chapters/originals/chapter-1/essay.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/bigbookofcomputing/optimization/raw/master/docs/chapters/originals/chapter-1/essay.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="chapter-1-from-simulation-to-data"><strong>Chapter 1: From Simulation to Data</strong></h1>
+<hr />
+<h1 id="introduction"><strong>Introduction</strong></h1>
+<p>Volume II established the forward problem: given physical laws and initial conditions, simulate the system's evolution to generate trajectories, ensembles, and observables. We built integrators for Newton's equations, Monte Carlo samplers for thermal equilibria, and finite-difference solvers for partial differential equations. The output of these efforts is invariably a massive corpus of raw information—terabytes of particle coordinates <span class="arithmatex">\(\mathbf{r}_i(t)\)</span>, arrays of spin configurations <span class="arithmatex">\(\{s_i\}^{(t)}\)</span>, or time-evolving field values <span class="arithmatex">\(\phi(\mathbf{x},t)\)</span>. Once the simulation terminates, the dynamical engine falls silent, and we are left with a static artifact: the <strong>dataset</strong>.</p>
+<p>The transition from simulation to data analysis requires a fundamental conceptual shift. In Volume II, we thought in terms of <strong>dynamics</strong>: how does state <span class="arithmatex">\(\mathbf{s}_t\)</span> causally produce state <span class="arithmatex">\(\mathbf{s}_{t+1}\)</span>? In Volume III, we must think in terms of <strong>geometry</strong>: how is the entire ensemble of states <span class="arithmatex">\(\{\mathbf{s}_i\}\)</span> arranged in high-dimensional space? This chapter establishes the mathematical and computational foundations for this transition, introducing the core concepts that transform raw simulation outputs into structured datasets amenable to statistical analysis and machine learning.</p>
+<p>We begin by reconceptualizing simulation outputs as clouds of points in high-dimensional <strong>feature space</strong> <span class="arithmatex">\(\mathbb{R}^D\)</span>, where each snapshot becomes a single data vector. We introduce the <strong>manifold hypothesis</strong>—the observation that while data may formally live in a space with millions of dimensions, physical constraints confine it to a much lower-dimensional surface embedded within that space. This geometric perspective leads naturally to the <strong>covariance matrix</strong> and <strong>principal component analysis (PCA)</strong>, tools that reveal the data's intrinsic axes of variation and allow us to visualize high-dimensional clouds as interpretable 2D maps. We then examine how different <strong>distance metrics</strong> (Euclidean, correlation, geodesic) encode different notions of similarity, and how the topology of the data cloud directly reflects the underlying energy landscape. Finally, we demonstrate these concepts through a worked example analyzing molecular dynamics trajectories, showing how covariance analysis automatically discovers collective variables and metastable states.</p>
+<p>By the end of this chapter, you will understand how to convert simulation trajectories into structured data matrices, compute and interpret principal components as physical order parameters, choose appropriate distance metrics for different physical systems, and recognize that the shape of a data cloud is a geometric encoding of the free-energy landscape. These foundations prepare you for Chapter 2, where we develop the probabilistic framework needed to estimate continuous distributions from finite samples and confront the counterintuitive phenomena that emerge in high-dimensional spaces.</p>
+<hr />
+<h1 id="chapter-1-outline"><strong>Chapter 1: Outline</strong></h1>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Sec.</strong></th>
+<th style="text-align: left;"><strong>Title</strong></th>
+<th style="text-align: left;"><strong>Core Ideas &amp; Examples</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>1.1</strong></td>
+<td style="text-align: left;"><strong>Data as the New State Variable</strong></td>
+<td style="text-align: left;">Transition from dynamics to geometry; phase space vs. feature space <span class="arithmatex">\(\mathbb{R}^D\)</span>; simulation snapshots as independent samples; manifold hypothesis: high-dimensional data confined to low-dimensional surfaces; order parameters as principal axes; example: Ising lattice <span class="arithmatex">\(2^{256}\)</span> states → 1D manifold (magnetization <span class="arithmatex">\(M\)</span>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>1.2</strong></td>
+<td style="text-align: left;"><strong>Representing Simulation Outputs</strong></td>
+<td style="text-align: left;">Flattening physical states (lattice → vector, molecule → concatenated coordinates); feature scaling and standardization <span class="arithmatex">\(x' = (x - \mu)/\sigma\)</span>; time averages vs. ensemble averages; ergodic hypothesis; empirical distribution <span class="arithmatex">\(X\)</span> as estimate of <span class="arithmatex">\(P(\mathbf{x})\)</span>; mean vector <span class="arithmatex">\(\mathbf{\mu}\)</span> and covariance matrix <span class="arithmatex">\(\Sigma\)</span> as fundamental descriptors.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>1.3</strong></td>
+<td style="text-align: left;"><strong>The Geometry of Variability</strong></td>
+<td style="text-align: left;">Covariance as geometric operator; eigendecomposition <span class="arithmatex">\(\Sigma \mathbf{v}_k = \lambda_k \mathbf{v}_k\)</span>; principal components as axes of max variance; manifold discovery via eigenvalue spectrum; collective variables in molecular dynamics; visualization via 2D PC projection; protein hinging motion as PC1; Ising magnetization as automatic order parameter.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>1.4</strong></td>
+<td style="text-align: left;"><strong>Distance, Similarity, and Metrics</strong></td>
+<td style="text-align: left;">Euclidean <span class="arithmatex">\(L^2\)</span> norm limitations; RMSD for rotationally invariant molecular comparison; correlation distance for pattern similarity; geodesic distance on manifolds vs. straight-line Euclidean; Swiss Alps analogy; energy barriers invisible to <span class="arithmatex">\(L^2\)</span>; foundation for nonlinear dimensionality reduction (t-SNE, UMAP).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>1.5</strong></td>
+<td style="text-align: left;"><strong>From Clouds to Structure</strong></td>
+<td style="text-align: left;">Data cloud topology encodes energy landscape; dense clusters = metastable basins; voids = energy barriers; filaments = transition paths; Shannon entropy <span class="arithmatex">\(S = -k_B \sum p_i \ln p_i\)</span> as data spread measure; low entropy (ordered, low-<span class="arithmatex">\(T\)</span>) vs. high entropy (disordered, high-<span class="arithmatex">\(T\)</span>); clustering algorithms as phase identification.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>1.6</strong></td>
+<td style="text-align: left;"><strong>Worked Example — Molecular Trajectories</strong></td>
+<td style="text-align: left;">Protein MD simulation (lysozyme, <span class="arithmatex">\(N \approx 20{,}000\)</span> atoms, <span class="arithmatex">\(M = 100{,}000\)</span> snapshots); flattening to <span class="arithmatex">\(\mathbb{R}^{60000}\)</span>; covariance of atomic displacements; eigendecomposition reveals 10–50 dominant modes; PC1 = collective hinging motion; 2D projection shows two metastable conformations (open/closed); sparse filaments = transition pathways.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>1.7</strong></td>
+<td style="text-align: left;"><strong>Code Demo — Visualizing the Data Geometry</strong></td>
+<td style="text-align: left;">Python implementation: generate synthetic 5D correlated data; sklearn PCA to find principal components; 2D scatter plot reveals elongated ellipse aligned with engineered correlation; variance ratio confirms PC1 dominance; demonstrates manifold discovery from correlation structure.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>1.8</strong></td>
+<td style="text-align: left;"><strong>Takeaways &amp; Bridge to Chapter 2</strong></td>
+<td style="text-align: left;">Recap: simulation → data cloud, covariance → geometry, PCA → collective variables, topology → energy landscape. <strong>Bridge to Ch. 2</strong>: From geometric description (mean, covariance) to full probability distribution <span class="arithmatex">\(P(\mathbf{x})\)</span>; estimating continuous densities from finite samples; curse of dimensionality; entropy and likelihood; maximum entropy principle.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="11-data-as-the-new-state-variable"><strong>1.1 Data as the New State Variable</strong></h2>
+<hr />
+<h3 id="the-post-simulation-reality"><strong>The Post-Simulation Reality</strong></h3>
+<p>In Volume II, we focused on the <em>generative</em> side of computational physics: building integrators, construct Monte Carlo samplers, and solving partial differential equations. The output of these efforts is typically a massive stream of raw information—terabytes of particle trajectories <span class="arithmatex">\(\mathbf{r}_i(t)\)</span>, traces of spin configurations <span class="arithmatex">\(\{s_i\}^{(t)}\)</span>, or time-evolving fields <span class="arithmatex">\(\phi(\mathbf{x},t)\)</span>.</p>
+<p>Once the simulation finishes, however, the dynamical "engine" turns off. We are left with a static artifact: the <strong>dataset</strong>. In classical theoretical physics, this might be a mere intermediate step before computing a single macroscopic observable like average magnetization <span class="arithmatex">\(\langle M \rangle\)</span>. In the modern era, the dataset itself is the object of study.</p>
+<p>The transition from <em>simulation</em> to <em>data analysis</em> requires a fundamental shift in perspective. We must move from thinking about <strong>dynamics</strong> (how state <span class="arithmatex">\(\mathbf{s}_t\)</span> causes state <span class="arithmatex">\(\mathbf{s}_{t+1}\)</span>) to thinking about <strong>geometry</strong> (how the set of all states <span class="arithmatex">\(\{\mathbf{s}_i\}\)</span> is arranged in high-dimensional space).</p>
+<div class="admonition tip">
+<p class="admonition-title">The Paradigm Shift: Dynamics to Geometry</p>
+</div>
+<h2 id="in-volume-ii-we-asked-given-initial-conditions-and-laws-what-happens-next-this-is-the-forward-problem-of-simulation-in-volume-iii-we-ask-given-a-cloud-of-observed-states-what-are-the-underlying-laws-this-is-the-inverse-problem-of-inference-the-bridge-is-geometry-the-shape-of-the-data-cloud-encodes-both-the-dynamics-that-created-it-and-the-probability-distribution-that-governs-it"><div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>In Volume II, we asked: &quot;Given initial conditions and laws, what happens next?&quot; This is the forward problem of simulation. In Volume III, we ask: &quot;Given a cloud of observed states, what are the underlying laws?&quot; This is the inverse problem of inference. The bridge is geometry: the shape of the data cloud encodes both the dynamics that created it and the probability distribution that governs it.
+</span></code></pre></div></h2>
+<h3 id="phase-space-vs-feature-space"><strong>Phase Space vs. Feature Space</strong></h3>
+<p>In physics, we are accustomed to <strong>phase space</strong>, <span class="arithmatex">\(\Gamma\)</span>. For a classical system of <span class="arithmatex">\(N\)</span> particles, this is a <span class="arithmatex">\(6N\)</span>-dimensional space where every point represents a complete microscopic description of the system:</p>
+<div class="arithmatex">\[
+(\mathbf{r}_1, \dots, \mathbf{r}_N, \mathbf{p}_1, \dots, \mathbf{p}_N)
+\]</div>
+<p>A simulation traces a curve through this space, governed by a Hamiltonian <span class="arithmatex">\(\mathcal{H}\)</span>.</p>
+<p>In data science, we introduce a parallel concept: <strong>feature space</strong> (often denoted <span class="arithmatex">\(\mathbb{R}^D\)</span>). A "sample" in data science is analogous to a "microstate" in statistical mechanics.
+* <strong>In Simulation:</strong> A state is a snapshot in time, causally linked to the previous moment.
+* <strong>In Data Science:</strong> A state is a point in a high-dimensional vector space, statistically related to other points in the ensemble.</p>
+<p>Consider a molecular dynamics simulation of a protein. Physically, it is a continuous trajectory. Viewed as a dataset, it is a cloud of <span class="arithmatex">\(10^6\)</span> points in <span class="arithmatex">\(\mathbb{R}^{3N}\)</span>. The task of Volume III is to learn the shape of this cloud. Does it form a unified blob (a single stable folded state)? Does it have two distinct clusters separated by a void (metastable states with a transition barrier)?</p>
+<p>By treating simulation outputs as data, we convert physical questions into geometric ones. "Entropy" becomes a measure of data spread; "phase transitions" become changes in the topology of the data manifold; "order parameters" become principal axes of variation.</p>
+<hr />
+<h3 id="the-manifold-hypothesis"><strong>The Manifold Hypothesis</strong></h3>
+<p>A crucial realization in modern data analysis is that while data may live in a profoundly high-dimensional space <span class="arithmatex">\(D\)</span> (where <span class="arithmatex">\(D\)</span> might be <span class="arithmatex">\(10^{6}\)</span> pixels in an image or <span class="arithmatex">\(10^{23}\)</span> atoms in a solid), it almost never occupies that space uniformly.</p>
+<p>Physical systems are constrained. Conservation laws, energetic symmetries, and correlations mean that the accessible states lie on a much lower-dimensional surface embedded within the larger space.</p>
+<blockquote>
+<p><strong>The Manifold Hypothesis:</strong> Real-world high-dimensional data lie on or near a low-dimensional manifold <span class="arithmatex">\(\mathcal{M}\)</span> embedded in observation space <span class="arithmatex">\(\mathbb{R}^D\)</span>.</p>
+</blockquote>
+<p>In computational physics, this is almost tautological. A gas of <span class="arithmatex">\(N\)</span> particles has <span class="arithmatex">\(3N\)</span> coordinates, but if it is confined to a 2D surface and has fixed total energy, its true degrees of freedom are far fewer than <span class="arithmatex">\(3N\)</span>. The "manifold" is simply the surface of constant energy in phase space.</p>
+<p>Machine learning algorithms (like PCA, t-SNE, or autoencoders) are essentially tools for <strong>manifold discovery</strong>. They attempt to find the coordinate system of <span class="arithmatex">\(\mathcal{M}\)</span> rather than <span class="arithmatex">\(\mathbb{R}^D\)</span>. For a physicist, discovering this manifold is equivalent to discovering the <em>collective variables</em> or <em>generalized coordinates</em> that genuinely describe the system's macroscopic behavior.</p>
+<div class="admonition example">
+<p class="admonition-title">Ising Model on a 16×16 Lattice</p>
+</div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Each spin configuration is a point in $\mathbb{R}^{256}$ (after flattening). But at temperature $T &lt; T_c$, the system explores only two regions: states with mostly +1 spins (magnetization $M \approx +1$) and mostly -1 spins ($M \approx -1$). The data manifold is effectively **1-dimensional** (parameterized by total magnetization $M$), not 256-dimensional. PCA automatically discovers this: PC1 is $\mathbf{v}_1 = (1,1,1,\ldots,1)$, the sum of all spins.
+</span></code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Conceptual Bridge from Dynamics to Geometry</p>
+</div>
+<h2 id="simulation-turns-physical-laws-into-data-analysis-turns-data-back-into-physical-insight-the-first-step-in-this-conceptual-flip-is-to-stop-seeing-a-trajectory-as-a-movie-and-start-seeing-it-as-a-static-geometry-in-high-dimensional-space"><div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Simulation turns physical laws into data; analysis turns data back into physical insight. The first step in this conceptual flip is to stop seeing a trajectory as a movie, and start seeing it as a static geometry in high-dimensional space.
+</span></code></pre></div></h2>
+<h2 id="12-representing-simulation-outputs"><strong>1.2 Representing Simulation Outputs</strong></h2>
+<p>The raw output of a simulation (e.g., a binary trajectory file) is not a dataset. A dataset, in the language of data science, is a structured table—a matrix <span class="arithmatex">\(X\)</span> of size <span class="arithmatex">\(M \times D\)</span>, where <span class="arithmatex">\(M\)</span> is the number of samples (snapshots) and <span class="arithmatex">\(D\)</span> is the number of features (variables). This section covers the practical and conceptual steps of transforming physical configurations into this standard matrix representation [1,2].</p>
+<hr />
+<h3 id="flattening-physical-states"><strong>Flattening Physical States</strong></h3>
+<p>Most machine learning algorithms are "geometrically unaware." They do not intrinsically understand that a <span class="arithmatex">\(16 \times 16\)</span> lattice has a 2D topology, or that a list of 100 atomic coordinates describes a 3D object. They expect input as a simple, one-dimensional vector, <span class="arithmatex">\(\mathbf{x} \in \mathbb{R}^D\)</span>. This conversion process is known as <strong>flattening</strong>.</p>
+<ul>
+<li><strong>Lattice Models:</strong> A <span class="arithmatex">\(16 \times 16\)</span> spin configuration (a 2D matrix) is "unrolled" into a <span class="arithmatex">\(D=256\)</span> dimensional vector:</li>
+</ul>
+<div class="arithmatex">\[
+\mathbf{x} = (s_{1,1}, s_{1,2}, \dots, s_{1,16}, s_{2,1}, \dots, s_{16,16})
+\]</div>
+<ul>
+<li><strong>Molecular Dynamics:</strong> A system of <span class="arithmatex">\(N\)</span> particles, each with 3 coordinates, is concatenated into a single <span class="arithmatex">\(D=3N\)</span> dimensional vector:</li>
+</ul>
+<div class="arithmatex">\[
+\mathbf{x} = (r_{1,x}, r_{1,y}, r_{1,z}, r_{2,x}, r_{2,y}, r_{2,z}, \dots, r_{N,z})
+\]</div>
+<p>This flattening is a brute-force operation. It discards explicit topological information (like neighborhood proximity in the lattice) and rotational/translational symmetries (in the molecule). A key task of modern machine learning (e.g., graph neural networks, Ch. 18) is to build architectures that do <em>not</em> require this step, but for classical analysis, it is the necessary starting point. The collection of <span class="arithmatex">\(M\)</span> such flattened snapshots forms the <strong>data matrix <span class="arithmatex">\(X\)</span></strong>.</p>
+<hr />
+<h3 id="feature-scaling-and-normalization"><strong>Feature Scaling and Normalization</strong></h3>
+<p>Once flattened, the features (columns of <span class="arithmatex">\(X\)</span>) often have wildly different physical units and scales. A molecular dynamics vector might concatenate atomic positions (in Ångströms, <span class="arithmatex">\(\sim 10^{-10}\)</span>) with the simulation box length (in nanometers, <span class="arithmatex">\(\sim 10^{-8}\)</span>). If left uncorrected, the box length would numerically dominate any geometric analysis, rendering the atomic positions irrelevant.</p>
+<p>We must <strong>normalize</strong> the data to place all features on an equal footing. The most common method is <strong>standardization (or Z-score normalization)</strong>, which centers each feature at zero mean and scales it to unit variance.</p>
+<p>For each feature <span class="arithmatex">\(j\)</span> (column) in the data matrix <span class="arithmatex">\(X\)</span>:</p>
+<ol>
+<li>Compute the feature mean:</li>
+</ol>
+<div class="arithmatex">\[
+\mu_j = \frac{1}{M} \sum_{i=1}^M x_{ij}
+\]</div>
+<ol>
+<li>Compute the feature standard deviation:</li>
+</ol>
+<div class="arithmatex">\[
+\sigma_j = \sqrt{\frac{1}{M-1} \sum_{i=1}^M (x_{ij} - \mu_j)^2}
+\]</div>
+<ol>
+<li>Rescale the feature:</li>
+</ol>
+<div class="arithmatex">\[
+x'_{ij} = \frac{x_{ij} - \mu_j}{\sigma_j}
+\]</div>
+<p>This standardized matrix <span class="arithmatex">\(X'\)</span> now describes the <em>relative</em> variations and correlations within the data, which is the foundation for all subsequent geometric and statistical analysis [1].</p>
+<hr />
+<h3 id="time-averages-vs-ensemble-averages"><strong>Time Averages vs. Ensemble Averages</strong></h3>
+<p>In physics, we distinguish two types of averages. A <strong>time average</strong> is an average over a single, long trajectory, as defined by the <strong>Ergodic Hypothesis</strong> [2].</p>
+<div class="arithmatex">\[
+\langle A \rangle_{\text{time}} = \lim_{T\to\infty} \frac{1}{T} \int_0^T A(\mathbf{s}(t)) dt
+\]</div>
+<p>This is what a single simulation run produces.</p>
+<p>An <strong>ensemble average</strong> is a conceptual average over an infinite number of independent system copies, each drawn from the equilibrium probability distribution <span class="arithmatex">\(P(\mathbf{s})\)</span>.</p>
+<p>$$
+\langle A \rangle_{\text{ens}} = \int A(\mathbf{s}) P(\mathbf{s}) d\mathbf{s}
+$$
+When we treat our <span class="arithmatex">\(M\)</span> simulation snapshots as a dataset, we are implicitly shifting from the time-average picture to the ensemble-average picture. We assume each snapshot <span class="arithmatex">\(\mathbf{x}_i\)</span> is an independent sample drawn from an underlying (and unknown) distribution <span class="arithmatex">\(P(\mathbf{x})\)</span>.</p>
+<p>Our dataset <span class="arithmatex">\(X\)</span> is therefore an <strong>empirical distribution</strong>—our best estimate of the true, unknown <span class="arithmatex">\(P(\mathbf{x})\)</span>. The goal of data analysis is to infer the properties of <span class="arithmatex">\(P(\mathbf{x})\)</span> from <span class="arithmatex">\(X\)</span>.</p>
+<hr />
+<h3 id="the-fundamental-statistical-descriptors"><strong>The Fundamental Statistical Descriptors</strong></h3>
+<p>The simplest properties we can extract from our empirical distribution are its first and second moments: the <strong>mean vector</strong> and the <strong>covariance matrix</strong>.</p>
+<ul>
+<li><strong>Mean Vector (<span class="arithmatex">\(\mathbf{\mu}\)</span>):</strong> The average state, or the center of the data cloud.</li>
+</ul>
+<div class="arithmatex">\[
+\mathbf{\mu} = \frac{1}{M}\sum_{i=1}^M \mathbf{x}_i
+\]</div>
+<ul>
+<li><strong>Covariance Matrix (<span class="arithmatex">\(\Sigma\)</span>):</strong> A <span class="arithmatex">\(D \times D\)</span> matrix describing the shape, spread, and orientation of the data cloud.</li>
+</ul>
+<div class="arithmatex">\[
+\Sigma = \frac{1}{M-1}\sum_{i=1}^M (\mathbf{x}_i - \mathbf{\mu})(\mathbf{x}_i - \mathbf{\mu})^{\top}
+\]</div>
+<p>The mean vector <span class="arithmatex">\(\mathbf{\mu}\)</span> tells us the average configuration (e.g., the mean positions of all atoms). The covariance matrix <span class="arithmatex">\(\Sigma\)</span> is far more powerful: its diagonal elements <span class="arithmatex">\(\Sigma_{jj}\)</span> are the <em>variances</em> of each feature, while its off-diagonal elements <span class="arithmatex">\(\Sigma_{jk}\)</span> reveal the <em>linear correlation</em> between features <span class="arithmatex">\(j\)</span> and <span class="arithmatex">\(k\)</span>.</p>
+<p>This matrix, <span class="arithmatex">\(\Sigma\)</span>, is the bridge from simple data representation to geometric analysis. As we will see in the next section, it encodes the principal axes of variation and is the key to discovering the data's intrinsic geometry.</p>
+<hr />
+<h2 id="13-the-geometry-of-variability"><strong>1.3 The Geometry of Variability</strong></h2>
+<p>The mean vector <span class="arithmatex">\(\mathbf{\mu}\)</span> locates the <em>center</em> of our data cloud, but the covariance matrix <span class="arithmatex">\(\Sigma\)</span> describes its <em>shape</em>. In this section, we transition from viewing <span class="arithmatex">\(\Sigma\)</span> as a mere statistical summary to understanding it as a <strong>geometric operator</strong> that defines the intrinsic axes of variation within our data [1,8].</p>
+<hr />
+<h3 id="covariance-as-a-geometric-operator"><strong>Covariance as a Geometric Operator</strong></h3>
+<p>The covariance matrix <span class="arithmatex">\(\Sigma\)</span> is, by construction, a <span class="arithmatex">\(D \times D\)</span> symmetric and positive semi-definite matrix. From linear algebra, this guarantees that <span class="arithmatex">\(\Sigma\)</span> has a full set of <span class="arithmatex">\(D\)</span> real, non-negative eigenvalues <span class="arithmatex">\(\lambda_k\)</span> and a corresponding set of <span class="arithmatex">\(D\)</span> orthogonal eigenvectors <span class="arithmatex">\(\mathbf{v}_k\)</span>. They are related by the eigenvalue equation:</p>
+<div class="arithmatex">\[
+\Sigma \mathbf{v}_k = \lambda_k \mathbf{v}_k
+\]</div>
+<p>This equation is not just a mathematical curiosity; it is the key to understanding the data's geometry.</p>
+<ul>
+<li><strong>Eigenvectors (<span class="arithmatex">\(\mathbf{v}_k\)</span>):</strong> These are the <strong>principal axes</strong> of the data cloud. They form a new, orthogonal coordinate system that is aligned with the data's natural orientation. The first principal component, <span class="arithmatex">\(\mathbf{v}_1\)</span> (corresponding to the largest eigenvalue <span class="arithmatex">\(\lambda_1\)</span>), is the single vector direction along which the data varies the most. The second, <span class="arithmatex">\(\mathbf{v}_2\)</span>, is the orthogonal direction that captures the most <em>remaining</em> variance, and so on.</li>
+<li><strong>Eigenvalues (<span class="arithmatex">\(\lambda_k\)</span>):</strong> Each eigenvalue <span class="arithmatex">\(\lambda_k\)</span> is precisely the <em>variance</em> of the data when projected onto its corresponding eigenvector <span class="arithmatex">\(\mathbf{v}_k\)</span>.</li>
+</ul>
+<p>This decomposition of <span class="arithmatex">\(\Sigma\)</span> is the mathematical core of <strong>Principal Component Analysis (PCA)</strong>, a foundational technique for dimensionality reduction [1,8].</p>
+<hr />
+<h3 id="manifold-intuition-and-collective-variables"><strong>Manifold Intuition and Collective Variables</strong></h3>
+<p>In most physical systems, <span class="arithmatex">\(D\)</span> is enormous (e.g., <span class="arithmatex">\(3N \sim 10^5\)</span> for a protein), but the <em>effective</em> degrees of freedom are small. A protein doesn't randomly explore all <span class="arithmatex">\(10^5\)</span> dimensions; it folds, hinges, and twists in a highly coordinated fashion.</p>
+<p>This physical constraint appears directly in the eigenvalue spectrum <span class="arithmatex">\(\{\lambda_k\}\)</span> of the covariance matrix. We will almost always find that:
+* A few eigenvalues (<span class="arithmatex">\(\lambda_1, \dots, \lambda_d\)</span> where <span class="arithmatex">\(d \ll D\)</span>) are large.
+* The vast majority of the <span class="arithmatex">\(D-d\)</span> remaining eigenvalues are very small, often near zero.</p>
+<p>This tells us the data cloud is not a <span class="arithmatex">\(D\)</span>-dimensional "hyper-sphere." It is a "hyper-pancake" or "cigar"—a structure that is geometrically flat in most directions. The subspace spanned by the first <span class="arithmatex">\(d\)</span> principal components (<span class="arithmatex">\(\mathbf{v}_1, \dots, \mathbf{v}_d\)</span>) forms a linear approximation of the low-dimensional manifold <span class="arithmatex">\(\mathcal{M}\)</span> on which the data truly lives.</p>
+<p>For a physicist, these principal components are the system's <strong>collective variables</strong> or <strong>order parameters</strong>, discovered automatically from the data.</p>
+<ul>
+<li><strong>Analogy 1: Molecular Dynamics.</strong> In a simulation of a protein, PC1 is rarely "atom 5 moves left." Instead, it is a complex vector describing a collective motion, such as the "hinging" of two domains—a physical <em>normal mode</em> of the system [3,4].</li>
+<li><strong>Analogy 2: Spin Systems.</strong> In a simulation of the Ising model, PC1 (the direction of max variance) corresponds to the total magnetization:</li>
+</ul>
+<div class="arithmatex">\[
+M = \sum_i s_i
+\]</div>
+<p>The analysis has automatically identified the system's order parameter.</p>
+<hr />
+<h3 id="visualization-projecting-the-shadow"><strong>Visualization: Projecting the Shadow</strong></h3>
+<p>We cannot visualize our data in <span class="arithmatex">\(\mathbb{R}^D\)</span>, but we <em>can</em> visualize its projection onto the most important subspace. The most common visualization in data-driven physics is a 2D scatter plot of the data projected onto its first two principal components.</p>
+<p>For each high-dimensional snapshot <span class="arithmatex">\(\mathbf{x}_i\)</span>, we compute its 2D coordinates:</p>
+<div class="arithmatex">\[
+z_{i1} = (\mathbf{x}_i - \mathbf{\mu}) \cdot \mathbf{v}_1
+\]</div>
+<p>(Coordinate along PC1)</p>
+<div class="arithmatex">\[
+z_{i2} = (\mathbf{x}_i - \mathbf{\mu}) \cdot \mathbf{v}_2
+\]</div>
+<p>(Coordinate along PC2)</p>
+<p>Plotting <span class="arithmatex">\(z_{i2}\)</span> versus <span class="arithmatex">\(z_{i1}\)</span> for all <span class="arithmatex">\(M\)</span> samples reveals the "shadow" of the manifold. This 2D map is our primary tool for visual exploration, allowing us to see the shape of the data: Are there distinct clusters (phases)? Are there clear pathways (transition states)? We have turned a terabyte simulation file into a single, interpretable map.</p>
+<hr />
+<h2 id="14-distance-similarity-and-metrics"><strong>1.4 Distance, Similarity, and Metrics</strong></h2>
+<p>Projecting data onto its principal components reveals the linear <em>geometry</em> of the data cloud (Section 1.3). However, this geometry is entirely dependent on our definition of "distance." The covariance matrix <span class="arithmatex">\(\Sigma\)</span> is built upon the implicit assumption of a standard <strong>Euclidean (or <span class="arithmatex">\(L^2\)</span>) metric</strong>. In high-dimensional physical systems, this default assumption can be misleading, and choosing a metric that reflects the underlying physics is a critical modeling decision [5,6].</p>
+<hr />
+<h3 id="the-l2-norm-and-its-limitations"><strong>The <span class="arithmatex">\(L^2\)</span> Norm and its Limitations</strong></h3>
+<p>The Euclidean distance between two flattened state vectors <span class="arithmatex">\(\mathbf{x}_i\)</span> and <span class="arithmatex">\(\mathbf{x}_j\)</span> is the familiar <span class="arithmatex">\(L^2\)</span> norm:
+$$
+d_E(\mathbf{x}<em k="1">i, \mathbf{x}_j) = |\mathbf{x}_i - \mathbf{x}_j|_2 = \sqrt{\sum</em>
+$$
+This metric is the default for PCA and many clustering algorithms (like K-means). However, it has a significant drawback: it treats all }^D (x_{ik} - x_{jk})^2<span class="arithmatex">\(D\)</span> features as independent and equally important. After flattening a 3D molecular structure into a <span class="arithmatex">\(3N\)</span>-dimensional vector, the <span class="arithmatex">\(L^2\)</span> norm loses all information about the original 3D rotational and translational symmetries. Two molecular configurations that are identical (one is just rotated) will have a large Euclidean distance, a physically nonsensical result.</p>
+<p>This necessitates metrics that are <strong>invariant</strong> to the underlying physical symmetries. A classic example is <strong>Root Mean Square Deviation (RMSD)</strong>, widely used in biophysics. RMSD first optimally aligns (superimposes) two structures to remove translational and rotational differences <em>before</em> computing the Euclidean distance of the atoms [5]. This is a <em>physically-aware</em> metric.</p>
+<hr />
+<h3 id="correlation-distance"><strong>Correlation Distance</strong></h3>
+<p>In many systems, we are interested in the <em>shape</em> of a signal, not its <em>magnitude</em>. For example, two time-series signals (like the magnetization trace <span class="arithmatex">\(M(t)\)</span> from two different simulation runs) might show the same fluctuations but have different baseline offsets or amplitudes. The Euclidean distance between them would be large, but a physicist would call them highly correlated.</p>
+<p>We can define a distance based on the <strong>Pearson correlation coefficient</strong>, <span class="arithmatex">\(r\)</span>:
+$$
+r_{ij} = \frac{(\mathbf{x}_i - \mathbf{\mu}_i) \cdot (\mathbf{x}_j - \mathbf{\mu}_j)}{|\mathbf{x}_i - \mathbf{\mu}_i| |\mathbf{x}_j - \mathbf{\mu}_j|}
+$$
+where <span class="arithmatex">\(\mathbf{\mu}_i\)</span> and <span class="arithmatex">\(\mathbf{\mu}_j\)</span> are the means of vectors <span class="arithmatex">\(\mathbf{x}_i\)</span> and <span class="arithmatex">\(\mathbf{x}_j\)</span>. The correlation coefficient <span class="arithmatex">\(r_{ij}\)</span> ranges from +1 (perfectly correlated) to -1 (perfectly anti-correlated).</p>
+<p>A common <strong>correlation distance</strong> is then defined as:
+$$
+d_C(\mathbf{x}<em ij="ij">i, \mathbf{x}_j) = \sqrt{2(1 - r</em>
+$$
+This metric is 0 for perfectly correlated signals (})<span class="arithmatex">\(r=1\)</span>) and reaches its maximum of 2 for perfectly anti-correlated signals (<span class="arithmatex">\(r=-1\)</span>). It is a powerful tool for finding <em>functionally</em> similar states, even if their raw values are different.</p>
+<details class="question">
+<summary>When Should You Use Correlation Distance vs. Euclidean Distance?</summary>
+</details>
+<h2 id="use-euclidean-distance-when-absolute-differences-matter-eg-comparing-atomic-positions-where-1-a-displacement-is-physically-meaningful-use-correlation-distance-when-you-care-about-patterns-or-shapes-regardless-of-scale-eg-comparing-time-series-signals-where-the-trend-matters-more-than-the-amplitude-or-comparing-molecular-conformations-where-you-want-rotationaltranslational-invariance-correlation-distance-is-essentially-asking-do-these-two-states-vary-together-rather-than-are-these-two-states-numerically-close"><div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Use **Euclidean distance** when absolute differences matter (e.g., comparing atomic positions where 1 Å displacement is physically meaningful). Use **correlation distance** when you care about patterns or shapes regardless of scale (e.g., comparing time-series signals where the trend matters more than the amplitude, or comparing molecular conformations where you want rotational/translational invariance). Correlation distance is essentially asking: &quot;Do these two states vary together?&quot; rather than &quot;Are these two states numerically close?&quot;
+</span></code></pre></div></h2>
+<h3 id="manifold-distance-geodesic-distance"><strong>Manifold Distance (Geodesic Distance)</strong></h3>
+<hr />
+<h3 id="manifold-distance-geodesic-distance_1"><strong>Manifold Distance (Geodesic Distance)</strong></h3>
+<p>The most profound limitation of the <span class="arithmatex">\(L^2\)</span> norm is that it measures distance "as the crow flies"—straight through the high-dimensional embedding space <span class="arithmatex">\(\mathbb{R}^D\)</span>. But if the data lives on a curved manifold <span class="arithmatex">\(\mathcal{M}\)</span> (Section 1.1.2), the physically relevant distance is the <strong>geodesic distance</strong>: the shortest path between two points <em>while staying on the manifold</em>.</p>
+<div class="admonition example">
+<p class="admonition-title">The Swiss Alps Analogy</p>
+</div>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>The Euclidean distance between two villages on opposite sides of a mountain may be 1 km. But the *geodesic* (hiking) distance, which must go up and over the mountain, might be 10 km. Euclidean distance fails to see the mountain—it measures straight through the obstacle rather than the actual traversable path.
+</span></code></pre></div>
+Euclidean distance fails to see the mountain. A simulation trajectory from one metastable state to another (e.g., protein folding) traces a long path <em>on the manifold</em>. The <span class="arithmatex">\(L^2\)</span> distance between the start and end states is short, completely missing the massive energy barrier (the "mountain") between them.</p>
+<p>The geodesic distance <span class="arithmatex">\(d_G(\mathbf{x}_i, \mathbf{x}_j)\)</span> is the true measure of dissimilarity within the system's constrained state space. While difficult to compute directly, it is the conceptual foundation for all <strong>nonlinear dimensionality reduction</strong> techniques (like t-SNE and UMAP, discussed in Chapter 3), which are designed to "unroll" the manifold <span class="arithmatex">\(\mathcal{M}\)</span> into a flat space while preserving these local geodesic distances [6,9].</p>
+<hr />
+<h2 id="15-from-clouds-to-structure"><strong>1.5 From Clouds to Structure</strong></h2>
+<p>The previous sections established how to represent a simulation as a <strong>data cloud</strong>—a collection of <span class="arithmatex">\(M\)</span> points in a <span class="arithmatex">\(D\)</span>-dimensional feature space <span class="arithmatex">\(\mathbb{R}^D\)</span>—and how to choose a metric to measure distances within it. Now, we ask the central question: <em>What does the shape of this cloud tell us about the physics?</em></p>
+<hr />
+<h3 id="the-clouds-shape-is-the-energy-landscape"><strong>The Cloud's Shape is the Energy Landscape</strong></h3>
+<p>A simulation is not a uniform sampler of <span class="arithmatex">\(\mathbb{R}^D\)</span>. A physical system governed by a potential energy function <span class="arithmatex">\(E(\mathbf{x})\)</span> preferentially visits low-energy states. According to the Boltzmann distribution, the probability of observing a state <span class="arithmatex">\(\mathbf{x}\)</span> is [2]:
+$$
+P(\mathbf{x}) \propto e^{-E(\mathbf{x})/k_B T}
+$$
+This fundamental law of statistical mechanics (Pathria &amp; Beale, 2011) has a profound geometric consequence:
+* <strong>Dense Clusters <span class="arithmatex">\(\leftrightarrow\)</span> Metastable States:</strong> Regions in the data cloud with a high density of points correspond to <strong>basins</strong> in the potential energy landscape. These are the system's stable or metastable states (e.g., folded, unfolded, or misfolded protein conformations; liquid or solid phases).
+* <strong>Empty Voids <span class="arithmatex">\(\leftrightarrow\)</span> Energy Barriers:</strong> Large empty regions in the data cloud correspond to high-energy barriers. The system <em>can</em> cross these regions, but does so rarely, making such states exponentially unlikely to be sampled.
+* <strong>Filaments &amp; Pathways <span class="arithmatex">\(\leftrightarrow\)</span> Transition States:</strong> The sparse "filaments" of points that occasionally connect two dense clusters are the system's <strong>transition paths</strong>. These are trajectories that successfully cross the energy barriers, passing through or near the saddle points of the potential energy surface.</p>
+<p>Therefore, by analyzing the <em>topological structure</em> of the data cloud, we are performing a data-driven version of <strong>free-energy landscape mapping</strong>. A data-clustering algorithm (Chapter 3) is, in this context, an algorithm for automatically identifying the system's metastable phases.</p>
+<hr />
+<h3 id="linking-geometry-to-information-entropy"><strong>Linking Geometry to Information: Entropy</strong></h3>
+<p>We can formalize the "spread" of the data cloud using the language of information theory. If we discretize the state space into microstates (or bins) <span class="arithmatex">\(i\)</span>, our data cloud <span class="arithmatex">\(X\)</span> gives an empirical probability <span class="arithmatex">\(p_i\)</span> for each bin (the fraction of samples in that bin).</p>
+<p>The <strong>Shannon entropy</strong> of this distribution is [7]:
+$$
+S = -k_B \sum_i p_i \ln p_i
+$$
+(We include <span class="arithmatex">\(k_B\)</span>, Boltzmann's constant, to make the connection to thermodynamics explicit).</p>
+<p>This single number provides a direct link between geometry and physics:
+* <strong>Low Entropy:</strong> If the data cloud is highly concentrated in one small region (one deep energy well), <span class="arithmatex">\(p_i \approx 1\)</span> for a single state and <span class="arithmatex">\(S \approx 0\)</span>. This is a <strong>low-temperature, ordered</strong> state.
+* <strong>High Entropy:</strong> If the data cloud is spread diffusely over many states (a flat, high-energy landscape), <span class="arithmatex">\(p_i\)</span> is small and uniform, and <span class="arithmatex">\(S\)</span> is large. This is a <strong>high-temperature, disordered</strong> state.</p>
+<p>In this view, data analysis is the process of inferring the <em>information geometry</em> of the system. The covariance matrix (Section 1.3) captures the Gaussian, or lowest-order, approximation of this geometry. The full cluster structure (Chapter 3) and nonlinear embeddings (Chapter 3) will provide a richer, higher-order picture of this fundamental probability/energy landscape.</p>
+<hr />
+<h2 id="16-worked-example-molecular-trajectories"><strong>1.6 Worked Example — Molecular Trajectories</strong></h2>
+<p>Let us now apply these concepts to a canonical problem in computational physics: analyzing a <strong>molecular dynamics (MD) trajectory</strong>.</p>
+<p><strong>1. The System and Simulation:</strong></p>
+<p>Consider a 1-microsecond simulation of a protein, such as the enzyme lysozyme, in a box of water. The simulation engine saves the (x, y, z) coordinates of all <span class="arithmatex">\(N\)</span> atoms (<span class="arithmatex">\(N \approx 20,000\)</span>) every 10 nanoseconds.</p>
+<ul>
+<li><strong>Raw Output:</strong> A trajectory file.</li>
+<li><strong>Samples (M):</strong> <span class="arithmatex">\(100,000\)</span> snapshots (frames).</li>
+<li><strong>Raw Features (D):</strong> <span class="arithmatex">\(3N \approx 60,000\)</span> coordinates.</li>
+</ul>
+<p><strong>2. Data Preparation (Flattening &amp; Centering):</strong></p>
+<p>As described in Section 1.2, we first "flatten" each snapshot into a single vector <span class="arithmatex">\(\mathbf{x}_i \in \mathbb{R}^{3N}\)</span>. We then compute the mean vector <span class="arithmatex">\(\mathbf{\mu}\)</span> (the average atomic positions over the entire trajectory) and subtract it, yielding a new data matrix <span class="arithmatex">\(X'\)</span> of <em>displacements</em> from the mean. This centering step ensures our analysis focuses on the <em>fluctuations</em> around the average structure, not the static position of the protein in the box.</p>
+<p><strong>3. Analysis I: Covariance and Principal Components:</strong></p>
+<p>We compute the <span class="arithmatex">\(3N \times 3N\)</span> <strong>covariance matrix of atomic displacements</strong>:
+$$
+\Sigma = \frac{1}{M-1} \sum_{i=1}^M (\mathbf{x}_i - \mathbf{\mu})(\mathbf{x}_i - \mathbf{\mu})^{\top}
+$$
+As <span class="arithmatex">\(3N\)</span> is enormous, this matrix is rarely constructed directly; instead, specialized algorithms are used to find its dominant eigenvectors (Section 1.3) [3].</p>
+<p><strong>4. Interpretation (The Physics):</strong></p>
+<p>We perform an eigendecomposition of <span class="arithmatex">\(\Sigma\)</span>.
+* <strong>The Eigenvectors (PCs):</strong> The first eigenvector <span class="arithmatex">\(\mathbf{v}_1\)</span> is a <span class="arithmatex">\(3N\)</span>-dimensional vector that represents the single, most dominant collective motion of the protein. When animated, this vector might show a large-scale "hinging" motion of the enzyme's active site. The second eigenvector <span class="arithmatex">\(\mathbf{v}_2\)</span> will show the next most significant motion, orthogonal to the first.
+* <strong>The Eigenvalues (Variance):</strong> We invariably find that the first 10-50 eigenvalues are significantly larger than the other <span class="arithmatex">\(\approx 59,950\)</span>, which are near zero. This confirms the <strong>manifold hypothesis</strong> (Section 1.1): the protein's complex motion is constrained to a low-dimensional manifold, governed by a few collective "normal modes."
+* <strong>The Visualization:</strong> We project all <span class="arithmatex">\(100,000\)</span> snapshots onto the first two PCs (as in Section 1.3). This 2D scatter plot is the <strong>free-energy landscape</strong> of the protein (Section 1.5). If the plot shows two dense clusters, we have discovered that the protein exists in two distinct metastable conformations (e.g., "open" and "closed"), and the sparse filaments of points between them are the transition paths.</p>
+<p>This single analysis, rooted in the data's covariance geometry, turns a massive, incomprehensible trajectory file into a simple, interpretable map of the protein's dominant motions and stable states.</p>
+<hr />
+<h2 id="17-code-demo-visualizing-the-data-geometry"><strong>1.7 Code Demo — Visualizing the Data Geometry</strong></h2>
+<p>This demo provides a minimal, practical implementation of the concepts from Sections 1.2 and 1.3. We will:</p>
+<ol>
+<li>Generate a synthetic 5-dimensional (<span class="arithmatex">\(D=5\)</span>) dataset where the features are <em>not</em> independent. We will explicitly "build in" a correlation (a physical constraint).</li>
+<li>Use Principal Component Analysis (PCA) to find the data's principal axes.</li>
+<li>Visualize the data by projecting it onto the first two principal components, revealing the hidden structure we created.</li>
+</ol>
+<p>This simulates a common scenario in physics where a system's dynamics are confined to a lower-dimensional manifold.</p>
+<p><div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCA</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="c1"># 1. Generate correlated synthetic data (analogy to molecular modes)</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="n">N</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">5</span>  <span class="c1"># 1000 samples (snapshots), 5 features (dimensions)</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="c1"># Create standard normal (uncorrelated) data</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="n">X</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="n">D</span><span class="p">))</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="c1"># Introduce a strong correlation:</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="c1"># Make feature 1 (index 1) strongly dependent on feature 0 (index 0)</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="c1"># This simulates a physical &quot;collective variable&quot; or constraint.</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">0.8</span> <span class="o">*</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="c1"># 2. PCA projection</span>
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="c1"># We &#39;standardize&#39; by centering, though scikit-learn&#39;s PCA does this.</span>
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="c1"># For clarity, we&#39;d typically use:</span>
+</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="c1"># X_scaled = (X - X.mean(axis=0)) / X.std(axis=0)</span>
+</span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="c1"># But for this simple demo, we proceed directly.</span>
+</span><span id="__span-5-22"><a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>
+</span><span id="__span-5-23"><a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a><span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</span><span id="__span-5-24"><a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a><span class="c1"># &#39;fit_transform&#39; computes the mean, finds the eigenvectors (v_k),</span>
+</span><span id="__span-5-25"><a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a><span class="c1"># and projects X onto the first two (v_1, v_2).</span>
+</span><span id="__span-5-26"><a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a><span class="n">X_pca</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</span><span id="__span-5-27"><a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a>
+</span><span id="__span-5-28"><a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a><span class="c1"># 3. Visualization</span>
+</span><span id="__span-5-29"><a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+</span><span id="__span-5-30"><a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_pca</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_pca</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</span><span id="__span-5-31"><a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Principal Component 1 (PC1)&#39;</span><span class="p">)</span>
+</span><span id="__span-5-32"><a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Principal Component 2 (PC2)&#39;</span><span class="p">)</span>
+</span><span id="__span-5-33"><a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;2D Projection of 5D Correlated Data&#39;</span><span class="p">)</span>
+</span><span id="__span-5-34"><a id="__codelineno-5-34" name="__codelineno-5-34" href="#__codelineno-5-34"></a><span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</span><span id="__span-5-35"><a id="__codelineno-5-35" name="__codelineno-5-35" href="#__codelineno-5-35"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</span><span id="__span-5-36"><a id="__codelineno-5-36" name="__codelineno-5-36" href="#__codelineno-5-36"></a>
+</span><span id="__span-5-37"><a id="__codelineno-5-37" name="__codelineno-5-37" href="#__codelineno-5-37"></a><span class="c1"># Optional: Check the variance captured</span>
+</span><span id="__span-5-38"><a id="__codelineno-5-38" name="__codelineno-5-38" href="#__codelineno-5-38"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Variance captured by PC1: </span><span class="si">{</span><span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-5-39"><a id="__codelineno-5-39" name="__codelineno-5-39" href="#__codelineno-5-39"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Variance captured by PC2: </span><span class="si">{</span><span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<strong>Sample Output:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Variance captured by PC1: 0.41
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>Variance captured by PC2: 0.18
+</span></code></pre></div></p>
+<p><strong>Interpretation:</strong></p>
+<p>The resulting scatter plot shows the 2D "shadow" of the 5D data cloud. Instead of a circular, uncorrelated blob (which we would get from a standard normal distribution), the data forms an elongated, elliptical shape.</p>
+<ul>
+<li><strong>PC1:</strong> This primary axis, which captures the majority of the variance, aligns perfectly with the <span class="arithmatex">\(X_0 \leftrightarrow X_1\)</span> correlation we engineered.</li>
+<li><strong>PC2:</strong> This second axis captures the next largest direction of independent variation.</li>
+</ul>
+<details class="question">
+<summary>Why does the 5D data appear elliptical in 2D projection?</summary>
+</details>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>The engineered correlation between features 0 and 1 creates a dominant direction of variation in the data. When we project onto PC1 and PC2, we&#39;re looking at the data along its primary and secondary axes of variation. The elongated ellipse reveals that variance is not uniform across all directions—it&#39;s concentrated along the correlated features, exactly as our physical constraint dictated. This is the geometric signature of dimensional reduction: 5D data with internal structure compresses naturally onto a lower-dimensional manifold.
+</span></code></pre></div>
+This plot is a "map" of the data's geometry. If this were a physical simulation, we would have just visually confirmed that the system's motion is not random but is dominated by one specific collective mode (PC1).</p>
+<hr />
+<h2 id="18-takeaways-bridge-to-chapter-2"><strong>1.8 Takeaways &amp; Bridge to Chapter 2</strong></h2>
+<hr />
+<h3 id="what-we-accomplished-in-chapter-1"><strong>What We Accomplished in Chapter 1</strong></h3>
+<p>This chapter established the fundamental conceptual shift required for Volume III: translating the <em>dynamic output</em> of physical simulations into the <em>static geometry</em> of a dataset. We moved from viewing a simulation as a time-ordered trajectory to seeing it as a static cloud of points <span class="arithmatex">\(X\)</span> embedded in a high-dimensional feature space <span class="arithmatex">\(\mathbb{R}^D\)</span> [1,8,10].</p>
+<p>The key insights are:</p>
+<ul>
+<li><strong>Data Geometry is Physical Structure:</strong> The shape of the data cloud is not an artifact; it is a direct map of the system's potential energy landscape. Dense clusters correspond to stable phases, while sparse regions represent high-energy barriers.</li>
+<li><strong>Covariance Reveals Collective Motion:</strong> The covariance matrix <span class="arithmatex">\(\Sigma\)</span> is more than a statistic; it is a geometric operator. Its eigenvectors (principal components) reveal the dominant, collective modes of variation in the system, automatically identifying the physical order parameters from the data alone.</li>
+<li><strong>Metrics and Normalization are First Principles:</strong> Our choice of metric (e.g., <span class="arithmatex">\(L^2\)</span>, RMSD, or correlation distance) and our normalization scheme (e.g., standardization) are not mere technicalities. They are foundational assumptions that define what we mean by "similarity" and "variation." An improper choice can obscure the physics, while a physically-motivated choice can reveal it.</li>
+</ul>
+<p>Here is the complete data-to-geometry pipeline:</p>
+<pre class="mermaid"><code>graph TD
+    A["Simulation Output&lt;br/&gt;Raw trajectory file&lt;br/&gt;Binary/HDF5 format"] --&gt; B["Extract Snapshots&lt;br/&gt;M time frames&lt;br/&gt;(e.g., every 10 ns)"]
+    B --&gt; C["Flatten Physical States&lt;br/&gt;Lattice/Molecule → Vector&lt;br/&gt;x ∈ ℝᴰ"]
+    C --&gt; D["Data Matrix X&lt;br/&gt;M × D matrix&lt;br/&gt;(rows = samples, cols = features)"]
+
+    D --&gt; E["Feature Normalization&lt;br/&gt;Standardization: x' = (x - μ) / σ&lt;br/&gt;or RMSD alignment"]
+    E --&gt; F["Compute Statistics&lt;br/&gt;Mean vector μ&lt;br/&gt;Covariance matrix Σ"]
+
+    F --&gt; G["Eigendecomposition&lt;br/&gt;Σvₖ = λₖvₖ&lt;br/&gt;Find principal components"]
+    G --&gt; H{"Dimensionality Check"}
+    H --&gt;|"Few large λₖ"| I["Low-Dimensional Manifold&lt;br/&gt;Data lives in d ≪ D dimensions"]
+    H --&gt;|"Many comparable λₖ"| J["High-Dimensional Cloud&lt;br/&gt;No clear manifold structure"]
+
+    I --&gt; K["Project to PC Subspace&lt;br/&gt;zᵢ = (xᵢ - μ) · v₁, v₂, ..., vₕ"]
+    K --&gt; L["2D/3D Visualization&lt;br/&gt;Scatter plot of PC1 vs PC2"]
+
+    L --&gt; M["Interpret Geometry&lt;br/&gt;✓ Dense clusters = stable states&lt;br/&gt;✓ Voids = energy barriers&lt;br/&gt;✓ Filaments = transition paths"]
+    M --&gt; N["Physical Insight&lt;br/&gt;Collective variables&lt;br/&gt;Order parameters&lt;br/&gt;Free energy landscape"]
+
+    O["Choose Metric&lt;br/&gt;L₂, RMSD, Correlation, Geodesic"] --&gt; F
+
+    style A fill:#e1f5ff
+    style D fill:#fff3cd
+    style G fill:#ffe1e1
+    style I fill:#d4edda
+    style L fill:#d1ecf1
+    style N fill:#f8d7da</code></pre>
+<hr />
+<h3 id="bridge-to-chapter-2-from-shape-to-probability"><strong>Bridge to Chapter 2: From Shape to Probability</strong></h3>
+<p>In this chapter, we learned how to <em>describe the shape</em> of the data cloud. We used the mean <span class="arithmatex">\(\mathbf{\mu}\)</span> to find its center and the covariance <span class="arithmatex">\(\Sigma\)</span> to describe its primary orientation and spread.</p>
+<p>However, this is a purely geometric description. It tells us <em>where</em> the data is, but not <em>why</em> it is there. We observed that the cloud is dense in some places and sparse in others, but we have not yet formalized this concept of density.</p>
+<p>This leads us to the natural next question: Now that we have the geometry, what is the <strong>probability distribution</strong> <span class="arithmatex">\(P(\mathbf{x})\)</span> that <em>generated</em> this geometry?</p>
+<p>In Chapter 2, "Statistics &amp; Probability in High Dimensions," we will make this leap. We will move from the first and second moments (mean and covariance) to the full distribution itself, connecting the geometric picture of data clouds to the rigorous, probabilistic language of statistical mechanics. We will ask:
+* How do we estimate a continuous probability density <span class="arithmatex">\(P(\mathbf{x})\)</span> from a finite set of samples?
+* What counter-intuitive paradoxes (like the "Curse of Dimensionality") arise when we move from low-dimensional geometry to high-dimensional probability?
+* How do we measure the "information" contained in this distribution using concepts like entropy and likelihood?</p>
+<p>We have just mapped the <em>terrain</em> of our data; now, we will learn the <em>laws of probability</em> that govern it.</p>
+<hr />
+<h2 id="references"><strong>References</strong></h2>
+<p>[1] <strong>Bishop, C. M.</strong> (2006). <em>Pattern Recognition and Machine Learning</em>. Springer. [Comprehensive treatment of PCA, covariance, and dimensionality reduction in machine learning context]</p>
+<p>[2] <strong>Pathria, R. K., &amp; Beale, P. D.</strong> (2011). <em>Statistical Mechanics</em> (3<sup>rd</sup> ed.). Academic Press. [Foundational text on ergodic hypothesis, ensemble averages, and Boltzmann distribution]</p>
+<p>[3] <strong>Amadei, A., Linssen, A. B., &amp; Berendsen, H. J.</strong> (1993). <em>Essential Dynamics of Proteins</em>. Proteins: Structure, Function, and Bioinformatics, 17(4), 412-425. [Seminal paper on PCA analysis of molecular dynamics trajectories]</p>
+<p>[4] <strong>Ichiye, T., &amp; Karplus, M.</strong> (1991). <em>Collective Motions in Proteins: A Covariance Analysis of Atomic Fluctuations in Molecular Dynamics and Normal Mode Simulations</em>. Proteins: Structure, Function, and Bioinformatics, 11(3), 205-217. [Covariance analysis revealing collective variables in protein dynamics]</p>
+<p>[5] <strong>Kearsley, S. K.</strong> (1989). <em>On the Orthogonal Transformation Used for Structural Comparisons</em>. Acta Crystallographica Section A: Foundations of Crystallography, 45(6), 390-394. [Mathematical foundation for RMSD alignment in molecular structures]</p>
+<p>[6] <strong>Tenenbaum, J. B., de Silva, V., &amp; Langford, J. C.</strong> (2000). <em>A Global Geometric Framework for Nonlinear Dimensionality Reduction</em>. Science, 290(5500), 2319-2323. [Isomap algorithm and geodesic distance preservation in manifold learning]</p>
+<p>[7] <strong>Shannon, C. E.</strong> (1948). <em>A Mathematical Theory of Communication</em>. Bell System Technical Journal, 27(3), 379-423. [Foundational paper on information theory and entropy]</p>
+<p>[8] <strong>Jolliffe, I. T.</strong> (2002). <em>Principal Component Analysis</em> (2<sup>nd</sup> ed.). Springer. [Comprehensive reference on PCA theory and applications]</p>
+<p>[9] <strong>Van Der Maaten, L., &amp; Hinton, G.</strong> (2008). <em>Visualizing Data Using t-SNE</em>. Journal of Machine Learning Research, 9(11), 2579-2605. [Nonlinear dimensionality reduction for visualization]</p>
+<p>[10] <strong>Hinton, G. E., &amp; Salakhutdinov, R. R.</strong> (2006). <em>Reducing the Dimensionality of Data with Neural Networks</em>. Science, 313(5786), 504-507. [Autoencoder approach to manifold discovery and dimensionality reduction]</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://bigbookofcomputing.github.io" target="_blank" rel="noopener" title="bigbookofcomputing.github.io" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/bigbookofcomputing" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256c0 120 82.7 220.8 194.2 248.5V334.2h-52.8V256h52.8v-33.7c0-87.1 39.4-127.5 125-127.5 16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H287v175.9C413.8 494.8 512 386.9 512 256"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.youtube.com/@big-book-of-computing" target="_blank" rel="noopener" title="www.youtube.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M549.7 124.1c-6.2-23.7-24.8-42.3-48.3-48.6C458.9 64 288.1 64 288.1 64S117.3 64 74.7 75.5c-23.5 6.3-42 24.9-48.3 48.6C15 167 15 256.4 15 256.4s0 89.4 11.4 132.3c6.3 23.6 24.8 41.5 48.3 47.8C117.3 448 288.1 448 288.1 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zM232.2 337.6V175.2l142.7 81.2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+  
+
+
+<h4>Cookie consent</h4>
+<p>We use cookies to recognize your repeated visits and preferences, as well as to measure the effectiveness of our documentation and whether users find what they're searching for. With your consent, you're helping us to make our documentation better.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="github" checked>
+      <span class="task-list-indicator"></span>
+      GitHub
+    </label>
+  </li>
+
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../static/mathjax-config.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

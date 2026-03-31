@@ -1,0 +1,3402 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A comprehensive guide to the foundations of optimization algorithms and techniques">
+      
+      
+        <meta name="author" content="Big Book of Computing">
+      
+      
+        <link rel="canonical" href="https://bigbookofcomputing.github.io/chapters/originals/chapter-18/essay/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Chapter 18: 18. Graph Neural Networks (GNNs) - Big Book of Computing | Optimization</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+      <link rel="stylesheet" href="../../../../static/styles.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-ECS7B3X8JM"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-ECS7B3X8JM",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-ECS7B3X8JM",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-18-18-graph-neural-networks-gnns" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="Big Book of Computing | Optimization" class="md-header__button md-logo" aria-label="Big Book of Computing | Optimization" data-md-component="logo">
+      
+  <img src="../../../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Big Book of Computing | Optimization
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter 18: 18. Graph Neural Networks (GNNs)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1M8 13h8v-2H8zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4a5 5 0 0 0 5-5 5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5M7 15a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/bigbookofcomputing/optimization" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../home/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../contents/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../introduction/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Introduction
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../chapter-1/essay/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../chapter-1/workbook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  WorkBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../chapter-1/codebook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  CodeBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Big Book of Computing | Optimization" class="md-nav__button md-logo" aria-label="Big Book of Computing | Optimization" data-md-component="logo">
+      
+  <img src="../../../../assets/logo.png" alt="logo">
+
+    </a>
+    Big Book of Computing | Optimization
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/bigbookofcomputing/optimization" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../home/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapters
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Chapters
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-1/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-2/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-3/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-4/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-5/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-6/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-7/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-8/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-9/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-10/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-11/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-12/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-13/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-14/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-15/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-16/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-17/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-18/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-19/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WorkBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    WorkBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-1/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-2/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-3/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-4/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-5/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-6/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-7/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-8/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-9/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-10/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-11/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-12/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-13/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-14/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-15/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-16/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-17/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-18/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-19/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CodeBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CodeBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-1/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-2/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-3/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-4/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-5/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-6/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-7/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-8/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-9/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-10/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-11/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-12/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-13/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-14/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-15/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-16/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-17/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-18/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-19/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/bigbookofcomputing/optimization/edit/master/docs/chapters/originals/chapter-18/essay.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/bigbookofcomputing/optimization/raw/master/docs/chapters/originals/chapter-18/essay.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="chapter-18-18-graph-neural-networks-gnns"><strong>Chapter 18: 18. Graph Neural Networks (GNNs)</strong></h1>
+<hr />
+<h1 id="introduction"><strong>Introduction</strong></h1>
+<p>Chapter 17 introduced <strong>Neural Quantum States (NQS)</strong>, demonstrating how neural networks serve as variational ansätze for quantum wavefunctions by compressing exponential Hilbert space into polynomial parameters—training minimizes expected Hamiltonian energy <span class="arithmatex">\(E[\psi_{\mathbf{\theta}}] = \langle \psi_{\mathbf{\theta}} | \hat{H} | \psi_{\mathbf{\theta}} \rangle\)</span> via Variational Monte Carlo (VMC), with RBM hidden units encoding entanglement through summation over latent states. While PINNs (Chapter 16) embed classical PDEs on continuous domains and NQS extends variational principles to quantum amplitudes on discrete spin configurations, both frameworks assume a predefined geometric structure: PINNs operate on Euclidean space with differential operators acting locally via automatic differentiation, while NQS typically models systems on regular lattices (Ising grids, periodic crystals) where interactions follow fixed spatial patterns. However, the most complex systems in nature—molecules, proteins, social networks, power grids, traffic systems—exhibit <strong>irregular, sparse connectivity</strong> where the relational topology itself carries critical information. A molecule's energy depends not on rigid grid positions but on the specific graph of covalent bonds connecting atoms; a neural wavefunction for such a system must respect this arbitrary connectivity rather than forcing interactions onto a regular lattice.</p>
+<p>This chapter introduces <strong>Graph Neural Networks (GNNs)</strong>, the natural architecture for learning functions over <strong>relational topologies</strong> where entities (nodes) interact only with their structurally-defined neighbors (edges), not through global all-to-all coupling or regular spatial grids. The fundamental operation is <strong>message passing</strong>: each node <span class="arithmatex">\(i\)</span> aggregates information from its neighborhood <span class="arithmatex">\(\mathcal{N}(i)\)</span> via <span class="arithmatex">\(\mathbf{m}_i = \sum_{j \in \mathcal{N}(i)} \phi_m(\mathbf{h}_i, \mathbf{h}_j, \mathbf{e}_{ij})\)</span>, then updates its state through <span class="arithmatex">\(\mathbf{h}_i' = \phi_u(\mathbf{h}_i, \mathbf{m}_i)\)</span>, where <span class="arithmatex">\(\phi_m\)</span> and <span class="arithmatex">\(\phi_u\)</span> are learnable neural functions. This iterative process mirrors <strong>local interaction dynamics</strong> in statistical physics: nodes exchange "forces" (messages) along graph edges (couplings), and repeated updates simulate collective relaxation toward equilibrium—exactly analogous to how spins on an irregular lattice evolve under local Hamiltonian dynamics, or how heat diffuses through a discrete manifold defined by connectivity rather than Euclidean distance. <strong>Graph Convolutional Networks (GCNs)</strong> implement this via spectral filtering on the graph Laplacian, effectively solving diffusion equations on arbitrary topologies, while <strong>Graph Attention Networks (GATs)</strong> introduce learned, dynamic coupling strengths <span class="arithmatex">\(\alpha_{ij}\)</span> that adapt based on node states—modeling systems where interaction potentials are context-dependent rather than fixed. The summation aggregator ensures <strong>permutation invariance</strong>: molecular energy cannot depend on how atoms are indexed, mirroring the physical requirement that observables are invariant under relabeling of identical particles.</p>
+<p>By the end of this chapter, you will understand GNNs as encoding <strong>local field theories on discrete manifolds</strong>, where training discovers the microscopic interaction rules (<span class="arithmatex">\(\phi_m\)</span>) necessary to reproduce macroscopic observables. <strong>Graph Hamiltonian Networks</strong> extend this by learning the total energy function <span class="arithmatex">\(H_{\mathbf{\theta}} = \sum_{(i,j)} \phi_e(\mathbf{h}_i, \mathbf{h}_j)\)</span> directly, then deriving dynamics via Hamilton's equations <span class="arithmatex">\(\dot{\mathbf{q}} = \partial H/\partial \mathbf{p}\)</span> computed through automatic differentiation—guaranteeing energy conservation by construction, exactly as PINNs embed conservation laws through differential residuals. <strong>Symmetry enforcement</strong> becomes critical: equivariant GNNs preserve geometric transformations (rotations, translations) so predicted molecular forces transform consistently with coordinate changes, implementing the neural analogue of Noether's theorem where continuous symmetries imply conserved quantities. Applications span molecular property prediction (QM9 dataset: atoms as nodes, bonds as edges, predicting quantum energies), materials science (crystal lattices), social networks (influence propagation), and power grids (fault detection)—unified by the principle that complexity arises from interaction patterns rather than isolated entity features. <strong>Graph Neural Operators</strong> generalize further by learning mappings between function spaces <span class="arithmatex">\(\mathcal{G}: u \to v\)</span> on continuous domains discretized as graphs, bridging GNNs' discrete topology with PINNs' continuous PDEs to solve entire classes of problems mesh-invariantly. Chapter 19 will address the fundamental limitation of GNNs—<strong>fixed local connectivity</strong>—by introducing <strong>Transformers</strong>, which replace predefined graph edges with learned self-attention mechanisms that dynamically compute all-to-all correlation, modeling nonlocal phenomena like long-range quantum entanglement or global coherence in language where information flow cannot be constrained to a static relational structure.</p>
+<hr />
+<h1 id="chapter-18-outline"><strong>Chapter 18: Outline</strong></h1>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Sec.</strong></th>
+<th style="text-align: left;"><strong>Title</strong></th>
+<th style="text-align: left;"><strong>Core Ideas &amp; Examples</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>18.1</strong></td>
+<td style="text-align: left;">Motivation — The Universe as a Graph</td>
+<td style="text-align: left;">Irregular sparse connectivity in molecules (atoms + bonds), social networks, power grids; relational topology defines local interactions; challenge: learn permutation-invariant functions over graph structure; physical analogy: particles <span class="arithmatex">\(\leftrightarrow\)</span> nodes, interactions <span class="arithmatex">\(\leftrightarrow\)</span> edges, message passing <span class="arithmatex">\(\leftrightarrow\)</span> force exchange on lattice; local updates yield emergent global order</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>18.2</strong></td>
+<td style="text-align: left;">Graph Representation and Notation</td>
+<td style="text-align: left;">Graph <span class="arithmatex">\(\mathcal{G} = (\mathcal{V}, \mathcal{E})\)</span> (nodes + edges); node features <span class="arithmatex">\(\mathbf{h}_i\)</span> (local state), edge features <span class="arithmatex">\(\mathbf{e}_{ij}\)</span> (relationship), adjacency matrix <span class="arithmatex">\(A\)</span> (connectivity); physical analogy: <span class="arithmatex">\(A_{ij} \leftrightarrow\)</span> coupling matrix <span class="arithmatex">\(J_{ij}\)</span> (Ising/Heisenberg), <span class="arithmatex">\(\mathbf{h}_i \leftrightarrow\)</span> microstate; mathematical map of interaction system</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>18.3</strong></td>
+<td style="text-align: left;">Message-Passing Framework (MPF)</td>
+<td style="text-align: left;">Iterative updates: message aggregation <span class="arithmatex">\(\mathbf{m}_i = \sum_{j \in \mathcal{N}(i)} \phi_m(\mathbf{h}_i, \mathbf{h}_j, \mathbf{e}_{ij})\)</span>, node update <span class="arithmatex">\(\mathbf{h}_i' = \phi_u(\mathbf{h}_i, \mathbf{m}_i)\)</span>; functions <span class="arithmatex">\(\phi_m, \phi_u\)</span> are learnable MLPs; summation ensures permutation invariance; analogy: force propagation, Markov property (state depends on local neighbors), collective relaxation to equilibrium</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>18.4</strong></td>
+<td style="text-align: left;">Graph Convolutional Networks (GCNs)</td>
+<td style="text-align: left;">Linearized message passing: <span class="arithmatex">\(H^{(l+1)} = \sigma(\tilde{D}^{-1/2}\tilde{A}\tilde{D}^{-1/2} H^{(l)} W^{(l)})\)</span>; normalized adjacency <span class="arithmatex">\(\tilde{D}^{-1/2}\tilde{A}\tilde{D}^{-1/2}\)</span> prevents feature explosion; spectral view: graph Laplacian <span class="arithmatex">\(L = D - A\)</span> defines vibrational modes; analogy: diffusion equation on discrete manifold (heat flow), spectral filtering (structural modes)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>18.5</strong></td>
+<td style="text-align: left;">Graph Attention Networks (GATs)</td>
+<td style="text-align: left;">Dynamic coupling: attention coefficients <span class="arithmatex">\(\alpha_{ij} = \text{softmax}_j(a^\top[W\mathbf{h}_i \|\| W\mathbf{h}_j])\)</span>; weighted aggregation <span class="arithmatex">\(\mathbf{h}_i' = \sigma(\sum_{j \in \mathcal{N}(i)} \alpha_{ij} W\mathbf{h}_j)\)</span>; learns context-dependent interaction strength; analogy: adaptive Ising model where <span class="arithmatex">\(J_{ij}\)</span> evolves with particle states (vs. GCN's fixed coupling)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>18.6</strong></td>
+<td style="text-align: left;">Physical Analogies of GNN Dynamics</td>
+<td style="text-align: left;">Mapping: message passing <span class="arithmatex">\(\leftrightarrow\)</span> force propagation, node update <span class="arithmatex">\(\leftrightarrow\)</span> energy minimization, graph convolution <span class="arithmatex">\(\leftrightarrow\)</span> diffusion/heat flow, attention <span class="arithmatex">\(\leftrightarrow\)</span> field interaction, summation <span class="arithmatex">\(\leftrightarrow\)</span> conservation law (permutation symmetry); training learns microscopic governing law from data; GNN as computational realization of local physical interaction rules</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>18.7</strong></td>
+<td style="text-align: left;">Equivariance and Symmetry</td>
+<td style="text-align: left;">Invariance: <span class="arithmatex">\(f(T(\mathbf{x})) = f(\mathbf{x})\)</span> (e.g., molecular energy under rotation); equivariance: <span class="arithmatex">\(f(T(\mathbf{x})) = T'(f(\mathbf{x}))\)</span> (e.g., force vectors rotate with molecule); permutation invariance via summation in MPF; equivariant GNNs enforce E(n)/SE(3) symmetries for 3D physics; Noether's theorem analogy (symmetry <span class="arithmatex">\(\leftrightarrow\)</span> conserved quantity)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>18.8</strong></td>
+<td style="text-align: left;">Graph Hamiltonian Networks (GHNs)</td>
+<td style="text-align: left;">Learn total energy <span class="arithmatex">\(H_{\mathbf{\theta}}(\mathbf{q}, \mathbf{p}) = \sum_{(i,j)} \phi_e(\mathbf{h}_i, \mathbf{h}_j)\)</span> via GNN; dynamics from Hamilton's equations <span class="arithmatex">\(\dot{\mathbf{q}} = \partial H/\partial \mathbf{p}\)</span>, <span class="arithmatex">\(\dot{\mathbf{p}} = -\partial H/\partial \mathbf{q}\)</span> via automatic differentiation; guarantees energy conservation (time-translation invariance); analogy: graph edges as springs transmitting forces, learning conserved Hamiltonian</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>18.9</strong></td>
+<td style="text-align: left;">Graph Neural Operators (GNOs)</td>
+<td style="text-align: left;">Learn mappings between function spaces <span class="arithmatex">\(\mathcal{G}: u \to v\)</span> (vs. vector maps <span class="arithmatex">\(f: \mathbb{R}^N \to \mathbb{R}^M\)</span>); mesh-invariant: generalizes across different discretizations; continuous input <span class="arithmatex">\(u(x)\)</span> sampled onto graph, GNN processes, outputs solution <span class="arithmatex">\(v(x)\)</span>; bridge: GNN <span class="arithmatex">\(\leftrightarrow\)</span> discrete topology, Operator <span class="arithmatex">\(\leftrightarrow\)</span> continuous PDE (PINNs); solves entire PDE classes not single instances</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>18.10</strong></td>
+<td style="text-align: left;">Applications</td>
+<td style="text-align: left;">Molecular modeling (atoms + bonds → energies/forces via effective force field learning); materials science (crystal lattices → stability/band structure); social networks (users + links → influence diffusion); power grids (stations + lines → fault detection); traffic/robotics (agents + routes → multi-agent coordination); unified by relational structure as fundamental computational problem</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>18.11</strong></td>
+<td style="text-align: left;">Worked Example — Molecular Property Prediction</td>
+<td style="text-align: left;">QM9 dataset: molecules as graphs (atoms = nodes with type/charge features, bonds = edges with type/length features); task: predict quantum energy <span class="arithmatex">\(E\)</span> or dipole moment; GNN (GAT/GCN) with multi-layer message passing → global readout (summation) → scalar property; loss: MSE between <span class="arithmatex">\(E_{\text{pred}}\)</span> and <span class="arithmatex">\(E_{\text{true}}\)</span>; learns effective chemical potential (force field), respects permutation invariance</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>18.12</strong></td>
+<td style="text-align: left;">Code Demo — Toy Message Passing</td>
+<td style="text-align: left;">PyTorch implementation: adjacency <span class="arithmatex">\(A\)</span> (3-node triangle), features <span class="arithmatex">\(H\)</span> (3×4), weights <span class="arithmatex">\(W\)</span> (4×4); loop: <code>H = relu(A @ H @ W)</code> (aggregation <code>A@H</code> + transformation <code>@W</code> + nonlinearity); 3 layers diffuse info 3 hops; convergence to statistical equilibrium; local aggregation → iterative diffusion → contextualized final features</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>18.13</strong></td>
+<td style="text-align: left;">Energy-Based Perspective</td>
+<td style="text-align: left;">Energy on graph: <span class="arithmatex">\(E_{\mathbf{\theta}}(\mathbf{h}) = \sum_{(i,j)} \phi_e(\mathbf{h}_i, \mathbf{h}_j)\)</span> (sum of pairwise potentials); probability <span class="arithmatex">\(P(\mathbf{h}) \propto e^{-E_{\mathbf{\theta}}(\mathbf{h})/T}\)</span>; training as energy sculpting: adjust <span class="arithmatex">\(\theta\)</span> so low-energy regions match observed data; continuous generalization of Ising Hamiltonian; graph as discrete field with learned interaction potential</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>18.14</strong></td>
+<td style="text-align: left;">Temporal Graph Networks (TGNs)</td>
+<td style="text-align: left;">Dynamic topology: nodes/edges change over time (network connections drop, features evolve); architecture: temporal embeddings + recurrent message passing (GNN + RNN/LSTM at each node) + attention on historical events; analogy: coupled oscillator networks (each node has internal dynamics + neighbor influence); applications: particle trajectories, social diffusion, traffic propagation over time</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>18.15</strong></td>
+<td style="text-align: left;">Relation to Other Paradigms</td>
+<td style="text-align: left;">Comparison table: CNN (Euclidean grid, locality), RNN (sequence/temporal, memory), PINN (continuous fields, PDE enforcement), NQS (Hilbert manifold, quantum variational), GNN (arbitrary graph, local coupling), Transformer (set/global, all-to-all); GNN vs CNN: irregular sparse vs regular periodic; GNN vs Transformer: fixed local vs dynamic global; GNN + NQS: graph as quantum ansatz for local spin couplings</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>18.16</strong></td>
+<td style="text-align: left;">Limitations and Frontiers</td>
+<td style="text-align: left;">Scalability for large/dense graphs (aggregation over all neighbors expensive); over-smoothing (deep layers → features converge to uniform value, nodes indistinguishable); dynamic graphs (edges/nodes appear/disappear rapidly); interpretability of learned <span class="arithmatex">\(\phi_m, \phi_u\)</span>; frontiers: Graph Neural Operators (mesh-invariant), learning quantum graph states (NQS with GNN ansatz), hierarchical/sparse structures for long-range interactions</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>18.17</strong></td>
+<td style="text-align: left;">Philosophical Perspective — Learning as Relational Physics</td>
+<td style="text-align: left;">Intelligence arises from interaction patterns not isolated computation; coupling defines whole (collective behavior from edge weights/message functions); reality as dynamic graph (spacetime as network, forces as message passing, consciousness as connectivity); limit of locality: fixed topology inadequate for nonlocal physics (quantum entanglement, long-range forces) → motivates need for global correlation (Transformers)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>18.18</strong></td>
+<td style="text-align: left;">Takeaways &amp; Bridge to Chapter 19</td>
+<td style="text-align: left;">GNNs model local coupling and emergent order via message passing (Markov property: state depends on neighbors); unify physics (coupling in lattice models) with AI (relational structure learning); symmetry enforcement (permutation invariance, energy conservation); limitation: <strong>locality</strong> restricts to predefined edges; Chapter 19 (Transformers): replace fixed graph with learned self-attention for all-to-all global correlation, modeling nonlocal phenomena (long-range forces, quantum entanglement)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="181-motivation-the-universe-as-a-graph"><strong>18.1 Motivation — The Universe as a Graph</strong></h2>
+<h3 id="the-necessity-of-relational-topology"><strong>The Necessity of Relational Topology</strong></h3>
+<hr />
+<p>Previous specialized architectures addressed structure on rigid grids (CNNs for space) or rigid sequences (RNNs for time). However, many of the most complex, high-dimensional systems in science are characterized by <strong>irregular, sparse connectivity</strong>:</p>
+<ul>
+<li><strong>Molecules and Crystals:</strong> Atoms are connected by specific, irregular bonds, forming a graph.</li>
+<li><strong>Power Grids and Social Networks:</strong> Entities (stations, people) are connected by links (wires, friendships), forming a network topology.</li>
+</ul>
+<p>These systems share a <strong>relational topology</strong>, where the behavior of one entity is determined only by its <strong>local interactions</strong> with its direct neighbors.</p>
+<h3 id="the-goal-learning-functions-over-graphs"><strong>The Goal: Learning Functions Over Graphs</strong></h3>
+<hr />
+<p>GNNs provide the mathematical toolkit to learn functions defined directly over these graph structures:</p>
+<ul>
+<li><strong>Task Examples:</strong> Learning to predict the total energy of a molecule, classifying the phase state of a lattice, or forecasting traffic flow across a city map.</li>
+<li><strong>Challenge:</strong> The functions must be <strong>permutation-invariant</strong>—the physical properties of a molecule must not change if we reorder the rows of the adjacency matrix.</li>
+</ul>
+<h3 id="physical-analogy-the-local-field-theory"><strong>Physical Analogy: The Local Field Theory</strong></h3>
+<hr />
+<p>The GNN architecture explicitly adopts the perspective of local interaction from statistical physics:</p>
+<ul>
+<li><strong>Particles <span class="arithmatex">\(\leftrightarrow\)</span> Nodes:</strong> Each entity (atom, person) is a node, holding a feature vector (state <span class="arithmatex">\(\mathbf{h}_i\)</span>).</li>
+<li><strong>Interactions <span class="arithmatex">\(\leftrightarrow\)</span> Edges:</strong> The connections are the edges, defining the coupling strength (<span class="arithmatex">\(\mathbf{e}_{ij}\)</span>).</li>
+<li><strong>Message Passing <span class="arithmatex">\(\leftrightarrow\)</span> Force Exchange:</strong> The core GNN operation involves nodes iteratively communicating with their neighbors. This process is analogous to <strong>force exchange, spin updates, or field propagation on a lattice</strong>.</li>
+</ul>
+<p>The <strong>core idea</strong> is that <strong>local updates yield emergent global order</strong>. By defining the rules of interaction (the message functions), GNN training learns the necessary <strong>microscopic rule</strong> that reproduces the desired <strong>macroscopic behavior</strong>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Graph Topology as Physical Coupling Structure</p>
+</div>
+<h2 id="think-of-the-graphs-adjacency-matrix-a-as-encoding-the-interaction-hamiltonian-of-the-system-each-edge-ij-represents-a-physical-coupling-term-like-j_ij-sigma_i-sigma_j-in-the-ising-model-and-the-gnns-message-passing-process-simulates-the-flow-of-energy-or-information-along-these-coupling-channels-just-as-spins-on-a-lattice-collectively-minimize-total-energy-through-local-interactions-gnn-nodes-iteratively-update-their-states-by-aggregating-neighbor-messages-until-the-network-reaches-computational-equilibrium-this-perspective-unifies-graph-structure-learning-with-statistical-physics-the-learned-message-functions-phi_m-are-computational-analogs-of-interaction-potentials"><div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Think of the graph&#39;s adjacency matrix $A$ as encoding the **interaction Hamiltonian** of the system. Each edge $(i,j)$ represents a physical coupling term (like $J_{ij} \sigma_i \sigma_j$ in the Ising model), and the GNN&#39;s message-passing process simulates the flow of energy or information along these coupling channels. Just as spins on a lattice collectively minimize total energy through local interactions, GNN nodes iteratively update their states by aggregating neighbor messages until the network reaches computational equilibrium. This perspective unifies graph structure learning with statistical physics: the learned message functions $\phi_m$ are computational analogs of interaction potentials.
+</span></code></pre></div></h2>
+<h2 id="182-graph-representation-and-notation"><strong>18.2 Graph Representation and Notation</strong></h2>
+<p>To effectively model complex physical and informational systems using <strong>Graph Neural Networks (GNNs)</strong>, we must first establish the common mathematical notation for representing the system as a graph and defining the information carried by its components.</p>
+<hr />
+<h3 id="the-graph-structure"><strong>The Graph Structure</strong></h3>
+<hr />
+<p>A graph <span class="arithmatex">\(\mathcal{G}\)</span> is formally defined by a set of entities and their relationships:</p>
+<div class="arithmatex">\[
+\mathcal{G}=(\mathcal{V},\mathcal{E})
+\]</div>
+<ul>
+<li><strong>Nodes (<span class="arithmatex">\(\mathcal{V}\)</span>):</strong> The set of vertices (or nodes) <span class="arithmatex">\(i\)</span>. These represent the individual entities of the system (e.g., a single atom, a pixel, a person, or a spin).</li>
+<li><strong>Edges (<span class="arithmatex">\(\mathcal{E}\)</span>):</strong> The set of edges <span class="arithmatex">\((i, j)\)</span> connecting pairs of nodes <span class="arithmatex">\(i\)</span> and <span class="arithmatex">\(j\)</span>. These represent the interactions, bonds, or relationships between entities.</li>
+</ul>
+<h3 id="data-representation-features-and-matrices"><strong>Data Representation: Features and Matrices</strong></h3>
+<hr />
+<p>For GNN computation, the graph structure and the information stored on it are represented by specific mathematical objects:</p>
+<ul>
+<li><strong>Node Features (<span class="arithmatex">\(\mathbf{h}_i\)</span>):</strong> Each node <span class="arithmatex">\(i\)</span> carries a feature vector <span class="arithmatex">\(\mathbf{h}_i\)</span>. This vector encodes the local state or characteristics of the entity (e.g., the position and velocity of a particle, the semantic embedding of a word, or the type of atom).</li>
+<li><strong>Edge Features (<span class="arithmatex">\(\mathbf{e}_{ij}\)</span>):</strong> An optional vector <span class="arithmatex">\(\mathbf{e}_{ij}\)</span> is associated with the edge connecting nodes <span class="arithmatex">\(i\)</span> and <span class="arithmatex">\(j\)</span>. This encodes information about the relationship itself (e.g., the distance between two atoms, the weight of a road segment, or the type of chemical bond).</li>
+<li><strong>Adjacency Matrix (<span class="arithmatex">\(A\)</span>):</strong> The connectivity of the entire graph is typically represented by the <span class="arithmatex">\(N \times N\)</span> <strong>Adjacency Matrix</strong> <span class="arithmatex">\(A\)</span>. The entry <span class="arithmatex">\(A_{ij}\)</span> is <span class="arithmatex">\(1\)</span> if an edge exists between node <span class="arithmatex">\(i\)</span> and node <span class="arithmatex">\(j\)</span>, and <span class="arithmatex">\(0\)</span> otherwise.</li>
+</ul>
+<h3 id="physical-analogy-the-coupling-matrix"><strong>Physical Analogy: The Coupling Matrix</strong></h3>
+<hr />
+<p>The graph representation is a mathematical map of a physical interaction system:</p>
+<ul>
+<li><strong><span class="arithmatex">\(A_{ij} \leftrightarrow\)</span> Coupling Matrix <span class="arithmatex">\(J_{ij}\)</span>:</strong> The adjacency matrix <span class="arithmatex">\(A\)</span> directly serves as the <strong>coupling matrix</strong> in lattice models like the Ising or Heisenberg model (Chapter 8.3). It defines which spins are connected and thus participate in direct energy exchange.</li>
+<li><strong><span class="arithmatex">\(\mathbf{h}_i \leftrightarrow\)</span> Microstate:</strong> The node feature <span class="arithmatex">\(\mathbf{h}_i\)</span> represents the local microstate of the particle or spin at that site.</li>
+</ul>
+<p>The GNN process is designed to iteratively transform the node features <span class="arithmatex">\(\mathbf{h}_i\)</span>, using the connectivity defined by <span class="arithmatex">\(A\)</span>, to compute a final, context-aware state <span class="arithmatex">\(\mathbf{h}_i'\)</span> that reflects the collective influence of the entire local neighborhood.</p>
+<hr />
+<h2 id="183-message-passing-framework"><strong>18.3 Message-Passing Framework</strong></h2>
+<p>The <strong>Message-Passing Framework (MPF)</strong> is the fundamental computational paradigm underlying nearly all <strong>Graph Neural Networks (GNNs)</strong>. It defines the dynamics by which local information propagates and transforms across the network, effectively simulating the <strong>collective relaxation</strong> of the coupled system.</p>
+<hr />
+<h3 id="mechanism-local-updates-and-aggregation"><strong>Mechanism: Local Updates and Aggregation</strong></h3>
+<hr />
+<p>The MPF is an iterative process. In each layer (or iteration <span class="arithmatex">\(t\)</span>), the feature vector of every node <span class="arithmatex">\(\mathbf{h}_i\)</span> is updated based on the information it receives from its direct neighbors, <span class="arithmatex">\(\mathcal{N}(i)\)</span>. This is a two-step process:</p>
+<ol>
+<li><strong>Message Generation/Aggregation:</strong> Each node <span class="arithmatex">\(i\)</span> gathers information (the "messages" <span class="arithmatex">\(\mathbf{m}\)</span>) from its neighbors <span class="arithmatex">\(j \in \mathcal{N}(i)\)</span>. This is done using a function <span class="arithmatex">\(\phi_m\)</span> that considers the state of the sender (<span class="arithmatex">\(\mathbf{h}_j\)</span>), the state of the receiver (<span class="arithmatex">\(\mathbf{h}_i\)</span>), and the nature of the edge (<span class="arithmatex">\(\mathbf{e}_{ij}\)</span>):</li>
+</ol>
+<div class="arithmatex">\[
+\mathbf{m}_i^{(t+1)} = \sum_{j\in\mathcal{N}(i)} \phi_m(\mathbf{h}_i^{(t)},\mathbf{h}_j^{(t)},\mathbf{e}_{ij})
+\]</div>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>The summation ($\sum$) ensures the message is **permutation-invariant**, meaning the aggregated message doesn&#39;t depend on the order in which the neighbors are listed.
+</span></code></pre></div>
+2.  <strong>Node Update:</strong> The node <span class="arithmatex">\(i\)</span> then combines its current state <span class="arithmatex">\(\mathbf{h}_i^{(t)}\)</span> with the aggregated message <span class="arithmatex">\(\mathbf{m}_i^{(t+1)}\)</span> to calculate its new, context-aware state <span class="arithmatex">\(\mathbf{h}_i^{(t+1)}\)</span>:</p>
+<div class="arithmatex">\[
+\mathbf{h}_i^{(t+1)} = \phi_u(\mathbf{h}_i^{(t)}, \mathbf{m}_i^{(t+1)})
+\]</div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>The functions $\phi_m$ (message) and $\phi_u$ (update) are typically implemented as small, differentiable feedforward neural networks (MLPs) whose parameters are learned during training.
+</span></code></pre></div>
+<h3 id="analogy-collective-relaxation-and-field-propagation"><strong>Analogy: Collective Relaxation and Field Propagation</strong></h3>
+<hr />
+<p>The repeated execution of the message-passing framework perfectly models the dynamics of coupled physical systems:</p>
+<ul>
+<li><strong>Force Propagation:</strong> The messages (<span class="arithmatex">\(\mathbf{m}\)</span>) act as the local <strong>forces</strong> or <strong>information fields</strong> propagating through the network.</li>
+<li><strong>Local Interaction:</strong> The dependence on <span class="arithmatex">\(\mathcal{N}(i)\)</span> reflects the <strong>Markov property</strong> (Chapter 11.4): the state of a node is determined entirely by the state of its immediate surroundings.</li>
+<li><strong>Equilibrium:</strong> As the process iterates (i.e., the GNN layers deepen), information diffuses outward from the source. The system continues this <strong>collective relaxation</strong> until the node states stabilize, achieving a state of convergence or <strong>statistical equilibrium</strong>. The final node features encode information about the entire neighborhood up to the depth of the network.</li>
+</ul>
+<hr />
+<h2 id="184-graph-convolutional-networks-gcns"><strong>18.4 Graph Convolutional Networks (GCNs)</strong></h2>
+<p>The <strong>Message-Passing Framework (MPF)</strong> (Section 18.3) provides a general recipe for GNNs. <strong>Graph Convolutional Networks (GCNs)</strong> are a highly popular and effective variant that implement the MPF by defining the message-passing and node update steps using a <strong>linearized spectral perspective</strong>. This formulation directly connects the GNN to classical physics concepts like diffusion and vibrational modes.</p>
+<hr />
+<h3 id="linearized-message-passing"><strong>Linearized Message Passing</strong></h3>
+<hr />
+<p>A GCN layer is defined by an operation that is analogous to <strong>convolution</strong> in image processing (Chapter 13.3), but generalized to arbitrary graph structures. The simplified layer-wise update rule for the node feature matrix <span class="arithmatex">\(H\)</span> (where rows are node features <span class="arithmatex">\(\mathbf{h}_i\)</span>) is typically written as:</p>
+<div class="arithmatex">\[
+H^{(l+1)}=\sigma(\tilde{D}^{-1/2}\tilde{A}\tilde{D}^{-1/2}H^{(l)}W^{(l)})
+\]</div>
+<ul>
+<li><span class="arithmatex">\(\tilde{A}\)</span>: The <strong>Adjacency Matrix</strong> <span class="arithmatex">\(A\)</span> modified by adding self-loops (<span class="arithmatex">\(\tilde{A} = A + I\)</span>). This ensures every node considers its own state when aggregating messages.</li>
+<li><span class="arithmatex">\(\tilde{D}\)</span>: The <strong>Degree Matrix</strong> corresponding to <span class="arithmatex">\(\tilde{A}\)</span>.</li>
+<li><span class="arithmatex">\(\tilde{D}^{-1/2}\tilde{A}\tilde{D}^{-1/2}\)</span>: This composite matrix is the <strong>Symmetrically Normalized Adjacency Matrix</strong>. It ensures that the feature scaling remains stable during aggregation, preventing feature magnitudes from exploding or vanishing.</li>
+<li><span class="arithmatex">\(W^{(l)}\)</span>: The trainable <strong>weight matrix</strong> (the filter/kernel) for layer <span class="arithmatex">\(l\)</span>.</li>
+<li><span class="arithmatex">\(\sigma\)</span>: The non-linear activation function (e.g., ReLU).</li>
+</ul>
+<p>This operation implicitly aggregates normalized information from the neighbors of each node, linearly transforms it, and applies a non-linearity.</p>
+<h3 id="spectral-view-graph-laplacian-and-diffusion"><strong>Spectral View: Graph Laplacian and Diffusion</strong></h3>
+<hr />
+<p>The design of the <span class="arithmatex">\(\tilde{D}^{-1/2}\tilde{A}\tilde{D}^{-1/2}\)</span> term is derived from the <strong>spectral graph theory</strong> perspective.</p>
+<ul>
+<li><strong>Graph Laplacian (<span class="arithmatex">\(L\)</span>):</strong> The core operator in spectral graph theory is the graph Laplacian <span class="arithmatex">\(L = D - A\)</span>. The eigenvalues and eigenvectors of <span class="arithmatex">\(L\)</span> define the fundamental "frequencies" and "modes" of the graph structure.</li>
+<li><strong>Convolution as Filter:</strong> Graph convolution is initially defined as a filter operation in the eigenbasis of the graph Laplacian. The GCN simplification uses the normalized adjacency matrix to approximate this spectral operation efficiently.</li>
+</ul>
+<h3 id="physical-analogy-diffusion-and-vibrational-modes"><strong>Physical Analogy: Diffusion and Vibrational Modes</strong></h3>
+<hr />
+<p>The mathematical structure of the GCN's update mirrors natural physical processes:</p>
+<ul>
+<li><strong>Diffusion Equation:</strong> The repeated application of the normalized adjacency matrix is mathematically similar to simulating the <strong>diffusion equation on a discrete manifold</strong>. In this view, information (the node features <span class="arithmatex">\(\mathbf{h}_i\)</span>) spreads outward from the source, like heat or a chemical concentration.</li>
+<li><strong>Vibrational Modes:</strong> The eigenvectors of the graph Laplacian encode the system's <strong>vibrational modes</strong>. The GCN process learns to filter features based on these structural modes, allowing it to efficiently extract collective behavior (e.g., the large-scale bending motions of a molecule).</li>
+</ul>
+<p>The GCN, therefore, provides a scalable and mathematically grounded way to model systems where <strong>information flow is dictated by fixed connectivity</strong>.</p>
+<hr />
+<h2 id="185-graph-attention-networks-gats"><strong>18.5 Graph Attention Networks (GATs)</strong></h2>
+<p>While <strong>Graph Convolutional Networks (GCNs)</strong> (Section 18.4) rely on a fixed, normalized averaging of neighbor features (like a passive diffusion process), <strong>Graph Attention Networks (GATs)</strong> introduce a crucial element of dynamism and intelligence. GATs model the system using a learned, <strong>adaptive interaction strength</strong>, effectively allowing the network to dynamically determine the importance of each neighbor's message.</p>
+<hr />
+<h3 id="adaptive-weighting-learned-relevance"><strong>Adaptive Weighting: Learned Relevance</strong></h3>
+<hr />
+<p>GATs replace the predetermined, structural normalization used in GCNs with a <strong>self-attention mechanism</strong> applied locally over the neighborhood <span class="arithmatex">\(\mathcal{N}(i)\)</span>. For each pair of connected nodes <span class="arithmatex">\((i, j)\)</span>, a GAT computes a normalized attention coefficient <span class="arithmatex">\(\alpha_{ij}\)</span>:</p>
+<div class="arithmatex">\[
+\alpha_{ij}=\text{softmax}_j\big(a^\top [W\mathbf{h}_i || W\mathbf{h}_j]\big)
+\]</div>
+<ul>
+<li><strong><span class="arithmatex">\(W\mathbf{h}_i\)</span> and <span class="arithmatex">\(W\mathbf{h}_j\)</span>:</strong> Linear transformations of the input node features.</li>
+<li><strong><span class="arithmatex">\([W\mathbf{h}_i || W\mathbf{h}_j]\)</span>:</strong> Concatenation of the transformed features of the receiving node (<span class="arithmatex">\(i\)</span>) and the sending node (<span class="arithmatex">\(j\)</span>).</li>
+<li><strong><span class="arithmatex">\(a^\top [\dots]\)</span>:</strong> A weight vector that computes the unnormalized <strong>interaction potential</strong> (raw score) between <span class="arithmatex">\(i\)</span> and <span class="arithmatex">\(j\)</span>.</li>
+<li><strong><span class="arithmatex">\(\text{softmax}_j\)</span>:</strong> Normalizes the scores for all neighbors <span class="arithmatex">\(j \in \mathcal{N}(i)\)</span>, ensuring the attention weights <span class="arithmatex">\(\alpha_{ij}\)</span> sum to 1.</li>
+</ul>
+<p>The new node feature <span class="arithmatex">\(\mathbf{h}_i'\)</span> is then computed as the weighted sum of the neighbors' messages:</p>
+<div class="arithmatex">\[
+\mathbf{h}_i' = \sigma\left(\sum_{j \in \mathcal{N}(i)} \alpha_{ij} W\mathbf{h}_j\right)
+\]</div>
+<h3 id="interpretation-dynamic-interaction-potentials"><strong>Interpretation: Dynamic Interaction Potentials</strong></h3>
+<hr />
+<p>The <strong>attention coefficients (<span class="arithmatex">\(\alpha_{ij}\)</span>)</strong> serve as the system's <strong>dynamic coupling strengths</strong>:</p>
+<ul>
+<li><strong>Adaptive Coupling:</strong> Unlike GCNs, where the influence of neighbor <span class="arithmatex">\(j\)</span> on node <span class="arithmatex">\(i\)</span> is fixed by the graph structure, a GAT learns the optimal weight based on the <strong>content</strong> of the features <span class="arithmatex">\(\mathbf{h}_i\)</span> and <span class="arithmatex">\(\mathbf{h}_j\)</span>.</li>
+<li><strong>Dynamic Potentials:</strong> This is analogous to a physical model where the interaction potentials (<span class="arithmatex">\(J_{ij}\)</span>) are not fixed constants but <strong>evolve with the state of the particles</strong>. If node <span class="arithmatex">\(j\)</span> is highly relevant to node <span class="arithmatex">\(i\)</span> at a given time step, the attention weight <span class="arithmatex">\(\alpha_{ij}\)</span> will be high, amplifying its message.</li>
+</ul>
+<h3 id="physical-analogy-adaptive-ising-model"><strong>Physical Analogy: Adaptive Ising Model</strong></h3>
+<hr />
+<p>GATs model the system as an <strong>Adaptive Ising Model</strong> (Chapter 8.3).</p>
+<ul>
+<li><strong>GCN:</strong> Analogous to a fixed-coupling Ising model where <span class="arithmatex">\(J_{ij}\)</span> is constant.</li>
+<li><strong>GAT:</strong> Analogous to a system where the magnetic <strong>couplings evolve with context</strong>. The network determines the necessary force, or coupling strength, in a data-dependent way, allowing for a much richer modeling of complex, non-static physical interactions.</li>
+</ul>
+<hr />
+<h2 id="186-physical-analogies-of-gnn-dynamics"><strong>18.6 Physical Analogies of GNN Dynamics</strong></h2>
+<p>The <strong>Message-Passing Framework (MPF)</strong> and its specialized forms (GCNs, GATs) provide a rich vocabulary of dynamics that directly parallel core concepts in classical and statistical physics. The GNN training process effectively learns the optimal <strong>microscopic rule</strong> necessary to generate the desired macroscopic behavior.</p>
+<hr />
+<h3 id="mapping-neural-operations-to-physical-processes"><strong>Mapping Neural Operations to Physical Processes</strong></h3>
+<hr />
+<p>The iterative update process of a GNN layer can be viewed as simulating a physical relaxation or propagation phenomenon on the discrete graph manifold:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Physics concept</th>
+<th style="text-align: left;">Graph operation</th>
+<th style="text-align: left;">Interpretation in a Coupled System</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Force Propagation</strong></td>
+<td style="text-align: left;"><strong>Message Passing</strong> (<span class="arithmatex">\(\mathbf{m}\)</span>).</td>
+<td style="text-align: left;">The local transmission of influence, statistical information, or corrective error signals between neighbors.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Potential Energy Minimization</strong></td>
+<td style="text-align: left;"><strong>Node Update Step</strong> (<span class="arithmatex">\(\phi_u\)</span>).</td>
+<td style="text-align: left;">The change in the node's state (<span class="arithmatex">\(\mathbf{h}_i\)</span>) is driven toward a low-energy configuration consistent with the received messages.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Diffusion / Heat Flow</strong></td>
+<td style="text-align: left;"><strong>Graph Convolution</strong> (GCNs).</td>
+<td style="text-align: left;">The feature matrix is smoothed by averaging neighbors, modeling the spread of a continuous quantity like concentration or heat across the network.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Field Interaction</strong></td>
+<td style="text-align: left;"><strong>Attention Mechanism</strong> (GATs).</td>
+<td style="text-align: left;">The interaction strength (coupling) is dynamic, modeling systems where forces vary based on the current state of the particles.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Conservation Law</strong></td>
+<td style="text-align: left;"><strong>Symmetry-invariant Aggregation</strong>.</td>
+<td style="text-align: left;">Aggregation functions (like summation or averaging) ensure the model's output is independent of node ordering, aligning with the necessity for physics-based models to respect <strong>permutation symmetry</strong>.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition example">
+<p class="admonition-title">Molecular Energy Prediction as Physical Relaxation</p>
+</div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Consider predicting the ground-state energy of a molecule using a GNN. Each atom (node) has features $\mathbf{h}_i$ encoding position and atomic type. Covalent bonds define edges $\mathbf{e}_{ij}$ with bond lengths. During message passing, each atom aggregates force-like messages from bonded neighbors: $\mathbf{m}_i = \sum_{j \in \mathcal{N}(i)} \phi_m(\mathbf{h}_i, \mathbf{h}_j, \mathbf{e}_{ij})$, where $\phi_m$ learns to encode pairwise potential energies (like Lennard-Jones or Coulomb interactions). After 3-5 layers, node features converge to equilibrium states encoding the molecule&#39;s electronic structure. A final readout sums all node energies: $E = \sum_i \phi_{\text{out}}(\mathbf{h}_i^{(L)})$. This process mirrors classical molecular dynamics: local interaction rules (learned $\phi_m$) drive collective relaxation to minimum energy, but executed symbolically via gradient descent rather than numerical integration of Newton&#39;s equations.
+</span></code></pre></div>
+<h3 id="insight-learning-the-microscopic-rule"><strong>Insight: Learning the Microscopic Rule</strong></h3>
+<hr />
+<p>The training of a GNN is the process of learning the best parameters for the local functions (<span class="arithmatex">\(\phi_m\)</span> and <span class="arithmatex">\(\phi_u\)</span>). This is equivalent to <strong>inferring the microscopic governing law</strong> of the system directly from data.</p>
+<p>For example, when modeling a magnetic lattice, the GNN learns the complex dependency between the local spins that, when iterated, reproduces the correct macroscopic magnetization and critical behavior. The learned <strong>message passing</strong> function <em>is</em> the computational realization of the physical law that governs local interaction.</p>
+<hr />
+<h2 id="187-equivariance-and-symmetry"><strong>18.7 Equivariance and Symmetry</strong></h2>
+<p>For a <strong>Graph Neural Network (GNN)</strong> to successfully model physical systems (like molecules or crystals), its computations must respect the inherent <strong>symmetries</strong> of the data. The most fundamental requirement is <strong>equivariance</strong>, a property that aligns the model's output transformation with the input transformation, mirroring the principle that physical laws should not change based on how the observer views the system.</p>
+<hr />
+<h3 id="requirement-consistency-under-transformation"><strong>Requirement: Consistency Under Transformation</strong></h3>
+<hr />
+<p>In physical or geometric domains, a transformation of the input should lead to a predictable, corresponding transformation of the output.</p>
+<ul>
+<li><strong>Symmetry:</strong> If a physical system's energy (the cost function) is invariant under a transformation (e.g., rotation or translation), the model's output must reflect this:<ul>
+<li><strong>Invariance:</strong> A function <span class="arithmatex">\(f(\mathbf{x})\)</span> is <strong>invariant</strong> if applying a transformation <span class="arithmatex">\(T\)</span> to the input does not change the output: <span class="arithmatex">\(f(T(\mathbf{x})) = f(\mathbf{x})\)</span>. (E.g., the total energy of a molecule must be the same regardless of its orientation.)</li>
+<li><strong>Equivariance:</strong> A function <span class="arithmatex">\(f(\mathbf{x})\)</span> is <strong>equivariant</strong> if applying a transformation <span class="arithmatex">\(T\)</span> to the input results in the <em>same transformation</em> being applied to the output: <span class="arithmatex">\(f(T(\mathbf{x})) = T'(f(\mathbf{x}))\)</span>. (E.g., if a GNN predicts the force vector on an atom, rotating the molecule should rotate the predicted force vector by the same amount.)</li>
+</ul>
+</li>
+</ul>
+<h3 id="permutation-invariance-and-gnns"><strong>Permutation Invariance and GNNs</strong></h3>
+<hr />
+<p>A core design requirement for all GNNs is <strong>permutation invariance</strong>.</p>
+<ul>
+<li><strong>Requirement:</strong> The output of the GNN (whether node features or a global prediction) must be unchanged if the order of the nodes (rows/columns) in the adjacency matrix and feature matrix is arbitrarily shuffled.</li>
+<li><strong>Implementation:</strong> The <strong>Message-Passing Framework</strong> (Section 18.3) enforces this through its <strong>summation (<span class="arithmatex">\(\sum\)</span>)</strong> operation during aggregation. Since summation is commutative, the aggregated message <span class="arithmatex">\(\mathbf{m}_i\)</span> is independent of the order of the neighbors <span class="arithmatex">\(\mathcal{N}(i)\)</span>.</li>
+</ul>
+<h3 id="equivariant-gnns-for-physical-systems"><strong>Equivariant GNNs for Physical Systems</strong></h3>
+<hr />
+<p>For modeling true 3D physical systems, GNNs often need to enforce stronger geometric symmetry groups, such as the Euclidean Group <strong>E(n)</strong> (rotation, translation, and reflection) or its rigid subgroup <strong>SE(3)</strong>.</p>
+<ul>
+<li><strong>Mechanism:</strong> <strong>Equivariant GNNs</strong> are explicitly constructed so that the linear and non-linear layers guarantee the output respects these symmetries.</li>
+<li><strong>Applications:</strong> This is vital for tasks like predicting <strong>molecular forces</strong> or modeling <strong>rigid-body mechanics</strong>.</li>
+</ul>
+<h3 id="analogy-noethers-theorem"><strong>Analogy: Noether's Theorem</strong></h3>
+<hr />
+<p>The drive for symmetric neural architectures is the computational analogue of <strong>Noether's Theorem</strong> in physics.</p>
+<ul>
+<li><strong>Physical Law:</strong> Noether's theorem states that for every continuous symmetry in nature, there is a corresponding <strong>conserved quantity</strong>. (E.g., translation invariance <span class="arithmatex">\(\leftrightarrow\)</span> conservation of momentum; rotation invariance <span class="arithmatex">\(\leftrightarrow\)</span> conservation of angular momentum.)</li>
+<li><strong>Neural Parallel:</strong> Designing a <strong>Symmetry-preserving</strong> GNN is an attempt to embed these conservation laws into the learning process, ensuring the model's predictions are fundamentally consistent with the physics of the system.</li>
+</ul>
+<details class="question">
+<summary>Why does permutation invariance in GNNs guarantee physical correctness for molecular properties?</summary>
+</details>
+<h2 id="molecular-properties-like-energy-dipole-moment-and-polarizability-are-intrinsic-physical-observables-that-cannot-depend-on-how-we-arbitrarily-label-atoms-in-our-computational-representation-if-swapping-atom-indices-in-the-adjacency-matrix-changed-the-predicted-energy-the-model-would-violate-a-fundamental-physics-principle-identical-particles-are-indistinguishable-permutation-invariance-enforced-via-summation-aggregation-mathbfm_i-sum_j-phi_mmathbfh_j-ensures-the-gnn-output-remains-unchanged-under-relabeling-exactly-mirroring-the-symmetry-of-the-quantum-wavefunction-under-particle-exchange-this-is-the-neural-network-analog-of-the-pauli-exclusion-principlecomputational-architecture-must-respect-the-statistical-symmetry-of-identical-particles"><div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Molecular properties like energy, dipole moment, and polarizability are intrinsic physical observables that cannot depend on how we arbitrarily label atoms in our computational representation. If swapping atom indices in the adjacency matrix changed the predicted energy, the model would violate a fundamental physics principle: identical particles are indistinguishable. Permutation invariance (enforced via summation aggregation $\mathbf{m}_i = \sum_{j} \phi_m(\mathbf{h}_j)$) ensures the GNN output remains unchanged under relabeling, exactly mirroring the symmetry of the quantum wavefunction under particle exchange. This is the neural network analog of the Pauli exclusion principle—computational architecture must respect the statistical symmetry of identical particles.
+</span></code></pre></div></h2>
+<h2 id="188-graph-hamiltonian-networks"><strong>18.8 Graph Hamiltonian Networks</strong></h2>
+<p>The synthesis of GNNs with physical principles (Section 18.7) leads directly to <strong>Graph Hamiltonian Networks</strong> (GHNs). These models go beyond merely predicting a system's state; they are designed to <strong>learn the underlying energy function</strong> (the Hamiltonian) that governs the system's dynamics, thereby guaranteeing that the network's predictions respect fundamental physical laws like the conservation of energy.</p>
+<hr />
+<h3 id="goal-learning-the-hamiltonian"><strong>Goal: Learning the Hamiltonian</strong></h3>
+<hr />
+<p>In classical mechanics, the dynamics of a particle system are entirely defined by the <strong>Hamiltonian</strong> <span class="arithmatex">\(H(\mathbf{q}, \mathbf{p})\)</span>, which is the total energy expressed as a function of generalized positions (<span class="arithmatex">\(\mathbf{q}\)</span>) and momenta (<span class="arithmatex">\(\mathbf{p}\)</span>).</p>
+<ul>
+<li><strong>Objective:</strong> A GHN uses a message-passing GNN to learn a scalar, continuous function <span class="arithmatex">\(H_\theta(\mathbf{q}, \mathbf{p})\)</span>.</li>
+<li><strong>Energy Prediction:</strong> The GNN processes the graph of interacting particles to output the predicted total system energy.</li>
+</ul>
+<h3 id="dynamics-hamiltons-equations"><strong>Dynamics: Hamilton's Equations</strong></h3>
+<hr />
+<p>Once the GNN has learned the Hamiltonian <span class="arithmatex">\(H_\theta\)</span>, the system's time evolution is strictly governed by <strong>Hamilton's Equations</strong>:</p>
+<div class="arithmatex">\[
+\dot{\mathbf{q}} = \frac{\partial H_\theta}{\partial \mathbf{p}},\quad \dot{\mathbf{p}} = -\frac{\partial H_\theta}{\partial \mathbf{q}}
+\]</div>
+<ul>
+<li><strong>Calculation:</strong> The network uses <strong>automatic differentiation</strong> (Chapter 16.3) to compute the gradients of the learned scalar function <span class="arithmatex">\(H_\theta\)</span> with respect to position (<span class="arithmatex">\(\mathbf{q}\)</span>) and momentum (<span class="arithmatex">\(\mathbf{p}\)</span>).</li>
+<li><strong>Integration:</strong> These derivatives yield the predicted forces and velocities (<span class="arithmatex">\(\dot{\mathbf{q}}, \dot{\mathbf{p}}\)</span>), which are then integrated forward in time using a numerical solver (like the Symplectic Euler method).</li>
+</ul>
+<h3 id="implementation-and-analogy"><strong>Implementation and Analogy</strong></h3>
+<hr />
+<ul>
+<li><strong>GNN Implementation:</strong> The GNN computes the total Hamiltonian by summing up the learned pairwise interaction energies (<span class="arithmatex">\(\phi_e\)</span>) between all connected particles:</li>
+</ul>
+<div class="arithmatex">\[
+H_\theta(\mathbf{h})=\sum_{(i,j)}\phi_e(\mathbf{h}_i,\mathbf{h}_j)
+\]</div>
+<ul>
+<li><strong>Analogy: Conserving Energy:</strong> The process is analogous to a system where the graph edges act as <strong>springs transmitting forces</strong> between nodes. By learning the Hamiltonian, the network embeds the most critical symmetry—<strong>time translation invariance</strong>—which, via Noether's theorem (Section 18.7), guarantees the <strong>conservation of total energy</strong> during the predicted time evolution.</li>
+</ul>
+<p>GHNs are a prime example of <strong>Physics-Informed AI</strong>, leveraging neural architectures to discover and enforce physical laws, offering a powerful alternative to traditional numerical solvers.</p>
+<hr />
+<h2 id="189-graph-neural-operators"><strong>18.9 Graph Neural Operators</strong></h2>
+<p>Traditional <strong>Graph Neural Networks (GNNs)</strong> (Sections 18.3–18.5) learn functions defined over <strong>discrete, fixed graph structures</strong>. <strong>Graph Neural Operators</strong> (GNOs) represent a modern extension that aims to solve a much harder problem: learning the mapping between <strong>functions on continuous domains</strong>. GNOs establish a powerful bridge between the discrete graph structure of GNNs and the continuous field theories of <strong>Physics-Informed Neural Networks (PINNs)</strong> (Chapter 16).</p>
+<hr />
+<h3 id="objective-learning-solution-operators"><strong>Objective: Learning Solution Operators</strong></h3>
+<hr />
+<p>The core objective of a Neural Operator is to learn the mathematical mapping <span class="arithmatex">\(\mathcal{G}: u \to v\)</span> where <span class="arithmatex">\(u\)</span> is a function (e.g., the initial state of a system) and <span class="arithmatex">\(v\)</span> is the function representing the solution (e.g., the state at a later time <span class="arithmatex">\(T\)</span>).</p>
+<ul>
+<li><strong>Standard GNN/NN:</strong> Learns a map between vectors: <span class="arithmatex">\(f: \mathbb{R}^N \to \mathbb{R}^M\)</span>.</li>
+<li><strong>Neural Operator:</strong> Learns a map between infinite-dimensional function spaces: <span class="arithmatex">\(\mathcal{G}: \mathcal{A} \to \mathcal{B}\)</span>.</li>
+</ul>
+<p>This means a GNO, once trained, can generalize across different initial conditions, boundary conditions, and, crucially, <strong>different discretizations (meshes)</strong> of the continuous domain.</p>
+<h3 id="implementation-function-space-gnn"><strong>Implementation: Function-Space GNN</strong></h3>
+<hr />
+<p>GNOs achieve this by using the graph as an intermediary representation of the continuous functions:</p>
+<ul>
+<li><strong>Discretization:</strong> The continuous input function <span class="arithmatex">\(u(x)\)</span> is sampled onto a high-resolution, fixed grid or an irregular graph (mesh).</li>
+<li><strong>GNN Processing:</strong> A specialized GNN (or graph-inspired structure, such as the <strong>Fourier Neural Operator, FNO</strong>) is used to process the features on this graph.</li>
+<li><strong>Interpretation:</strong> The GNN learns how information and influence must propagate <em>between</em> the sampled points to model the dynamics of the underlying continuous field.</li>
+</ul>
+<h3 id="bridge-unifying-discrete-and-continuous-physics"><strong>Bridge: Unifying Discrete and Continuous Physics</strong></h3>
+<hr />
+<p>GNOs represent the fusion of the continuous and discrete approaches to modeling physics:</p>
+<ul>
+<li><strong>GNN <span class="arithmatex">\(\leftrightarrow\)</span> Discrete Topology:</strong> The graph component effectively models the local interaction on an irregular mesh, providing the geometric structure inherent in GNNs.</li>
+<li><strong>Operator <span class="arithmatex">\(\leftrightarrow\)</span> Continuous Law (PINNs):</strong> The operator objective itself is often derived from the goal of solving Partial Differential Equations (PDEs), similar to the problem addressed by PINNs (Chapter 16).</li>
+</ul>
+<p>The development of GNOs and FNOs allows AI to move beyond solving PDEs for a single fixed domain (the PINN approach) to solving the <strong>entire class of problems</strong> defined by that differential equation, representing a significant advancement in generating neural surrogates for physical simulation.</p>
+<hr />
+<h2 id="1810-applications"><strong>18.10 Applications</strong></h2>
+<p>The ability of <strong>Graph Neural Networks (GNNs)</strong> to learn local interaction rules over arbitrary topologies makes them universal inductive biases for relational data across scientific, engineering, and social domains. The GNN acts as an engine for modeling complex <strong>field theories on discrete manifolds</strong>.</p>
+<hr />
+<h3 id="observations-gnns-as-relational-inductive-biases"><strong>Observations: GNNs as Relational Inductive Biases</strong></h3>
+<hr />
+<p>GNNs excel in areas where the relationships between entities are more important than their individual characteristics.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Domain</th>
+<th style="text-align: left;">Graph Type</th>
+<th style="text-align: left;">Role</th>
+<th style="text-align: left;">Interpretation in the System</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Molecular Modeling</strong></td>
+<td style="text-align: left;">Atoms &amp; Covalent Bonds.</td>
+<td style="text-align: left;"><strong>Predicting Energies, Forces, and Properties</strong>.</td>
+<td style="text-align: left;">The GNN learns the effective chemical potential and force field by modeling message passing as the exchange of bonding and non-bonding forces.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Materials Science</strong></td>
+<td style="text-align: left;">Crystal Lattices and Unit Cells.</td>
+<td style="text-align: left;"><strong>Stability and Band Structure Prediction</strong>.</td>
+<td style="text-align: left;">The network processes the atomic structure (nodes) and their periodic connections (edges) to predict macroscopic material properties.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Social &amp; Information Networks</strong></td>
+<td style="text-align: left;">Agents &amp; Links (Users, Followers, Citations).</td>
+<td style="text-align: left;"><strong>Influence, Diffusion, and Community Detection</strong>.</td>
+<td style="text-align: left;">The message-passing flow simulates the propagation of information, beliefs, or viruses through the network topology.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Power Grids</strong></td>
+<td style="text-align: left;">Stations &amp; Transmission Lines.</td>
+<td style="text-align: left;"><strong>Fault Detection, Control, and Load Forecasting</strong>.</td>
+<td style="text-align: left;">GNNs model the system dynamics to predict cascade failures or optimize resource flow across the infrastructure graph.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Traffic &amp; Robotics</strong></td>
+<td style="text-align: left;">Agents &amp; Paths/Routes.</td>
+<td style="text-align: left;"><strong>Multi-Agent Coordination and Route Optimization</strong>.</td>
+<td style="text-align: left;">The system learns to predict how the actions of one agent (node) will propagate through and influence the others via the shared graph (roads or workspace).</td>
+</tr>
+</tbody>
+</table>
+<p>The utility of GNNs stems from the <strong>unifying idea</strong> that the fundamental computational problem in all these domains is the same: <strong>how to aggregate and transform information based on a predefined relational structure</strong>.</p>
+<hr />
+<h2 id="1811-worked-example-molecular-property-prediction"><strong>18.11 Worked Example — Molecular Property Prediction</strong></h2>
+<p>This example demonstrates the power of <strong>Graph Neural Networks (GNNs)</strong> in computational science by tackling a core problem in chemistry: predicting molecular properties from the atomic structure. By framing a molecule as a graph, the GNN learns the complex interaction potentials necessary to predict a system's quantum mechanical properties.</p>
+<hr />
+<h3 id="setup-molecule-as-a-graph"><strong>Setup: Molecule as a Graph</strong></h3>
+<hr />
+<ul>
+<li><strong>Dataset:</strong> The QM9 dataset, consisting of thousands of small organic molecules, each with structural information (atoms and bonds) and calculated quantum mechanical properties (e.g., total energy, dipole moment).</li>
+<li><strong>Graph Representation:</strong> Each molecule is converted into a graph <span class="arithmatex">\(\mathcal{G}=(\mathcal{V},\mathcal{E})\)</span>:<ul>
+<li><strong>Nodes (<span class="arithmatex">\(\mathcal{V}\)</span>):</strong> Represent individual <strong>atoms</strong> (e.g., Carbon, Oxygen, Hydrogen). Node features (<span class="arithmatex">\(\mathbf{h}_i\)</span>) encode the atom type, atomic number, and initial charge.</li>
+<li><strong>Edges (<span class="arithmatex">\(\mathcal{E}\)</span>):</strong> Represent the <strong>covalent bonds</strong> connecting the atoms. Edge features (<span class="arithmatex">\(\mathbf{e}_{ij}\)</span>) encode the bond type (single, double, triple) and bond length.</li>
+</ul>
+</li>
+<li><strong>Task:</strong> Predict a macroscopic scalar property, such as the total energy <span class="arithmatex">\(E\)</span> or the dipole moment, using the GNN.</li>
+</ul>
+<h3 id="architecture-and-learning-dynamics"><strong>Architecture and Learning Dynamics</strong></h3>
+<hr />
+<ol>
+<li><strong>Message-Passing GNN:</strong> A specialized GNN (e.g., a variant of GAT or GCN, Sections 18.4, 18.5) is used. This GNN uses multiple layers of message passing (Section 18.3) to allow information (forces and chemical environment) to propagate from distant atoms to local atoms.</li>
+<li><strong>Loss Function:</strong> The network is trained by minimizing the mean squared error (least-squares loss) between the predicted property <span class="arithmatex">\(E_{\text{pred}}\)</span> and the true calculated property <span class="arithmatex">\(E_{\text{true}}\)</span>:</li>
+</ol>
+<div class="arithmatex">\[
+L = |E_{\text{pred}} - E_{\text{true}}|^2
+\]</div>
+<ol>
+<li><strong>Global Readout:</strong> After the message passing stabilizes the node features <span class="arithmatex">\(\mathbf{h}_i'\)</span>, a final <strong>summation or averaging layer</strong> is applied across all nodes in the graph (a global readout) to produce the single, scalar output property <span class="arithmatex">\(E_{\text{pred}}\)</span>. (The summation ensures the final output is <strong>permutation-invariant</strong>, as the molecule's total energy should not depend on the order in which its atoms are listed, Section 18.7).</li>
+</ol>
+<h3 id="observation-learned-energy-surfaces"><strong>Observation: Learned Energy Surfaces</strong></h3>
+<hr />
+<ul>
+<li><strong>Learning the Force Field:</strong> The network implicitly learns the <strong>effective force field</strong> or <strong>chemical potential</strong> of the system. The learned message functions (<span class="arithmatex">\(\phi_m, \phi_u\)</span>) in the deep layers encode the rules of chemical interaction necessary for predicting energy.</li>
+<li><strong>Symmetry and Consistency:</strong> The GNN's built-in permutation invariance and the learned interactions allow it to successfully predict properties with high accuracy. The trained model generalizes across similar molecules and often learns an energy surface that respects physical constraints, such as the prediction being <strong>force-consistent</strong> (a property of Graph Hamiltonian Networks, Section 18.8).</li>
+</ul>
+<p>This application validates GNNs as powerful neural surrogates capable of performing complex quantum mechanical inference.</p>
+<hr />
+<h2 id="1812-code-demo-toy-message-passing"><strong>18.12 Code Demo — Toy Message Passing</strong></h2>
+<p>This code demonstration illustrates the core mathematical operation of a basic <strong>Graph Neural Network (GNN)</strong> layer: the <strong>message-passing and update step</strong> (Section 18.3). The example uses the simplest possible form of aggregation, showing how information diffuses through the graph topology.</p>
+<hr />
+<p><div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1"># --- 1. Graph Structure (Adjacency Matrix) ---</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># Defines a simple 3-node graph connected in a triangle (Nodes 1-2-3 all linked)</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">A</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]],</span><span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> 
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="c1"># A is 3x3: A[i,j] = 1 if an edge exists (A[1,2]=1, A[2,1]=1, etc.)</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="c1"># --- 2. Initial Node Features (State) ---</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="c1"># H is 3x4: 3 nodes, each with a 4-dimensional feature vector (h_i)</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="n">H</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>  
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="c1"># H is the initial state of the system</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="c1"># --- 3. Trainable Weights (Filter) ---</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="c1"># W is 4x4: The learned linear transformation matrix (weight matrix)</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="n">W</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span> 
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="c1"># --- 4. Message Passing and Update Loop ---</span>
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>    <span class="c1"># Step 1: Aggregation/Message Passing (A @ H)</span>
+</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>    <span class="c1"># A @ H: Each node&#39;s new features are a sum of its neighbors&#39; current features.</span>
+</span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>    <span class="c1"># Step 2: Feature Transformation ((A @ H) @ W)</span>
+</span><span id="__span-5-22"><a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>    <span class="c1"># The aggregated features are transformed by the learned weights W.</span>
+</span><span id="__span-5-23"><a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>    <span class="c1"># Step 3: Non-linearity (torch.relu)</span>
+</span><span id="__span-5-24"><a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>    <span class="n">H</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">A</span> <span class="o">@</span> <span class="n">H</span> <span class="o">@</span> <span class="n">W</span><span class="p">)</span>   <span class="c1"># General form of a GNN layer</span>
+</span><span id="__span-5-25"><a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a>
+</span><span id="__span-5-26"><a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a><span class="nb">print</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+</span></code></pre></div>
+<strong>Sample Output:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>tensor([[0.0000, 0.0000, 4.2726, 2.8220],
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>        [0.0000, 0.0000, 4.1070, 2.7440],
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>        [0.0000, 0.0000, 2.7966, 1.8785]])
+</span></code></pre></div></p>
+<h3 id="interpretation-of-the-dynamics"><strong>Interpretation of the Dynamics</strong></h3>
+<hr />
+<ol>
+<li><strong>Local Aggregation (<code>A @ H</code>):</strong> The matrix multiplication of the adjacency matrix <span class="arithmatex">\(A\)</span> with the feature matrix <span class="arithmatex">\(H\)</span> is the core <strong>message-passing</strong> step. Since <span class="arithmatex">\(A\)</span> is 1 for a neighbor and 0 otherwise, the result aggregates the features from a node's immediate neighborhood (<span class="arithmatex">\(\mathcal{N}(i)\)</span>).</li>
+<li><strong>Transformation (<code>@ W</code>):</strong> The aggregated information is transformed by the trainable weights <span class="arithmatex">\(W\)</span>.</li>
+<li><strong>Iterative Diffusion:</strong> The <code>for</code> loop simulates multiple layers (or iterations) of message passing. With each iteration, information diffuses further across the graph:<ul>
+<li><strong>Layer 1:</strong> Each node knows about its 1-hop neighbors.</li>
+<li><strong>Layer 2:</strong> Each node knows about its 2-hop neighbors (neighbors of neighbors).</li>
+<li><strong>Layer 3:</strong> Information has diffused 3 hops away.</li>
+</ul>
+</li>
+<li><strong>Convergence:</strong> The repeated updates continue this process, simulating the <strong>relaxation dynamics</strong> of a physical system. The final output matrix <span class="arithmatex">\(H\)</span> contains the features of the nodes after their states have been influenced and contextualized by the structure of the entire local graph. This process achieves a form of <strong>statistical equilibrium</strong>.</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Interpreting Matrix Multiplication as Neighborhood Aggregation</p>
+</div>
+<h2 id="the-core-gnn-operation-a-h-is-elegant-because-it-encodes-message-passing-purely-through-linear-algebra-each-row-of-the-result-ah_i-equals-sum_j-a_ij-h_j-which-is-exactly-the-sum-of-neighbor-features-since-a_ij-1-for-neighbors-0-otherwise-this-means-adjacency-matrix-multiplication-is-message-aggregation-the-subsequent-transformation-w-and-nonlinearity-relu-allow-the-network-to-learn-complex-nonlinear-interaction-rules-after-l-layers-node-i-has-aggregated-information-from-all-nodes-within-l-hopsits-l-hop-neighborhoodmirroring-how-physical-information-propagates-at-finite-speed-through-a-lattice-the-depth-of-the-gnn-thus-controls-the-receptive-field-of-each-node-exactly-analogous-to-how-convolutional-depth-controls-receptive-field-size-in-cnns"><div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>The core GNN operation `A @ H` is elegant because it encodes message passing purely through linear algebra. Each row of the result $(AH)_i$ equals $\sum_j A_{ij} H_j$, which is exactly the sum of neighbor features (since $A_{ij} = 1$ for neighbors, $0$ otherwise). This means adjacency matrix multiplication *is* message aggregation. The subsequent transformation `@ W` and nonlinearity `relu()` allow the network to learn complex, nonlinear interaction rules. After $L$ layers, node $i$ has aggregated information from all nodes within $L$ hops—its $L$-hop neighborhood—mirroring how physical information propagates at finite speed through a lattice. The depth of the GNN thus controls the &quot;receptive field&quot; of each node, exactly analogous to how convolutional depth controls receptive field size in CNNs.
+</span></code></pre></div></h2>
+<h2 id="1813-energy-based-perspective"><strong>18.13 Energy-Based Perspective</strong></h2>
+<p>The <strong>Graph Neural Network (GNN)</strong>, despite being trained via predictive loss minimization (e.g., mean squared error), can be fully interpreted within the <strong>Energy-Based Model (EBM)</strong> framework. This perspective unifies the GNN's relational structure with the thermodynamic principles of optimization (Part II) and probabilistic modeling (Part III).</p>
+<hr />
+<h3 id="defining-energy-on-the-graph"><strong>Defining Energy on the Graph</strong></h3>
+<hr />
+<p>In the EBM approach (Chapter 14.1), the cost function is defined directly as the <strong>energy function</strong> <span class="arithmatex">\(E_\theta(\mathbf{x})\)</span>, where low energy corresponds to high probability <span class="arithmatex">\(P(\mathbf{x}) \propto e^{-E_\theta(\mathbf{x})/T}\)</span>.</p>
+<p>For a GNN, the energy of a configuration can be defined as the sum of the learned <strong>pairwise interaction potentials</strong> across all edges:</p>
+<div class="arithmatex">\[
+E_\theta(\mathbf{h}) = \sum_{(i,j)} \phi_e(\mathbf{h}_i, \mathbf{h}_j)
+\]</div>
+<ul>
+<li><span class="arithmatex">\(\mathbf{h}_i\)</span>: The final learned feature vector (state) of node <span class="arithmatex">\(i\)</span>.</li>
+<li><span class="arithmatex">\(\phi_e(\mathbf{h}_i, \mathbf{h}_j)\)</span>: The local energy function learned by the GNN that defines the interaction potential between the states of nodes <span class="arithmatex">\(i\)</span> and <span class="arithmatex">\(j\)</span>.</li>
+<li><span class="arithmatex">\(\sum_{(i,j)}\)</span>: The sum over all edges (couplings) in the graph.</li>
+</ul>
+<p>This energy function <span class="arithmatex">\(E_\theta(\mathbf{h})\)</span> acts as a sophisticated, continuous generalization of the <strong>Ising Hamiltonian</strong> (Chapter 8.3), allowing the system to model arbitrary interactions, not just binary spins.</p>
+<h3 id="training-as-energy-sculpting"><strong>Training as Energy Sculpting</strong></h3>
+<hr />
+<p>The optimization process then becomes a process of <strong>sculpting the interaction potential</strong>.</p>
+<ul>
+<li><strong>Objective:</strong> The training objective, often involving maximizing the log-likelihood or minimizing a form of free energy (Chapter 9.6), forces the GNN to adjust its parameters (<span class="arithmatex">\(\theta\)</span>) such that the energy surface <span class="arithmatex">\(E_\theta(\mathbf{h})\)</span> is minimized in regions observed to be highly probable in the training data.</li>
+<li><strong>Analogy:</strong> The GNN's learning process is equivalent to finding the unique <strong>interaction potential</strong> that accurately reproduces the empirically observed statistical mechanics (the low-energy configurations) of the coupled system.</li>
+</ul>
+<p>In this view, the graph is interpreted as a <strong>discrete field</strong>, and training is the process of adjusting the field's potential (energy) to match the observed physical configurations.</p>
+<hr />
+<h2 id="1814-temporal-graph-networks"><strong>18.14 Temporal Graph Networks</strong></h2>
+<p>While most <strong>Graph Neural Networks (GNNs)</strong> (Sections 18.3–18.5) model a static, instantaneous relational structure, many complex physical and social systems exhibit <strong>dynamic topology</strong>—where the nodes, edges, or features change over time. <strong>Temporal Graph Networks (TGNs)</strong> extend the message-passing framework to learn the <strong>equations of motion of connectivity</strong>.</p>
+<hr />
+<h3 id="modeling-dynamic-topology"><strong>Modeling Dynamic Topology</strong></h3>
+<hr />
+<p>TGNs are necessary when the graph structure itself is not fixed. Examples include:
+* <strong>Dynamic Graphs:</strong> Edges may appear or disappear (e.g., a network connection drops).
+* <strong>Temporal Evolution:</strong> Node features (<span class="arithmatex">\(\mathbf{h}_i\)</span>) evolve based on dynamic interactions.</p>
+<p>The goal of a TGN is to learn how the instantaneous state of the system <span class="arithmatex">\(\mathcal{G}(t)\)</span> influences the subsequent state <span class="arithmatex">\(\mathcal{G}(t+1)\)</span>, incorporating both the spatial relationships (the graph) and the temporal evolution (the dynamics).</p>
+<h3 id="architecture-fusing-space-and-time"><strong>Architecture: Fusing Space and Time</strong></h3>
+<hr />
+<p>TGNs fuse the principles of spatial message passing with temporal memory mechanisms:</p>
+<ol>
+<li><strong>Temporal Embedding:</strong> Each interaction or node is often assigned a time-based embedding that captures its age or recency.</li>
+<li><strong>Recurrent Message Passing:</strong> The GNN's message-passing layers (Section 18.3) are augmented with a <strong>recurrent unit</strong> (like an RNN or LSTM, Chapter 13.5) at each node. This unit updates the node's feature vector <span class="arithmatex">\(\mathbf{h}_i\)</span> based on both the aggregated <strong>spatial message</strong> (from neighbors) and the node's <strong>previous memory state</strong>.</li>
+<li><strong>Attention Mechanisms:</strong> Often, <strong>attention-based mechanisms</strong> (Chapter 18.5) are used to weight past temporal interactions, allowing the network to prioritize the most relevant historical events.</li>
+</ol>
+<h3 id="analogy-coupled-oscillator-networks"><strong>Analogy: Coupled Oscillator Networks</strong></h3>
+<hr />
+<p>The dynamics of TGNs are analogous to systems of <strong>coupled oscillators</strong> or <strong>complex dynamical systems</strong>:</p>
+<ul>
+<li><strong>Coupled Oscillators:</strong> Each node is an oscillator whose state is influenced by its neighbors, but it also carries its own internal temporal dynamics. The network simulates the evolution of the phase and amplitude of the entire system.</li>
+<li><strong>Evolution of Correlation:</strong> The TGN learns to model the <strong>evolution of the correlation structure</strong> over time. It predicts how local perturbations will propagate and influence the global behavior of the graph over sequential steps.</li>
+</ul>
+<h3 id="applications"><strong>Applications</strong></h3>
+<hr />
+<p>TGNs are essential for any problem involving predicting sequential behavior on a network:
+* <strong>Particle Simulations:</strong> Forecasting trajectories based on continuously changing forces.
+* <strong>Social Dynamics:</strong> Predicting the spread of information or influence based on who talks to whom and when.
+* <strong>Traffic Prediction:</strong> Modeling how congestion (a local event) propagates across a city's road network (the graph) over minutes or hours.</p>
+<hr />
+<h2 id="1815-relation-to-other-paradigms"><strong>18.15 Relation to Other Paradigms</strong></h2>
+<p>The <strong>Graph Neural Network (GNN)</strong> framework, centered on the <strong>Message-Passing</strong> principle, occupies a critical intersection in the landscape of modern AI, distinguishing itself from other powerful architectures (CNNs, RNNs, PINNs, NQS, and Transformers) by its focus on <strong>relational topology</strong>. Understanding these relationships clarifies the specific strengths and inductive biases of GNNs.</p>
+<hr />
+<h3 id="unification-geometries-of-learning"><strong>Unification: Geometries of Learning</strong></h3>
+<hr />
+<p>Each specialized neural architecture can be categorized by the <strong>geometry of learning</strong> it imposes or exploits:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Framework</th>
+<th style="text-align: left;">Focus Geometry</th>
+<th style="text-align: left;">Primary Inductive Bias</th>
+<th style="text-align: left;">Analogy in Physics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>CNN</strong></td>
+<td style="text-align: left;"><strong>Euclidean/Grid</strong></td>
+<td style="text-align: left;">Locality and translation invariance.</td>
+<td style="text-align: left;"><strong>Real-Space Renormalization</strong>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RNN</strong></td>
+<td style="text-align: left;"><strong>Sequence/Temporal</strong></td>
+<td style="text-align: left;">Time ordering and memory feedback.</td>
+<td style="text-align: left;"><strong>Dynamical System Trajectory</strong>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>PINN</strong></td>
+<td style="text-align: left;"><strong>Continuous Fields</strong></td>
+<td style="text-align: left;">Enforcement of differential laws (PDEs).</td>
+<td style="text-align: left;"><strong>Variational Principle</strong>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NQS</strong></td>
+<td style="text-align: left;"><strong>Hilbert Manifold</strong></td>
+<td style="text-align: left;">Variational principle on quantum amplitude.</td>
+<td style="text-align: left;"><strong>Wavefunction Geometry</strong>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GNN</strong></td>
+<td style="text-align: left;"><strong>Arbitrary Graph/Discrete</strong></td>
+<td style="text-align: left;">Permutation invariance and local coupling.</td>
+<td style="text-align: left;"><strong>Network Topology</strong> (Ising lattice).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Transformer</strong></td>
+<td style="text-align: left;"><strong>Set/Global Correlation</strong></td>
+<td style="text-align: left;">Dynamic, all-to-all interaction.</td>
+<td style="text-align: left;"><strong>Nonlocal Field Theory</strong>.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition example">
+<p class="admonition-title">Comparing GNN and CNN on Molecular vs. Image Data</p>
+</div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Consider two prediction tasks: (1) predicting molecular energy from atomic structure, (2) classifying an image of a molecule. For task (1), a **GNN** is ideal: the molecule is naturally a graph (atoms = nodes, bonds = edges with irregular connectivity), and chemical properties depend on specific bonding patterns, not spatial grid positions. A CNN would fail because molecules have arbitrary topology—no regular 2D/3D grid exists. For task (2), a **CNN** excels: the image is a regular pixel grid with local spatial correlations (edges, textures). A GNN would be inefficient since every pixel would need edges to its neighbors, recreating a grid structure. The key insight: CNNs are GNNs on **regular lattices** with **weight sharing** (convolution), while GNNs handle **irregular topologies** with **node-specific aggregation**. This architectural choice encodes the inductive bias matching the data&#39;s intrinsic geometry.
+</span></code></pre></div>
+<h3 id="gnns-vs-other-paradigms"><strong>GNNs vs. Other Paradigms</strong></h3>
+<hr />
+<ol>
+<li><strong>GNNs vs. CNNs:</strong> A CNN is essentially a GNN applied to a <strong>regular, periodic grid graph</strong> where the weights are shared globally (convolution). GNNs generalize this concept to <strong>irregular, sparse graphs</strong> (e.g., molecules).</li>
+<li><strong>GNNs vs. Transformers:</strong> GNNs enforce <strong>local connectivity</strong> based on a fixed topology, modeling nearest-neighbor interactions (like short-range forces). <strong>Transformers</strong> use attention to model <strong>global, all-to-all coupling</strong> (like long-range forces). The Transformer is a GNN where the adjacency matrix is dense and dynamically learned (Section 19.9).</li>
+<li><strong>GNNs vs. NQS:</strong> NQS (Chapter 17) uses neural networks to represent the <strong>quantum amplitude</strong> of a spin system. GNNs provide a powerful tool for this purpose: the GNN structure can be used as the network architecture (the ansatz) within an NQS to enforce the necessary local physical couplings.</li>
+</ol>
+<p>This comparative view highlights that GNNs fill a crucial role by providing the necessary <strong>inductive bias for systems with relational structure</strong>, where information flow is determined by specific, discrete connections.</p>
+<hr />
+<h2 id="1816-limitations-and-frontiers"><strong>18.16 Limitations and Frontiers</strong></h2>
+<p>Despite their success in modeling molecules and discrete networks, <strong>Graph Neural Networks (GNNs)</strong> face inherent technical and theoretical challenges that define the current frontiers of research. These limitations guide the development of the next generation of neural architectures and hybrid models.</p>
+<hr />
+<h3 id="technical-limitations"><strong>Technical Limitations</strong></h3>
+<hr />
+<ul>
+<li><strong>Scalability for Large Graphs:</strong> GNNs struggle with very large or <strong>dense graphs</strong> (those where the adjacency matrix is full or nearly full). Message aggregation (Section 18.3) requires iterating over all neighbors, leading to computational complexity that can be prohibitive for massive networks like social graphs. Efficient sampling and mini-batch strategies are required to overcome this.</li>
+<li><strong>Over-smoothing:</strong> As information diffuses through many layers of message passing, the feature vectors (<span class="arithmatex">\(\mathbf{h}_i\)</span>) of all nodes tend to converge toward a common, average value. This <strong>over-smoothing</strong> causes nodes to become indistinguishable, losing the capacity to represent unique local features. This limits the effective depth of most GNNs to only a few layers.</li>
+<li><strong>Modeling Dynamic Graphs:</strong> While Temporal Graph Networks (TGNs, Section 18.14) exist, accurately modeling graphs where <strong>edges and nodes appear and disappear quickly</strong> remains a challenge.</li>
+</ul>
+<h3 id="theoretical-frontiers"><strong>Theoretical Frontiers</strong></h3>
+<hr />
+<ul>
+<li><strong>Interpretability of Learned Interactions:</strong> Although GNNs are structurally more interpretable than MLPs, understanding the precise, quantitative meaning of the learned message and update functions (<span class="arithmatex">\(\phi_m, \phi_u\)</span>) (Section 18.3) remains difficult. Isolating the contribution of a single interaction to the final prediction is an ongoing challenge.</li>
+<li><strong>Beyond Message Passing (GNN <span class="arithmatex">\(\leftrightarrow\)</span> Operator):</strong> Research is moving toward <strong>Graph Neural Operators (GNOs)</strong> (Section 18.9). The goal is to develop methods that are <strong>mesh-invariant</strong>, allowing the learned physical dynamics to generalize across irregular domains and varying discretizations.</li>
+<li><strong>Learning Quantum Graph States:</strong> At the cutting edge (Chapter 17), GNNs are being extended to model <strong>Neural Quantum States (NQS)</strong>. The GNN structure provides a physical ansatz for representing the quantum wavefunction <span class="arithmatex">\(\psi\)</span> of interacting spin systems, setting the stage for more accurate and scalable quantum simulations.</li>
+</ul>
+<h3 id="analogy-addressing-scale-in-field-theory"><strong>Analogy: Addressing Scale in Field Theory</strong></h3>
+<hr />
+<p>The limitations faced by GNNs—especially over-smoothing and scalability—are analogous to the challenges encountered in modeling long-range physical interactions in classical simulations. The solutions being pursued (e.g., hierarchical structures, sparse connectivity) seek to design efficient neural models that mimic the sparse, multi-scale nature of real-world physical forces.</p>
+<hr />
+<h2 id="1817-philosophical-perspective-learning-as-relational-physics"><strong>18.17 Philosophical Perspective — Learning as Relational Physics</strong></h2>
+<p>The <strong>Graph Neural Network (GNN)</strong> architecture compels a philosophical shift in how we define both computation and reality, moving from the study of isolated entities to the study of <strong>interaction patterns</strong>. This view posits that learning is fundamentally a process of <strong>Relational Physics</strong>—discovering and optimizing the laws that govern how components influence one another.</p>
+<hr />
+<h3 id="insight-intelligence-arises-from-interaction"><strong>Insight: Intelligence Arises from Interaction</strong></h3>
+<hr />
+<p>The GNN structure challenges the traditional focus on the internal state of a single processor (like a simple neuron). Instead, it suggests a profound insight:</p>
+<ul>
+<li><strong>Intelligence is Relational:</strong> The true complexity and information in a system arise not from the computation performed by an isolated node, but from the <strong>patterns of interaction</strong> (<span class="arithmatex">\(\phi_m\)</span>) that propagate messages between nodes.</li>
+<li><strong>The Coupling Defines the Whole:</strong> The collective behavior (e.g., the macroscopic phase or global stability) is determined entirely by the <strong>coupling constants</strong> (the learned edge weights and message functions) that define the system's energy landscape.</li>
+</ul>
+<h3 id="analogy-reality-as-a-dynamic-graph"><strong>Analogy: Reality as a Dynamic Graph</strong></h3>
+<hr />
+<p>The GNN provides a computational model for the long-standing philosophical idea that <strong>physical reality itself is fundamentally relational</strong>.</p>
+<ul>
+<li><strong>Spacetime as Network:</strong> Concepts like the discrete fabric of spacetime or the entangled states of quantum matter can be viewed as complex, high-dimensional graphs.</li>
+<li><strong>Energy as Message Passing:</strong> Physical laws are then simplified to rules for <strong>energy and information message passing</strong> across this network topology. Forces become messages (<span class="arithmatex">\(\mathbf{m}\)</span>), and the dynamics of the universe are the repeated, collective relaxation steps of a universal GNN.</li>
+<li><strong>Consciousness as Connectivity:</strong> In cognitive science, this perspective suggests that integrated intelligence (or consciousness) may be an emergent property of the <strong>dynamic connectivity</strong> of a massive neural graph, where attention (Chapter 19) is a form of learned, global coherence.</li>
+</ul>
+<h3 id="bridge-to-correlation-the-limit-of-locality"><strong>Bridge to Correlation: The Limit of Locality</strong></h3>
+<hr />
+<p>The GNN embodies the limits of locality by restricting interactions to direct neighbors. This leads directly to the question addressed in the next chapter:</p>
+<ul>
+<li>If the underlying physics is not local (e.g., quantum entanglement or long-range forces), the fixed topology of the GNN is inadequate.</li>
+<li>The next progression in the architecture must replace this fixed graph structure with a dynamic mechanism capable of modeling <strong>all-to-all correlation</strong>.</li>
+</ul>
+<p>This prepares the way for the <strong>Transformer</strong>, which generalizes the GNN by learning the optimal correlation structure dynamically, moving from <strong>local interaction</strong> to <strong>global field theory</strong>.</p>
+<hr />
+<h2 id="1818-takeaways-bridge-to-chapter-19"><strong>18.18 Takeaways &amp; Bridge to Chapter 19</strong></h2>
+<p>This chapter established the <strong>Graph Neural Network (GNN)</strong> as the architectural template for modeling systems defined by <strong>discrete, relational structure</strong>. We demonstrated that the GNN's dynamics are a direct computational analogue of force exchange and field propagation in coupled physical systems.</p>
+<hr />
+<h3 id="key-takeaways-from-chapter-18"><strong>Key Takeaways from Chapter 18</strong></h3>
+<hr />
+<ul>
+<li><strong>Relational Structure and Local Coupling:</strong> GNNs successfully model <strong>local interaction and emergent order</strong> by propagating information along the network's topology. The <strong>Message-Passing Framework</strong> (Section 18.3) explicitly implements the <strong>Markov property</strong> (Chapter 11.4), ensuring a node's state depends only on its immediate neighbors.</li>
+<li><strong>Unifying Physics and AI:</strong> GNNs unify message passing in AI with <strong>coupling in physics</strong>. The learning process is equivalent to discovering the optimal <strong>microscopic rule</strong> (the local message function) necessary to reproduce the macroscopic behavior of the system.</li>
+<li><strong>Symmetry Enforcement:</strong> The architecture's design enforces <strong>permutation invariance</strong> (Section 18.7). Advanced variants like <strong>Graph Hamiltonian Networks</strong> (Section 18.8) embed principles like the <strong>conservation of energy</strong>, directly aligning the learned dynamics with physical laws.</li>
+</ul>
+<h3 id="bridge-to-chapter-19-the-global-correlation-frontier"><strong>Bridge to Chapter 19: The Global Correlation Frontier</strong></h3>
+<hr />
+<p>The GNN's power is constrained by its primary inductive bias: <strong>locality</strong>. Information can only flow between nodes connected by a fixed, pre-defined edge.</p>
+<p>This constraint becomes a severe limitation for problems dominated by <strong>nonlocal phenomena</strong>:
+* <strong>Long-Range Forces:</strong> Modeling interactions across distant components (e.g., electrostatics or gravity).
+* <strong>Quantum Entanglement:</strong> Capturing global correlations across non-adjacent subsystems (Section 19.8).</p>
+<p>This motivates the final architectural step: replacing the fixed, local graph with a mechanism that learns and propagates all-to-all influence dynamically.</p>
+<p><strong>Chapter 19: "Transformers and Global Correlation,"</strong> introduces the <strong>Self-Attention</strong> mechanism, which generalizes the GNN by modeling a system as a dynamic field. The focus shifts from <strong>local interaction</strong> to <strong>global coupling</strong>, enabling the network to learn the long-range entanglement of information and matter.</p>
+<hr />
+<h2 id="references"><strong>References</strong></h2>
+<p>[1] Scarselli, F., Gori, M., Tsoi, A. C., Hagenbuchner, M., &amp; Monfardini, G. (2009). The graph neural network model. <em>IEEE Transactions on Neural Networks</em>, 20(1), 61-80.
+[2] Kipf, T. N., &amp; Welling, M. (2017). Semi-supervised classification with graph convolutional networks. <em>International Conference on Learning Representations (ICLR)</em>.
+[3] Veličković, P., Cucurull, G., Casanova, A., Romero, A., Liò, P., &amp; Bengio, Y. (2018). Graph attention networks. <em>International Conference on Learning Representations (ICLR)</em>.
+[4] Gilmer, J., Schoenholz, S. S., Riley, P. F., Vinyals, O., &amp; Dahl, G. E. (2017). Neural message passing for quantum chemistry. <em>International Conference on Machine Learning (ICML)</em>, 1263-1272.
+[5] Battaglia, P. W., et al. (2018). Relational inductive biases, deep learning, and graph networks. <em>arXiv preprint arXiv:1806.01261</em>.
+[6] Sanchez-Gonzalez, A., et al. (2020). Learning to simulate complex physics with graph networks. <em>International Conference on Machine Learning (ICML)</em>, 8459-8468.
+[7] Li, Z., et al. (2020). Fourier neural operator for parametric partial differential equations. <em>International Conference on Learning Representations (ICLR)</em>.
+[8] Greydanus, S., Dzamba, M., &amp; Yosinski, J. (2019). Hamiltonian neural networks. <em>Advances in Neural Information Processing Systems (NeurIPS)</em>, 32.
+[9] Schütt, K. T., et al. (2017). SchNet: A continuous-filter convolutional neural network for modeling quantum interactions. <em>Advances in Neural Information Processing Systems (NeurIPS)</em>, 30.
+[10] Wu, Z., Pan, S., Chen, F., Long, G., Zhang, C., &amp; Yu, P. S. (2021). A comprehensive survey on graph neural networks. <em>IEEE Transactions on Neural Networks and Learning Systems</em>, 32(1), 4-24.</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://bigbookofcomputing.github.io" target="_blank" rel="noopener" title="bigbookofcomputing.github.io" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/bigbookofcomputing" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256c0 120 82.7 220.8 194.2 248.5V334.2h-52.8V256h52.8v-33.7c0-87.1 39.4-127.5 125-127.5 16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H287v175.9C413.8 494.8 512 386.9 512 256"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.youtube.com/@big-book-of-computing" target="_blank" rel="noopener" title="www.youtube.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M549.7 124.1c-6.2-23.7-24.8-42.3-48.3-48.6C458.9 64 288.1 64 288.1 64S117.3 64 74.7 75.5c-23.5 6.3-42 24.9-48.3 48.6C15 167 15 256.4 15 256.4s0 89.4 11.4 132.3c6.3 23.6 24.8 41.5 48.3 47.8C117.3 448 288.1 448 288.1 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zM232.2 337.6V175.2l142.7 81.2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+  
+
+
+<h4>Cookie consent</h4>
+<p>We use cookies to recognize your repeated visits and preferences, as well as to measure the effectiveness of our documentation and whether users find what they're searching for. With your consent, you're helping us to make our documentation better.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="github" checked>
+      <span class="task-list-indicator"></span>
+      GitHub
+    </label>
+  </li>
+
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../static/mathjax-config.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

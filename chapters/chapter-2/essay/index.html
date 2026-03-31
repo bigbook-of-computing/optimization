@@ -1,0 +1,3212 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A comprehensive guide to the foundations of optimization algorithms and techniques">
+      
+      
+        <meta name="author" content="Big Book of Computing">
+      
+      
+        <link rel="canonical" href="https://bigbookofcomputing.github.io/chapters/chapter-2/essay/">
+      
+      
+        <link rel="prev" href="../../chapter-1/essay/">
+      
+      
+        <link rel="next" href="../../chapter-3/essay/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Chapter-2 Statistics & Probability in High Dimensions - Big Book of Computing | Optimization</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+      <link rel="stylesheet" href="../../../static/styles.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-ECS7B3X8JM"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-ECS7B3X8JM",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-ECS7B3X8JM",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-2-2-statistics-probability-in-high-dimensions" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Big Book of Computing | Optimization" class="md-header__button md-logo" aria-label="Big Book of Computing | Optimization" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Big Book of Computing | Optimization
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter-2 Statistics & Probability in High Dimensions
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1M8 13h8v-2H8zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4a5 5 0 0 0 5-5 5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5M7 15a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/bigbookofcomputing/optimization" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../home/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contents/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../introduction/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Introduction
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../chapter-1/essay/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapter-1/workbook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  WorkBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapter-1/codebook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  CodeBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Big Book of Computing | Optimization" class="md-nav__button md-logo" aria-label="Big Book of Computing | Optimization" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    Big Book of Computing | Optimization
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/bigbookofcomputing/optimization" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../home/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapters
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Chapters
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-16/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-17/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-18/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-19/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WorkBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    WorkBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-16/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-17/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-18/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-19/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CodeBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CodeBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-16/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-17/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-18/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-19/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/bigbookofcomputing/optimization/edit/master/docs/chapters/chapter-2/essay.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/bigbookofcomputing/optimization/raw/master/docs/chapters/chapter-2/essay.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="chapter-2-2-statistics-probability-in-high-dimensions"><strong>Chapter 2: 2. Statistics &amp; Probability in High Dimensions</strong></h1>
+<h1 id="introduction"><strong>Introduction</strong></h1>
+<p>Chapter 1 established a <strong>geometric</strong> framework for understanding simulation data: trajectories in phase space were transformed into point clouds in feature space, characterized by their center (the mean vector <span class="arithmatex">\(\mathbf{\mu}\)</span>) and shape (the covariance matrix <span class="arithmatex">\(\Sigma\)</span>). This geometric picture, however, is incomplete. It describes the <em>location</em> and <em>orientation</em> of the data manifold but tells us nothing about the <em>density</em> of points populating that manifold—whether the cloud is uniformly distributed, clustered into distinct phases, or concentrated along narrow pathways. To answer these questions, we must transition from <strong>geometry</strong> (the shape of data) to <strong>probability</strong> (the distribution that generates it).</p>
+<p>This chapter provides the formal statistical and information-theoretic toolkit required to model and analyze high-dimensional probability distributions <span class="arithmatex">\(p(\mathbf{x})\)</span>. We begin by reinterpreting our data cloud as an <strong>empirical distribution</strong> and establish the profound connection between probability and energy through the <strong>Boltzmann distribution</strong>, linking statistical inference to the physical concept of free-energy landscapes. We then confront the central obstacle to all high-dimensional analysis: the <strong>Curse of Dimensionality</strong>—the exponential explosion of volume and the catastrophic failure of naive density estimation methods in spaces where <span class="arithmatex">\(D \gg 3\)</span>. To overcome this, we develop the theory of <strong>sampling-based inference</strong>, introducing <strong>Monte Carlo methods</strong>, <strong>importance sampling</strong>, and the foundational <strong>Markov Chain Monte Carlo (MCMC)</strong> framework. We formalize the concepts of <strong>entropy</strong>, <strong>mutual information</strong>, and <strong>KL divergence</strong> as quantitative measures of uncertainty, dependence, and distributional mismatch—tools essential for discovering order parameters and validating models.</p>
+<p>By the end of this chapter, you will understand how to move from raw simulation trajectories to probabilistic models, compute expectation values via sampling when analytical integration is impossible, and quantify the information content and uncertainty inherent in high-dimensional data. You will recognize why the Gaussian distribution emerges as the maximum-entropy solution subject to known mean and covariance constraints, and why density estimation in the full <span class="arithmatex">\(\mathbb{R}^D\)</span> space is futile without first applying dimensionality reduction. These foundations prepare you for <strong>Chapter 3</strong>, where we develop the algorithms—<strong>PCA</strong>, <strong>t-SNE</strong>, <strong>UMAP</strong>, and <strong>autoencoders</strong>—that project high-dimensional manifolds into computationally tractable low-dimensional representations, enabling the statistical methods of this chapter to finally work.</p>
+<hr />
+<h1 id="chapter-2-outline"><strong>Chapter 2: Outline</strong></h1>
+<table>
+<thead>
+<tr>
+<th><strong>Sec.</strong></th>
+<th><strong>Title</strong></th>
+<th><strong>Core Ideas &amp; Examples</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>2.1</strong></td>
+<td><strong>From Geometry to Probability</strong></td>
+<td>Empirical distribution <span class="arithmatex">\(\hat{p}(\mathbf{x}) = \frac{1}{N}\sum \delta(\mathbf{x}-\mathbf{x}_i)\)</span>; Boltzmann distribution <span class="arithmatex">\(p(\mathbf{s}) \propto e^{-E/k_BT}\)</span>; energy-probability duality <span class="arithmatex">\(E_{\text{eff}} = -k_BT \ln p(\mathbf{x})\)</span>; likelihood as inverse energy.</td>
+</tr>
+<tr>
+<td><strong>2.2</strong></td>
+<td><strong>Probability Distributions as Energy Landscapes</strong></td>
+<td>Exponential family and partition function <span class="arithmatex">\(Z(\mathbf{\theta})\)</span>; moments (mean, covariance, skewness, kurtosis) and cumulants; Shannon entropy <span class="arithmatex">\(S[p] = -\langle \ln p \rangle\)</span>; KL divergence $D_{\mathrm{KL}}(p</td>
+</tr>
+<tr>
+<td><strong>2.3</strong></td>
+<td><strong>Likelihood and Inference</strong></td>
+<td>Maximum Likelihood Estimation (MLE) <span class="arithmatex">\(\mathbf{\theta}_{\text{ML}} = \arg\max \ln \mathcal{L}(\mathbf{\theta})\)</span>; Bayesian inference and MAP <span class="arithmatex">\(\mathbf{\theta}_{\text{MAP}} = \arg\max [\ln \mathcal{L} + \ln p(\mathbf{\theta})]\)</span>; <span class="arithmatex">\(\chi^2\)</span> fitting as MLE under Gaussian noise; Fisher Information Matrix as metric tensor.</td>
+</tr>
+<tr>
+<td><strong>2.4</strong></td>
+<td><strong>The Curse of Dimensionality</strong></td>
+<td>Volume concentration in high-dimensional spheres; shell fraction <span class="arithmatex">\(1-(1-\epsilon)^D \to 1\)</span> as <span class="arithmatex">\(D \to \infty\)</span>; distance concentration (all pairwise distances converge); data sparsity (<span class="arithmatex">\(10^D\)</span> samples required); failure of naive histograms and nearest-neighbor methods.</td>
+</tr>
+<tr>
+<td><strong>2.5</strong></td>
+<td><strong>Sampling Strategies</strong></td>
+<td>Monte Carlo integration <span class="arithmatex">\(\langle f \rangle \approx \frac{1}{N}\sum f(\mathbf{x}_i)\)</span>; importance sampling with weights <span class="arithmatex">\(w = p/q\)</span>; Markov Chain Monte Carlo (MCMC) as correlated sampling; Metropolis-Hastings acceptance <span class="arithmatex">\(\min(1, e^{-\beta \Delta E})\)</span>; variance reduction techniques.</td>
+</tr>
+<tr>
+<td><strong>2.6</strong></td>
+<td><strong>Density Estimation</strong></td>
+<td>Parametric models (single Gaussian, Gaussian Mixture Models); nonparametric methods (Kernel Density Estimation with bandwidth <span class="arithmatex">\(h\)</span>, K-Nearest Neighbors); bias-variance trade-off; curse revisited—KDE fails when <span class="arithmatex">\(D\)</span> large; workflow: reduce dimension first, estimate density in latent space.</td>
+</tr>
+<tr>
+<td><strong>2.7</strong></td>
+<td><strong>Entropy, Information, and Uncertainty</strong></td>
+<td>Shannon entropy as Gibbs entropy <span class="arithmatex">\(S = -k_B \sum p_i \ln p_i\)</span>; Maximum Entropy Principle (MaxEnt) justifies Boltzmann and Gaussian distributions; mutual information $I(X;Y) = S(X) - S(X</td>
+</tr>
+<tr>
+<td><strong>2.8</strong></td>
+<td><strong>Worked Example: Sampling a High-Dimensional Gaussian</strong></td>
+<td>Ground truth <span class="arithmatex">\(\mathcal{N}(\mathbf{0}, \Sigma_{\text{true}})\)</span>; projection effects hide correlations; empirical covariance <span class="arithmatex">\(\hat{\Sigma}\)</span> estimation; singularity when <span class="arithmatex">\(N &lt; D\)</span>; sample size requirement <span class="arithmatex">\(N \gg D\)</span> for stable inference; Random Matrix Theory regime.</td>
+</tr>
+<tr>
+<td><strong>2.9</strong></td>
+<td><strong>Code Demo: Monte Carlo Density Estimation</strong></td>
+<td>2D correlated Gaussian as ground truth; draw <span class="arithmatex">\(N=5000\)</span> samples; Kernel Density Estimation (KDE) with automatic bandwidth; visualization of learned density <span class="arithmatex">\(\hat{p}(\mathbf{x})\)</span> via contour plot; bridge to Chapter 3: need dimensionality reduction for <span class="arithmatex">\(D \gg 2\)</span>.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="21-from-geometry-to-probability"><strong>2.1 From Geometry to Probability</strong></h2>
+<hr />
+<h3 id="why-statistics"><strong>Why Statistics?</strong></h3>
+<p>In Chapter 1, we established a <strong>geometric</strong> picture of our simulation data. We learned to transform raw, high-dimensional trajectories into a static data cloud, or manifold, <span class="arithmatex">\(\mathcal{M} \subset \mathbb{R}^D\)</span>. We used the mean vector <span class="arithmatex">\(\mathbf{\mu}\)</span> to locate its center and the covariance matrix <span class="arithmatex">\(\Sigma\)</span> to describe its linear shape, orientation, and dominant modes of variation.</p>
+<p>This geometric summary, however, is incomplete. It provides the first and second moments but tells us little about the <em>density</em> of the cloud. Is the cloud solid, hollow, or clustered in multiple 'blobs'? To answer this, we must move from geometry (the <em>shape</em> of the data) to <strong>probability</strong> (the <em>distribution</em> that populates that shape). Our goal is no longer just to describe the data, but to infer the <strong>generative process</strong> <span class="arithmatex">\(P(\mathbf{x})\)</span> from which our samples <span class="arithmatex">\(\{\mathbf{x}_i\}\)</span> were drawn.</p>
+<div class="admonition tip">
+<p class="admonition-title">From Shape to Distribution</p>
+</div>
+<h2 id="the-mean-and-covariance-tell-us-where-the-data-is-and-how-its-oriented-but-not-how-densely-its-packed-probability-density-is-the-missing-piece-that-transforms-geometric-description-into-predictive-modeling"><div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>The mean and covariance tell us *where* the data is and *how it&#39;s oriented*, but not *how densely* it&#39;s packed. Probability density is the missing piece that transforms geometric description into predictive modeling.
+</span></code></pre></div></h2>
+<h3 id="the-empirical-distribution"><strong>The Empirical Distribution</strong></h3>
+<p>Our entire knowledge of the true, underlying distribution <span class="arithmatex">\(P(\mathbf{x})\)</span> is contained within the <span class="arithmatex">\(N\)</span> finite samples from our simulation. The most direct, unbiased representation of this knowledge is the <strong>empirical distribution</strong>, <span class="arithmatex">\(\hat{p}(\mathbf{x})\)</span>.</p>
+<p>We define <span class="arithmatex">\(\hat{p}(\mathbf{x})\)</span> as a sum of Dirac delta functions, one centered on each data point we observed:</p>
+<div class="arithmatex">\[
+\hat{p}(\mathbf{x}) \approx \frac{1}{N}\sum_{i=1}^{N}\delta(\mathbf{x}-\mathbf{x}_i)
+\]</div>
+<p>This function places a "probability mass" of <span class="arithmatex">\(1/N\)</span> at the precise location of each sample and is zero everywhere else [1]. It is a "spiky," non-parametric model of the underlying reality. Any expectation value <span class="arithmatex">\(\langle f(\mathbf{x}) \rangle\)</span> computed under this empirical distribution is simply the sample mean of <span class="arithmatex">\(f\)</span> over our dataset:</p>
+<p>$$
+\langle f(\mathbf{x}) \rangle_{\hat{p}} = \int f(\mathbf{x})\hat{p}(\mathbf{x})d\mathbf{x} = \frac{1}{N}\sum_{i=1}^{N}f(\mathbf{x}_i)
+$$
+This is the formal bridge from our data samples to the language of probability. Our data cloud <em>is</em> the empirical distribution.</p>
+<hr />
+<h3 id="physical-analogy-energy-and-log-likelihood"><strong>Physical Analogy: Energy and Log-Likelihood</strong></h3>
+<p>In statistical physics, the probability of a system being in a microstate <span class="arithmatex">\(\mathbf{s}\)</span> at thermal equilibrium is not uniform. It is governed by the <strong>Boltzmann distribution</strong> [2]:</p>
+<p>$$
+p(\mathbf{s}) = \frac{1}{Z} e^{-E[\mathbf{s}]/k_B T}
+$$
+Here, <span class="arithmatex">\(E[\mathbf{s}]\)</span> is the energy of the state, <span class="arithmatex">\(k_B T\)</span> is the thermal energy, and <span class="arithmatex">\(Z\)</span> is the partition function that ensures the distribution sums to one.</p>
+<p>This gives us a profound conceptual link:
+* High-probability states <span class="arithmatex">\(\leftrightarrow\)</span> Low-energy states (basins, stable phases)
+* Low-probability states <span class="arithmatex">\(\leftrightarrow\)</span> High-energy states (barriers, transition states)</p>
+<p>We can invert this relationship to <em>define</em> an <strong>effective energy</strong> for <em>any</em> probability distribution:</p>
+<div class="arithmatex">\[
+E_{\text{eff}}(\mathbf{x}) \equiv -k_B T \ln p(\mathbf{x})
+\]</div>
+<p>This reframes our entire task. The goal of "learning a distribution" <span class="arithmatex">\(p(\mathbf{x})\)</span> from data is equivalent to the physical goal of "finding the energy landscape" <span class="arithmatex">\(E_{\text{eff}}(\mathbf{x})\)</span> that would produce that distribution.</p>
+<div class="admonition example">
+<p class="admonition-title">Energy-Probability Duality</p>
+</div>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>In the Ising model at low temperature, the two ground states (all spins up or all spins down) have $E = -JN$ and dominate the probability $p(\mathbf{s}) \propto e^{+\beta JN}$. High-energy configurations with mixed spins are exponentially suppressed. This direct mapping between energy minima and probability maxima is the foundation of statistical mechanics.
+</span></code></pre></div>
+This also connects directly to the core concept of <strong>log-likelihood</strong> in statistics. The log-likelihood of observing a state <span class="arithmatex">\(\mathbf{x}\)</span> is <span class="arithmatex">\(\ln p(\mathbf{x})\)</span>. Therefore, <strong>maximizing the log-likelihood is equivalent to minimizing the energy</strong>. This duality—between statistics and physics, between likelihood and energy—is the central theme of this volume.</p>
+<hr />
+<h3 id="goal"><strong>Goal</strong></h3>
+<p>Our goal in this chapter is to build a formal toolkit for modeling <span class="arithmatex">\(p(\mathbf{x})\)</span>. We must move beyond the simple empirical distribution <span class="arithmatex">\(\hat{p}(\mathbf{x})\)</span> and the low-order moments of Chapter 1. We need methods to extract statistical regularities, quantify uncertainty, and build parametric models of the underlying energy landscape, all while confronting the profound mathematical challenges that arise when our dimension <span class="arithmatex">\(D\)</span> is large.</p>
+<hr />
+<h2 id="22-probability-distributions-as-energy-landscapes"><strong>2.2 Probability Distributions as Energy Landscapes</strong></h2>
+<p>The analogy from Section 2.1—where probability is inversely related to an effective energy—is one of the most powerful organizing principles in science. We can formalize this by defining our probability models as members of the <strong>exponential family</strong>, a broad class of distributions that includes the Gaussian, Poisson, Bernoulli, and, most importantly, the Boltzmann distribution [1].</p>
+<hr />
+<h3 id="the-exponential-family-and-the-partition-function"><strong>The Exponential Family and the Partition Function</strong></h3>
+<p>A general (unnormalized) energy-based model defines the probability <span class="arithmatex">\(p(\mathbf{x})\)</span> of a state <span class="arithmatex">\(\mathbf{x}\)</span> using a set of parameters <span class="arithmatex">\(\mathbf{\theta}\)</span> and an energy function <span class="arithmatex">\(E(\mathbf{x};\mathbf{\theta})\)</span>:</p>
+<div class="arithmatex">\[
+p(\mathbf{x}) = \frac{1}{Z(\mathbf{\theta})}\exp[-E(\mathbf{x};\mathbf{\theta})]
+\]</div>
+<p>This form explicitly bridges statistics and physics [1]:</p>
+<ul>
+<li><span class="arithmatex">\(E(\mathbf{x};\mathbf{\theta})\)</span> is the <strong>energy function</strong> (or "Hamiltonian"). It assigns a low energy to "desirable" or probable states and a high energy to "undesirable" or improbable states. The parameters <span class="arithmatex">\(\mathbf{\theta}\)</span> (e.g., coupling constants <span class="arithmatex">\(J_{ij}\)</span> in an Ising model) define the landscape.</li>
+<li><span class="arithmatex">\(Z(\mathbf{\theta})\)</span> is the <strong>partition function</strong>, a normalization constant that ensures the distribution integrates to one. It is the sum (or integral) over all possible states:</li>
+</ul>
+<div class="arithmatex">\[
+Z(\mathbf{\theta}) = \int \exp[-E(\mathbf{x};\mathbf{\theta})] d\mathbf{x}
+\]</div>
+<p>This single equation, <span class="arithmatex">\(p \propto e^{-E}\)</span>, is the core of statistical mechanics, Bayesian inference, and energy-based machine learning. The central challenge of these fields is often the intractability of <span class="arithmatex">\(Z(\mathbf{\theta})\)</span>, which requires summing over an exponentially large state space.</p>
+<details class="question">
+<summary>Why is the partition function so hard to compute?</summary>
+</details>
+<h2 id="for-a-system-with-n-binary-variables-like-spins-there-are-2n-possible-states-computing-z-requires-summing-exp-emathbfx-over-all-of-them-for-just-n300-spins-this-is-2300-approx-1090-termsmore-than-the-number-of-atoms-in-the-universe-this-exponential-complexity-makes-exact-calculation-impossible-forcing-us-to-use-approximations-mean-field-theory-or-sampling-methods-mcmc"><div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>For a system with $N$ binary variables (like spins), there are $2^N$ possible states. Computing $Z$ requires summing $\exp[-E(\mathbf{x})]$ over all of them. For just $N=300$ spins, this is $2^{300} \approx 10^{90}$ terms—more than the number of atoms in the universe. This exponential complexity makes exact calculation impossible, forcing us to use approximations (mean-field theory) or sampling methods (MCMC).
+</span></code></pre></div></h2>
+<h3 id="moments-and-cumulants"><strong>Moments and Cumulants</strong></h3>
+<p>A probability distribution can be characterized by its <strong>moments</strong>, which describe its shape.</p>
+<ul>
+<li><strong>1<sup>st</sup> Moment (Mean):</strong></li>
+</ul>
+<div class="arithmatex">\[
+\mathbf{\mu} = \langle \mathbf{x} \rangle = \int \mathbf{x} p(\mathbf{x}) d\mathbf{x}
+\]</div>
+<p>This is the center of mass.</p>
+<ul>
+<li><strong>2<sup>nd</sup> Central Moment (Covariance):</strong></li>
+</ul>
+<div class="arithmatex">\[
+\Sigma_{jk} = \langle (x_j - \mu_j)(x_k - \mu_k) \rangle
+\]</div>
+<p>This is the <span class="arithmatex">\(D \times D\)</span> matrix (from Chapter 1) that describes the linear correlations and spread.</p>
+<p>Higher-order moments capture more subtle, non-Gaussian features:</p>
+<ul>
+<li><strong>3<sup>rd</sup> Moment (Skewness):</strong> Measures the asymmetry of the distribution.</li>
+<li><strong>4<sup>th</sup> Moment (Kurtosis):</strong> Measures the "tailedness" or "peakedness" of the distribution compared to a Gaussian.</li>
+</ul>
+<p><strong>Cumulants</strong> are a closely related set of quantities (the <span class="arithmatex">\(n\)</span>-th cumulant is a polynomial of the first <span class="arithmatex">\(n\)</span> moments) that are often more fundamental. For example, the first cumulant is the mean, and the second is the variance. A key property is that for a Gaussian distribution, all cumulants of order greater than two are exactly zero. Thus, the deviation of higher-order cumulants from zero provides a direct measure of non-Gaussianity.</p>
+<hr />
+<h3 id="entropy-the-measure-of-uncertainty"><strong>Entropy: The Measure of Uncertainty</strong></h3>
+<p>While moments describe shape, <strong>entropy</strong> measures the total "volume," "spread," or "uncertainty" of a distribution. The <strong>Shannon (or differential) entropy</strong> <span class="arithmatex">\(S[p]\)</span> is defined as the expected value of the negative log-probability [3]:</p>
+<div class="arithmatex">\[
+S[p] = -\int p(\mathbf{x}) \ln p(\mathbf{x}) d\mathbf{x} = \langle -\ln p(\mathbf{x}) \rangle_p
+\]</div>
+<p>This quantity is the direct information-theoretic analogue of entropy in statistical mechanics [2].</p>
+<ul>
+<li>A "delta function" distribution (perfect certainty) has <span class="arithmatex">\(S = -\infty\)</span> (or <span class="arithmatex">\(S=0\)</span> in the discrete case).</li>
+<li>A broad, flat, uniform distribution (total uncertainty) has the maximum possible entropy for a given domain.</li>
+</ul>
+<p>Entropy provides a way to quantify what we <em>don't</em> know. The principle of maximum entropy states that the most unbiased model <span class="arithmatex">\(p(\mathbf{x})\)</span> consistent with a set of constraints (e.g., a known mean and variance) is the one that maximizes <span class="arithmatex">\(S[p]\)</span>.</p>
+<hr />
+<h3 id="relative-entropy-kl-divergence-the-measure-of-difference"><strong>Relative Entropy (KL Divergence): The Measure of Difference</strong></h3>
+<p>Finally, we need a way to measure the "distance" between two distributions—for example, the distance between our model's guess <span class="arithmatex">\(q(\mathbf{x})\)</span> and the true data distribution <span class="arithmatex">\(p(\mathbf{x})\)</span>.</p>
+<p>This is given by the <strong>relative entropy</strong>, or <strong>Kullback-Leibler (KL) divergence</strong> [5]:</p>
+<div class="arithmatex">\[
+D_{\mathrm{KL}}(p||q) = \int p(\mathbf{x})\ln\frac{p(\mathbf{x})}{q(\mathbf{x})}d\mathbf{x}
+\]</div>
+<p>The KL divergence measures the expected "information gain" or "surprise" when one revises their beliefs from a prior distribution <span class="arithmatex">\(q(\mathbf{x})\)</span> to a posterior distribution <span class="arithmatex">\(p(\mathbf{x})\)</span>.</p>
+<ul>
+<li><span class="arithmatex">\(D_{\mathrm{KL}}(p||q) \ge 0\)</span> for all <span class="arithmatex">\(p\)</span> and <span class="arithmatex">\(q\)</span>.</li>
+<li><span class="arithmatex">\(D_{\mathrm{KL}}(p||q) = 0\)</span> if and only if <span class="arithmatex">\(p(\mathbf{x}) = q(\mathbf{x})\)</span>.</li>
+</ul>
+<p>Critically, the KL divergence is <strong>not a true distance metric</strong> because it is asymmetric: <span class="arithmatex">\(D_{\mathrm{KL}}(p||q) \neq D_{\mathrm{KL}}(q||p)\)</span>. This asymmetry is important, but for our purposes, <span class="arithmatex">\(D_{\mathrm{KL}}\)</span> serves as our primary tool for measuring how "wrong" our model <span class="arithmatex">\(q\)</span> is with respect to the truth <span class="arithmatex">\(p\)</span>. Much of modern machine learning, particularly variational inference, is formulated as an optimization problem that seeks to minimize this divergence.</p>
+<hr />
+<h2 id="23-likelihood-and-inference"><strong>2.3 Likelihood and Inference</strong></h2>
+<p>Given a set of <span class="arithmatex">\(N\)</span> i.i.d. (independent and identically distributed) data samples <span class="arithmatex">\(X = \{\mathbf{x}_1, \dots, \mathbf{x}_N\}\)</span> and a parametric model <span class="arithmatex">\(p(\mathbf{x}|\mathbf{\theta})\)</span> that defines an energy landscape (as in 2.2), how do we "fit" the model to the data? That is, how do we select the parameters <span class="arithmatex">\(\mathbf{\theta}\)</span> that best explain our observations? This is the central question of statistical inference.</p>
+<hr />
+<h3 id="the-likelihood-principle"><strong>The Likelihood Principle</strong></h3>
+<p>The most common approach in classical statistics is founded on the <strong>likelihood principle</strong>. The likelihood function, <span class="arithmatex">\(\mathcal{L}(\mathbf{\theta})\)</span>, is not a probability distribution over <span class="arithmatex">\(\mathbf{\theta}\)</span>. Instead, it is the probability of having observed the <em>specific data</em> <span class="arithmatex">\(X\)</span> <em>given</em> a particular choice of parameters <span class="arithmatex">\(\mathbf{\theta}\)</span>.</p>
+<p>Assuming our <span class="arithmatex">\(N\)</span> samples are independent, the total probability of the dataset is the product of the probabilities of each sample:</p>
+<div class="arithmatex">\[
+\mathcal{L}(\mathbf{\theta}) = p(X|\mathbf{\theta}) = \prod_{i=1}^N p(\mathbf{x}_i|\mathbf{\theta})
+\]</div>
+<p>The <strong>Maximum Likelihood Estimate (MLE)</strong> is the value of <span class="arithmatex">\(\mathbf{\theta}\)</span> that maximizes this function. This is the set of parameters <span class="arithmatex">\(\mathbf{\theta}_{\text{ML}}\)</span> under which our observed data was most probable.</p>
+<p>In practice, this product of small probabilities is numerically unstable. We instead maximize the <strong>log-likelihood</strong>, which converts the product into a more stable and convenient sum:</p>
+<div class="arithmatex">\[
+\ln \mathcal{L}(\mathbf{\theta}) = \sum_{i=1}^N \ln p(\mathbf{x}_i|\mathbf{\theta})
+\]</div>
+<p>Since the logarithm is a monotonic function, <span class="arithmatex">\(\arg\max \mathcal{L}(\mathbf{\theta}) = \arg\max \ln \mathcal{L}(\mathbf{\theta})\)</span>. This converts a difficult product-maximization problem into an equivalent, and much simpler, sum-maximization problem.</p>
+<hr />
+<h3 id="maximum-likelihood-vs-bayesian-inference"><strong>Maximum Likelihood vs. Bayesian Inference</strong></h3>
+<p>The MLE approach provides a single point estimate, <span class="arithmatex">\(\mathbf{\theta}_{\text{ML}}\)</span>. The Bayesian framework offers a more complete, probabilistic view by incorporating <em>prior knowledge</em> <span class="arithmatex">\(p(\mathbf{\theta})\)</span>, which represents our beliefs about the parameters <em>before</em> seeing any data.</p>
+<p>Using <strong>Bayes' theorem</strong>, we compute the <strong>posterior distribution</strong> <span class="arithmatex">\(p(\mathbf{\theta}|X)\)</span>, which is our updated belief about <span class="arithmatex">\(\mathbf{\theta}\)</span> <em>after</em> observing the data:</p>
+<div class="arithmatex">\[
+p(\mathbf{\theta}|X) = \frac{p(X|\mathbf{\theta}) p(\mathbf{\theta})}{p(X)} \propto \mathcal{L}(\mathbf{\theta}) p(\mathbf{\theta})
+\]</div>
+<p>This is often stated as: <strong>Posterior <span class="arithmatex">\(\propto\)</span> Likelihood <span class="arithmatex">\(\times\)</span> Prior</strong>.</p>
+<p>Instead of just maximizing the likelihood, a Bayesian may seek the <strong>Maximum A Posteriori (MAP)</strong> estimate, which is the peak (or mode) of the posterior distribution:</p>
+<div class="arithmatex">\[
+\mathbf{\theta}_{\text{MAP}} = \arg\max_{\mathbf{\theta}} p(\mathbf{\theta}|X) = \arg\max_{\mathbf{\theta}} [\ln \mathcal{L}(\mathbf{\theta}) + \ln p(\mathbf{\theta})]
+\]</div>
+<p>This reveals a crucial connection: the MAP estimate is identical to the MLE, but with an added <strong>regularization term</strong> <span class="arithmatex">\(\ln p(\mathbf{\theta})\)</span>. For example, choosing a Gaussian prior <span class="arithmatex">\(p(\mathbf{\theta}) \propto \exp(-\alpha ||\mathbf{\theta}||^2)\)</span> is equivalent to adding an <span class="arithmatex">\(L^2\)</span> penalty (ridge regression) to the log-likelihood objective. MLE can thus be seen as the special case of MAP inference where the prior <span class="arithmatex">\(p(\mathbf{\theta})\)</span> is uniform (or "flat").</p>
+<hr />
+<h3 id="connection-to-physical-fitting-chi2"><strong>Connection to Physical Fitting (<span class="arithmatex">\(\chi^2\)</span>)</strong></h3>
+<p>The principle of maximum likelihood provides the formal justification for one of the most common practices in the physical sciences: <strong>least-squares fitting</strong>.</p>
+<p>Assume we are fitting a set of data points <span class="arithmatex">\((y_i, x_i)\)</span> to a model <span class="arithmatex">\(f(x_i; \mathbf{\theta})\)</span>. Let's assume that our measurements <span class="arithmatex">\(y_i\)</span> are corrupted by independent Gaussian noise with a known standard deviation <span class="arithmatex">\(\sigma_i\)</span>. Our model for the data is therefore:</p>
+<div class="arithmatex">\[
+p(y_i | x_i, \mathbf{\theta}) = \mathcal{N}(y_i | f(x_i; \mathbf{\theta}), \sigma_i^2) = \frac{1}{\sqrt{2\pi\sigma_i^2}} \exp\left[ -\frac{(y_i - f(x_i; \mathbf{\theta}))^2}{2\sigma_i^2} \right]
+\]</div>
+<p>The total log-likelihood for all <span class="arithmatex">\(N\)</span> data points is the sum:</p>
+<div class="arithmatex">\[
+\ln \mathcal{L}(\mathbf{\theta}) = \sum_{i=1}^N \ln p(y_i | x_i, \mathbf{\theta}) = \sum_{i=1}^N \left( -\frac{1}{2} \ln(2\pi\sigma_i^2) -\frac{(y_i - f(x_i; \mathbf{\theta}))^2}{2\sigma_i^2} \right)
+\]</div>
+<p>To maximize <span class="arithmatex">\(\ln \mathcal{L}(\mathbf{\theta})\)</span>, we only need to consider the terms that depend on <span class="arithmatex">\(\mathbf{\theta}\)</span>. This is equivalent to <em>minimizing</em> the negative log-likelihood:</p>
+<div class="arithmatex">\[
+-\ln \mathcal{L}(\mathbf{\theta}) = \frac{1}{2} \sum_{i=1}^N \frac{(y_i - f(x_i; \mathbf{\theta}))^2}{\sigma_i^2} + \text{Constant}
+\]</div>
+<p>This is precisely the definition of the <strong>chi-squared (<span class="arithmatex">\(\chi^2\)</span>) statistic</strong> [7]. Therefore, <strong>minimizing <span class="arithmatex">\(\chi^2\)</span> is identical to finding the maximum likelihood estimate of <span class="arithmatex">\(\mathbf{\theta}\)</span> under the assumption of independent Gaussian noise</strong>.</p>
+<hr />
+<h3 id="information-geometry"><strong>Information Geometry</strong></h3>
+<p>The log-likelihood function <span class="arithmatex">\(\ln \mathcal{L}(\mathbf{\theta})\)</span> can be viewed as a "landscape" over the space of parameters. The MLE is the peak of this landscape. The <em>sharpness</em> of this peak tells us how much "information" the data provides about <span class="arithmatex">\(\mathbf{\theta}\)</span>. A sharp peak (high curvature) implies high certainty, while a flat peak (low curvature) implies high uncertainty.</p>
+<p>This concept is formalized by the <strong>Fisher Information Matrix</strong>, <span class="arithmatex">\(I(\mathbf{\theta})\)</span>, which is defined as the expected value of the Hessian (matrix of second derivatives) of the <em>negative</em> log-likelihood:</p>
+<div class="arithmatex">\[
+I(\mathbf{\theta})_{jk} = -\left\langle \frac{\partial^2 \ln p(\mathbf{x}|\mathbf{\theta})}{\partial \theta_j \partial \theta_k} \right\rangle_{p(\mathbf{x}|\mathbf{\theta})}
+\]</div>
+<p>The Fisher Information Matrix acts as a <strong>metric tensor</strong> <span class="arithmatex">\(g_{jk}\)</span> on the manifold of parameters. It defines a "distance" between different models, <span class="arithmatex">\(ds^2 = \sum_{jk} I(\mathbf{\theta})_{jk} d\theta_j d\theta_k\)</span>. This field, known as <strong>information geometry</strong>, provides a powerful framework for understanding the space of statistical models, where the natural "distance" between models is not their Euclidean parameter difference but the <em>statistical distinguishability</em> of the data they generate [1].</p>
+<hr />
+<h2 id="24-the-curse-of-dimensionality"><strong>2.4 The Curse of Dimensionality</strong></h2>
+<p>In low-dimensional spaces like <span class="arithmatex">\(\mathbb{R}^2\)</span> or <span class="arithmatex">\(\mathbb{R}^3\)</span>, our geometric intuition is a reliable guide. We can visualize data clouds, understand "closeness," and build histograms to estimate density. In the high-dimensional spaces <span class="arithmatex">\(\mathbb{R}^D\)</span> where our simulation data lives (<span class="arithmatex">\(D \gg 3\)</span>), this intuition fails spectacularly. This failure is famously known as the <strong>"Curse of Dimensionality,"</strong> a term coined by Richard Bellman [6] to describe the exponential scaling of problems in high dimensions.</p>
+<hr />
+<h3 id="the-volume-paradox"><strong>The Volume Paradox</strong></h3>
+<p>The most counter-intuitive property of high-dimensional spaces concerns volume. Consider a <span class="arithmatex">\(D\)</span>-dimensional hypersphere (or "ball") of radius <span class="arithmatex">\(r\)</span>. Its volume scales as:</p>
+<div class="arithmatex">\[
+\text{Vol}(r) \propto r^D
+\]</div>
+<p>Now, let's examine where this volume is located. Consider a hypersphere of radius <span class="arithmatex">\(r=1\)</span> and the "shell" of data that lies between <span class="arithmatex">\(r=1-\epsilon\)</span> and <span class="arithmatex">\(r=1\)</span>. The volume of this thin, outer shell is:</p>
+<p>$$
+\frac{\text{Vol}<em _text_total="\text{total">{\text{shell}}}{\text{Vol}</em> = \frac{1^D - (1-\epsilon)}}} = \frac{\text{Vol}(r=1) - \text{Vol}(r=1-\epsilon)}{\text{Vol}(r=1)<sup>D}{1</sup>D} = 1 - (1-\epsilon)^D
+$$
+In three dimensions, for <span class="arithmatex">\(\epsilon=0.01\)</span>, this ratio is tiny: <span class="arithmatex">\(1 - (0.99)^3 \approx 0.03\)</span>. Most of the volume is in the core.
+In high dimensions, this trend reverses completely. For <span class="arithmatex">\(D=10,000\)</span> and <span class="arithmatex">\(\epsilon=0.01\)</span>:</p>
+<div class="arithmatex">\[
+1 - (0.99)^{10000} \approx 1 - (2.6 \times 10^{-44}) \to 1
+\]</div>
+<p>This is a stunning result: <strong>virtually all of the volume of a high-dimensional sphere is concentrated in an infinitesimally thin shell near its surface.</strong> The "core" of the sphere is, for all practical purposes, empty.</p>
+<div class="admonition example">
+<p class="admonition-title">Volume Concentration in High Dimensions</p>
+</div>
+<h2 id="for-a-10000-dimensional-unit-hypersphere-9999-of-the-volume-lies-in-a-shell-between-radius-099-and-10a-shell-that-is-only-1-thick-this-is-why-naive-sampling-fails-uniformly-distributed-points-would-almost-never-land-in-this-critical-shell-where-the-probability-mass-is-concentrated"><div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>For a 10,000-dimensional unit hypersphere, 99.99% of the volume lies in a shell between radius 0.99 and 1.0—a shell that is only 1% thick. This is why naive sampling fails: uniformly distributed points would almost never land in this critical shell where the probability mass is concentrated.
+</span></code></pre></div></h2>
+<h3 id="consequences-for-data"><strong>Consequences for Data</strong></h3>
+<p>This "volume paradox" has two devastating consequences for our data analysis:</p>
+<ul>
+<li>
+<p><strong>Distance Concentration:</strong> In high-dimensional space, the concept of a "nearest neighbor" becomes meaningless. As <span class="arithmatex">\(D\)</span> increases, the pairwise distances between any two randomly chosen points <span class="arithmatex">\(\mathbf{x}_i\)</span> and <span class="arithmatex">\(\mathbf{x}_j\)</span> all converge to the same value. The difference between the maximum and minimum distance in a dataset, relative to the average distance, shrinks to zero [8]. This means that <strong>all points become "equally far" from each other</strong>. Algorithms like K-nearest-neighbors, which rely on a meaningful concept of "closeness," fail.</p>
+</li>
+<li>
+<p><strong>Data Sparsity:</strong> Our data cloud, no matter how large, is an infinitesimally sparse mist in <span class="arithmatex">\(\mathbb{R}^D\)</span>. If we need 10 samples to get a reasonable density estimate on a 1D line, we would need <span class="arithmatex">\(10^D\)</span> samples to achieve the same resolution in <span class="arithmatex">\(D\)</span> dimensions. With <span class="arithmatex">\(D=100\)</span>, this is more than the number of atoms in the universe. Any new point we wish to analyze will, with near-certainty, fall into a region of the space where we have <em>never</em> seen a single data point.</p>
+</li>
+</ul>
+<hr />
+<h3 id="implication-the-failure-of-naive-methods"><strong>Implication: The Failure of Naïve Methods</strong></h3>
+<p>The curse of dimensionality dictates that <strong>naïve density estimation (like histograms or kernels) is impossible in high dimensions.</strong> Any attempt to "bin" the space will result in a near-infinite number of empty bins.</p>
+<p>This is not just a technical challenge; it is a fundamental one. It tells us that we <em>cannot</em> hope to model the full distribution <span class="arithmatex">\(p(\mathbf{x})\)</span> in <span class="arithmatex">\(\mathbb{R}^D\)</span>. The only reason we can make progress at all is the <strong>Manifold Hypothesis</strong> (Chapter 1): our data is not truly <span class="arithmatex">\(D\)</span>-dimensional. It is confined to a much lower-dimensional manifold <span class="arithmatex">\(\mathcal{M}\)</span> embedded within the larger space.</p>
+<p>This realization is the primary motivation for <strong>Chapter 3: Dimensionality Reduction &amp; Clustering</strong>. Before we can perform statistical inference, we must first find a lower-dimensional representation of the data that "unrolls" this manifold and makes the data dense enough for statistical methods to work.</p>
+<hr />
+<h2 id="25-sampling-strategies"><strong>2.5 Sampling Strategies</strong></h2>
+<p>The "Curse of Dimensionality" (Section 2.4) establishes a formidable challenge: we cannot analytically integrate over <span class="arithmatex">\(p(\mathbf{x})\)</span> in <span class="arithmatex">\(\mathbb{R}^D\)</span>, nor can we build a simple histogram to approximate it. Our only path forward is to compute expectation values <span class="arithmatex">\(\langle f \rangle = \int f(\mathbf{x})p(\mathbf{x})d\mathbf{x}\)</span> by <strong>sampling</strong>.</p>
+<p>However, naïve sampling (e.g., from a uniform distribution) fails. If <span class="arithmatex">\(p(\mathbf{x})\)</span> is a low-temperature Boltzmann distribution, nearly all uniform samples will land in high-energy regions where <span class="arithmatex">\(p(\mathbf{x}) \approx 0\)</span>, contributing nothing to the integral. The variance of such an estimator would be astronomically high. We must, therefore, use smarter strategies that <em>focus</em> our sampling on the regions where <span class="arithmatex">\(p(\mathbf{x})\)</span> is large—the low-energy basins.</p>
+<hr />
+<h3 id="monte-carlo-sampling"><strong>Monte Carlo Sampling</strong></h3>
+<p>The general term <strong>Monte Carlo sampling</strong> refers to any method that estimates an integral by taking random samples. The "simple" Monte Carlo integral <span class="arithmatex">\(\frac{1}{N}\sum f(\mathbf{x}_i)\)</span> is the most basic form. The key to making this work in high dimensions is to <em>not</em> sample from a simple, uniform distribution, but to draw samples directly from the complex target distribution <span class="arithmatex">\(p(\mathbf{x})\)</span> itself. If we could magically generate <span class="arithmatex">\(N\)</span> independent samples <span class="arithmatex">\(\{\mathbf{x}_i\}\)</span> drawn from <span class="arithmatex">\(p(\mathbf{x})\)</span>, our estimator would simply be the sample mean:</p>
+<div class="arithmatex">\[
+\langle f \rangle_p \approx \frac{1}{N}\sum_{i=1}^N f(\mathbf{x}_i)
+\]</div>
+<p>This is the ideal scenario. The challenge is: how do we draw samples from a complex, high-dimensional <span class="arithmatex">\(p(\mathbf{x})\)</span> that we only know up to a (likely intractable) normalization constant <span class="arithmatex">\(Z\)</span>?</p>
+<hr />
+<h3 id="importance-sampling"><strong>Importance Sampling</strong></h3>
+<p><strong>Importance Sampling</strong> is a strategy for sampling from a <em>different</em>, simpler <strong>proposal distribution</strong> <span class="arithmatex">\(q(\mathbf{x})\)</span> that we <em>can</em> draw from, and then correcting for the mismatch. We rewrite the expectation integral as:</p>
+<div class="arithmatex">\[
+\langle f \rangle_p = \int f(\mathbf{x})p(\mathbf{x})d\mathbf{x} = \int f(\mathbf{x})\frac{p(\mathbf{x})}{q(\mathbf{x})}q(\mathbf{x})d\mathbf{x} = \left\langle f(\mathbf{x}) \frac{p(\mathbf{x})}{q(\mathbf{x})} \right\rangle_q
+\]</div>
+<p>This gives us a new estimator. We draw <span class="arithmatex">\(N\)</span> samples <span class="arithmatex">\(\{\mathbf{x}_i\}\)</span> from <span class="arithmatex">\(q(\mathbf{x})\)</span> and compute:</p>
+<div class="arithmatex">\[
+\langle f \rangle_p \approx \frac{1}{N}\sum_{i=1}^N f(\mathbf{x}_i)w(\mathbf{x}_i) \quad \text{where} \quad w(\mathbf{x}_i) = \frac{p(\mathbf{x}_i)}{q(\mathbf{x}_i)}
+\]</div>
+<p>The terms <span class="arithmatex">\(w(\mathbf{x}_i)\)</span> are the <strong>importance weights</strong> that correct for the fact that we sampled from <span class="arithmatex">\(q\)</span> instead of <span class="arithmatex">\(p\)</span>. This method works perfectly if <span class="arithmatex">\(q(\mathbf{x})\)</span> is non-zero wherever <span class="arithmatex">\(p(\mathbf{x})\)</span> is non-zero. The variance of this estimator is minimized when the proposal <span class="arithmatex">\(q(\mathbf{x})\)</span> is chosen to be "close" to <span class="arithmatex">\(p(\mathbf{x})\)</span> [1]. The primary difficulty, especially in high dimensions, is finding a simple <span class="arithmatex">\(q(\mathbf{x})\)</span> that is also a good match for the unknown, complex <span class="arithmatex">\(p(\mathbf{x})\)</span>.</p>
+<hr />
+<h3 id="markov-chain-monte-carlo-mcmc"><strong>Markov Chain Monte Carlo (MCMC)</strong></h3>
+<p><strong>MCMC</strong> is the most powerful and widely used solution to this problem. Instead of trying to guess a good proposal <span class="arithmatex">\(q(\mathbf{x})\)</span> for independent samples, MCMC constructs a <strong>correlated</strong> sequence of samples using a <strong>Markov chain</strong>—a "random walk" whose rules are cleverly designed.</p>
+<p>The core idea is to define a "transition probability" <span class="arithmatex">\(T(\mathbf{x}'|\mathbf{x})\)</span> for stepping from state <span class="arithmatex">\(\mathbf{x}\)</span> to state <span class="arithmatex">\(\mathbf{x}'\)</span>. This transition rule is built (e.g., via the <strong>Metropolis-Hastings</strong> algorithm) to ensure that the stationary distribution of this random walk is exactly our target distribution <span class="arithmatex">\(p(\mathbf{x})\)</span> [9].</p>
+<p>We "run" the chain by:
+1. Starting at a random <span class="arithmatex">\(\mathbf{x}_0\)</span>.
+2. Iteratively applying the transition rule: <span class="arithmatex">\(\mathbf{x}_{t+1} \sim T(\mathbf{x}_{t+1}|\mathbf{x}_t)\)</span>.</p>
+<p>After an initial "burn-in" period, the states <span class="arithmatex">\(\{\mathbf{x}_t\}\)</span> visited by the walker are, by construction, distributed according to <span class="arithmatex">\(p(\mathbf{x})\)</span>. We can then use these states in our simple sample mean estimator. The trade-off is that the samples are no longer independent; they are correlated in "time." This requires careful analysis of autocorrelation to determine the true statistical error, but it allows us to sample from distributions in thousands or millions of dimensions without ever knowing the partition function <span class="arithmatex">\(Z\)</span>.</p>
+<hr />
+<h3 id="other-variance-reduction-techniques"><strong>Other Variance Reduction Techniques</strong></h3>
+<p>While MCMC is the workhorse in statistical physics, other methods are used in statistics and data science to improve sampling efficiency:
+* <strong>Stratified Sampling:</strong> We partition the state space into disjoint regions (strata) and sample a fixed number of points from each. This ensures that low-probability regions are not missed by chance, which can significantly reduce the variance of the estimate.
+* <strong>Low-Discrepancy Sampling (Quasi-Monte Carlo):</strong> This method replaces pseudo-random numbers with deterministic, "low-discrepancy" sequences (e.g., Sobol or Halton sequences). These sequences are designed to "fill" the high-dimensional space more uniformly than random points, often leading to a faster rate of convergence for the integral estimate [10].</p>
+<p>These methods are powerful but are often difficult to apply to the irregular, high-dimensional energy landscapes of complex physical systems, making MCMC the dominant strategy.</p>
+<hr />
+<h2 id="26-density-estimation"><strong>2.6 Density Estimation</strong></h2>
+<p>The sampling methods in Section 2.5, particularly MCMC, allow us to compute expectation values <span class="arithmatex">\(\langle f \rangle_p\)</span> without ever writing down a functional form for <span class="arithmatex">\(p(\mathbf{x})\)</span>. However, we often want the distribution itself. We want to turn our "spiky" empirical distribution (Section 2.1) into a smooth, analytical function <span class="arithmatex">\(\hat{p}(\mathbf{x})\)</span> that approximates the true <span class="arithmatex">\(p(\mathbf{x})\)</span>. This process is called <strong>density estimation</strong>.</p>
+<hr />
+<h3 id="parametric-approaches"><strong>Parametric Approaches</strong></h3>
+<p>The most direct approach is to <em>assume</em> a functional form for <span class="arithmatex">\(\hat{p}(\mathbf{x}|\mathbf{\theta})\)</span> and then use the data to fit the parameters <span class="arithmatex">\(\mathbf{\theta}\)</span>.</p>
+<ul>
+<li><strong>Single Gaussian:</strong> The simplest assumption is that our data cloud is a single "hyper-ellipsoid." The model is <span class="arithmatex">\(\hat{p}(\mathbf{x}) = \mathcal{N}(\mathbf{x}|\mathbf{\mu}, \Sigma)\)</span>. In this case, the parameters <span class="arithmatex">\(\mathbf{\theta} = (\mathbf{\mu}, \Sigma)\)</span> are simply the sample mean and covariance we computed in Chapter 1.</li>
+<li><strong>Gaussian Mixture Model (GMM):</strong> A far more flexible model, a GMM assumes the data is a weighted sum of <span class="arithmatex">\(K\)</span> different Gaussian "blobs."</li>
+</ul>
+<div class="arithmatex">\[
+\hat{p}(\mathbf{x}) = \sum_{k=1}^K \pi_k \mathcal{N}(\mathbf{x}|\mathbf{\mu}_k, \Sigma_k)
+\]</div>
+<p>This can capture multi-modal distributions, such as the distinct clusters corresponding to different physical phases (e.g., solid, liquid) in a simulation [1]. The parameters <span class="arithmatex">\((\pi_k, \mathbf{\mu}_k, \Sigma_k)\)</span> are typically fit using the Expectation-Maximization (EM) algorithm.</p>
+<p>The advantage of parametric models is that they are compact (defined by a small set of parameters). The disadvantage is their high <strong>bias</strong>; if the true distribution is not Gaussian-like, the model will be a poor fit regardless of how much data we have.</p>
+<hr />
+<h3 id="nonparametric-approaches"><strong>Nonparametric Approaches</strong></h3>
+<p>Nonparametric methods make minimal assumptions about the shape of <span class="arithmatex">\(p(\mathbf{x})\)</span>. The model's complexity is allowed to grow as the number of data points <span class="arithmatex">\(N\)</span> increases.</p>
+<ul>
+<li><strong>Kernel Density Estimation (KDE):</strong> This is the most intuitive "smoothing" of the empirical distribution <span class="arithmatex">\(\hat{p}(\mathbf{x}) = \frac{1}{N}\sum \delta(\mathbf{x}-\mathbf{x}_i)\)</span>. Instead of placing an infinitely sharp "spike" (a delta function) on each data point, KDE places a smooth, local "bump" called a <strong>kernel</strong> <span class="arithmatex">\(K\)</span> (e.g., a small Gaussian) on each point. The final density estimate is the sum of all these bumps [11].</li>
+</ul>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>The model is:
+</span></code></pre></div>
+$$
+\hat{p}(\mathbf{x}) = \frac{1}{N} \sum_{i=1}^N K_h(\mathbf{x} - \mathbf{x}_i)
+$$</p>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>where $K_h$ is the kernel (e.g., a Gaussian) with a **bandwidth** $h$, which controls the &quot;width&quot; of the bumps. A small $h$ leads to a &quot;spiky&quot; (high-variance) estimate, while a large $h$ leads to an &quot;oversmoothed&quot; (high-bias) estimate.
+</span></code></pre></div>
+* <strong>K-Nearest Neighbors (KNN):</strong> This method reverses the logic. Instead of fixing a bandwidth <span class="arithmatex">\(h\)</span> and counting the points inside, KNN fixes the number of points <span class="arithmatex">\(k\)</span> and measures the volume <span class="arithmatex">\(V\)</span> required to enclose them. The density at a point <span class="arithmatex">\(\mathbf{x}\)</span> is then estimated as:</p>
+<div class="arithmatex">\[
+\hat{p}(\mathbf{x}) \approx \frac{k}{N \cdot V(\mathbf{x})}
+\]</div>
+<h2 id="this-is-an-adaptive-method-in-dense-regions-v-will-be-small-giving-a-high-density-in-sparse-regions-v-will-be-large-giving-a-low-density"><div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>This is an *adaptive* method: in dense regions, $V$ will be small, giving a high density. In sparse regions, $V$ will be large, giving a low density.
+</span></code></pre></div></h2>
+<h3 id="the-curse-revisited"><strong>The Curse, Revisited</strong></h3>
+<p>Nonparametric methods, which seem so powerful in 1D, are crippled by the <strong>Curse of Dimensionality</strong> (Section 2.4).
+* In KDE, for a data point <span class="arithmatex">\(\mathbf{x}_i\)</span> to have any influence on <span class="arithmatex">\(\hat{p}(\mathbf{x})\)</span>, the point <span class="arithmatex">\(\mathbf{x}\)</span> must lie within its kernel's radius (roughly <span class="arithmatex">\(h\)</span>). But in high dimensions <span class="arithmatex">\(D\)</span>, the volume of this kernel, which scales as <span class="arithmatex">\(h^D\)</span>, is vanishingly small.
+* To capture any data, <span class="arithmatex">\(h\)</span> must be made so large that the kernel covers a significant fraction of the entire data space. The estimate at <span class="arithmatex">\(\mathbf{x}\)</span> is no longer a "local" estimate but an average over a vast, non-local region. The bias becomes enormous.</p>
+<p>This is a direct consequence of the <strong>bias-variance trade-off</strong>, which becomes exponentially more severe with increasing <span class="arithmatex">\(D\)</span>.</p>
+<hr />
+<h3 id="practical-viewpoint"><strong>Practical Viewpoint</strong></h3>
+<p>The futility of density estimation in high dimensions reinforces a central lesson: <strong>we must not work in the full <span class="arithmatex">\(\mathbb{R}^D\)</span> space.</strong></p>
+<p>The practical workflow is almost always to <em>first</em> apply dimensionality reduction (the topic of Chapter 3) to find the 1D, 2D, or 3D coordinates of the underlying manifold <span class="arithmatex">\(\mathcal{M}\)</span>. We then perform density estimation (e.g., with KDE) in this low-dimensional, computationally-tractable latent space. This allows us to build a meaningful <span class="arithmatex">\(\hat{p}(\mathbf{z})\)</span> on the manifold, which is the "effective" distribution our physical system actually follows.</p>
+<hr />
+<h2 id="27-entropy-information-and-uncertainty"><strong>2.7 Entropy, Information, and Uncertainty</strong></h2>
+<p>In Section 2.2, we introduced entropy <span class="arithmatex">\(S[p]\)</span> as a measure of the "spread" of a distribution. Here, we formalize its connection to physical thermodynamics and introduce its relative, <strong>mutual information</strong>, to quantify the statistical dependence between variables. These information-theoretic tools provide a powerful lens for understanding and discovering physical order.</p>
+<hr />
+<h3 id="shannon-entropy-and-physical-entropy"><strong>Shannon Entropy and Physical Entropy</strong></h3>
+<p>The <strong>Shannon entropy</strong> of a discrete distribution <span class="arithmatex">\(p_i\)</span> is a rigorous measure of the average "surprise" or "uncertainty" of an outcome [3]:</p>
+<div class="arithmatex">\[
+S = -k_B \sum_i p_i \ln p_i
+\]</div>
+<p>This form is identical to the <strong>Gibbs entropy</strong> in statistical mechanics [2]. This is not a coincidence; it reflects a deep connection. The <strong>Principle of Maximum Entropy</strong> (MaxEnt) states that the most objective or "honest" distribution <span class="arithmatex">\(p(\mathbf{x})\)</span> that is consistent with a set of known constraints (e.g., a known average energy) is the one that maximizes <span class="arithmatex">\(S[p]\)</span> [4].</p>
+<ul>
+<li><strong>Example 1: MaxEnt and the Boltzmann Distribution.</strong> The distribution that maximizes entropy subject to a <em>fixed average energy</em> <span class="arithmatex">\(\langle E \rangle\)</span> is precisely the Boltzmann distribution <span class="arithmatex">\(p(\mathbf{x}) \propto e^{-\beta E(\mathbf{x})}\)</span>.</li>
+<li><strong>Example 2: MaxEnt and the Gaussian Distribution.</strong> The distribution that maximizes entropy subject to a <em>fixed mean <span class="arithmatex">\(\mathbf{\mu}\)</span> and covariance <span class="arithmatex">\(\Sigma\)</span></em> is the multivariate Gaussian distribution <span class="arithmatex">\(\mathcal{N}(\mathbf{\mu}, \Sigma)\)</span>.</li>
+</ul>
+<p>This second example provides a profound justification for the importance of the Gaussian model: it is the "most random" or "least structured" distribution possible that matches the first and second moments (mean and covariance) we computed in Chapter 1.</p>
+<hr />
+<h3 id="mutual-information-measuring-dependence"><strong>Mutual Information: Measuring Dependence</strong></h3>
+<p>Entropy measures the uncertainty of a <em>single</em> variable. <strong>Mutual Information (MI)</strong> measures the "reduction in uncertainty" about one variable from knowing another. It quantifies the amount of information <span class="arithmatex">\(X\)</span> and <span class="arithmatex">\(Y\)</span> <em>share</em>.</p>
+<p>Given two variables <span class="arithmatex">\(X\)</span> and <span class="arithmatex">\(Y\)</span> with a joint distribution <span class="arithmatex">\(p(x,y)\)</span> and marginals <span class="arithmatex">\(p(x)\)</span> and <span class="arithmatex">\(p(y)\)</span>, their mutual information <span class="arithmatex">\(I(X;Y)\)</span> is:</p>
+<div class="arithmatex">\[
+I(X;Y) = \sum_{x,y} p(x,y) \ln \left( \frac{p(x,y)}{p(x)p(y)} \right)
+\]</div>
+<ul>
+<li>If <span class="arithmatex">\(X\)</span> and <span class="arithmatex">\(Y\)</span> are <strong>independent</strong>, then <span class="arithmatex">\(p(x,y) = p(x)p(y)\)</span>, the log term is <span class="arithmatex">\(\ln(1)=0\)</span>, and <span class="arithmatex">\(I(X;Y) = 0\)</span>.</li>
+<li>If <span class="arithmatex">\(X\)</span> and <span class="arithmatex">\(Y\)</span> are <strong>dependent</strong>, <span class="arithmatex">\(p(x,y) \neq p(x)p(y)\)</span>, and <span class="arithmatex">\(I(X;Y) &gt; 0\)</span>.</li>
+</ul>
+<p><span class="arithmatex">\(I(X;Y)\)</span> can also be expressed in terms of entropies, <span class="arithmatex">\(I(X;Y) = S(X) - S(X|Y)\)</span>, which reads as "the uncertainty of <span class="arithmatex">\(X\)</span> minus the uncertainty of <span class="arithmatex">\(X\)</span> given <span class="arithmatex">\(Y\)</span>." It is also equivalent to the KL divergence (Section 2.2) between the joint distribution and the product of its marginals: <span class="arithmatex">\(I(X;Y) = D_{\mathrm{KL}}(p(x,y) || p(x)p(y))\)</span>.</p>
+<details class="question">
+<summary>When should you use mutual information vs. correlation?</summary>
+</details>
+<h2 id="correlation-measures-only-linear-relationships-between-variables-and-ranges-from-1-to-1-mutual-information-captures-any-statistical-dependence-linear-or-nonlinear-and-is-always-non-negative-for-example-if-y-x2-where-x-is-centered-the-pearson-correlation-is-zero-but-ixy-is-large-use-mi-when-you-suspect-complex-nonlinear-dependencies"><div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Correlation measures only *linear* relationships between variables and ranges from -1 to +1. Mutual information captures *any* statistical dependence (linear or nonlinear) and is always non-negative. For example, if $Y = X^2$ where $X$ is centered, the Pearson correlation is zero, but $I(X;Y)$ is large. Use MI when you suspect complex, nonlinear dependencies.
+</span></code></pre></div></h2>
+<h3 id="application-discovering-order-parameters"><strong>Application: Discovering Order Parameters</strong></h3>
+<p>Mutual information is not just a theoretical metric; it is a powerful computational tool for discovering hidden physical relationships. In a complex simulation (e.g., a phase transition), the raw state <span class="arithmatex">\(\mathbf{x}\)</span> (a <span class="arithmatex">\(1000 \times 1000\)</span> spin configuration) is too high-dimensional. We seek a low-dimensional <strong>order parameter</strong> <span class="arithmatex">\(O(\mathbf{x})\)</span> (like total magnetization, <span class="arithmatex">\(M\)</span>) that effectively captures the state of the system.</p>
+<p>But how do we find a good <span class="arithmatex">\(O(\mathbf{x})\)</span> if we don't already know it?</p>
+<p>If we have labeled data (e.g., "Phase A" or "Phase B" from simulation temperature), we can find the optimal order parameter by <em>maximizing mutual information</em>. We search for a function <span class="arithmatex">\(O(\mathbf{x})\)</span> that maximizes <span class="arithmatex">\(I(O; \text{Label})\)</span>. The function that best "predicts" the label is, by definition, the best order parameter. This approach has been used successfully in machine learning to automatically discover the order parameters of complex physical systems without prior human-supplied physical intuition [12].</p>
+<hr />
+<h2 id="28-worked-example-sampling-a-high-dimensional-gaussian"><strong>2.8 Worked Example — Sampling a High-Dimensional Gaussian</strong></h2>
+<p>In this example, we bridge theory and practice. We will use a known high-dimensional probability distribution—the Multivariate Normal (Gaussian) distribution—as our "ground truth." By drawing samples from it, we can simulate a dataset and test how well our statistical tools (from Chapter 1) can recover the true underlying parameters. This will vividly illustrate the challenges of high-dimensional statistics, particularly the "curse of dimensionality."</p>
+<hr />
+<h3 id="the-ground-truth-a-correlated-d-dimensional-gaussian"><strong>The Ground Truth: A Correlated <span class="arithmatex">\(D\)</span>-Dimensional Gaussian</strong></h3>
+<p>We define our true distribution <span class="arithmatex">\(p(\mathbf{x})\)</span> to be a <span class="arithmatex">\(D\)</span>-dimensional Multivariate Gaussian <span class="arithmatex">\(\mathcal{N}(\mathbf{\mu}_{\text{true}}, \Sigma_{\text{true}})\)</span>.
+* <strong>True Mean <span class="arithmatex">\(\mathbf{\mu}_{\text{true}}\)</span>:</strong> We'll set this to the zero vector <span class="arithmatex">\(\mathbf{0}\)</span> for simplicity.
+* <strong>True Covariance <span class="arithmatex">\(\Sigma_{\text{true}}\)</span>:</strong> This is the most important part. We will construct a <span class="arithmatex">\(D \times D\)</span> covariance matrix that is <em>not</em> diagonal. For example, we can define a correlated matrix where <span class="arithmatex">\(\Sigma_{jj} = 1\)</span> and the off-diagonals <span class="arithmatex">\(\Sigma_{jk} = \rho^{|j-k|}\)</span> (an autoregressive structure), creating a "true" physical correlation between features.</p>
+<hr />
+<h3 id="sampling-and-projection-effects"><strong>Sampling and Projection Effects</strong></h3>
+<p>We generate <span class="arithmatex">\(N\)</span> data samples <span class="arithmatex">\(\{\mathbf{x}_i\}\)</span> by drawing from <span class="arithmatex">\(p(\mathbf{x}) = \mathcal{N}(\mathbf{0}, \Sigma_{\text{true}})\)</span>. This <span class="arithmatex">\(N \times D\)</span> data matrix <span class="arithmatex">\(X\)</span> is our simulated "data cloud."</p>
+<p>The first challenge is <strong>visualization</strong>. We cannot see the <span class="arithmatex">\(D\)</span>-dimensional structure. Our only option is to look at 2D projections, or <strong>pairwise marginals</strong>—a scatter plot of feature <span class="arithmatex">\(x_j\)</span> versus feature <span class="arithmatex">\(x_k\)</span>.</p>
+<p>This reveals a critical pitfall:
+* If we plot <span class="arithmatex">\(x_1\)</span> vs. <span class="arithmatex">\(x_2\)</span>, we will see a clear, tilted ellipse, revealing the correlation <span class="arithmatex">\(\rho\)</span>.
+* However, if we plot <span class="arithmatex">\(x_1\)</span> vs. <span class="arithmatex">\(x_5\)</span>, the correlation <span class="arithmatex">\(\rho^4\)</span> might be so small that the plot looks like an uncorrelated circular blob.</p>
+<p>This demonstrates that <strong>an absence of correlation in a 2D projection does not imply an absence of structure in <span class="arithmatex">\(D\)</span> dimensions.</strong> A complex, high-dimensional manifold can look simple or unstructured from most random viewpoints.</p>
+<hr />
+<h3 id="estimating-the-covariance"><strong>Estimating the Covariance</strong></h3>
+<p>We now treat our <span class="arithmatex">\(N\)</span> samples as the <em>only</em> data we have, and we attempt to recover the "laws of physics" (i.e., <span class="arithmatex">\(\Sigma_{\text{true}}\)</span>) that generated it. We compute the <strong>empirical covariance matrix</strong> from our data:</p>
+<div class="arithmatex">\[
+\hat{\Sigma} = \frac{1}{N-1}\sum_{i=1}^N (\mathbf{x}_i - \mathbf{\mu}_{\text{emp}})(\mathbf{x}_i - \mathbf{\mu}_{\text{emp}})^{\top}
+\]</div>
+<p>where <span class="arithmatex">\(\mathbf{\mu}_{\text{emp}}\)</span> is the sample mean.</p>
+<hr />
+<h3 id="observation-the-sample-size-requirement-n-vs-d"><strong>Observation: The Sample Size Requirement (<span class="arithmatex">\(N\)</span> vs. <span class="arithmatex">\(D\)</span>)</strong></h3>
+<p>This is the key lesson. We compare <span class="arithmatex">\(\hat{\Sigma}\)</span> to <span class="arithmatex">\(\Sigma_{\text{true}}\)</span> and observe how the error <span class="arithmatex">\(||\hat{\Sigma} - \Sigma_{\text{true}}||\)</span> changes with <span class="arithmatex">\(N\)</span> and <span class="arithmatex">\(D\)</span>.</p>
+<ul>
+<li>
+<p><strong>Case 1: <span class="arithmatex">\(N \gg D\)</span> (e.g., <span class="arithmatex">\(D=10, N=1,000,000\)</span>).</strong> The number of samples is huge compared to the dimension. <span class="arithmatex">\(\hat{\Sigma}\)</span> will be a very accurate, "stable" estimate of <span class="arithmatex">\(\Sigma_{\text{true}}\)</span>. The law of large numbers holds.</p>
+</li>
+<li>
+<p><strong>Case 2: <span class="arithmatex">\(N \approx D\)</span> or <span class="arithmatex">\(N &lt; D\)</span> (e.g., <span class="arithmatex">\(D=100, N=50\)</span>).</strong> This is the <strong>high-dimensional regime</strong> common in physics (e.g., <span class="arithmatex">\(D=3N_{\text{atoms}}\)</span>). The result is catastrophic:</p>
+<ol>
+<li><strong>Singularity:</strong> If <span class="arithmatex">\(N &lt; D\)</span>, the matrix <span class="arithmatex">\(\hat{\Sigma}\)</span> is mathematically <strong>singular</strong> (not invertible). It has at most <span class="arithmatex">\(N-1\)</span> non-zero eigenvalues, meaning it "thinks" the <span class="arithmatex">\(D\)</span>-dimensional data lives in a much smaller <span class="arithmatex">\((N-1)\)</span>-dimensional subspace.</li>
+<li><strong>High Variance:</strong> The <span class="arithmatex">\(D(D+1)/2\)</span> unique elements of <span class="arithmatex">\(\Sigma_{\text{true}}\)</span> (e.g., 5,050 for <span class="arithmatex">\(D=100\)</span>) are being estimated from only <span class="arithmatex">\(N=50\)</span> samples. The estimates are dominated by statistical noise. The empirical eigenvalues will not match the true ones at all (this is a central topic in Random Matrix Theory).</li>
+</ol>
+</li>
+</ul>
+<p>This example demonstrates that to get a stable, well-behaved estimate of our system's statistical geometry (its covariance), the number of samples <span class="arithmatex">\(N\)</span> must be significantly larger than the number of dimensions <span class="arithmatex">\(D\)</span>. When <span class="arithmatex">\(D\)</span> is large, this is often impossible, reinforcing that we must first reduce the <em>effective</em> dimension before statistical inference can be trusted.</p>
+<hr />
+<h2 id="29-code-demo-monte-carlo-density-estimation"><strong>2.9 Code Demo — Monte Carlo Density Estimation</strong></h2>
+<p>This demonstration provides a practical implementation of the concepts from Section 2.6 (Density Estimation) and Section 2.8 (Sampling). We will:</p>
+<ol>
+<li>Define a "ground truth" 2D correlated Gaussian distribution, <span class="arithmatex">\(p(\mathbf{x})\)</span>.</li>
+<li>Draw <span class="arithmatex">\(N=5000\)</span> samples from it, simulating our "data cloud."</li>
+<li>Use <strong>Kernel Density Estimation (KDE)</strong>, a powerful nonparametric method, to construct a smooth, continuous estimate <span class="arithmatex">\(\hat{p}(\mathbf{x})\)</span> from only the samples.</li>
+<li>Visualize the resulting learned density landscape.</li>
+</ol>
+<p>This exercise is a low-dimensional analogue for inferring a free-energy landscape from a simulation trajectory.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">multivariate_normal</span><span class="p">,</span> <span class="n">gaussian_kde</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="c1">## 1. Define the &quot;ground truth&quot; target distribution</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="c1">## A 2D Gaussian with strong correlation (non-diagonal covariance)</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="n">mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="n">cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">]])</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="c1">## This covariance matrix defines the &quot;true&quot; energy landscape.</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="c1">## 2. Draw N samples (our &quot;simulation data&quot;)</span>
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">cov</span><span class="p">,</span> <span class="mi">5000</span><span class="p">)</span>
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>
+</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="c1">## 3. Perform Kernel Density Estimation (KDE)</span>
+</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>
+</span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="c1">## This is the practical implementation of the formula from Sec 2.6</span>
+</span><span id="__span-8-20"><a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a>
+</span><span id="__span-8-21"><a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="c1">## &#39;gaussian_kde&#39; automatically determines a good bandwidth (h).</span>
+</span><span id="__span-8-22"><a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a>
+</span><span id="__span-8-23"><a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a><span class="n">kde</span> <span class="o">=</span> <span class="n">gaussian_kde</span><span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+</span><span id="__span-8-24"><a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a>
+</span><span id="__span-8-25"><a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a><span class="c1">## 4. Create a 2D grid to evaluate the learned density</span>
+</span><span id="__span-8-26"><a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a>
+</span><span id="__span-8-27"><a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mgrid</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">:</span><span class="mi">3</span><span class="p">:</span><span class="mi">100</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">:</span><span class="mi">3</span><span class="p">:</span><span class="mi">100</span><span class="n">j</span><span class="p">]</span>
+</span><span id="__span-8-28"><a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a><span class="n">grid_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span>
+</span><span id="__span-8-29"><a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a>
+</span><span id="__span-8-30"><a id="__codelineno-8-30" name="__codelineno-8-30" href="#__codelineno-8-30"></a><span class="c1">## Evaluate the KDE on the grid to get the smooth density</span>
+</span><span id="__span-8-31"><a id="__codelineno-8-31" name="__codelineno-8-31" href="#__codelineno-8-31"></a>
+</span><span id="__span-8-32"><a id="__codelineno-8-32" name="__codelineno-8-32" href="#__codelineno-8-32"></a><span class="n">z</span> <span class="o">=</span> <span class="n">kde</span><span class="p">(</span><span class="n">grid_points</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+</span><span id="__span-8-33"><a id="__codelineno-8-33" name="__codelineno-8-33" href="#__codelineno-8-33"></a>
+</span><span id="__span-8-34"><a id="__codelineno-8-34" name="__codelineno-8-34" href="#__codelineno-8-34"></a><span class="c1">## 5. Visualization</span>
+</span><span id="__span-8-35"><a id="__codelineno-8-35" name="__codelineno-8-35" href="#__codelineno-8-35"></a>
+</span><span id="__span-8-36"><a id="__codelineno-8-36" name="__codelineno-8-36" href="#__codelineno-8-36"></a><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+</span><span id="__span-8-37"><a id="__codelineno-8-37" name="__codelineno-8-37" href="#__codelineno-8-37"></a><span class="c1">## Plot the learned, smooth density as a filled contour map</span>
+</span><span id="__span-8-38"><a id="__codelineno-8-38" name="__codelineno-8-38" href="#__codelineno-8-38"></a>
+</span><span id="__span-8-39"><a id="__codelineno-8-39" name="__codelineno-8-39" href="#__codelineno-8-39"></a><span class="n">plt</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
+</span><span id="__span-8-40"><a id="__codelineno-8-40" name="__codelineno-8-40" href="#__codelineno-8-40"></a><span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Estimated Density $\hat</span><span class="si">{p}</span><span class="s1">(\mathbf</span><span class="si">{x}</span><span class="s1">)$&#39;</span><span class="p">)</span>
+</span><span id="__span-8-41"><a id="__codelineno-8-41" name="__codelineno-8-41" href="#__codelineno-8-41"></a>
+</span><span id="__span-8-42"><a id="__codelineno-8-42" name="__codelineno-8-42" href="#__codelineno-8-42"></a><span class="c1">## Overlay a few raw samples to show the &quot;empirical&quot; data</span>
+</span><span id="__span-8-43"><a id="__codelineno-8-43" name="__codelineno-8-43" href="#__codelineno-8-43"></a>
+</span><span id="__span-8-44"><a id="__codelineno-8-44" name="__codelineno-8-44" href="#__codelineno-8-44"></a><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">samples</span><span class="p">[:</span><span class="mi">200</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">samples</span><span class="p">[:</span><span class="mi">200</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Raw Samples&#39;</span><span class="p">)</span>
+</span><span id="__span-8-45"><a id="__codelineno-8-45" name="__codelineno-8-45" href="#__codelineno-8-45"></a>
+</span><span id="__span-8-46"><a id="__codelineno-8-46" name="__codelineno-8-46" href="#__codelineno-8-46"></a><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Monte Carlo + KDE Density Estimation&#39;</span><span class="p">)</span>
+</span><span id="__span-8-47"><a id="__codelineno-8-47" name="__codelineno-8-47" href="#__codelineno-8-47"></a><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Feature $x_1$&#39;</span><span class="p">)</span>
+</span><span id="__span-8-48"><a id="__codelineno-8-48" name="__codelineno-8-48" href="#__codelineno-8-48"></a><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Feature $x_2$&#39;</span><span class="p">)</span>
+</span><span id="__span-8-49"><a id="__codelineno-8-49" name="__codelineno-8-49" href="#__codelineno-8-49"></a><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</span><span id="__span-8-50"><a id="__codelineno-8-50" name="__codelineno-8-50" href="#__codelineno-8-50"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</span></code></pre></div>
+<p><strong>Interpretation:</strong>
+The resulting plot shows the power of nonparametric estimation in low dimensions.</p>
+<ul>
+<li>The <strong>white dots</strong> represent our raw, discrete "empirical distribution" <span class="arithmatex">\(\hat{p}(\mathbf{x}) \approx \frac{1}{N}\sum \delta(\mathbf{x}-\mathbf{x}_i)\)</span>.</li>
+<li>The <strong>colored contour plot</strong> represents the <em>learned, smooth</em> density <span class="arithmatex">\(\hat{p}(\mathbf{x})\)</span> from the KDE.</li>
+</ul>
+<p>The KDE has successfully "filled in the gaps" between the samples to reconstruct a continuous function. Crucially, the shape of the contours—a tilted ellipse—has correctly inferred the underlying correlation structure (the <code>cov</code> matrix) of the true distribution, even though it was only given the list of samples. This visualization represents the ideal goal of density estimation: to turn a sparse set of points into a complete, continuous model of the underlying probability landscape.</p>
+<p><strong>Bridge to Chapter 3:</strong> This works beautifully in 2D. But as Section 2.6 warned, in high dimensions (<span class="arithmatex">\(D \gg 2\)</span>), KDE fails catastrophically due to data sparsity. The next chapter addresses this: we will first reduce the dimension, <em>then</em> apply KDE in the low-dimensional latent space.</p>
+<hr />
+<h2 id="references"><strong>References</strong></h2>
+<p>[1] Bishop, C. M. (2006). <em>Pattern Recognition and Machine Learning</em>. Springer.</p>
+<p>[2] Pathria, R. K., &amp; Beale, P. D. (2011). <em>Statistical Mechanics</em> (3<sup>rd</sup> ed.). Academic Press.</p>
+<p>[3] Shannon, C. E. (1948). A Mathematical Theory of Communication. <em>Bell System Technical Journal</em>, 27(3), 379–423.</p>
+<p>[4] Jaynes, E. T. (1957). Information Theory and Statistical Mechanics. <em>Physical Review</em>, 106(4), 620–630.</p>
+<p>[5] Kullback, S., &amp; Leibler, R. A. (1951). On Information and Sufficiency. <em>Annals of Mathematical Statistics</em>, 22(1), 79–86.</p>
+<p>[6] Bellman, R. (1957). <em>Dynamic Programming</em>. Princeton University Press.</p>
+<p>[7] Bevington, P. R., &amp; Robinson, D. K. (2003). <em>Data Reduction and Error Analysis for the Physical Sciences</em> (3<sup>rd</sup> ed.). McGraw-Hill.</p>
+<p>[8] Beyer, K., Goldstein, J., Ramakrishnan, R., &amp; Shaft, U. (1999). When is "Nearest Neighbor" Meaningful? <em>Proceedings of the 7<sup>th</sup> International Conference on Database Theory (ICDT)</em>, 217–235.</p>
+<p>[9] Metropolis, N., Rosenbluth, A. W., Rosenbluth, M. N., Teller, A. H., &amp; Teller, E. (1953). Equation of State Calculations by Fast Computing Machines. <em>The Journal of Chemical Physics</em>, 21(6), 1087–1092.</p>
+<p>[10] Press, W. H., Teukolsky, S. A., Vetterling, W. T., &amp; Flannery, B. P. (2007). <em>Numerical Recipes: The Art of Scientific Computing</em> (3<sup>rd</sup> ed.). Cambridge University Press.</p>
+<p>[11] Silverman, B. W. (1986). <em>Density Estimation for Statistics and Data Analysis</em>. Chapman and Hall.</p>
+<p>[12] Carrasquilla, J., &amp; Melko, R. G. (2017). Machine Learning Phases of Matter. <em>Nature Physics</em>, 13(5), 431–434.</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../chapter-1/essay/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Chapter-1 From Simulation to Data">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Chapter-1 From Simulation to Data
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../chapter-3/essay/" class="md-footer__link md-footer__link--next" aria-label="Next: Chapter-3 Dimensionality Reduction &amp; Clustering">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Chapter-3 Dimensionality Reduction & Clustering
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://bigbookofcomputing.github.io" target="_blank" rel="noopener" title="bigbookofcomputing.github.io" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/bigbookofcomputing" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256c0 120 82.7 220.8 194.2 248.5V334.2h-52.8V256h52.8v-33.7c0-87.1 39.4-127.5 125-127.5 16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H287v175.9C413.8 494.8 512 386.9 512 256"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.youtube.com/@big-book-of-computing" target="_blank" rel="noopener" title="www.youtube.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M549.7 124.1c-6.2-23.7-24.8-42.3-48.3-48.6C458.9 64 288.1 64 288.1 64S117.3 64 74.7 75.5c-23.5 6.3-42 24.9-48.3 48.6C15 167 15 256.4 15 256.4s0 89.4 11.4 132.3c6.3 23.6 24.8 41.5 48.3 47.8C117.3 448 288.1 448 288.1 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zM232.2 337.6V175.2l142.7 81.2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+  
+
+
+<h4>Cookie consent</h4>
+<p>We use cookies to recognize your repeated visits and preferences, as well as to measure the effectiveness of our documentation and whether users find what they're searching for. With your consent, you're helping us to make our documentation better.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="github" checked>
+      <span class="task-list-indicator"></span>
+      GitHub
+    </label>
+  </li>
+
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../static/mathjax-config.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

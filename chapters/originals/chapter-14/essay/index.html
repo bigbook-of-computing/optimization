@@ -1,0 +1,3353 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A comprehensive guide to the foundations of optimization algorithms and techniques">
+      
+      
+        <meta name="author" content="Big Book of Computing">
+      
+      
+        <link rel="canonical" href="https://bigbookofcomputing.github.io/chapters/originals/chapter-14/essay/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Chapter 14: Energy-Based and Generative Models - Big Book of Computing | Optimization</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+      <link rel="stylesheet" href="../../../../static/styles.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-ECS7B3X8JM"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-ECS7B3X8JM",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-ECS7B3X8JM",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-14-energy-based-and-generative-models" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="Big Book of Computing | Optimization" class="md-header__button md-logo" aria-label="Big Book of Computing | Optimization" data-md-component="logo">
+      
+  <img src="../../../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Big Book of Computing | Optimization
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter 14: Energy-Based and Generative Models
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1M8 13h8v-2H8zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4a5 5 0 0 0 5-5 5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5M7 15a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/bigbookofcomputing/optimization" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../home/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../contents/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../introduction/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Introduction
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../chapter-1/essay/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../chapter-1/workbook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  WorkBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../chapter-1/codebook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  CodeBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Big Book of Computing | Optimization" class="md-nav__button md-logo" aria-label="Big Book of Computing | Optimization" data-md-component="logo">
+      
+  <img src="../../../../assets/logo.png" alt="logo">
+
+    </a>
+    Big Book of Computing | Optimization
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/bigbookofcomputing/optimization" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../home/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapters
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Chapters
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-1/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-2/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-3/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-4/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-5/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-6/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-7/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-8/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-9/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-10/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-11/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-12/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-13/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-14/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-15/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-16/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-17/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-18/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-19/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WorkBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    WorkBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-1/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-2/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-3/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-4/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-5/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-6/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-7/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-8/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-9/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-10/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-11/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-12/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-13/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-14/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-15/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-16/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-17/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-18/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-19/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CodeBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CodeBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-1/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-2/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-3/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-4/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-5/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-6/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-7/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-8/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-9/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-10/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-11/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-12/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-13/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-14/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-15/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-16/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-17/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-18/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-19/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/bigbookofcomputing/optimization/edit/master/docs/chapters/originals/chapter-14/essay.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/bigbookofcomputing/optimization/raw/master/docs/chapters/originals/chapter-14/essay.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="chapter-14-energy-based-and-generative-models"><strong>Chapter 14: Energy-Based and Generative Models</strong></h1>
+<hr />
+<h1 id="introduction"><strong>Introduction</strong></h1>
+<p>In Chapter 13, we explored <strong>hierarchical representation learning</strong> through specialized architectures—CNNs exploiting spatial locality, RNNs capturing temporal dependencies, and autoencoders discovering latent manifolds through information compression. These discriminative models excelled at tasks like classification (<span class="arithmatex">\(P(y|\mathbf{x})\)</span>) and regression by learning to extract progressively abstract features from raw data, transforming complex, entangled manifolds into linearly separable representations. This chapter marks a profound shift from <strong>discriminative modeling</strong> to <strong>generative modeling</strong>, transitioning from learning conditional distributions (what class does this belong to?) to learning the complete joint distribution <span class="arithmatex">\(P(\mathbf{x})\)</span> itself. The ultimate test of understanding is not merely recognition but <strong>creation</strong>—can the model synthesize new, realistic samples that respect the statistical structure of the observed data?</p>
+<p>At the heart of this chapter lies the <strong>Energy-Based Model (EBM)</strong> framework, which formalizes the energy-probability duality from statistical mechanics: <span class="arithmatex">\(p(\mathbf{x}) = e^{-E_\theta(\mathbf{x})}/Z_\theta\)</span>, where the learned energy function <span class="arithmatex">\(E_\theta(\mathbf{x})\)</span> assigns low energy to high-probability data configurations and high energy to unlikely regions. We will explore <strong>Boltzmann Machines</strong> and their restricted variant (RBMs) as classical implementations of this framework, using binary stochastic units and symmetric weight matrices to define equilibrium distributions through contrastive divergence training. The <strong>Variational Autoencoder (VAE)</strong> extends the deterministic autoencoder by introducing probabilistic latent variables, optimizing the Evidence Lower Bound (ELBO) to balance reconstruction accuracy (energy minimization) against KL regularization (entropy control). <strong>Generative Adversarial Networks (GANs)</strong> bypass the intractable partition function entirely through adversarial training—a minimax game between a generator synthesizing fake samples and a discriminator distinguishing real from fake, converging to a Nash equilibrium where the generator's distribution matches the data. <strong>Diffusion Models</strong> represent the latest paradigm, learning to reverse a fixed noise-injection process through score matching, effectively implementing time-reversed thermodynamics to restore order from chaos.</p>
+<p>By the end of this chapter, you will understand generative modeling as <strong>energy landscape sculpting</strong>—training adjusts network parameters to carve potential wells around data clusters while raising barriers in empty regions, with sampling (via MCMC or learned reverse diffusion) exploring this learned equilibrium distribution. You will see how different generative paradigms embody distinct physical metaphors: EBMs as direct Boltzmann distributions, VAEs as free-energy minimizers balancing reconstruction and entropy, GANs as competing fields seeking thermodynamic balance, and diffusion models as entropy-reversing stochastic processes. The variational core shared by these architectures—minimizing energy functionals over parameterized distributions—establishes a deep connection to quantum mechanics, foreshadowing the use of neural networks as variational ansätze for wavefunctions in Neural Quantum States (Chapter 17). Chapter 15 will extend this equilibrium framework to <strong>dynamic decision-making</strong>, shifting from learning static distributions <span class="arithmatex">\(P(\mathbf{x})\)</span> to optimizing sequential policies that maximize cumulative reward over trajectories, framing reinforcement learning as the thermodynamics of goal-driven behavior in uncertain environments.</p>
+<hr />
+<h1 id="chapter-14-outline"><strong>Chapter 14: Outline</strong></h1>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Sec.</strong></th>
+<th style="text-align: left;"><strong>Title</strong></th>
+<th style="text-align: left;"><strong>Core Ideas &amp; Examples</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>14.1</strong></td>
+<td style="text-align: left;">From Discrimination to Generation</td>
+<td style="text-align: left;">Shift from conditional <span class="arithmatex">\(P(y\|\mathbf{x})\)</span> to joint <span class="arithmatex">\(P(\mathbf{x})\)</span>; generative test: synthesize new realistic samples; energy-probability duality <span class="arithmatex">\(p(\mathbf{x}) = e^{-E_\theta(\mathbf{x})}/Z_\theta\)</span>; learning as energy sculpting (low energy for data, high for voids); generation as sampling from equilibrium distribution</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>14.2</strong></td>
+<td style="text-align: left;">Energy Functions and Probabilistic Interpretation</td>
+<td style="text-align: left;">Energy function <span class="arithmatex">\(E_\theta(\mathbf{x})\)</span> assigns potential to configurations; gradient of log-probability: <span class="arithmatex">\(\nabla_\theta \log p = -\nabla_\theta E_\theta(\mathbf{x})_{\text{data}} + \mathbb{E}_{p_\theta}[\nabla_\theta E_\theta]_{\text{model}}\)</span>; intractable partition function <span class="arithmatex">\(Z_\theta = \int e^{-E_\theta(\mathbf{x})}d\mathbf{x}\)</span>; sampling-based approximations (MCMC, contrastive divergence)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>14.3</strong></td>
+<td style="text-align: left;">Boltzmann Machines — The Classical Energy Model</td>
+<td style="text-align: left;">Binary units (visible <span class="arithmatex">\(\mathbf{v}\)</span>, hidden <span class="arithmatex">\(\mathbf{h}\)</span>); energy function <span class="arithmatex">\(E(\mathbf{v},\mathbf{h}) = -\mathbf{b}^\top \mathbf{v} - \mathbf{c}^\top \mathbf{h} - \mathbf{v}^\top W \mathbf{h}\)</span>; Boltzmann distribution <span class="arithmatex">\(p(\mathbf{v}, \mathbf{h}) = e^{-E}/Z\)</span>; extension of Ising model to data modeling; latent spins introduce complex couplings; free-energy minimization</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>14.4</strong></td>
+<td style="text-align: left;">Restricted Boltzmann Machines (RBMs)</td>
+<td style="text-align: left;">Bipartite graph (no intra-layer connections); efficient inference <span class="arithmatex">\(P(h_j=1\|\mathbf{v}) = \sigma(\sum_i W_{ij}v_i + c_j)\)</span>; contrastive divergence training <span class="arithmatex">\(\Delta W_{ij} = \eta(\langle v_i h_j\rangle_{\text{data}} - \langle v_i h_j\rangle_{\text{model}})\)</span>; positive phase (data) vs negative phase (model samples); two-layer spin glass analogy</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>14.5</strong></td>
+<td style="text-align: left;">Autoencoders vs. Boltzmann Machines</td>
+<td style="text-align: left;">Comparison: AE (continuous <span class="arithmatex">\(\mathbf{z}\)</span>, deterministic, reconstruction loss, backprop) vs RBM (binary <span class="arithmatex">\(\mathbf{h}\)</span>, probabilistic, energy minimization, contrastive divergence); AE as zero-temperature limit of RBM; bridge to VAE (merging deterministic flow with probabilistic rigor)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>14.6</strong></td>
+<td style="text-align: left;">Variational Autoencoders (VAEs) — Probabilistic Extension</td>
+<td style="text-align: left;">Generative model <span class="arithmatex">\(p_\theta(\mathbf{x},\mathbf{z}) = p_\theta(\mathbf{x}\|\mathbf{z})p(\mathbf{z})\)</span>; encoder <span class="arithmatex">\(q_\phi(\mathbf{z}\|\mathbf{x})\)</span> approximates posterior; reparameterization trick <span class="arithmatex">\(\mathbf{z} = \mathbf{\mu}_\phi(\mathbf{x}) + \mathbf{\sigma}_\phi(\mathbf{x})\odot\mathbf{\epsilon}\)</span>; ELBO <span class="arithmatex">\(\mathcal{L} = \mathbb{E}[\ln p_\theta(\mathbf{x}\|\mathbf{z})] - D_{\mathrm{KL}}[q\|\|p]\)</span>; energy-entropy tradeoff</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>14.7</strong></td>
+<td style="text-align: left;">Generative Adversarial Networks (GANs)</td>
+<td style="text-align: left;">Two-player game: Generator <span class="arithmatex">\(G(\mathbf{z})\)</span> creates fake samples, Discriminator <span class="arithmatex">\(D(\mathbf{x})\)</span> distinguishes real/fake; minimax objective <span class="arithmatex">\(\min_G \max_D \mathbb{E}[\ln D(\mathbf{x})] + \mathbb{E}[\ln(1-D(G(\mathbf{z})))]\)</span>; Nash equilibrium (<span class="arithmatex">\(p_g = p_{\text{data}}\)</span>, <span class="arithmatex">\(D=0.5\)</span>); minimizes Jensen-Shannon divergence; competing fields seeking thermodynamic balance</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>14.8</strong></td>
+<td style="text-align: left;">Diffusion Models and Score Matching</td>
+<td style="text-align: left;">Forward process: gradual noise addition <span class="arithmatex">\(q(\mathbf{x}_t\|\mathbf{x}_{t-1}) = \mathcal{N}(\sqrt{1-\beta_t}\mathbf{x}_{t-1}, \beta_t I)\)</span>; reverse process: learned denoising via network <span class="arithmatex">\(\epsilon_\theta\)</span>; score matching loss <span class="arithmatex">\(L = \mathbb{E}[\|\epsilon - \epsilon_\theta(\mathbf{x}_t, t)\|^2]\)</span>; time-reversed thermodynamics (entropy decrease restores order from noise)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>14.9</strong></td>
+<td style="text-align: left;">Comparing Generative Paradigms</td>
+<td style="text-align: left;">Unified goal: achieve <span class="arithmatex">\(P_{\theta} \approx P_{\text{data}}\)</span> (statistical equilibrium); EBMs (direct Boltzmann distribution, energy sculpting), VAEs (free-energy minimization, ELBO), GANs (adversarial Nash equilibrium, JS divergence), Diffusion (reversed entropy flow, score matching); contrasting strengths (rigor vs speed vs sample quality)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>14.10</strong></td>
+<td style="text-align: left;">Worked Example — Energy-Based Learning on 2D Data</td>
+<td style="text-align: left;">Multi-modal 2D distribution (two Gaussian clusters at <span class="arithmatex">\(x=\pm 2\)</span>); parameterized energy <span class="arithmatex">\(E_{\mathbf{w}}(\mathbf{x}) = \frac{1}{2}\|\mathbf{x}\|^2 + w_1\sin(ax_1) + w_2\cos(ax_2)\)</span>; contrastive divergence training; data term (lower energy at clusters) vs model term (raise energy in voids); visualize learned landscape (basins align with data)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>14.11</strong></td>
+<td style="text-align: left;">Code Demo — Toy Energy-Based Model</td>
+<td style="text-align: left;">PyTorch implementation; synthetic two-cluster data; energy function with trainable parameters; training loop (positive phase: data energy, negative phase: noise energy); loss = data energy - model energy; visualization of learned potential wells; MCMC sampling would reproduce multi-modal distribution</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>14.12</strong></td>
+<td style="text-align: left;">Physical Perspective — Learning as Thermodynamics</td>
+<td style="text-align: left;">Mapping: energy <span class="arithmatex">\(E_\theta \leftrightarrow\)</span> Hamiltonian, probability <span class="arithmatex">\(\propto e^{-E/T} \leftrightarrow\)</span> Boltzmann distribution, negative log-likelihood <span class="arithmatex">\(\leftrightarrow\)</span> potential energy, learning <span class="arithmatex">\(\leftrightarrow\)</span> equilibration; data in thermal contact with model; entropy-energy duality (fidelity vs diversity); VAE balances reconstruction (energy) and KL (entropy cost)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>14.13</strong></td>
+<td style="text-align: left;">Modern Applications</td>
+<td style="text-align: left;">Generative models as universal energy landscape approximators; applications: image/media synthesis (GANs, diffusion), molecular design (VAEs, EBMs for chemical space), physics simulations (learn potential surfaces), anomaly detection (high-energy regions), text-to-image (conditioned diffusion); enables creative AI beyond classification</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>14.14</strong></td>
+<td style="text-align: left;">Bridge to Quantum and Information Physics</td>
+<td style="text-align: left;">Variational core shared with quantum mechanics (minimize energy expectation); probability amplitude <span class="arithmatex">\(\leftrightarrow\)</span> wavefunction (<span class="arithmatex">\(\psi(\mathbf{x}) \leftrightarrow \sqrt{P_\theta(\mathbf{x})}\)</span>); VAE/EBM variational free energy <span class="arithmatex">\(\leftrightarrow\)</span> quantum variational principle (minimize <span class="arithmatex">\(\langle \hat{H} \rangle\)</span>); foreshadowing Neural Quantum States (Chapter 17: RBMs as variational ansatz for wavefunctions)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>14.15</strong></td>
+<td style="text-align: left;">Takeaways &amp; Bridge to Chapter 15</td>
+<td style="text-align: left;">Generative modeling as energy sculpting; sampling as thermal exploration; paradigms (EBMs: Boltzmann, VAEs: free-energy, GANs: adversarial equilibrium, Diffusion: reversed entropy); quantum connection via variational principle; Bridge: Chapter 15 shifts from static <span class="arithmatex">\(P(\mathbf{x})\)</span> to dynamic decision-making (RL), optimizing sequential policies over trajectories, thermodynamics of goal-driven behavior</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="141-from-discrimination-to-generation"><strong>14.1 From Discrimination to Generation</strong></h2>
+<hr />
+<h3 id="recap-the-shift-in-learning-goal"><strong>Recap: The Shift in Learning Goal</strong></h3>
+<p>In previous chapters, deep architectures like CNNs and RNNs served primarily as <strong>hierarchical feature extractors</strong>. Their loss functions focused on predicting conditional probabilities or reducing reconstruction error.</p>
+<ul>
+<li><strong>Discriminative Learning (Past):</strong> Answers the question, "<strong>What is this?</strong>" (e.g., Is this a cat? What is the velocity at <span class="arithmatex">\(t+1\)</span>?). The model learns the boundary between classes.</li>
+<li><strong>Generative Learning (Current):</strong> Answers the question, "<strong>What can be?</strong>" (e.g., Generate a new, realistic image; model all possible protein configurations). The model must learn the <strong>entire joint probability distribution</strong>.</li>
+</ul>
+<hr />
+<h3 id="core-shift-conditional-to-joint-modeling"><strong>Core Shift: Conditional to Joint Modeling</strong></h3>
+<p>The change in objective is a mathematical shift from learning a conditional function to learning a joint distribution:</p>
+<div class="arithmatex">\[
+\text{Discriminative: } P(y \mid \mathbf{x}) \quad \longrightarrow \quad \text{Generative: } P(\mathbf{x})
+\]</div>
+<p>The rigorous test of whether a model genuinely understands the structure of the data is its ability to <strong>produce new samples (<span class="arithmatex">\(\mathbf{x}_{\text{new}}\)</span>) consistent with the observed distribution</strong>.</p>
+<hr />
+<h3 id="energy-formulation-the-hamiltonian-of-data"><strong>Energy Formulation: The Hamiltonian of Data</strong></h3>
+<p>The most powerful framework for generative modeling is the <strong>Energy-Based Model (EBM)</strong>. This approach leverages the fundamental energy-probability duality (Chapter 2.1) to define the data distribution through a learned <strong>energy function</strong> <span class="arithmatex">\(E_\theta(\mathbf{x})\)</span>:</p>
+<div class="arithmatex">\[
+p(\mathbf{x}) = \frac{e^{-E_\theta(\mathbf{x})}}{Z_\theta}
+\]</div>
+<ul>
+<li><span class="arithmatex">\(E_\theta(\mathbf{x})\)</span>: The <strong>energy function</strong> (or Hamiltonian). It is parameterized by the network weights <span class="arithmatex">\(\mathbf{\theta}\)</span> and assigns low energy to high-probability states (the data) and high energy to low-probability states (the voids).</li>
+<li><span class="arithmatex">\(Z_\theta\)</span>: The <strong>Partition Function</strong>. This normalization constant is the sum (or integral) over all possible energy states:</li>
+</ul>
+<div class="arithmatex">\[
+Z_\theta = \int e^{-E_\theta(\mathbf{x})}d\mathbf{x}
+\]</div>
+<div class="admonition tip">
+<p class="admonition-title">Energy Landscape Sculpting</p>
+</div>
+<h2 id="training-a-generative-model-is-equivalent-to-sculpting-an-energy-landscape-adjust-parameters-to-create-deep-potential-wells-at-data-locations-and-high-barriers-in-empty-regions-sampling-from-the-learned-distribution-explores-these-sculpted-basins"><div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Training a generative model is equivalent to sculpting an energy landscape: adjust parameters to create deep potential wells at data locations and high barriers in empty regions. Sampling from the learned distribution explores these sculpted basins.
+</span></code></pre></div></h2>
+<h3 id="analogy-finding-the-equilibrium-distribution"><strong>Analogy: Finding the Equilibrium Distribution</strong></h3>
+<p>Generative modeling, in this view, is the process of <strong>finding the equilibrium distribution of a physical system</strong>:</p>
+<ul>
+<li><strong>Learning <span class="arithmatex">\(\leftrightarrow\)</span> Energy Sculpting:</strong> Training the network involves adjusting the weights <span class="arithmatex">\(\mathbf{\theta}\)</span> to <strong>sculpt the energy landscape</strong> <span class="arithmatex">\(E_\theta(\mathbf{x})\)</span> so that its low-energy basins perfectly align with the observed data clusters.</li>
+<li><strong>Generation <span class="arithmatex">\(\leftrightarrow\)</span> Sampling:</strong> Once the landscape is learned, generating new data (images, molecules, etc.) is equivalent to <strong>sampling</strong> from this equilibrium distribution <span class="arithmatex">\(P(\mathbf{x})\)</span> (e.g., using a Monte Carlo technique, Chapter 2.5).</li>
+</ul>
+<p>The network's ultimate achievement is to learn its own statistical <strong>Hamiltonian of data</strong>.</p>
+<hr />
+<h2 id="142-energy-functions-and-probabilistic-interpretation"><strong>14.2 Energy Functions and Probabilistic Interpretation</strong></h2>
+<p>The <strong>Energy-Based Model (EBM)</strong> framework (Section 14.1) hinges on the duality between energy and probability, enabling us to derive a formal learning rule based on the gradient of the log-probability. However, this leads immediately to the <strong>intractability problem</strong> central to statistical physics: the normalization constant.</p>
+<hr />
+<h3 id="energyprobability-connection"><strong>Energy–Probability Connection</strong></h3>
+<p>The probability distribution <span class="arithmatex">\(p(\mathbf{x})\)</span> is defined using the learned energy function <span class="arithmatex">\(E_\theta(\mathbf{x})\)</span>:</p>
+<div class="arithmatex">\[
+p(\mathbf{x}) = \frac{e^{-E_\theta(\mathbf{x})}}{Z_\theta}
+\]</div>
+<p>This relationship dictates that <strong>lower <span class="arithmatex">\(E_\theta(\mathbf{x})\)</span> directly corresponds to higher <span class="arithmatex">\(p(\mathbf{x})\)</span></strong>. The model learns to assign high "energy" (cost) to configurations <span class="arithmatex">\(\mathbf{x}\)</span> not observed in the data (the empty space) and low energy to the observed data manifold.</p>
+<hr />
+<h3 id="gradient-of-the-log-probability"><strong>Gradient of the Log-Probability</strong></h3>
+<p>To train the parameters <span class="arithmatex">\(\mathbf{\theta}\)</span> (the network weights) of the EBM, we must find the direction that maximizes the likelihood of the training data. This is done by computing the gradient of the log-probability, <span class="arithmatex">\(\nabla_\theta \log p_\theta(\mathbf{x})\)</span>, which is the learning force:</p>
+<div class="arithmatex">\[
+\nabla_\theta \log p_\theta(\mathbf{x}) = \nabla_\theta \log \left(\frac{e^{-E_\theta(\mathbf{x})}}{Z_\theta}\right)
+\]</div>
+<p>Applying the rules of differentiation and separating the terms yields the final, physical form of the learning rule:</p>
+<div class="arithmatex">\[
+\nabla_\theta \log p_\theta(\mathbf{x}) = \underbrace{-\nabla_\theta E_\theta(\mathbf{x})}_{\text{Data Term}} + \underbrace{\mathbb{E}_{p_\theta}[\nabla_\theta E_\theta(\mathbf{x})]}_{\text{Model Term}}
+\]</div>
+<ul>
+<li><strong>Data Term:**</strong> This term, evaluated on the observed data samples (<span class="arithmatex">\(\mathbf{x}\)</span>), pushes the model parameters <span class="arithmatex">\(\mathbf{\theta}\)</span> in the direction that <strong>decreases the energy of the data</strong>.</li>
+<li><strong>Model Term:</strong> This term, an expectation taken over the model's own distribution <span class="arithmatex">\(p_\theta(\mathbf{x})\)</span>, pushes the model parameters in the direction that <strong>increases the energy of samples drawn from the model</strong>.</li>
+</ul>
+<p>This duality implies that learning is a constant competition: the model must simultaneously make the data feel "low energy" and make the non-data configurations feel "high energy".</p>
+<hr />
+<h3 id="the-challenge-the-partition-function-z_theta"><strong>The Challenge: The Partition Function <span class="arithmatex">\(Z_\theta\)</span></strong></h3>
+<p>While the gradient equation provides a perfect learning rule, the <strong>Model Term</strong> requires computing an expectation value over the model's distribution <span class="arithmatex">\(p_\theta(\mathbf{x})\)</span>. To do this, one must access the <strong>Partition Function (<span class="arithmatex">\(Z_\theta\)</span>)</strong>:</p>
+<div class="arithmatex">\[
+Z_\theta = \int e^{-E_\theta(\mathbf{x})}d\mathbf{x}
+\]</div>
+<p><strong><span class="arithmatex">\(Z_\theta\)</span> is typically intractable</strong>. For high-dimensional systems (e.g., images or large graphs), this integral (or sum over discrete states) involves summing over an exponentially large or infinite state space.</p>
+<hr />
+<h3 id="physical-analogy-the-free-energy-normalization-problem"><strong>Physical Analogy: The Free-Energy Normalization Problem</strong></h3>
+<ul>
+<li><strong>Physical Analogy:</strong> This intractable normalization is <strong>exactly the same partition function problem</strong> that plagues statistical mechanics. <span class="arithmatex">\(Z_\theta\)</span> is required to calculate all thermodynamic properties, including the <strong>free energy</strong> (Chapter 9.6).</li>
+<li><strong>Solution Path:</strong> Because <span class="arithmatex">\(Z_\theta\)</span> cannot be computed directly, EBMs must employ approximation techniques, usually through <strong>sampling</strong> (e.g., MCMC or contrastive divergence, as seen in subsequent sections) to estimate the model term.</li>
+</ul>
+<hr />
+<h2 id="143-boltzmann-machines-the-classical-energy-model"><strong>14.3 Boltzmann Machines — The Classical Energy Model</strong></h2>
+<p>The <strong>Boltzmann Machine (BM)</strong> is the historical and theoretical cornerstone of <strong>Energy-Based Models (EBMs)</strong>. It provides a direct neural network architecture for the <strong>Gibbs (Boltzmann) distribution</strong> (Chapter 7.2), extending the physics of the <strong>Ising model</strong> (Chapter 8.3) to represent complex data distributions.</p>
+<hr />
+<h3 id="definition-binary-units-and-hidden-states"><strong>Definition: Binary Units and Hidden States</strong></h3>
+<p>A Boltzmann Machine is a type of recurrent neural network composed of binary units, <span class="arithmatex">\(s_i \in \{0, 1\}\)</span> or <span class="arithmatex">\(\{-1, +1\}\)</span>. The units are separated into two groups:
+* <strong>Visible Units (<span class="arithmatex">\(\mathbf{v}\)</span>):</strong> These correspond to the observed data.
+* <strong>Hidden Units (<span class="arithmatex">\(\mathbf{h}\)</span>):</strong> These correspond to the latent variables (internal features) of the model.</p>
+<p>The BM is defined by its <strong>Energy Function <span class="arithmatex">\(E(\mathbf{v}, \mathbf{h})\)</span></strong>, which is a general quadratic form over all unit states:</p>
+<div class="arithmatex">\[
+E(\mathbf{v},\mathbf{h}) = -\mathbf{b}^\top \mathbf{v} -\mathbf{c}^\top \mathbf{h} -\mathbf{v}^\top W \mathbf{h}
+\]</div>
+<ul>
+<li><strong><span class="arithmatex">\(-\mathbf{v}^\top W \mathbf{h}\)</span>:</strong> The <strong>coupling energy</strong> between the visible and hidden units. The weight matrix <span class="arithmatex">\(W\)</span> encodes the learned interactions.</li>
+<li><strong><span class="arithmatex">\(-\mathbf{b}^\top \mathbf{v}\)</span> and <span class="arithmatex">\(-\mathbf{c}^\top \mathbf{h}\)</span>:</strong> The <strong>bias fields</strong> (linear terms) acting on the visible and hidden units, respectively.</li>
+</ul>
+<hr />
+<h3 id="probability-and-the-boltzmann-distribution"><strong>Probability and The Boltzmann Distribution</strong></h3>
+<p>The probability of the system being in any complete state <span class="arithmatex">\((\mathbf{v}, \mathbf{h})\)</span> is given by the Boltzmann distribution:</p>
+<div class="arithmatex">\[
+p(\mathbf{v}, \mathbf{h}) = \frac{e^{-E(\mathbf{v}, \mathbf{h})}}{Z}
+\]</div>
+<p>The system is trained to match the <strong>marginal probability</strong> of the visible units, <span class="arithmatex">\(p(\mathbf{v}) = \sum_{\mathbf{h}} p(\mathbf{v}, \mathbf{h})\)</span>, to the empirical data distribution <span class="arithmatex">\(p_{\text{data}}(\mathbf{v})\)</span>.</p>
+<hr />
+<h3 id="training-minimizing-free-energy"><strong>Training: Minimizing Free Energy</strong></h3>
+<p>Training the BM means finding the parameters (<span class="arithmatex">\(\mathbf{\theta} = \{W, \mathbf{b}, \mathbf{c}\}\)</span>) that maximize the log-likelihood of the observed data. This optimization is challenging because of the intractable Partition Function <span class="arithmatex">\(Z\)</span> (Section 14.2).</p>
+<p>The learning rule involves minimizing an objective function related to the <strong>Kullback-Leibler (KL) divergence</strong>. The key challenge lies in estimating the <strong>Model Term</strong> (the expectation <span class="arithmatex">\(\mathbb{E}_{p_\theta}[\nabla_\theta E_\theta(\mathbf{x})]\)</span>) which is typically approximated using Markov Chain Monte Carlo (MCMC) sampling techniques like <strong>Contrastive Divergence (CD)</strong>.</p>
+<hr />
+<h3 id="analogy-latent-spins-and-free-energy"><strong>Analogy: Latent Spins and Free Energy</strong></h3>
+<ul>
+<li><strong>Connection to Ising:</strong> The BM directly <strong>extends the Ising model</strong> from physics to data modeling. The visible units are the observed spins, and the hidden units act as <strong>latent spins</strong> that introduce complex, non-linear coupling effects necessary to model high-dimensional data dependencies.</li>
+<li><strong>Equilibration:</strong> The network training process is analogous to forcing the system's learned equilibrium distribution to match the empirical distribution of the data. The network effectively <strong>equilibrates to a state of minimum free energy</strong> (Chapter 9.6).</li>
+</ul>
+<p>The Boltzmann Machine thus provides the classical, probabilistic foundation for deep generative learning.</p>
+<hr />
+<h2 id="144-restricted-boltzmann-machines-rbms"><strong>14.4 Restricted Boltzmann Machines (RBMs)</strong></h2>
+<p>The <strong>Boltzmann Machine (BM)</strong> (Section 14.3) is computationally challenging because its units are all interconnected, making the conditional probability of the hidden units given the visible units (<span class="arithmatex">\(P(\mathbf{h}|\mathbf{v})\)</span>) difficult to calculate. The <strong>Restricted Boltzmann Machine (RBM)</strong> solves this intractability by imposing a crucial <strong>architectural constraint</strong>.</p>
+<hr />
+<h3 id="restriction-the-bipartite-graph"><strong>Restriction: The Bipartite Graph</strong></h3>
+<p>An RBM maintains the division between <strong>visible units (<span class="arithmatex">\(\mathbf{v}\)</span>)</strong> and <strong>hidden units (<span class="arithmatex">\(\mathbf{h}\)</span>)</strong>. However, it enforces a structural restriction: there are <strong>no intra-layer connections</strong>.</p>
+<ul>
+<li>The network forms a <strong>bipartite graph</strong> (like the Factor Graph concept, Chapter 11.5), where connections only exist between a visible unit and a hidden unit.</li>
+<li><strong>Consequence:</strong> Because the units within each layer are independent of one another, the conditional probabilities simplify dramatically, enabling <strong>efficient inference</strong>.</li>
+</ul>
+<hr />
+<h3 id="efficient-inference-and-update-rules"><strong>Efficient Inference and Update Rules</strong></h3>
+<p>Due to the independence constraint, we can calculate the probability of a unit being active (<span class="arithmatex">\(s_i=1\)</span>) given the state of the opposite layer (<span class="arithmatex">\(\mathbf{h}\)</span> or <span class="arithmatex">\(\mathbf{v}\)</span>) using the <strong>sigmoid function (<span class="arithmatex">\(\sigma\)</span>)</strong> (Chapter 12.3):</p>
+<div class="arithmatex">\[
+P(h_j=1|\mathbf{v}) = \sigma\left(\sum_i W_{ij}v_i + c_j\right)
+\]</div>
+<div class="arithmatex">\[
+P(v_i=1|\mathbf{h}) = \sigma\left(\sum_j W_{ij}h_j + b_i\right)
+\]</div>
+<p>This bi-directional sampling (from <span class="arithmatex">\(\mathbf{v}\)</span> to <span class="arithmatex">\(\mathbf{h}\)</span> and back) forms the core dynamic of RBMs.</p>
+<hr />
+<h3 id="training-via-contrastive-divergence-cd"><strong>Training via Contrastive Divergence (CD)</strong></h3>
+<p>The intractable Partition Function (<span class="arithmatex">\(Z\)</span>) still prevents direct computation of the exact likelihood gradient (Section 14.2). RBMs are trained using the <strong>Contrastive Divergence (CD)</strong> algorithm, which provides a fast, approximate gradient estimate:</p>
+<p>The update rule for the weights (<span class="arithmatex">\(W_{ij}\)</span>) is a difference between <strong>data-driven statistics</strong> and <strong>model-generated statistics</strong>:</p>
+<div class="arithmatex">\[
+\Delta W_{ij} = \eta(\underbrace{\langle v_i h_j\rangle_{\text{data}}}_{\text{Positive Phase}} - \underbrace{\langle v_i h_j\rangle_{\text{model}}}_{\text{Negative Phase}})
+\]</div>
+<ul>
+<li><strong>Positive Phase (<span class="arithmatex">\(\langle \dots \rangle_{\text{data}}\)</span>):</strong> Calculated from the observed data, pushing the model toward the target energy minimum.</li>
+<li><strong>Negative Phase (<span class="arithmatex">\(\langle \dots \rangle_{\text{model}}\)</span>):</strong> Approximated using a short Markov chain (MCMC, Chapter 2.5) that samples the model's own distribution, pushing the energy landscape away from spurious configurations.</li>
+</ul>
+<hr />
+<h3 id="analogy-two-layer-spin-glass-and-sampler"><strong>Analogy: Two-Layer Spin Glass and Sampler</strong></h3>
+<ul>
+<li><strong>Two-Layer Spin Glass:</strong> The RBM is a type of disordered system, functioning as a <strong>two-layer spin glass</strong>. The hidden units act as <strong>latent spins</strong> that introduce non-linear collective effects to capture complex dependencies in the observed data.</li>
+<li><strong>Thermodynamic Sampler:</strong> The CD training process forces the model's free-energy landscape to align with the empirical data. RBMs effectively learn to serve as <strong>thermodynamic samplers</strong> that reproduce the observed statistical regularities.</li>
+</ul>
+<p>RBMs were historically crucial as the foundational component for building deeper architectures like <strong>Deep Belief Networks (DBNs)</strong>, paving the way for the deep learning revolution.</p>
+<hr />
+<h2 id="145-autoencoders-vs-boltzmann-machines"><strong>14.5 Autoencoders vs. Boltzmann Machines</strong></h2>
+<p>The <strong>Autoencoder (AE)</strong> (Section 13.6) and the <strong>Restricted Boltzmann Machine (RBM)</strong> (Section 14.4) are two foundational architectures that both aim to learn a compact internal representation (latent code) of the input data. However, they derive from fundamentally different philosophical and mathematical viewpoints, reflecting a distinction between <strong>deterministic function approximation</strong> and <strong>stochastic probabilistic sampling</strong>.</p>
+<hr />
+<h3 id="contrasting-architectures-and-objectives"><strong>Contrasting Architectures and Objectives</strong></h3>
+<p>The difference between the AE and the RBM lies in the nature of their latent units, their learning rules, and their final interpretation:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Aspect</th>
+<th style="text-align: left;">Autoencoder (AE)</th>
+<th style="text-align: left;">Restricted Boltzmann Machine (RBM)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Latent Units</strong></td>
+<td style="text-align: left;">Continuous (<span class="arithmatex">\(\mathbf{z} \in \mathbb{R}^d\)</span>).</td>
+<td style="text-align: left;"><strong>Stochastic, Binary</strong> (<span class="arithmatex">\(\mathbf{h} \in \{0, 1\}^d\)</span>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Inference</strong></td>
+<td style="text-align: left;"><strong>Deterministic</strong>. Encoder maps <span class="arithmatex">\(\mathbf{x} \to \mathbf{z}\)</span> directly.</td>
+<td style="text-align: left;"><strong>Probabilistic</strong>. Inference is <span class="arithmatex">\(P(\mathbf{h} \mid \mathbf{v})\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Objective</strong></td>
+<td style="text-align: left;">Minimize <strong>Reconstruction Error</strong> <span class="arithmatex">\(L = \|\mathbf{x} - \mathbf{x}'\|^2\)</span>.</td>
+<td style="text-align: left;">Minimize <strong>Energy</strong> (Maximize Log-Likelihood).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Training</strong></td>
+<td style="text-align: left;"><strong>Gradient Descent</strong> (Backpropagation).</td>
+<td style="text-align: left;"><strong>Contrastive Divergence</strong> (MCMC-based sampling).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Interpretation</strong></td>
+<td style="text-align: left;"><strong>Function Approximator</strong> (Information Compressor).</td>
+<td style="text-align: left;"><strong>Probabilistic Sampler</strong> (Thermodynamic Model).</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="unification-shared-representation-goal"><strong>Unification: Shared Representation Goal</strong></h3>
+<p>Despite the differences, both architectures aim to solve the same problem: learning an internal representation. An RBM can be viewed as an <strong>energy-based autoencoder</strong>.</p>
+<ul>
+<li><strong>AE <span class="arithmatex">\(\leftrightarrow\)</span> RBM Limit:</strong> The deterministic mapping of the <strong>Autoencoder</strong> is analogous to the behavior of the <strong>RBM in the zero-temperature limit (<span class="arithmatex">\(T \to 0\)</span>)</strong>. When the thermal noise goes to zero, the stochastic binary units of the RBM collapse to their most probable, deterministic state, and the network behaves like a feedforward function approximator.</li>
+</ul>
+<p>The conceptual bridge between the two models—energy minimization versus deterministic reconstruction—led directly to the development of the <strong>Variational Autoencoder (VAE)</strong> (Section 13.7), which successfully merges the deterministic flow of the AE with the probabilistic rigor of the RBM.</p>
+<hr />
+<h2 id="146-variational-autoencoders-vaes-probabilistic-extension"><strong>14.6 Variational Autoencoders (VAEs) — Probabilistic Extension</strong></h2>
+<p>The <strong>Variational Autoencoder (VAE)</strong> represents a pivotal architecture that bridges the structural design of the deterministic Autoencoder (AE, Section 13.6) with the probabilistic rigor of <strong>Energy-Based Models (EBMs)</strong> and Bayesian inference (Chapter 9). VAEs achieve deep generative modeling by explicitly modeling <strong>uncertainty</strong> in the latent space.</p>
+<hr />
+<h3 id="probabilistic-model-and-intractability"><strong>Probabilistic Model and Intractability</strong></h3>
+<p>The VAE defines a generative process for the data <span class="arithmatex">\(\mathbf{x}\)</span> using a set of unobserved latent variables <span class="arithmatex">\(\mathbf{z}\)</span>:</p>
+<div class="arithmatex">\[
+p_\theta(\mathbf{x},\mathbf{z}) = p_\theta(\mathbf{x}|\mathbf{z})p(\mathbf{z})
+\]</div>
+<ul>
+<li><span class="arithmatex">\(p(\mathbf{z})\)</span>: The simple <strong>Prior</strong> distribution over the latent space (e.g., a standard Gaussian).</li>
+<li><span class="arithmatex">\(p_\theta(\mathbf{x}|\mathbf{z})\)</span>: The <strong>Decoder</strong> distribution, which learns to reconstruct the data stochastically from the latent code.</li>
+</ul>
+<p>The key challenge, as with all EBMs, is the <strong>intractable posterior</strong> <span class="arithmatex">\(p(\mathbf{z}|\mathbf{x})\)</span>.</p>
+<hr />
+<h3 id="the-architecture-inference-and-generation"><strong>The Architecture: Inference and Generation</strong></h3>
+<p>To address this, the VAE structure explicitly implements the <strong>Variational Inference</strong> framework (Section 9.6):</p>
+<ol>
+<li><strong>Encoder (Inference Model):</strong> The encoder is parameterized as a neural network <span class="arithmatex">\(\mathbf{z}\)</span> that learns an approximate posterior distribution, <span class="arithmatex">\(q_\phi(\mathbf{z}|\mathbf{x})\)</span>, over the latent space. Crucially, the encoder outputs the <strong>mean (<span class="arithmatex">\(\mathbf{\mu}_\phi(\mathbf{x})\)</span>) and variance (<span class="arithmatex">\(\mathbf{\sigma}_\phi(\mathbf{x})\)</span>)</strong> of a Gaussian distribution, making the latent code a distribution rather than a fixed point.</li>
+<li><strong>Reparameterization Trick:</strong> To allow gradients to flow backward through the stochastic sampling process (a requirement for Backpropagation, Chapter 12.5), the sampling is shifted out of the computational graph:</li>
+</ol>
+<div class="arithmatex">\[
+\mathbf{z} = \mathbf{\mu}_\phi(\mathbf{x}) + \mathbf{\sigma}_\phi(\mathbf{x})\odot \mathbf{\epsilon}, \quad \mathbf{\epsilon}\sim\mathcal{N}(0,I)
+\]</div>
+<p>This generates a sample <span class="arithmatex">\(\mathbf{z}\)</span> while ensuring the gradients can pass through the deterministic functions <span class="arithmatex">\(\mathbf{\mu}_\phi\)</span> and <span class="arithmatex">\(\mathbf{\sigma}_\phi\)</span>.</p>
+<hr />
+<h3 id="objective-free-energy-minimization"><strong>Objective: Free-Energy Minimization</strong></h3>
+<p>The VAE is trained by maximizing the <strong>Evidence Lower Bound (ELBO)</strong>, which is equivalent to minimizing the <strong>Variational Free Energy</strong> (<span class="arithmatex">\(\mathcal{F}\)</span>) (Section 9.6):</p>
+<div class="arithmatex">\[
+\mathcal{L} = \underbrace{\mathbb{E}_{q_\phi(\mathbf{z}|\mathbf{x})}[\ln p_\theta(\mathbf{x}|\mathbf{z})]}_{\text{Reconstruction Term (Energy)}} - \underbrace{D_{\text{KL}}[q_\phi(\mathbf{z}|\mathbf{x})||p(\mathbf{z})]}_{\text{Regularization Term (Entropy)}}
+\]</div>
+<p>This objective provides a clear thermodynamic interpretation:</p>
+<ol>
+<li><strong>Reconstruction Term (Energy):</strong> Maximizes the likelihood of regenerating the data from <span class="arithmatex">\(\mathbf{z}\)</span>. It drives the network to reduce prediction error (minimize energy).</li>
+<li><strong>KL Term (Entropy):</strong> Acts as a regularizer, penalizing the divergence of the learned latent distribution <span class="arithmatex">\(q\)</span> from the simple prior <span class="arithmatex">\(p(\mathbf{z})\)</span>. This forces the latent space to be continuous and well-structured, preventing the encoder from scattering data points randomly. It effectively drives the system to minimize the <strong>entropy cost</strong>.</li>
+</ol>
+<p>The VAE training process is thus a continuous effort in <strong>free-energy minimization</strong>, balancing the fidelity of reconstruction (energy) with the simplicity and regularity of the latent code (entropy).</p>
+<div class="admonition example">
+<p class="admonition-title">VAE Latent Space Structure</p>
+</div>
+<h2 id="in-a-trained-vae-on-mnist-digits-the-2d-latent-space-mathbfz-forms-distinct-clusters-for-each-digit-class-0-9-with-smooth-interpolations-between-clusters-generating-plausible-intermediate-shapes-demonstrating-continuous-manifold-learning"><div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>In a trained VAE on MNIST digits, the 2D latent space $\mathbf{z}$ forms distinct clusters for each digit class (0-9), with smooth interpolations between clusters generating plausible intermediate shapes, demonstrating continuous manifold learning.
+</span></code></pre></div></h2>
+<h2 id="147-generative-adversarial-networks-gans"><strong>14.7 Generative Adversarial Networks (GANs)</strong></h2>
+<p><strong>Generative Adversarial Networks (GANs)</strong>, introduced by Ian Goodfellow in 2014, offer a radically different approach to generative modeling compared to Energy-Based Models (EBMs) and Variational Autoencoders (VAEs). GANs bypass the intractable <strong>Partition Function (<span class="arithmatex">\(Z\)</span>)</strong> problem (Section 14.2) by framing the learning process as a <strong>dynamic, two-player zero-sum game</strong>.</p>
+<hr />
+<h3 id="concept-the-adversarial-game"><strong>Concept: The Adversarial Game</strong></h3>
+<p>A GAN consists of two competing neural networks that are optimized simultaneously:</p>
+<ol>
+<li><strong>Generator (<span class="arithmatex">\(G\)</span>):</strong> This network takes a random noise vector <span class="arithmatex">\(\mathbf{z}\)</span> (sampled from a simple prior distribution) and transforms it to produce a synthetic data sample, <span class="arithmatex">\(\tilde{\mathbf{x}} = G(\mathbf{z})\)</span>. Its goal is to fool the Discriminator.</li>
+<li><strong>Discriminator (<span class="arithmatex">\(D\)</span>):</strong> This network takes an input (<span class="arithmatex">\(\mathbf{x}\)</span> from the real dataset or <span class="arithmatex">\(\tilde{\mathbf{x}}\)</span> from the Generator) and outputs a probability score, <span class="arithmatex">\(D(\mathbf{x}) \in [0, 1]\)</span>, estimating whether the sample is real or fake. Its goal is to distinguish the real data from the generated data.</li>
+</ol>
+<hr />
+<h3 id="objective-minimax-equilibrium"><strong>Objective: Minimax Equilibrium</strong></h3>
+<p>The two networks engage in a continuous minimax optimization game:</p>
+<ul>
+<li><strong>Discriminator's Goal (<span class="arithmatex">\(\max_D\)</span>):</strong> Maximize its score for real data (<span class="arithmatex">\(\ln D(\mathbf{x})\)</span>) and minimize its score for fake data (<span class="arithmatex">\(\ln(1 - D(G(\mathbf{z})))\)</span>).</li>
+<li><strong>Generator's Goal (<span class="arithmatex">\(\min_G\)</span>):</strong> Minimize the Discriminator's score for fake data, effectively fooling the Discriminator.</li>
+</ul>
+<p>The joint optimization objective function is:</p>
+<div class="arithmatex">\[
+\min_G \max_D \mathcal{L}(D, G) = \mathbb{E}_{\mathbf{x} \sim p_{\text{data}}}[\ln D(\mathbf{x})] + \mathbb{E}_{\mathbf{z} \sim p_{\mathbf{z}}}[\ln(1 - D(G(\mathbf{z})))]
+\]</div>
+<hr />
+<h3 id="interpretation-statistical-and-physical-equilibrium"><strong>Interpretation: Statistical and Physical Equilibrium</strong></h3>
+<ol>
+<li><strong>Statistical Interpretation:</strong> The minimax game drives the system toward a <strong>Nash equilibrium</strong>. At this equilibrium, the Generator's distribution <span class="arithmatex">\(p_g\)</span> exactly matches the real data distribution <span class="arithmatex">\(p_{\text{data}}\)</span> (<span class="arithmatex">\(p_g = p_{\text{data}}\)</span>). The optimal Discriminator can no longer distinguish real from fake, predicting <span class="arithmatex">\(D(\mathbf{x}) = 0.5\)</span> everywhere. This convergence is driven by the minimization of the <strong>Jensen–Shannon Divergence</strong> between <span class="arithmatex">\(p_g\)</span> and <span class="arithmatex">\(p_{\text{data}}\)</span>.</li>
+<li><strong>Physical Analogy:</strong> The process is analogous to two <strong>competing fields seeking equilibrium</strong>. The <strong>Generator</strong> acts as a field that continuously excites new samples. The <strong>Discriminator</strong> acts as a critic imposing learned energy constraints, pushing the Generator's samples into a low-energy configuration that resembles the real world. The equilibrium state is a <strong>thermodynamic balance</strong> where the generative pressure exactly matches the critical constraint pressure.</li>
+</ol>
+<p>GANs are exceptionally effective at generating sharp, realistic samples because the Discriminator provides a highly effective, dynamically learned loss function that is often superior to simple pixel-wise error metrics.</p>
+<details class="question">
+<summary>Why Do GANs Often Generate Sharper Images Than VAEs?</summary>
+</details>
+<h2 id="gans-use-an-adversarial-discriminator-as-a-learned-loss-function-that-emphasizes-perceptual-quality-while-vaes-optimize-pixel-wise-reconstruction-like-mse-which-tends-to-produce-blurry-averages-the-dynamic-game-theoretic-training-of-gans-better-captures-high-frequency-details"><div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>GANs use an adversarial discriminator as a learned loss function that emphasizes perceptual quality, while VAEs optimize pixel-wise reconstruction (like MSE) which tends to produce blurry averages. The dynamic game-theoretic training of GANs better captures high-frequency details.
+</span></code></pre></div></h2>
+<h2 id="148-diffusion-models-and-score-matching"><strong>14.8 Diffusion Models and Score Matching</strong></h2>
+<p><strong>Diffusion Models</strong> represent the newest paradigm in generative modeling, achieving state-of-the-art results in tasks like image synthesis. They are fundamentally rooted in <strong>stochastic dynamics</strong> and bridge the concepts of thermodynamics (entropy increase) and deep learning (noise reversal).</p>
+<hr />
+<h3 id="idea-learning-the-reverse-stochastic-dynamics"><strong>Idea: Learning the Reverse Stochastic Dynamics</strong></h3>
+<p>Diffusion Models operate by defining a two-part process:</p>
+<ol>
+<li><strong>Forward Process (Diffusion):</strong> This is a fixed <strong>Markov chain</strong> (Chapter 2.5) that gradually and sequentially adds small amounts of Gaussian noise to the data (<span class="arithmatex">\(\mathbf{x}_0\)</span>) over <span class="arithmatex">\(T\)</span> time steps. The data is slowly corrupted until it becomes pure, random noise (<span class="arithmatex">\(\mathbf{x}_T \sim \mathcal{N}(0, I)\)</span>):</li>
+</ol>
+<div class="arithmatex">\[
+q(\mathbf{x}_t|\mathbf{x}_{t-1}) = \mathcal{N}(\sqrt{1-\beta_t}\mathbf{x}_{t-1}, \beta_t I)
+\]</div>
+<ul>
+<li>
+<p><span class="arithmatex">\(\beta_t\)</span>: A fixed schedule controlling the amount of noise added at each step <span class="arithmatex">\(t\)</span>.</p>
+</li>
+<li>
+<p><strong>Reverse Process (Generation):</strong> This is the <strong>learned process</strong>. The goal is to train a neural network (<span class="arithmatex">\(\epsilon_\theta\)</span>) to learn the reverse transitions of the Markov chain—that is, how to denoise the data one small step at a time, starting from pure noise (<span class="arithmatex">\(\mathbf{x}_T\)</span>) and sequentially restoring structure back to the original data (<span class="arithmatex">\(\mathbf{x}_0\)</span>).</p>
+</li>
+</ul>
+<hr />
+<h3 id="training-via-score-matching"><strong>Training via Score Matching</strong></h3>
+<p>The key training insight is related to <strong>score matching</strong>. The network is trained to estimate the <strong>noise (<span class="arithmatex">\(\epsilon\)</span>)</strong> added in the forward step. This noise estimate is directly proportional to the <strong>score function</strong>, <span class="arithmatex">\(\nabla_{\mathbf{x}} \log q(\mathbf{x}_t)\)</span> (the gradient of the log probability density).</p>
+<ul>
+<li><strong>Objective:</strong> The training loss minimizes the difference between the true noise <span class="arithmatex">\(\epsilon\)</span> added at step <span class="arithmatex">\(t\)</span> and the noise predicted by the neural network <span class="arithmatex">\(\epsilon_\theta\)</span>:</li>
+</ul>
+<div class="arithmatex">\[
+L = \mathbb{E}_{t}\mathbb{E}_{\mathbf{x},\epsilon} [|\epsilon - \epsilon_\theta(\sqrt{\bar\alpha_t}\mathbf{x}+\sqrt{1-\bar\alpha_t}\epsilon, t)|^2]
+\]</div>
+<ul>
+<li><span class="arithmatex">\(\epsilon_\theta(\mathbf{x}_t, t)\)</span>: The neural network that predicts the noise to be subtracted from <span class="arithmatex">\(\mathbf{x}_t\)</span> to get the denoised state.</li>
+</ul>
+<hr />
+<h3 id="analogy-time-reversed-thermodynamics"><strong>Analogy: Time-Reversed Thermodynamics</strong></h3>
+<p>Diffusion Models represent a powerful synthesis with thermodynamics:</p>
+<ul>
+<li><strong>Forward Process <span class="arithmatex">\(\leftrightarrow\)</span> Entropy Increase:</strong> The process of adding noise (diffusion) is analogous to the natural flow of time, where <strong>entropy increases</strong> and order dissolves into disorder (heat death).</li>
+<li><strong>Reverse Process <span class="arithmatex">\(\leftrightarrow\)</span> Entropy Reversal:</strong> The generative process, learned by the network, is a simulation of <strong>time-reversed stochastic dynamics</strong>. The network learns to actively <em>decrease</em> entropy, restoring order and structure from pure noise.</li>
+</ul>
+<p>This framework allows the generative model to exploit the mathematical simplicity of the Gaussian distribution (the final noisy state) to model the complexity of the data distribution (the final ordered state), leading to highly stable training and exceptional sample quality.</p>
+<hr />
+<h2 id="149-comparing-generative-paradigms"><strong>14.9 Comparing Generative Paradigms</strong></h2>
+<p>The field of generative modeling employs several distinct architectural and philosophical paradigms to solve the problem of learning the data distribution <span class="arithmatex">\(P(\mathbf{x})\)</span>. While all aim to minimize the divergence between the model's distribution <span class="arithmatex">\(P_{\theta}\)</span> and the data's empirical distribution <span class="arithmatex">\(P_{\text{data}}\)</span>, they use different methods to handle the complex underlying <strong>energy landscape</strong>.</p>
+<hr />
+<h3 id="unifying-theme-statistical-equilibrium-in-probability-space"><strong>Unifying Theme: Statistical Equilibrium in Probability Space</strong></h3>
+<p>The ultimate goal for all major generative architectures is to achieve <strong>statistical equilibrium</strong> in the probability space, where the system settles into a configuration where <span class="arithmatex">\(P_{\theta} \approx P_{\text{data}}\)</span>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Model</th>
+<th style="text-align: left;">Core Principle</th>
+<th style="text-align: left;">Optimization Objective</th>
+<th style="text-align: left;">Physical Analogy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Energy-Based Models (EBM)</strong></td>
+<td style="text-align: left;">Direct modeling of <span class="arithmatex">\(P(\mathbf{x}) \propto e^{-E_{\theta}(\mathbf{x})}\)</span>.</td>
+<td style="text-align: left;">Maximize Log-Likelihood (via Contrastive Divergence).</td>
+<td style="text-align: left;"><strong>Boltzmann Distribution:</strong> Direct sculpting of the energy landscape.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Variational Autoencoders (VAEs)</strong></td>
+<td style="text-align: left;">Latent variable encoding with stochasticity.</td>
+<td style="text-align: left;">Maximize <strong>Evidence Lower Bound (ELBO)</strong>.</td>
+<td style="text-align: left;"><strong>Free-Energy Minimization:</strong> Balancing reconstruction (energy) and latent regularization (entropy).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Generative Adversarial Networks (GANs)</strong></td>
+<td style="text-align: left;">Two-player minimax competition.</td>
+<td style="text-align: left;">Minimize Jensen–Shannon Divergence (via Adversarial Game).</td>
+<td style="text-align: left;"><strong>Competing Fields Seeking Equilibrium:</strong> Nash equilibrium = thermodynamic balance.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Diffusion Models</strong></td>
+<td style="text-align: left;">Learning the reverse of a fixed diffusion process.</td>
+<td style="text-align: left;">Minimize noise prediction error (Score Matching).</td>
+<td style="text-align: left;"><strong>Time-Reversed Thermodynamics:</strong> Reversing the natural flow of entropy from disorder to order.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="contrasting-strengths"><strong>Contrasting Strengths</strong></h3>
+<ul>
+<li><strong>EBMs and Diffusion Models:</strong> Excel at rigorous statistical modeling of the distribution boundary and density. Their training process (sampling) is complex but rooted in physical dynamics.</li>
+<li><strong>VAEs:</strong> Offer a fast, analytical framework for inference and generation by modeling the entire system in a continuous latent space.</li>
+<li><strong>GANs:</strong> Historically achieved the sharpest, most realistic samples because the adversarial training provides a highly effective, dynamic loss function based on perceptual similarity.</li>
+</ul>
+<p>The development of these generative paradigms confirms that the universal computational goal—modeling data—can be efficiently solved through frameworks borrowed from fundamental physics.</p>
+<hr />
+<h2 id="1410-worked-example-energy-based-learning-on-2d-data"><strong>14.10 Worked Example — Energy-Based Learning on 2D Data</strong></h2>
+<p>This example demonstrates the core generative mechanism of <strong>Energy-Based Models (EBMs)</strong> by training a simple energy function <span class="arithmatex">\(E_\theta(\mathbf{x})\)</span> to discover and sculpt the potential wells around a synthetic 2D data distribution. The goal is to show how <strong>minimizing energy aligns the learned landscape with the empirical data manifold</strong>.</p>
+<hr />
+<h3 id="setup-modeling-a-multi-modal-landscape"><strong>Setup: Modeling a Multi-Modal Landscape</strong></h3>
+<ol>
+<li><strong>Task:</strong> Learn a simple 2D probability distribution that is <strong>multi-modal</strong> (e.g., two distinct clusters).</li>
+<li><strong>Data:</strong> We generate synthetic data composed of two separate Gaussian clusters centered at <span class="arithmatex">\(x=\pm 2\)</span> (representing two metastable states or phases).</li>
+<li><strong>Model:</strong> We define a simple, parameterized energy function <span class="arithmatex">\(E(\mathbf{x}, \mathbf{w})\)</span> that has a global quadratic structure (like a harmonic potential) but includes trigonometric terms to allow for complex, multi-modal features:</li>
+</ol>
+<div class="arithmatex">\[
+E_{\mathbf{w}}(\mathbf{x}) = \frac{1}{2}|\mathbf{x}|^2 + w_1\sin(a x_1) + w_2\cos(a x_2)
+\]</div>
+<ol>
+<li><strong>Training:</strong> We optimize the parameters <span class="arithmatex">\(\mathbf{w}\)</span> using a technique like <strong>Contrastive Divergence (CD)</strong> (Chapter 14.4) or its gradient approximation. This method minimizes the <strong>KL divergence</strong> between the data distribution and the model distribution.</li>
+</ol>
+<hr />
+<h3 id="dynamics-energy-sculpting"><strong>Dynamics: Energy Sculpting</strong></h3>
+<p>The learning dynamics for the EBM (Section 14.2) are a constant competition:</p>
+<ul>
+<li><strong>Data Term (Attraction):</strong> Pushes the parameters to <strong>decrease the energy</strong> in regions where the data is located (making <span class="arithmatex">\(\mathbf{x}_{\text{data}}\)</span> low energy). This deepens the potential wells.</li>
+<li><strong>Model Term (Repulsion):</strong> Pushes the parameters to <strong>increase the energy</strong> in regions where the model <em>currently</em> draws samples (making spurious <span class="arithmatex">\(\mathbf{x}_{\text{fake}}\)</span> high energy). This prevents the energy basins from becoming too wide or filling the empty space.</li>
+</ul>
+<hr />
+<h3 id="observation-basins-of-attraction"><strong>Observation: Basins of Attraction</strong></h3>
+<p>When the system converges, the visualization of the learned energy surface reveals the successful outcome of this sculpting process:</p>
+<ul>
+<li><strong>Energy Contours:</strong> The energy surface forms distinct <strong>basins of attraction</strong>.</li>
+<li><strong>Alignment:</strong> The deepest points of these potential wells align precisely with the centers of the observed data clusters.</li>
+<li><strong>Separation:</strong> The regions separating the clusters maintain <strong>high energy</strong> (ridges or barriers), correctly modeling the low probability of observing configurations in the void between the clusters.</li>
+</ul>
+<p><strong>Conclusion:</strong> The EBM successfully converts the statistical data distribution into a recognizable, continuous <strong>energy landscape</strong>. Sampling from the resulting <span class="arithmatex">\(P(\mathbf{x}) \propto e^{-E_{\mathbf{w}}(\mathbf{x})}\)</span> (e.g., via MCMC) will naturally generate new points that respect the multi-modal structure observed in the original data.</p>
+<hr />
+<h2 id="1411-code-demo-toy-energy-based-model"><strong>14.11 Code Demo — Toy Energy-Based Model</strong></h2>
+<p>This code demonstration implements a simplified, minimal <strong>Energy-Based Model (EBM)</strong> in two dimensions, visually illustrating the core principle of <strong>energy sculpting</strong> (Section 14.10). It trains the model to create potential wells (low energy) around observed data clusters and push up the energy elsewhere.</p>
+<hr />
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span><span class="o">,</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span> <span class="c1"># Used for plotting grid setup</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># --- 1. Synthetic Data (Two Metastable States) ---</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># Creates two Gaussian clusters centered at (-2, 0) and (2, 0)</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="c1"># These represent two high-probability, low-energy regions (basins).</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="mf">0.3</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">]),</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>    <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="mf">0.3</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="p">])</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="c1"># --- 2. Energy Function Definition E(x, w) ---</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="c1"># E is parameterized by &#39;w&#39; (our neural network weights)</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="n">E</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">w</span><span class="p">:</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mf">1.2</span><span class="o">*</span><span class="n">x</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mf">1.2</span><span class="o">*</span><span class="n">x</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="n">w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="n">opt</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">([</span><span class="n">w</span><span class="p">],</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="c1"># --- 3. Training Loop (Contrastive Divergence / Gradient Approximation) ---</span>
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="c1"># Minimizes the difference between the average energy of real data and fake data.</span>
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">500</span><span class="p">):</span>
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>    <span class="c1"># a) Positive Phase (Data Term): Calculate average energy of real samples</span>
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>    <span class="n">Eb</span> <span class="o">=</span> <span class="n">E</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>
+</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>    <span class="c1"># b) Negative Phase (Model Term): Sample pure noise (an approximation)</span>
+</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>    <span class="c1"># This sample represents non-data configurations that should have high energy.</span>
+</span><span id="__span-3-27"><a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a>    <span class="n">x_fake</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn_like</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span><span id="__span-3-28"><a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a>    <span class="n">Em</span> <span class="o">=</span> <span class="n">E</span><span class="p">(</span><span class="n">x_fake</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</span><span id="__span-3-29"><a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a>
+</span><span id="__span-3-30"><a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a>    <span class="c1"># Loss: Minimize E_data - E_model. This pulls E(data) down and pushes E(fake) up.</span>
+</span><span id="__span-3-31"><a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a>    <span class="n">loss</span> <span class="o">=</span> <span class="n">Eb</span> <span class="o">-</span> <span class="n">Em</span> 
+</span><span id="__span-3-32"><a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a>
+</span><span id="__span-3-33"><a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a>    <span class="c1"># Optimization step</span>
+</span><span id="__span-3-34"><a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a>    <span class="n">opt</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">();</span> <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">();</span> <span class="n">opt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</span><span id="__span-3-35"><a id="__codelineno-3-35" name="__codelineno-3-35" href="#__codelineno-3-35"></a>
+</span><span id="__span-3-36"><a id="__codelineno-3-36" name="__codelineno-3-36" href="#__codelineno-3-36"></a><span class="c1"># --- 4. Visualization: Plotting the Learned Landscape ---</span>
+</span><span id="__span-3-37"><a id="__codelineno-3-37" name="__codelineno-3-37" href="#__codelineno-3-37"></a><span class="n">X_grid</span><span class="p">,</span> <span class="n">Y_grid</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">100</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">100</span><span class="p">),</span> <span class="n">indexing</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">)</span>
+</span><span id="__span-3-38"><a id="__codelineno-3-38" name="__codelineno-3-38" href="#__codelineno-3-38"></a><span class="c1"># Evaluate the learned energy function across the entire 2D grid</span>
+</span><span id="__span-3-39"><a id="__codelineno-3-39" name="__codelineno-3-39" href="#__codelineno-3-39"></a><span class="n">Z</span> <span class="o">=</span> <span class="n">E</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">X_grid</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">Y_grid</span><span class="o">.</span><span class="n">flatten</span><span class="p">()],</span><span class="mi">1</span><span class="p">),</span> <span class="n">w</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+</span><span id="__span-3-40"><a id="__codelineno-3-40" name="__codelineno-3-40" href="#__codelineno-3-40"></a>
+</span><span id="__span-3-41"><a id="__codelineno-3-41" name="__codelineno-3-41" href="#__codelineno-3-41"></a><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+</span><span id="__span-3-42"><a id="__codelineno-3-42" name="__codelineno-3-42" href="#__codelineno-3-42"></a><span class="c1"># Plot the energy contours (low energy is dark, high energy is light)</span>
+</span><span id="__span-3-43"><a id="__codelineno-3-43" name="__codelineno-3-43" href="#__codelineno-3-43"></a><span class="n">plt</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">X_grid</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">Y_grid</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">Z</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">levels</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;magma&#39;</span><span class="p">)</span>
+</span><span id="__span-3-44"><a id="__codelineno-3-44" name="__codelineno-3-44" href="#__codelineno-3-44"></a><span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;Learned Energy $E_{\mathbf</span><span class="si">{w}</span><span class="s1">}(\mathbf</span><span class="si">{x}</span><span class="s1">)$&#39;</span><span class="p">)</span>
+</span><span id="__span-3-45"><a id="__codelineno-3-45" name="__codelineno-3-45" href="#__codelineno-3-45"></a><span class="c1"># Overlay the original data points</span>
+</span><span id="__span-3-46"><a id="__codelineno-3-46" name="__codelineno-3-46" href="#__codelineno-3-46"></a><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">data</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">s</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;cyan&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Original Data&#39;</span><span class="p">)</span>
+</span><span id="__span-3-47"><a id="__codelineno-3-47" name="__codelineno-3-47" href="#__codelineno-3-47"></a>
+</span><span id="__span-3-48"><a id="__codelineno-3-48" name="__codelineno-3-48" href="#__codelineno-3-48"></a><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Learned Energy Landscape via EBM Training&#39;</span><span class="p">)</span>
+</span><span id="__span-3-49"><a id="__codelineno-3-49" name="__codelineno-3-49" href="#__codelineno-3-49"></a><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x_1$&#39;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x_2$&#39;</span><span class="p">)</span>
+</span><span id="__span-3-50"><a id="__codelineno-3-50" name="__codelineno-3-50" href="#__codelineno-3-50"></a><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</span><span id="__span-3-51"><a id="__codelineno-3-51" name="__codelineno-3-51" href="#__codelineno-3-51"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</span></code></pre></div>
+<hr />
+<h3 id="observation-and-interpretation"><strong>Observation and Interpretation</strong></h3>
+<ul>
+<li><strong>Energy Sculpting:</strong> The resulting contour plot visualizes the shape of the learned energy function <span class="arithmatex">\(E_{\mathbf{w}}(\mathbf{x})\)</span>. The low-energy regions (dark colors) correspond to the deepest <strong>potential wells</strong> sculpted by the network.</li>
+<li><strong>Basin Alignment:</strong> These low-energy wells align perfectly with the cyan data clusters at <span class="arithmatex">\(x=\pm 2\)</span>, demonstrating that the network has successfully learned the <strong>two basins of attraction</strong> that define the data's multi-modal structure.</li>
+<li><strong>Thermodynamic Principle:</strong> The training enforces the principle of <strong>Maximum Likelihood</strong> by minimizing the energy of real samples and maximizing the energy of non-data samples. The final visualization is the <strong>Hamiltonian of data</strong> that, if used for MCMC sampling (Chapter 7.2), would reproduce the original multi-modal distribution.</li>
+</ul>
+<p>The code shows that learning a generative model is equivalent to finding the continuous energy function whose potential minimums define the empirical data distribution.</p>
+<hr />
+<h2 id="1412-physical-perspective-learning-as-thermodynamics"><strong>14.12 Physical Perspective — Learning as Thermodynamics</strong></h2>
+<p>The concepts of <strong>Energy-Based Models (EBMs)</strong> and generative learning (Sections 14.1–14.11) provide a powerful framework for interpreting learning as a process governed by the laws of <strong>thermodynamics</strong>. This physical perspective establishes that model training is fundamentally equivalent to forcing a coupled system toward a state of thermal equilibrium.</p>
+<hr />
+<h3 id="mapping-learning-as-thermodynamic-equilibration"><strong>Mapping: Learning as Thermodynamic Equilibration</strong></h3>
+<p>The mathematical duality between energy and probability allows for a direct mapping of concepts from machine learning onto the rigorous framework of statistical physics:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Machine Learning</th>
+<th style="text-align: left;">Statistical Physics</th>
+<th style="text-align: left;">Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Energy <span class="arithmatex">\(E_\theta(\mathbf{x})\)</span></strong></td>
+<td style="text-align: left;"><strong>Hamiltonian</strong>.</td>
+<td style="text-align: left;">Defines the potential energy landscape of the data system.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Probability <span class="arithmatex">\(p(\mathbf{x}) \propto e^{-E/T}\)</span></strong></td>
+<td style="text-align: left;"><strong>Boltzmann Distribution</strong>.</td>
+<td style="text-align: left;">The equilibrium distribution of the system.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Negative Log-Likelihood (<span class="arithmatex">\(-\ln P(\mathbf{x})\)</span>)</strong></td>
+<td style="text-align: left;"><strong>Potential Energy</strong>.</td>
+<td style="text-align: left;">The objective function being minimized.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Learning (<span class="arithmatex">\(\min \mathcal{F}\)</span>)</strong></td>
+<td style="text-align: left;"><strong>Thermodynamic Equilibration</strong>.</td>
+<td style="text-align: left;">The network adjusting its parameters to match its learned energy function to the data's empirical energy.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="interpretation-data-in-thermal-contact"><strong>Interpretation: Data in Thermal Contact</strong></h3>
+<p>The training of a generative model is equivalent to placing the learned model in <strong>thermal contact</strong> with the data.</p>
+<ul>
+<li><strong>Goal of Learning:</strong> The system minimizes the difference between the average energy of the observed data and the average energy of the samples generated by the model (Chapter 14.2). This continuous force pushes the system until the learned model's energy states perfectly align with the empirical data manifold.</li>
+<li><strong>Analogy:</strong> Data samples act as measurements taken from a physical system at a specific temperature (<span class="arithmatex">\(T\)</span>). The network attempts to reverse-engineer the Hamiltonian that produced those samples.</li>
+</ul>
+<hr />
+<h3 id="entropyenergy-duality-in-generative-modeling"><strong>Entropy–Energy Duality in Generative Modeling</strong></h3>
+<p>Generative learning is fundamentally a balancing act governed by the free energy principle (Chapter 9.6):</p>
+<ul>
+<li><strong>Fidelity (Energy):</strong> The model seeks high accuracy, minimizing energy (loss).</li>
+<li><strong>Diversity (Entropy):</strong> The model must ensure its distribution is broad and complex enough to capture the full variety of the data, maximizing entropy.</li>
+</ul>
+<p>Models like the <strong>Variational Autoencoder (VAE)</strong> (Chapter 14.6) explicitly manage this duality by balancing the reconstruction term (energy) against the KL regularization term (entropy cost). The generative success lies in finding the optimal point where high fidelity and rich diversity are simultaneously maintained.</p>
+<hr />
+<h2 id="1413-modern-applications"><strong>14.13 Modern Applications</strong></h2>
+<p>The <strong>Energy-Based Model (EBM)</strong> framework and its generative descendants (VAEs, GANs, Diffusion Models) have transcended simple data analysis to become critical tools across diverse scientific and engineering disciplines. The ability to accurately model the <strong>full probability distribution</strong> <span class="arithmatex">\(P(\mathbf{x})\)</span>—the energy landscape of the data—allows these networks to perform sophisticated tasks beyond simple classification.</p>
+<hr />
+<h3 id="unifying-idea-approximating-energy-landscapes"><strong>Unifying Idea: Approximating Energy Landscapes</strong></h3>
+<p>Generative models are essentially <strong>universal approximators of energy landscapes</strong>. By learning the potential energy function <span class="arithmatex">\(E_\theta(\mathbf{x})\)</span>, they gain the power to simulate, invent, and discover.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Domain</th>
+<th style="text-align: left;">Model Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Image &amp; Media Synthesis</strong></td>
+<td style="text-align: left;"><strong>GANs, Diffusion Models</strong>.</td>
+<td style="text-align: left;">Generate photorealistic scenes and artistic content by synthesizing novel high-dimensional data points from noise.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Molecular Design</strong></td>
+<td style="text-align: left;"><strong>VAEs, EBMs</strong>.</td>
+<td style="text-align: left;">Generate novel molecules or materials with desired properties (e.g., specific energy levels or solubility) by <strong>sampling</strong> from the low-energy regions of the learned chemical space.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Physics Simulations</strong></td>
+<td style="text-align: left;"><strong>EBMs, Score Models</strong>.</td>
+<td style="text-align: left;">Learn complex, high-dimensional <strong>potential surfaces</strong> (e.g., interatomic forces or lattice Hamiltonians) directly from simulation data, bypassing computationally intensive quantum mechanical calculations.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Anomaly Detection</strong></td>
+<td style="text-align: left;"><strong>VAEs</strong>.</td>
+<td style="text-align: left;">Identify rare events or defects (anomalies) by determining which configurations fall into <strong>low-probability regions</strong> (high-energy barriers) of the learned distribution.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Text-to-Image / Multimodal</strong></td>
+<td style="text-align: left;"><strong>Diffusion / Hybrid Models</strong>.</td>
+<td style="text-align: left;">Generate images conditioned on text, demonstrating the model's ability to sculpt the energy landscape based on specific semantic constraints.</td>
+</tr>
+</tbody>
+</table>
+<p>The pervasive use of these models underscores that the transition from simple classification to <strong>probabilistic generation</strong> is a key enabler for modern, creative AI applications.</p>
+<hr />
+<h2 id="1414-bridge-to-quantum-and-information-physics"><strong>14.14 Bridge to Quantum and Information Physics</strong></h2>
+<p>The framework of <strong>Energy-Based Models (EBMs)</strong> and generative learning establishes a profound conceptual and mathematical link between the optimization of neural networks and the principles governing <strong>quantum mechanics</strong> and <strong>information theory</strong>.</p>
+<hr />
+<h3 id="the-variational-core-energy-optimization"><strong>The Variational Core: Energy Optimization</strong></h3>
+<p>Both generative learning and quantum mechanics rely on a <strong>variational core</strong>—the principle of finding the optimal configuration by minimizing an energy expectation.</p>
+<ul>
+<li><strong>Generative Learning (VAE/EBM):</strong> Training involves minimizing the <strong>Variational Free Energy (<span class="arithmatex">\(\mathcal{F}\)</span>)</strong> functional (Chapter 9.6). This process seeks the model parameters (<span class="arithmatex">\(\mathbf{\theta}\)</span>) that minimize the energy penalty (<span class="arithmatex">\(\langle E \rangle\)</span>) while controlling the entropy cost (<span class="arithmatex">\(\mathcal{H}\)</span>).</li>
+<li><strong>Quantum Mechanics:</strong> Finding the ground state of a system requires minimizing the <strong>expected Hamiltonian energy (<span class="arithmatex">\(\langle \hat{H} \rangle\)</span>)</strong> with respect to a parameterized <strong>wavefunction (<span class="arithmatex">\(\psi\)</span>)</strong>. This is the <strong>Variational Principle</strong> of quantum mechanics.</li>
+</ul>
+<hr />
+<h3 id="analogy-probability-amplitude-leftrightarrow-wavefunction"><strong>Analogy: Probability Amplitude <span class="arithmatex">\(\leftrightarrow\)</span> Wavefunction</strong></h3>
+<p>This variational similarity leads to a direct analogy where the neural network's learned distribution approximates the quantum state:</p>
+<ul>
+<li><strong>Classical Probability Density (<span class="arithmatex">\(P_{\theta}\)</span>):</strong> Generative models learn the probability density <span class="arithmatex">\(P_{\theta}(\mathbf{x})\)</span>.</li>
+<li><strong>Quantum Wavefunction (<span class="arithmatex">\(\psi\)</span>):</strong> The probability density in quantum mechanics is defined by the squared magnitude of the wavefunction: <span class="arithmatex">\(P(\mathbf{x}) = |\psi(\mathbf{x})|^2\)</span>.</li>
+</ul>
+<p>This suggests that neural networks can approximate the <strong>amplitude</strong> of a quantum state:</p>
+<div class="arithmatex">\[
+\psi(\mathbf{x}) \leftrightarrow \sqrt{P_\theta(\mathbf{x})}
+\]</div>
+<p><strong>Foreshadowing: Neural Quantum States (NQS)</strong></p>
+<p>This theoretical link is made explicit in <strong>Chapter 17: Neural Quantum States (NQS)</strong>. NQS uses deep neural networks (like Restricted Boltzmann Machines, Chapter 14.4) as the flexible <strong>variational ansatz</strong> for the true quantum wavefunction. By training the network to minimize the expectation of the physical Hamiltonian, the network effectively learns the system's quantum structure and energy. The generative model becomes a tool for scientific discovery at the quantum level.</p>
+<hr />
+<h2 id="1415-takeaways-bridge-to-chapter-15"><strong>14.15 Takeaways &amp; Bridge to Chapter 15</strong></h2>
+<p>This chapter introduced <strong>generative modeling</strong>, completing the pivot from learning a deterministic function to learning the system's underlying <strong>probability distribution</strong> and <strong>energy landscape</strong>. We demonstrated that the process of generation is fundamentally a thermodynamic task.</p>
+<hr />
+<h3 id="key-takeaways-from-chapter-14"><strong>Key Takeaways from Chapter 14</strong></h3>
+<ul>
+<li><strong>Learning as Energy Sculpting:</strong> Energy-Based Models (EBMs) define the data distribution <span class="arithmatex">\(P(\mathbf{x}) \propto e^{-E_{\theta}(\mathbf{x})}/Z_{\theta}\)</span>. Training is a process of <strong>energy sculpting</strong>—adjusting parameters <span class="arithmatex">\(\mathbf{\theta}\)</span> to align the low-energy basins with the observed data manifold.</li>
+<li><strong>Sampling is Thermal Exploration:</strong> Generating new data is equivalent to <strong>sampling</strong> from this learned equilibrium distribution, often requiring MCMC or stochastic dynamics.</li>
+<li><strong>The Generative Paradigms:</strong> Different architectures embody distinct physical metaphors (Section 14.9):<ul>
+<li><strong>VAEs</strong> use <strong>free-energy minimization</strong> to balance reconstruction (energy) and latent regularity (entropy).</li>
+<li><strong>GANs</strong> use <strong>adversarial competition</strong> to seek a thermodynamic Nash equilibrium.</li>
+<li><strong>Diffusion Models</strong> use <strong>time-reversed stochastic dynamics</strong> to restore order from noise.</li>
+</ul>
+</li>
+<li><strong>Bridge to Quantum Physics:</strong> The variational core shared by EBMs and VAEs provides a direct conceptual link to the quantum variational principle, where neural networks can be used to approximate <strong>wavefunctions (<span class="arithmatex">\(\psi\)</span>)</strong> (Section 14.14).</li>
+</ul>
+<hr />
+<h3 id="bridge-to-chapter-15-learning-in-motion"><strong>Bridge to Chapter 15: Learning in Motion</strong></h3>
+<p>Generative models learn a <strong>static, equilibrium distribution</strong> <span class="arithmatex">\(P(\mathbf{x})\)</span>, representing the set of all plausible states. The next natural progression is to study systems that actively <strong>move</strong> and <strong>adapt</strong> within this space.</p>
+<p><strong>Reinforcement Learning (RL)</strong> (Chapter 15) takes the optimization framework (Part II) and extends it into the realm of <strong>dynamic decision-making</strong> and <strong>control</strong>.</p>
+<ul>
+<li><strong>From Samples to Trajectories:</strong> The objective shifts from minimizing loss over independent data samples to maximizing a reward signal over a long, sequential <strong>trajectory</strong> of actions and states.</li>
+<li><strong>Goal-Driven Generation:</strong> The system becomes an <strong>agent</strong> seeking to optimize its behavior (its policy) in a dynamic, uncertain environment.</li>
+</ul>
+<p><strong>Chapter 15: "Reinforcement Learning and Control,"</strong> will show that RL is the <strong>thermodynamics of decision-making</strong>, where the agent continuously minimizes an effective "energy" (negative reward) over time, balancing exploration (entropy) and exploitation (fidelity).</p>
+<hr />
+<h2 id="references"><strong>References</strong></h2>
+<p>[1] Goodfellow, I., Bengio, Y., &amp; Courville, A. (2016). <em>Deep Learning</em>. MIT Press.
+[2] Kingma, D.P., &amp; Welling, M. (2013). "Auto-Encoding Variational Bayes". <em>arXiv:1312.6114</em>.
+[3] Goodfellow, I., Pouget-Abadie, J., Mirza, M., et al. (2014). "Generative Adversarial Networks". <em>NeurIPS</em>.
+[4] Ho, J., Jain, A., &amp; Abbeel, P. (2020). "Denoising Diffusion Probabilistic Models". <em>NeurIPS</em>.
+[5] Hinton, G.E. (2002). "Training Products of Experts by Minimizing Contrastive Divergence". <em>Neural Computation</em>, 14(8), 1771-1800.
+[6] Smolensky, P. (1986). "Information Processing in Dynamical Systems: Foundations of Harmony Theory". In <em>Parallel Distributed Processing</em>, Vol. 1, MIT Press.
+[7] LeCun, Y., Chopra, S., Hadsell, R., Ranzato, M., &amp; Huang, F. (2006). "A Tutorial on Energy-Based Learning". In <em>Predicting Structured Data</em>, MIT Press.
+[8] Sohl-Dickstein, J., Weiss, E., Maheswaranathan, N., &amp; Ganguli, S. (2015). "Deep Unsupervised Learning using Nonequilibrium Thermodynamics". <em>ICML</em>.
+[9] Song, Y., &amp; Ermon, S. (2019). "Generative Modeling by Estimating Gradients of the Data Distribution". <em>NeurIPS</em>.
+[10] Carleo, G., &amp; Troyer, M. (2017). "Solving the Quantum Many-Body Problem with Artificial Neural Networks". <em>Science</em>, 355(6325), 602-606.</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://bigbookofcomputing.github.io" target="_blank" rel="noopener" title="bigbookofcomputing.github.io" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/bigbookofcomputing" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256c0 120 82.7 220.8 194.2 248.5V334.2h-52.8V256h52.8v-33.7c0-87.1 39.4-127.5 125-127.5 16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H287v175.9C413.8 494.8 512 386.9 512 256"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.youtube.com/@big-book-of-computing" target="_blank" rel="noopener" title="www.youtube.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M549.7 124.1c-6.2-23.7-24.8-42.3-48.3-48.6C458.9 64 288.1 64 288.1 64S117.3 64 74.7 75.5c-23.5 6.3-42 24.9-48.3 48.6C15 167 15 256.4 15 256.4s0 89.4 11.4 132.3c6.3 23.6 24.8 41.5 48.3 47.8C117.3 448 288.1 448 288.1 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zM232.2 337.6V175.2l142.7 81.2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+  
+
+
+<h4>Cookie consent</h4>
+<p>We use cookies to recognize your repeated visits and preferences, as well as to measure the effectiveness of our documentation and whether users find what they're searching for. With your consent, you're helping us to make our documentation better.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="github" checked>
+      <span class="task-list-indicator"></span>
+      GitHub
+    </label>
+  </li>
+
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../static/mathjax-config.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

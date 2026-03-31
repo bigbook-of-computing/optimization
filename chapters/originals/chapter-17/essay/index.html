@@ -1,0 +1,3291 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A comprehensive guide to the foundations of optimization algorithms and techniques">
+      
+      
+        <meta name="author" content="Big Book of Computing">
+      
+      
+        <link rel="canonical" href="https://bigbookofcomputing.github.io/chapters/originals/chapter-17/essay/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Chapter 17: 17. Neural Quantum States (NQS) - Big Book of Computing | Optimization</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+      <link rel="stylesheet" href="../../../../static/styles.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-ECS7B3X8JM"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-ECS7B3X8JM",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-ECS7B3X8JM",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-17-17-neural-quantum-states-nqs" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="Big Book of Computing | Optimization" class="md-header__button md-logo" aria-label="Big Book of Computing | Optimization" data-md-component="logo">
+      
+  <img src="../../../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Big Book of Computing | Optimization
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter 17: 17. Neural Quantum States (NQS)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1M8 13h8v-2H8zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4a5 5 0 0 0 5-5 5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5M7 15a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/bigbookofcomputing/optimization" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../home/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../contents/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../introduction/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Introduction
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../chapter-1/essay/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../chapter-1/workbook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  WorkBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../chapter-1/codebook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  CodeBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Big Book of Computing | Optimization" class="md-nav__button md-logo" aria-label="Big Book of Computing | Optimization" data-md-component="logo">
+      
+  <img src="../../../../assets/logo.png" alt="logo">
+
+    </a>
+    Big Book of Computing | Optimization
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/bigbookofcomputing/optimization" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../home/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapters
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Chapters
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-1/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-2/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-3/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-4/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-5/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-6/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-7/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-8/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-9/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-10/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-11/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-12/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-13/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-14/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-15/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-16/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-17/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-18/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-19/essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WorkBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    WorkBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-1/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-2/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-3/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-4/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-5/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-6/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-7/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-8/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-9/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-10/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-11/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-12/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-13/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-14/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-15/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-16/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-17/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-18/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-19/workbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CodeBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CodeBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-1/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 From Simulation to Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-2/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 Statistics & Probability in High Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-3/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Dimensionality Reduction & Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-4/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 The Optimization Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-5/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Gradient Methods — The Workhorses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-6/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Gradient Dynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-7/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Stochastic & Heuristic Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-8/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 Combinatorial Optimization and QUBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-9/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Bayesian Thinking and Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-10/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Regression & Classification — The Linear Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-11/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Graphical Models & Probabilistic Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-12/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 The Perceptron and Neural Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-13/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Hierarchical Representation Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-14/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Energy-Based and Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-15/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Reinforcement Learning and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-16/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-16 Physics-Informed Neural Networks (PINNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-17/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-17 Neural Quantum States (NQS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-18/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-18 Graph Neural Networks (GNNs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chapter-19/codebook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-19 Transformers and Global Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/bigbookofcomputing/optimization/edit/master/docs/chapters/originals/chapter-17/essay.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/bigbookofcomputing/optimization/raw/master/docs/chapters/originals/chapter-17/essay.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="chapter-17-17-neural-quantum-states-nqs"><strong>Chapter 17: 17. Neural Quantum States (NQS)</strong></h1>
+<hr />
+<h1 id="introduction"><strong>Introduction</strong></h1>
+<p>In Chapter 16, we explored <strong>Physics-Informed Neural Networks (PINNs)</strong>, which embed classical differential equations directly into loss functions to solve forward and inverse problems constrained by conservation laws—minimizing augmented energy functionals combining empirical data loss with physics residual penalties computed via automatic differentiation. This approach transformed PDE solving from numerical discretization to variational optimization, ensuring solutions respect fundamental laws like Navier-Stokes or the heat equation while extrapolating robustly beyond sparse training data. This chapter extends the physics-constrained learning paradigm to the ultimate frontier: <strong>quantum mechanics</strong>, where the exponential curse of dimensionality renders exact computation impossible for systems with even modest numbers of interacting particles. A quantum state of <span class="arithmatex">\(N\)</span> spins requires storing <span class="arithmatex">\(2^N\)</span> complex amplitudes—for just 50 spins, this exceeds <span class="arithmatex">\(10^{15}\)</span> parameters, vastly beyond any classical computer's memory. Traditional methods (exact diagonalization, tensor networks) either fail to scale or succeed only for systems with restricted entanglement structures obeying area laws.</p>
+<p>At the heart of this chapter lies the <strong>Neural Quantum State (NQS)</strong> framework, which represents the quantum wavefunction <span class="arithmatex">\(\psi(\mathbf{s})\)</span> as a parameterized neural network <span class="arithmatex">\(\psi_{\mathbf{\theta}}(\mathbf{s})\)</span>, compressing exponential Hilbert space complexity into a tractable polynomial number of weights. The training objective is not empirical data fitting but the <strong>Variational Principle</strong>: minimizing the expected energy <span class="arithmatex">\(E[\psi_{\mathbf{\theta}}] = \langle \psi_{\mathbf{\theta}} | \hat{H} | \psi_{\mathbf{\theta}} \rangle / \langle \psi | \psi \rangle\)</span> guarantees that the learned state is an upper bound to the true ground state energy, with equality achieved at the optimal parameters <span class="arithmatex">\(\mathbf{\theta}^*\)</span>. <strong>Variational Monte Carlo (VMC)</strong> enables stochastic estimation of this energy by sampling configurations <span class="arithmatex">\(\mathbf{s}_i\)</span> from the probability distribution <span class="arithmatex">\(P(\mathbf{s}) = |\psi_{\mathbf{\theta}}(\mathbf{s})|^2\)</span> and averaging local energies <span class="arithmatex">\(E_{\text{loc}}(\mathbf{s}) = (\hat{H}\psi_{\mathbf{\theta}})(\mathbf{s})/\psi_{\mathbf{\theta}}(\mathbf{s})\)</span> via MCMC sampling. The <strong>Restricted Boltzmann Machine (RBM)</strong> provides the canonical neural ansatz, with visible units representing physical spins and hidden units encoding entanglement through the exponential sum <span class="arithmatex">\(\psi_{\mathbf{\theta}}(\mathbf{s}) = \sum_{\mathbf{h}} e^{a^\top \mathbf{s} + b^\top \mathbf{h} + \mathbf{s}^\top W \mathbf{h}}\)</span>, where the marginalization over hidden states introduces the nonlocal correlations necessary to represent complex quantum states.</p>
+<p>By the end of this chapter, you will understand NQS as implementing <strong>quantum relaxation</strong> through optimization—gradient descent in parameter space drives the wavefunction toward lower energy along geodesics on the Hilbert manifold, analogous to imaginary-time Schrödinger evolution. <strong>Complex-valued neural networks</strong> are required because wavefunctions possess both amplitude and phase (<span class="arithmatex">\(\psi = R e^{i\Phi}\)</span>), with phase governing quantum interference; Wirtinger derivatives extend backpropagation to complex gradients. <strong>Stochastic Reconfiguration (SR)</strong>, the quantum Natural Gradient, preconditions standard energy gradients with the Quantum Fisher Information Matrix <span class="arithmatex">\(S_{ij}\)</span> to account for the non-Euclidean geometry of normalized quantum states, ensuring stable convergence by moving along optimal paths in Hilbert space. Advanced architectures include autoregressive networks for efficient sampling, CNNs exploiting translational invariance on lattices, and Transformers capturing long-range entanglement through self-attention. Applications span quantum spin systems (Transverse-Field Ising Model ground states), electronic structure (correlated electron wavefunctions in molecules), quantum chemistry (chemical accuracy for energies and densities), and hybrid quantum-classical algorithms (Variational Quantum Eigensolvers). Chapter 18 will explore <strong>Graph Neural Networks</strong>, which model information propagation on arbitrary discrete topologies, providing the natural architecture for systems where interactions follow specific geometric connectivity patterns rather than dense all-to-all coupling or regular lattice structures.</p>
+<hr />
+<h1 id="chapter-17-outline"><strong>Chapter 17: Outline</strong></h1>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Sec.</strong></th>
+<th style="text-align: left;"><strong>Title</strong></th>
+<th style="text-align: left;"><strong>Core Ideas &amp; Examples</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>17.1</strong></td>
+<td style="text-align: left;">Motivation — Quantum States as Data Distributions</td>
+<td style="text-align: left;">Exponential Hilbert space scaling (<span class="arithmatex">\(2^N\)</span> for <span class="arithmatex">\(N\)</span> spins); wavefunction <span class="arithmatex">\(\psi(\mathbf{s})\)</span> defines probability <span class="arithmatex">\(p(\mathbf{s}) = \|\psi(\mathbf{s})\|^2\)</span>; NQS uses neural network <span class="arithmatex">\(\psi_{\mathbf{\theta}}\)</span> to compress exponential complexity into polynomial parameters; training minimizes expected energy (not data fitting); quantum state as probability distribution analogy</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>17.2</strong></td>
+<td style="text-align: left;">The Variational Principle as Learning Objective</td>
+<td style="text-align: left;">Ground state energy <span class="arithmatex">\(E[\psi] = \langle \psi \| \hat{H} \| \psi \rangle / \langle \psi \| \psi \rangle\)</span>; Variational Principle: any trial <span class="arithmatex">\(\psi_{\mathbf{\theta}}\)</span> gives <span class="arithmatex">\(E[\psi_{\mathbf{\theta}}] \ge E_0\)</span> (upper bound); optimization minimizes expected energy via gradient descent; Hamiltonian <span class="arithmatex">\(\hat{H}\)</span> acts as loss operator (universe defines cost surface)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>17.3</strong></td>
+<td style="text-align: left;">From Boltzmann Machines to Quantum Amplitudes</td>
+<td style="text-align: left;">Neural ansatz encodes complex wavefunction <span class="arithmatex">\(\psi_{\mathbf{\theta}}(\mathbf{s}) = \sqrt{P_{\mathbf{\theta}}} e^{i\Phi_{\mathbf{\theta}}}\)</span> (amplitude + phase); RBM ansatz <span class="arithmatex">\(\psi_{\mathbf{\theta}}(\mathbf{s}) = \sum_{\mathbf{h}} e^{a^\top \mathbf{s} + b^\top \mathbf{h} + \mathbf{s}^\top W \mathbf{h}}\)</span>; hidden units encode entanglement (latent spins); quantum compressor (exponential Hilbert space → polynomial weights)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>17.4</strong></td>
+<td style="text-align: left;">Variational Monte Carlo (VMC)</td>
+<td style="text-align: left;">Energy estimation via sampling: <span class="arithmatex">\(E = \mathbb{E}_{P(\mathbf{s})}[E_{\text{loc}}(\mathbf{s})]\)</span> where <span class="arithmatex">\(E_{\text{loc}} = (\hat{H}\psi_{\mathbf{\theta}})/\psi_{\mathbf{\theta}}\)</span>; MCMC samples from <span class="arithmatex">\(P(\mathbf{s}) = \|\psi_{\mathbf{\theta}}\|^2\)</span>; gradient calculation through sampled local energies; stochastic optimization on quantum potential surface (SGD on quantum domain)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>17.5</strong></td>
+<td style="text-align: left;">Example — Transverse-Field Ising Model</td>
+<td style="text-align: left;">TFIM Hamiltonian <span class="arithmatex">\(\hat{H} = -J\sum_{\langle ij\rangle}\hat{\sigma}^z_i\hat{\sigma}^z_j - h\sum_i \hat{\sigma}^x_i\)</span> (ordering vs transverse field); quantum phase transition as <span class="arithmatex">\(J/h\)</span> varies; NQS (RBM or deep network) represents ground state <span class="arithmatex">\(\psi_{\mathbf{\theta}}(\mathbf{s})\)</span>; VMC optimizes to find minimal energy; scales to <span class="arithmatex">\(N \approx 100\)</span> spins (exponential compression)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>17.6</strong></td>
+<td style="text-align: left;">Complex-Valued Neural Networks</td>
+<td style="text-align: left;">Wavefunction has complex amplitude <span class="arithmatex">\(\psi_{\mathbf{\theta}} = R_{\mathbf{\theta}} e^{i\Phi_{\mathbf{\theta}}}\)</span> (magnitude + phase); phase governs quantum interference; Wirtinger derivatives extend backpropagation to complex gradients; implementation: coupled real/imaginary channels; two-phase interference of gradient flow (real drives amplitude, imaginary controls phase)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>17.7</strong></td>
+<td style="text-align: left;">Neural Quantum States vs. Tensor Networks</td>
+<td style="text-align: left;">Comparison table: TNs (local/structured, limited entanglement, polynomial expressivity, transparent) vs NQS (global/flexible, high entanglement, exponential expressivity, black-box); TNs efficient for area-law systems, NQS handles complex nonlocal correlations; analogy: fixed polynomial fit vs deep nonlinear network</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>17.8</strong></td>
+<td style="text-align: left;">Connection to Energy-Based Models (EBMs)</td>
+<td style="text-align: left;">EBM: <span class="arithmatex">\(P_{\mathbf{\theta}}(\mathbf{x}) \propto e^{-E_{\mathbf{\theta}}(\mathbf{x})/T}\)</span> (classical probability); NQS: <span class="arithmatex">\(\psi_{\mathbf{\theta}}(\mathbf{s}) \propto e^{-E_{\mathbf{\theta}}(\mathbf{s})/2}\)</span> (quantum amplitude); difference: amplitude vs probability (complex phase enables interference); NQS as quantum generalization of EBMs (probability becomes amplitude)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>17.9</strong></td>
+<td style="text-align: left;">Stochastic Reconfiguration — Quantum Natural Gradient</td>
+<td style="text-align: left;">Problem: standard gradient descent unstable on non-Euclidean quantum manifold; Stochastic Reconfiguration preconditions gradient: <span class="arithmatex">\(S_{ij}\Delta\theta_j = -\nabla_i E\)</span>; Quantum Fisher Information <span class="arithmatex">\(S_{ij}\)</span> defines Hilbert space metric (statistical distinguishability of states); ensures geodesic motion on manifold of normalized states; quantum Natural Gradient analogy</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>17.10</strong></td>
+<td style="text-align: left;">Code Demo — Minimal Neural Quantum State</td>
+<td style="text-align: left;">PyTorch RBM implementation: <code>NQS</code> class with weights <span class="arithmatex">\(W\)</span>, biases <span class="arithmatex">\(a,b\)</span>; forward pass computes <span class="arithmatex">\(\psi(\mathbf{s}) = \exp(a^\top \mathbf{s} + \log\sum_h \exp(b^\top \mathbf{h} + \mathbf{s}^\top W \mathbf{h}))\)</span> via logsumexp; entanglement encoding through hidden unit summation; input: spin configuration <span class="arithmatex">\(\mathbf{s}\)</span>, output: complex amplitude; VMC would follow with local energy sampling</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>17.11</strong></td>
+<td style="text-align: left;">Deep Quantum Architectures</td>
+<td style="text-align: left;">Beyond shallow RBM: autoregressive NQS (sequential modeling, exact sampling), CNN-NQS (translational invariance for lattices), Transformer-NQS (self-attention for long-range entanglement); hierarchical structures for multi-scale correlations; hybrid quantum-classical (VQE: classical optimizer + quantum circuit ansatz); specialized inductive biases match system physics</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>17.12</strong></td>
+<td style="text-align: left;">Quantum Probability and Information Geometry</td>
+<td style="text-align: left;">Manifold of quantum states (curved Hilbert space geometry); Quantum Fisher Information Matrix <span class="arithmatex">\(S_{ij}\)</span> measures state distinguishability (metric tensor); SR uses <span class="arithmatex">\(S^{-1}\)</span> to precondition gradients (geodesic descent); information compression view: project exponential true state onto polynomial manifold; geometry dictates optimal learning dynamics</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>17.13</strong></td>
+<td style="text-align: left;">Applications</td>
+<td style="text-align: left;">Quantum spin systems (Ising, Heisenberg ground states, quantum criticality); electronic structure (correlated electron wavefunctions, Hubbard model); quantum chemistry (molecular energies/densities with chemical accuracy); quantum dynamics (time-evolving PINNs for Schrödinger equation); VQE on quantum hardware (hybrid classical-quantum optimization); transforms high-D quantum observables to statistical inference</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>17.14</strong></td>
+<td style="text-align: left;">Physical Interpretation — Learning as Quantum Relaxation</td>
+<td style="text-align: left;">Gradient descent as imaginary-time Schrödinger evolution (quantum relaxation toward ground state); classical relaxation: overdamped particle minimizing potential; quantum: trial wavefunction flows to minimal energy in Hilbert manifold; parameter updates <span class="arithmatex">\(\leftrightarrow\)</span> state relaxation driven by energy gradient force; unification: ML and quantum physics share common energetic geometry</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>17.15</strong></td>
+<td style="text-align: left;">Bridge to Quantum Information and Beyond</td>
+<td style="text-align: left;">Extensions: Quantum Boltzmann Machines (mixed states/density matrices), learning entanglement entropy/mutual information, neural quantum dynamics (time-dependent Schrödinger); foreshadowing Chapter 18 GNNs: model information propagation on arbitrary graph topologies (discrete field theories, local interaction structures); progression: classical optimization → quantum amplitudes → graph-structured interactions</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="171-motivation-quantum-states-as-data-distributions"><strong>17.1 Motivation — Quantum States as Data Distributions</strong></h2>
+<h3 id="the-problem-exponential-scaling"><strong>The Problem: Exponential Scaling</strong></h3>
+<hr />
+<p>The central challenge in computational quantum physics is the <strong>many-body problem</strong>. The state of a system of <span class="arithmatex">\(N\)</span> interacting quantum particles is described by its <strong>wavefunction <span class="arithmatex">\(\psi(\mathbf{s})\)</span></strong> (or state vector).</p>
+<ul>
+<li><strong>Hilbert Space:</strong> The dimension of the space required to store this wavefunction, known as the Hilbert space, grows <strong>exponentially</strong> with the number of particles <span class="arithmatex">\(N\)</span>.</li>
+<li><strong>Intractability:</strong> For even a few dozen interacting spins (e.g., <span class="arithmatex">\(N=50\)</span>), the state space size <span class="arithmatex">\(2^N\)</span> exceeds the storage capacity of any classical computer. This makes exact simulation impossible.</li>
+</ul>
+<h3 id="the-observation-probability-and-amplitude"><strong>The Observation: Probability and Amplitude</strong></h3>
+<hr />
+<p>Quantum mechanics provides the first link to the probabilistic world of machine learning:</p>
+<ul>
+<li><strong>Probability Distribution:</strong> The wavefunction <span class="arithmatex">\(\psi(\mathbf{s})\)</span> is a <strong>complex-valued function</strong> whose squared magnitude defines the probability of observing the system in a configuration <span class="arithmatex">\(\mathbf{s}\)</span>:</li>
+</ul>
+<p>$$
+p(\mathbf{s}) = |\psi(\mathbf{s})|^2
+$$
+* <strong>Wavefunction as Data:</strong> This means the quantum state <em>is</em> a probability distribution.</p>
+<h3 id="the-idea-neural-ansatz-and-optimization"><strong>The Idea: Neural Ansatz and Optimization</strong></h3>
+<hr />
+<p>The <strong>Neural Quantum State (NQS)</strong> approach proposes using a highly flexible, parameterized neural network (<span class="arithmatex">\(\psi_{\mathbf{\theta}}\)</span>) to approximate the true, intractable wavefunction <span class="arithmatex">\(\psi(\mathbf{s})\)</span>.</p>
+<ul>
+<li><strong>Representation:</strong> The network weights <span class="arithmatex">\(\mathbf{\theta}\)</span> compress the exponential complexity of the quantum state into a tractable number of parameters.</li>
+<li><strong>Training:</strong> The network is trained not by matching data, but by minimizing the system's fundamental <strong>expected energy</strong> (Section 17.2).</li>
+</ul>
+<h3 id="analogy-fitting-the-distribution-of-the-universe"><strong>Analogy: Fitting the Distribution of the Universe</strong></h3>
+<hr />
+<p>The NQS method is analogous to a powerful form of generative modeling (Chapter 14):
+* <strong>Classical ML:</strong> We fit an energy function <span class="arithmatex">\(E_{\mathbf{\theta}}(\mathbf{x})\)</span> (or distribution <span class="arithmatex">\(P_{\mathbf{\theta}}\)</span>) to an empirically observed dataset.
+* <strong>NQS:</strong> We fit the <strong>quantum probability amplitude</strong> <span class="arithmatex">\(\psi_{\mathbf{\theta}}(\mathbf{s})\)</span> to the theoretical distribution of the system's lowest energy state.</p>
+<p>The network learns the structural features and correlations (entanglement) required by the physical law, effectively fitting the underlying probabilistic structure of the system itself.</p>
+<div class="admonition tip">
+<p class="admonition-title">Quantum State as Probability Compressor</p>
+</div>
+<h2 id="unlike-classical-machine-learning-where-we-fit-a-model-to-observed-data-nqs-compresses-the-exponential-hilbert-space-2n-amplitudes-into-a-polynomial-parameter-neural-network-approx-n2-weights-this-compression-preserves-the-essential-quantum-correlations-entanglement-needed-to-represent-the-ground-state-think-of-the-network-as-learning-the-code-that-reconstructs-the-full-quantum-distribution-from-minimal-informationanalogous-to-how-a-deep-generative-model-learns-the-latent-structure-underlying-high-dimensional-data"><div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Unlike classical machine learning where we fit a model to observed data, NQS compresses the exponential Hilbert space ($2^N$ amplitudes) into a polynomial-parameter neural network ($\approx N^2$ weights). This compression preserves the essential quantum correlations (entanglement) needed to represent the ground state. Think of the network as learning the &quot;code&quot; that reconstructs the full quantum distribution from minimal information—analogous to how a deep generative model learns the latent structure underlying high-dimensional data.
+</span></code></pre></div></h2>
+<h2 id="172-the-variational-principle-as-learning-objective"><strong>17.2 The Variational Principle as Learning Objective</strong></h2>
+<p>The challenge of finding the <strong>ground state</strong> (lowest energy state) of a quantum system, which is the goal of <strong>Neural Quantum States (NQS)</strong>, is mathematically translated into a computationally solvable optimization problem by utilizing the <strong>Variational Principle</strong>. This principle serves as the fundamental loss function for training the neural network wavefunction.</p>
+<hr />
+<h3 id="quantum-ground-state-energy-epsi"><strong>Quantum Ground State Energy <span class="arithmatex">\(E[\psi]\)</span></strong></h3>
+<hr />
+<p>In quantum mechanics, the energy of a given state <span class="arithmatex">\(\psi\)</span> is determined by the <strong>Hamiltonian operator (<span class="arithmatex">\(\hat{H}\)</span>)</strong>, which represents the total energy of the system. The expected energy <span class="arithmatex">\(E[\psi]\)</span> of a state is the expectation value of this operator:</p>
+<div class="arithmatex">\[
+E[\psi] = \frac{\langle \psi | \hat{H} | \psi \rangle}{\langle \psi | \psi \rangle}
+\]</div>
+<h3 id="the-variational-principle"><strong>The Variational Principle</strong></h3>
+<hr />
+<p>The Variational Principle provides a powerful, universal constraint on this energy: <strong>The true ground state energy <span class="arithmatex">\(E_0\)</span> is the lowest possible expected energy a system can have</strong>.</p>
+<p>This means that for any arbitrary <strong>trial wavefunction</strong> <span class="arithmatex">\(\psi_{\mathbf{\theta}}\)</span> (our neural network approximation), its calculated expected energy will always be an upper bound for the true ground state energy <span class="arithmatex">\(E_0\)</span>:</p>
+<div class="arithmatex">\[
+E[\psi_{\mathbf{\theta}}] \ge E_0
+\]</div>
+<p>The mathematical task is thus clear: the <strong>optimal wavefunction (<span class="arithmatex">\(\psi_{\mathbf{\theta}}^*\)</span>) is the one that minimizes the expected energy <span class="arithmatex">\(E[\psi_{\mathbf{\theta}}]\)</span></strong>.</p>
+<h3 id="optimization-learning-via-gradient-descent"><strong>Optimization: Learning via Gradient Descent</strong></h3>
+<hr />
+<p>The NQS approach leverages the numerical optimization techniques of deep learning (Part II) to find this minimum.</p>
+<ul>
+<li><strong>Learning Objective:</strong> The objective function <span class="arithmatex">\(L\)</span> for NQS training is the expected energy: <span class="arithmatex">\(L(\mathbf{\theta}) = E[\psi_{\mathbf{\theta}}]\)</span>.</li>
+<li><strong>Gradient-Based Optimization:</strong> The parameters <span class="arithmatex">\(\mathbf{\theta}\)</span> of the neural network are iteratively adjusted using gradient descent to drive the system toward the minimum energy. The gradient of the expected energy is:
+$$
+\nabla_{\mathbf{\theta}} E = 2 \operatorname{Re}\left[\left\langle \left(E_{\text{loc}}-E\right)\nabla_{\mathbf{\theta}} \ln \psi_{\mathbf{\theta}}\right\rangle\right]
+$$
+This gradient is calculated through sampling, a process known as <strong>Variational Monte Carlo (VMC)</strong> (Section 17.4).</li>
+</ul>
+<h3 id="analogy-the-universe-defines-the-loss"><strong>Analogy: The Universe Defines the Loss</strong></h3>
+<hr />
+<p>The Variational Principle establishes the definitive link between quantum physics and optimization:</p>
+<ul>
+<li><strong>Hamiltonian <span class="arithmatex">\(\leftrightarrow\)</span> Loss Operator:</strong> The <strong>Hamiltonian operator (<span class="arithmatex">\(\hat{H}\)</span>)</strong> plays the role of the loss function operator. It is the fundamental physical law that dictates the cost of any state.</li>
+<li><strong>Energy Minimization <span class="arithmatex">\(\leftrightarrow\)</span> Learning:</strong> The process of training the NQS network is entirely equivalent to a generalized <strong>energy minimization</strong>. The parameters <span class="arithmatex">\(\mathbf{\theta}\)</span> are driven by a force (gradient) toward the global minimum defined by the quantum mechanical laws of the system.</li>
+</ul>
+<p>This perspective means that the <em>universe itself</em> defines the optimization cost surface for the learning algorithm.</p>
+<hr />
+<h2 id="173-from-boltzmann-machines-to-quantum-amplitudes"><strong>17.3 From Boltzmann Machines to Quantum Amplitudes</strong></h2>
+<p>The development of <strong>Neural Quantum States (NQS)</strong> relies on adapting classical neural architectures to represent the specific mathematical properties of a quantum state. This leads to the central concept of the <strong>neural ansatz</strong>: mapping a network designed for classical probability (like the Boltzmann Machine) to one that encodes <strong>quantum probability amplitudes</strong>.</p>
+<hr />
+<h3 id="neural-ansatz-encoding-amplitude-and-phase"><strong>Neural Ansatz: Encoding Amplitude and Phase</strong></h3>
+<hr />
+<p>A quantum wavefunction <span class="arithmatex">\(\psi(\mathbf{s})\)</span> is, in general, a <strong>complex-valued field</strong>. It must be represented in a way that allows a classical network, typically optimized with real-valued parameters, to encode both its magnitude (amplitude) and its complex phase:</p>
+<div class="arithmatex">\[
+\psi_{\mathbf{\theta}}(\mathbf{s}) = \sqrt{P_{\mathbf{\theta}}(\mathbf{s})} e^{i \Phi_{\mathbf{\theta}}(\mathbf{s})}
+\]</div>
+<ul>
+<li><strong>Amplitude (<span class="arithmatex">\(R\)</span>):</strong> <span class="arithmatex">\(\sqrt{P_{\mathbf{\theta}}(\mathbf{s})}\)</span> determines the probability of observing the state <span class="arithmatex">\(\mathbf{s}\)</span>.</li>
+<li><strong>Phase (<span class="arithmatex">\(\Phi\)</span>):</strong> <span class="arithmatex">\(e^{i \Phi_{\mathbf{\theta}}(\mathbf{s})}\)</span> governs quantum interference and the time evolution of the system.</li>
+</ul>
+<h3 id="the-restricted-boltzmann-machine-rbm-ansatz"><strong>The Restricted Boltzmann Machine (RBM) Ansatz</strong></h3>
+<hr />
+<p>The most historically significant and widely used neural ansatz for NQS is based on the <strong>Restricted Boltzmann Machine (RBM)</strong> (Chapter 14.4).</p>
+<p>The RBM, a bipartite network of visible (<span class="arithmatex">\(\mathbf{s}\)</span>) and hidden (<span class="arithmatex">\(\mathbf{h}\)</span>) units, models the joint energy. The NQS utilizes the RBM's normalized <strong>probability amplitude</strong>:</p>
+<div class="arithmatex">\[
+\psi_{\mathbf{\theta}}(\mathbf{s}) = \sum_{\mathbf{h}} e^{a^\top \mathbf{s} + b^\top \mathbf{h} + \mathbf{s}^\top W \mathbf{h}}
+\]</div>
+<ul>
+<li>The summation over the hidden units (<span class="arithmatex">\(\sum_{\mathbf{h}}\)</span>) is the key feature that introduces <strong>non-trivial correlations</strong> (analogous to entanglement) necessary to represent complex quantum states.</li>
+<li>The parameters <span class="arithmatex">\(\{a, b, W\}\)</span> (collectively <span class="arithmatex">\(\mathbf{\theta}\)</span>) are the adjustable variational parameters of the network, which are often generalized to be complex numbers to explicitly encode the phase (Section 17.6).</li>
+</ul>
+<h3 id="interpretation-quantum-compressor"><strong>Interpretation: Quantum Compressor</strong></h3>
+<hr />
+<ul>
+<li><strong>Entanglement Modeling:</strong> The hidden units of the RBM are interpreted as <strong>latent spins</strong> that model the <strong>entanglement</strong> structure of the quantum system. The weights <span class="arithmatex">\(W\)</span> encode the complex, global correlation between the visible spins.</li>
+<li><strong>Spin Configuration <span class="arithmatex">\(\leftrightarrow\)</span> State:</strong> The visible units <span class="arithmatex">\(\mathbf{s}\)</span> correspond to the physical spin configurations of the system.</li>
+<li><strong>Quantum Compressor:</strong> The NQS network acts as a <strong>quantum compressor</strong>, storing the essential information of the exponential Hilbert space within a tractable, polynomial number of network weights. By minimizing the energy (Section 17.2), the network learns the most efficient encoding of the quantum state's entanglement structure.</li>
+</ul>
+<hr />
+<h2 id="174-variational-monte-carlo-vmc"><strong>17.4 Variational Monte Carlo (VMC)</strong></h2>
+<p>The optimization of a <strong>Neural Quantum State (NQS)</strong> (Section 17.3) requires minimizing the expected energy <span class="arithmatex">\(E[\psi_{\mathbf{\theta}}]\)</span> (Section 17.2). Since the full expectation integral is intractable for large, many-body systems, this energy calculation must be performed through <strong>stochastic sampling</strong>, a technique known as <strong>Variational Monte Carlo (VMC)</strong>.</p>
+<h3 id="sampling-based-energy-estimation"><strong>Sampling-Based Energy Estimation</strong></h3>
+<hr />
+<p>The expected energy functional involves integration over the exponentially large Hilbert space:</p>
+<div class="arithmatex">\[
+E = \frac{\langle \psi | \hat{H} | \psi \rangle}{\langle \psi | \psi \rangle} = \sum_{\mathbf{s}} |\psi_{\mathbf{\theta}}(\mathbf{s})|^2 \frac{(\hat{H}\psi_{\mathbf{\theta}})(\mathbf{s})}{\psi_{\mathbf{\theta}}(\mathbf{s})}
+\]</div>
+<p>VMC solves this by rewriting the expectation as an integral over the system's probability distribution <span class="arithmatex">\(P(\mathbf{s}) = |\psi_{\mathbf{\theta}}(\mathbf{s})|^2\)</span>:</p>
+<div class="arithmatex">\[
+E = \mathbb{E}_{P(\mathbf{s})}\left[ E_{\text{loc}}(\mathbf{s}) \right]
+\]</div>
+<ol>
+<li><strong>Local Energy (<span class="arithmatex">\(E_{\text{loc}}\)</span>):</strong> The key quantity is the <strong>local energy</strong>, defined for a specific configuration <span class="arithmatex">\(\mathbf{s}\)</span>:</li>
+</ol>
+<div class="arithmatex">\[
+E_{\text{loc}}(\mathbf{s}) = \frac{(\hat{H}\psi_{\mathbf{\theta}})(\mathbf{s})}{\psi_{\mathbf{\theta}}(\mathbf{s})}
+\]</div>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>This quantity can be computed directly, as the Hamiltonian operator $\hat{H}$ usually only involves local interactions between nearby particles.
+</span></code></pre></div>
+2.  <strong>Monte Carlo Estimate:</strong> The integral for <span class="arithmatex">\(E\)</span> is approximated by averaging the local energy over <span class="arithmatex">\(N_{\text{samples}}\)</span> configurations <span class="arithmatex">\(\mathbf{s}_i\)</span> drawn from the probability distribution <span class="arithmatex">\(P(\mathbf{s})\)</span>:</p>
+<div class="arithmatex">\[
+E \approx \frac{1}{N_{\text{samples}}} \sum_{i=1}^{N_{\text{samples}}} E_{\text{loc}}(\mathbf{s}_i)
+\]</div>
+<h3 id="the-optimization-loop-gradient-through-sampling"><strong>The Optimization Loop: Gradient through Sampling</strong></h3>
+<hr />
+<p>VMC requires an iterative loop, blending the optimization of the neural network parameters with the statistical mechanics of sampling:</p>
+<ol>
+<li><strong>Sampling:</strong> Generate configurations <span class="arithmatex">\(\mathbf{s}_i\)</span> from the model's probability distribution <span class="arithmatex">\(P(\mathbf{s}) = |\psi_{\mathbf{\theta}}(\mathbf{s})|^2\)</span>. This is typically achieved using a classical <strong>Markov Chain Monte Carlo (MCMC)</strong> method (Chapter 2.5), like the Metropolis algorithm (Chapter 7.3), applied to the squared amplitude of the wavefunction.</li>
+<li><strong>Gradient Calculation:</strong> Compute the gradient <span class="arithmatex">\(\nabla_{\mathbf{\theta}} E\)</span> using the sampled local energies.</li>
+<li><strong>Update:</strong> Adjust the network parameters <span class="arithmatex">\(\mathbf{\theta}\)</span> via gradient descent or a specialized method like <strong>Stochastic Reconfiguration</strong> (Section 17.9).</li>
+</ol>
+<h3 id="analogy-stochastic-optimization-on-a-quantum-surface"><strong>Analogy: Stochastic Optimization on a Quantum Surface</strong></h3>
+<hr />
+<p>VMC is the direct equivalent of <strong>Stochastic Gradient Descent (SGD)</strong> (Chapter 5.4) applied to the quantum domain:</p>
+<ul>
+<li><strong>Stochastic Optimization:</strong> Both methods estimate the true gradient (force) using small, noisy samples (mini-batches/Monte Carlo samples).</li>
+<li><strong>Energy Minimization:</strong> VMC is the optimization procedure for training the energy-based model on a <strong>quantum potential surface</strong>. The network learns the distribution that minimizes the expected energy, successfully bridging classical statistical sampling with quantum mechanical optimization.</li>
+</ul>
+<div class="admonition example">
+<p class="admonition-title">VMC for the Hydrogen Molecule Ground State</p>
+</div>
+<h2 id="consider-computing-the-ground-state-of-h_2-the-exact-wavefunction-requires-integrating-over-all-electron-coordinatesintractable-for-classical-computers-vmc-with-an-nqs-ansatz-samples-electron-configurations-mathbfs_i-from-psi_mathbfthetamathbfs2-using-mcmc-metropolis-sampling-for-each-sample-compute-the-local-energy-e_textlocmathbfs_i-hathpsi_mathbfthetamathbfs_ipsi_mathbfthetamathbfs_i-where-hath-includes-kinetic-energy-and-coulomb-interactions-average-these-local-energies-to-estimate-epsi_mathbftheta-then-update-network-weights-via-gradient-descent-after-optimization-the-learned-psi_mathbftheta-predicts-molecular-binding-energy-and-electron-density-to-chemical-accuracy"><div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Consider computing the ground state of H$_2$. The exact wavefunction requires integrating over all electron coordinates—intractable for classical computers. VMC with an NQS ansatz samples electron configurations $\mathbf{s}_i$ from $|\psi_{\mathbf{\theta}}(\mathbf{s})|^2$ using MCMC (Metropolis sampling). For each sample, compute the local energy $E_{\text{loc}}(\mathbf{s}_i) = (\hat{H}\psi_{\mathbf{\theta}})(\mathbf{s}_i)/\psi_{\mathbf{\theta}}(\mathbf{s}_i)$ where $\hat{H}$ includes kinetic energy and Coulomb interactions. Average these local energies to estimate $E[\psi_{\mathbf{\theta}}]$, then update network weights via gradient descent. After optimization, the learned $\psi_{\mathbf{\theta}}$ predicts molecular binding energy and electron density to chemical accuracy.
+</span></code></pre></div></h2>
+<h2 id="175-example-transverse-field-ising-model"><strong>17.5 Example — Transverse-Field Ising Model</strong></h2>
+<p>The <strong>Transverse-Field Ising Model (TFIM)</strong> is a foundational model in condensed matter physics, often used to study quantum phase transitions and quantum criticality. It serves as an ideal, non-trivial example for demonstrating how <strong>Neural Quantum States (NQS)</strong> (Section 17.3) can be employed to find the <strong>quantum ground state</strong> of an interacting many-body system.</p>
+<h3 id="the-system-and-hamiltonian"><strong>The System and Hamiltonian</strong></h3>
+<hr />
+<p>The TFIM describes a lattice of <span class="arithmatex">\(N\)</span> interacting spins (often simplified to <span class="arithmatex">\(\sigma^z = \pm 1\)</span> and <span class="arithmatex">\(\sigma^x\)</span> operators) subject to two competing forces:</p>
+<ol>
+<li><strong>Ising Interaction (Ordering Force):</strong> Tries to align neighboring spins in the <span class="arithmatex">\(z\)</span>-direction (analogous to the classical Ising model, Chapter 8.3).</li>
+<li><strong>Transverse Field (Disordering Force):</strong> Tries to flip spins in the <span class="arithmatex">\(x\)</span>-direction.</li>
+</ol>
+<p>The Hamiltonian operator <span class="arithmatex">\(\hat{H}\)</span> for the TFIM is:</p>
+<div class="arithmatex">\[
+\hat{H} = -J\sum_{\langle ij\rangle}\hat{\sigma}^z_i\hat{\sigma}^z_j - h\sum_i \hat{\sigma}^x_i
+\]</div>
+<ul>
+<li><strong><span class="arithmatex">\(J\)</span>:</strong> The interaction strength between nearest neighbors <span class="arithmatex">\(\langle ij \rangle\)</span>.</li>
+<li><strong><span class="arithmatex">\(h\)</span>:</strong> The strength of the transverse magnetic field.</li>
+</ul>
+<p>The system undergoes a <strong>quantum phase transition</strong> as the ratio of <span class="arithmatex">\(J\)</span> to <span class="arithmatex">\(h\)</span> changes.</p>
+<h3 id="state-representation-the-neural-ansatz"><strong>State Representation: The Neural Ansatz</strong></h3>
+<hr />
+<p>Since the exact calculation of the wavefunction <span class="arithmatex">\(\psi\)</span> is impossible for large <span class="arithmatex">\(N\)</span>, NQS represents the ground state wavefunction <span class="arithmatex">\(\psi_{\mathbf{\theta}}(\mathbf{s})\)</span> using a flexible neural architecture:</p>
+<ul>
+<li><strong>Ansatz:</strong> A common choice is the <strong>Restricted Boltzmann Machine (RBM)</strong> (Section 17.3), though deep autoregressive networks or specialized CNN-based structures (Section 17.11) may also be used.</li>
+<li><strong>Input:</strong> The input <span class="arithmatex">\(\mathbf{s}\)</span> is the <span class="arithmatex">\(N\)</span>-dimensional spin configuration.</li>
+<li><strong>Output:</strong> The complex quantum amplitude <span class="arithmatex">\(\psi_{\mathbf{\theta}}(\mathbf{s})\)</span> for that configuration.</li>
+</ul>
+<h3 id="optimization-and-observation"><strong>Optimization and Observation</strong></h3>
+<hr />
+<p>The network parameters <span class="arithmatex">\(\mathbf{\theta}\)</span> are optimized using the <strong>Variational Monte Carlo (VMC)</strong> method (Section 17.4) to minimize the system's expected energy <span class="arithmatex">\(E[\psi_{\mathbf{\theta}}]\)</span>.</p>
+<ul>
+<li><strong>Challenge:</strong> Traditional methods (like exact diagonalization) are limited to small systems (e.g., <span class="arithmatex">\(N \approx 20\)</span>).</li>
+<li><strong>NQS Advantage:</strong> The NQS approach scales effectively to much larger systems (<span class="arithmatex">\(N \approx 100\)</span> or more), capturing the phase transition behavior with a number of parameters that scales only polynomially with <span class="arithmatex">\(N\)</span>. This demonstrates the network's ability to compress the <strong>exponential complexity</strong> of the quantum state into a tractable set of learned weights.</li>
+</ul>
+<h3 id="analogy-quantum-compressor"><strong>Analogy: Quantum Compressor</strong></h3>
+<hr />
+<p>The neural network acts as a <strong>quantum compressor</strong>. The learned weights implicitly encode the complex, non-local correlations (entanglement) that define the system's quantum structure. This process is analogous to classical dimensionality reduction (Chapter 3) but applied to the Hilbert space, finding the essential, low-dimensional representation of the quantum state.</p>
+<hr />
+<h2 id="176-complex-valued-neural-networks"><strong>17.6 Complex-Valued Neural Networks</strong></h2>
+<p>The <strong>Neural Quantum State (NQS)</strong> approach (Section 17.3) faces a significant challenge because the quantum <strong>wavefunction <span class="arithmatex">\(\psi(\mathbf{s})\)</span></strong> is, in general, a <strong>complex-valued field</strong>. It has both a real magnitude (amplitude) and a phase, <span class="arithmatex">\(e^{i\Phi_{\mathbf{\theta}}}\)</span>. This necessitates generalizing the standard real-valued neural network architecture to handle complex numbers.</p>
+<h3 id="wavefunction-as-a-complex-field"><strong>Wavefunction as a Complex Field</strong></h3>
+<hr />
+<p>The wavefunction is represented by its polar form:</p>
+<div class="arithmatex">\[
+\psi_{\mathbf{\theta}} = R_{\mathbf{\theta}} e^{i\Phi_{\mathbf{\theta}}}
+\]</div>
+<ul>
+<li><strong>Magnitude (<span class="arithmatex">\(R_{\mathbf{\theta}}\)</span>):</strong> Encodes the probability amplitude, where <span class="arithmatex">\(R_{\mathbf{\theta}}^2 = P(\mathbf{s})\)</span>.</li>
+<li><strong>Phase (<span class="arithmatex">\(\Phi_{\mathbf{\theta}}\)</span>):</strong> Encodes the phase of the quantum state, which is crucial for phenomena like <strong>quantum interference</strong> and predicting <strong>time evolution</strong>.</li>
+</ul>
+<p>To fully utilize the NQS framework, the neural network must be capable of learning both <span class="arithmatex">\(R_{\mathbf{\theta}}\)</span> and <span class="arithmatex">\(\Phi_{\mathbf{\theta}}\)</span>.</p>
+<h3 id="training-challenge-complex-gradients"><strong>Training Challenge: Complex Gradients</strong></h3>
+<hr />
+<p>Training a network with complex parameters and complex outputs requires extending the calculus of optimization.</p>
+<ul>
+<li><strong>Standard Gradient Descent (Chapter 5):</strong> This is defined for real functions.</li>
+<li><strong>Complex Gradients:</strong> Complex-valued parameters <span class="arithmatex">\(\mathbf{\theta} = \mathbf{\theta}_{\text{real}} + i \mathbf{\theta}_{\text{imag}}\)</span> require the use of <strong>Wirtinger derivatives</strong>. These derivatives extend the standard chain rule to complex functions, allowing the backpropagation of the energy gradient (<span class="arithmatex">\(\nabla E\)</span>) to the complex-valued weights.</li>
+</ul>
+<h3 id="implementation-coupled-real-and-imaginary-channels"><strong>Implementation: Coupled Real and Imaginary Channels</strong></h3>
+<hr />
+<p>In practice, a <strong>complex-valued neural network</strong> is implemented by treating the complex numbers as having two coupled channels: the real and imaginary parts.</p>
+<ul>
+<li><strong>Weights and Activations:</strong> All weights (<span class="arithmatex">\(W\)</span>) and node activations are represented as pairs of real numbers. The network's linear transformations and non-linear activation functions must be adapted to operate on these coupled channels.</li>
+<li><strong>Final Output:</strong> The NQS network ultimately outputs the complex amplitude <span class="arithmatex">\(\psi_{\mathbf{\theta}}\)</span>.</li>
+</ul>
+<h3 id="analogy-two-phase-interference-of-flow"><strong>Analogy: Two-Phase Interference of Flow</strong></h3>
+<hr />
+<p>The optimization in this complex space is analogous to a dynamical system where two coupled vector fields (the real and imaginary components of the gradient) interfere.</p>
+<ul>
+<li><strong>Interference:</strong> The dynamics of the complex weights are constrained by the <strong>phase relationship</strong>. The optimization must balance the real part (which drives the amplitude and energy minimization) with the imaginary part (which controls the phase).</li>
+<li><strong>Geodesic Motion:</strong> The goal is to move the system's state along the most efficient path (a <strong>geodesic</strong>) on the manifold of normalized quantum states (Section 17.9), where the metric is complex.</li>
+</ul>
+<hr />
+<h2 id="177-neural-quantum-states-vs-tensor-networks"><strong>17.7 Neural Quantum States vs. Tensor Networks</strong></h2>
+<p><strong>Neural Quantum States (NQS)</strong> emerged as a modern approach to tackling the quantum many-body problem, building on classical machine learning's capacity for complex function approximation. They directly compete with <strong>Tensor Networks (TNs)</strong>, which are the established, traditional framework in physics for efficiently representing and simulating quantum states. Comparing these two approaches reveals their complementary strengths and weaknesses in modeling quantum entanglement.</p>
+<hr />
+<h3 id="contrasting-architectures-for-the-wavefunction"><strong>Contrasting Architectures for the Wavefunction</strong></h3>
+<hr />
+<p>Both NQS and TNs attempt to find an efficient, parameterized <strong>ansatz</strong> (trial wavefunction, <span class="arithmatex">\(\psi_{\mathbf{\theta}}\)</span>) that compresses the exponentially large Hilbert space into a tractable set of parameters.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">Tensor Networks (TNs)</th>
+<th style="text-align: left;">Neural Quantum States (NQS)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Structure</strong></td>
+<td style="text-align: left;"><strong>Local and Structured</strong>. Defined by fixed, low-rank tensor decompositions.</td>
+<td style="text-align: left;"><strong>Global and Flexible</strong>. Defined by deep, highly non-linear neural networks (e.g., RBM, CNN).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Entanglement</strong></td>
+<td style="text-align: left;"><strong>Limited to low entanglement</strong>. Efficiency depends on the system having limited local correlation (area law).</td>
+<td style="text-align: left;"><strong>Can handle high entanglement</strong>. Expressivity is high, allowing for complex, global correlations.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Expressivity</strong></td>
+<td style="text-align: left;"><strong>Polynomial</strong>. Scales predictably but is inherently limited.</td>
+<td style="text-align: left;"><strong>Potentially Exponential</strong>. The universal approximation theorem applies to the function.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Interpretability</strong></td>
+<td style="text-align: left;"><strong>Transparent</strong>. Parameters relate directly to physical coupling and locality.</td>
+<td style="text-align: left;"><strong>Black-box</strong>. Weights encode structure non-linearly, requiring specialized probing.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Geometry</strong></td>
+<td style="text-align: left;"><strong>Classical Geometry</strong> of the Hilbert space.</td>
+<td style="text-align: left;"><strong>Learned Geometry</strong>.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="complementarity-and-analogy"><strong>Complementarity and Analogy</strong></h3>
+<hr />
+<ul>
+<li><strong>TNs: The Local Experts:</strong> Tensor Networks, such as Matrix Product States (MPS), are specialized to capture <strong>local correlations efficiently</strong>. They rely on physical insight to define the structure of the network.</li>
+<li><strong>NQS: The Global Generalizers:</strong> Neural Quantum States generalize this concept by offering a model capable of encoding complex, <strong>nonlocal entanglement</strong> without requiring explicit knowledge of the underlying physical topology.</li>
+<li><strong>Analogy:</strong> The difference is analogous to using a <strong>simple, fixed polynomial fit</strong> (TN) versus a <strong>complex, non-linear deep network</strong> (NQS) to approximate an unknown function. NQS provides a highly flexible basis set for the quantum state, often outperforming TNs for highly entangled (disordered) systems.</li>
+</ul>
+<hr />
+<h2 id="178-connection-to-energy-based-models-ebms"><strong>17.8 Connection to Energy-Based Models (EBMs)</strong></h2>
+<p>The mathematical structure of <strong>Neural Quantum States (NQS)</strong> (Section 17.3) establishes a profound link to classical <strong>Energy-Based Models (EBMs)</strong> (Chapter 14). Both frameworks define their respective distributions using an <strong>exponential relationship</strong> with an energy-like function, solidifying the idea that the physics of probability underlies all generative modeling.</p>
+<h3 id="similarity-the-exponential-form"><strong>Similarity: The Exponential Form</strong></h3>
+<hr />
+<p>EBMs and NQS model their distributions using analogous exponential functions:</p>
+<ul>
+<li><strong>EBMs (Classical Probability):</strong> Model the <strong>probability density</strong> <span class="arithmatex">\(P_{\mathbf{\theta}}(\mathbf{x})\)</span> using a real-valued energy function <span class="arithmatex">\(E_{\mathbf{\theta}}(\mathbf{x})\)</span> and temperature <span class="arithmatex">\(T\)</span>:</li>
+</ul>
+<div class="arithmatex">\[
+P_{\mathbf{\theta}}(\mathbf{x}) \propto e^{-E_{\mathbf{\theta}}(\mathbf{x})/T}
+\]</div>
+<ul>
+<li><strong>NQS (Quantum Probability Amplitude):</strong> Model the <strong>wavefunction amplitude</strong> <span class="arithmatex">\(\psi_{\mathbf{\theta}}(\mathbf{x})\)</span>, which is often defined as an exponential function (e.g., in the RBM ansatz):</li>
+</ul>
+<div class="arithmatex">\[
+\psi_{\mathbf{\theta}}(\mathbf{x}) \propto e^{-E_{\mathbf{\theta}}(\mathbf{x})/2}
+\]</div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>*(Note: This form simplifies the relationship, where $E_{\mathbf{\theta}}(\mathbf{x})$ now includes the complex components needed for phase.)*
+</span></code></pre></div>
+<h3 id="difference-amplitude-vs-probability"><strong>Difference: Amplitude vs. Probability</strong></h3>
+<hr />
+<p>The critical difference lies in the nature of the output:</p>
+<ul>
+<li><strong>EBMs output Probability (<span class="arithmatex">\(P\)</span>):</strong> The result is a positive, real number. This governs classical statistics.</li>
+<li><strong>NQS output Amplitude (<span class="arithmatex">\(\psi\)</span>):</strong> The result is a <strong>complex number</strong> that includes both magnitude and <strong>phase</strong> (Section 17.6).</li>
+</ul>
+<p>This complex phase allows for <strong>quantum interference</strong>. While the classical probability <span class="arithmatex">\(P(\mathbf{x})\)</span> simply adds, quantum probability amplitudes can cancel out or reinforce each other (destructive or constructive interference). This difference is essential for modeling the unique phenomena of quantum mechanics.</p>
+<h3 id="analogy-nqs-as-quantum-ebms"><strong>Analogy: NQS as Quantum EBMs</strong></h3>
+<hr />
+<p>The relationship is summarized by viewing NQS as <strong>quantum generalizations of EBMs</strong>:</p>
+<ul>
+<li><strong>NQS <span class="arithmatex">\(\leftrightarrow\)</span> Quantum EBMs:</strong> The energy function <span class="arithmatex">\(E_{\mathbf{\theta}}\)</span> in NQS is now the <strong>complex energy functional</strong> (related to action).</li>
+<li><strong>Quantum Statistical Mechanics:</strong> The principles of training (minimizing expected energy via VMC, Section 17.4) are derived from the same variational basis as classical energy-based learning, but adapted to the domain of complex probability.</li>
+</ul>
+<p>NQS fundamentally extends the powerful EBM idea to the domain where <strong>probability becomes amplitude</strong>.</p>
+<details class="question">
+<summary>Why Do Quantum Amplitudes Require Complex Numbers While Classical Probabilities Don't?</summary>
+</details>
+<h2 id="classical-probabilities-are-always-positive-real-numbers-that-add-directly-quantum-mechanics-however-requires-interferencethe-ability-for-probability-amplitudes-to-cancel-destructive-interference-or-reinforce-constructive-interference-this-interference-is-impossible-with-real-numbers-alone-complex-numbers-provide-the-necessary-phase-eiphi-that-allows-amplitudes-to-point-in-different-directions-in-the-complex-plane-when-computing-probabilities-psi2-these-phases-interact-psi_1-psi_22-neq-psi_12-psi_22-this-phase-dependent-interference-is-the-signature-of-quantum-mechanics-and-requires-the-wavefunction-to-be-fundamentally-complex-valued"><div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Classical probabilities are always positive real numbers that add directly. Quantum mechanics, however, requires **interference**—the ability for probability amplitudes to cancel (destructive interference) or reinforce (constructive interference). This interference is impossible with real numbers alone. Complex numbers provide the necessary phase $e^{i\Phi}$ that allows amplitudes to point in different &quot;directions&quot; in the complex plane. When computing probabilities $|\psi|^2$, these phases interact: $|\psi_1 + \psi_2|^2 \neq |\psi_1|^2 + |\psi_2|^2$. This phase-dependent interference is the signature of quantum mechanics and requires the wavefunction to be fundamentally complex-valued.
+</span></code></pre></div></h2>
+<h2 id="179-stochastic-reconfiguration-quantum-natural-gradient"><strong>17.9 Stochastic Reconfiguration — Quantum Natural Gradient</strong></h2>
+<p>The training of a <strong>Neural Quantum State (NQS)</strong> (Section 17.2) by minimizing the expected energy <span class="arithmatex">\(E[\psi_{\mathbf{\theta}}]\)</span> (Section 17.2) often suffers from severe instability when using standard <strong>gradient descent</strong>. This issue arises because the system is constrained to move on the highly non-Euclidean manifold of normalized quantum states. <strong>Stochastic Reconfiguration (SR)</strong>, which is the quantum analogue of the <strong>Natural Gradient</strong>, solves this by adapting the optimization direction to the geometry of this quantum manifold.</p>
+<h3 id="the-problem-unstable-gradient-descent"><strong>The Problem: Unstable Gradient Descent</strong></h3>
+<hr />
+<p>When performing gradient descent on the energy functional, <span class="arithmatex">\(\nabla_{\mathbf{\theta}} E\)</span>, the optimization step <span class="arithmatex">\(\Delta \mathbf{\theta} \propto -\nabla_{\mathbf{\theta}} E\)</span> is defined using a simple <strong>Euclidean metric</strong> in the parameter space.</p>
+<p>However, the energy is defined over the Hilbert space of wavefunctions. Movement in the parameter space that looks small in Euclidean terms can lead to a massive, disruptive change in the actual quantum state, causing <strong>unstable and slow convergence</strong>. This instability is exacerbated because the wavefunction <span class="arithmatex">\(\psi_{\mathbf{\theta}}\)</span> must always remain <strong>normalized</strong> (<span class="arithmatex">\(\langle \psi_{\mathbf{\theta}} | \psi_{\mathbf{\theta}} \rangle = 1\)</span>).</p>
+<h3 id="the-solution-hilbert-space-metric"><strong>The Solution: Hilbert Space Metric</strong></h3>
+<hr />
+<p>Stochastic Reconfiguration (SR) corrects this by preconditioning the standard gradient with a metric tensor derived from the quantum state's geometry. The optimization step <span class="arithmatex">\(\Delta \mathbf{\theta}\)</span> is found by solving a linear system:</p>
+<div class="arithmatex">\[
+S_{ij}\Delta\theta_j = -\nabla_i E
+\]</div>
+<ul>
+<li><strong><span class="arithmatex">\(\nabla_i E\)</span>:</strong> The standard expected energy gradient.</li>
+<li><strong><span class="arithmatex">\(S_{ij}\)</span> (Quantum Geometric Tensor):</strong> This matrix, estimated through Monte Carlo sampling, defines the <strong>metric of the Hilbert space</strong>. It ensures that the calculated step <span class="arithmatex">\(\Delta \mathbf{\theta}\)</span> is the most efficient movement toward the energy minimum when distance is measured in terms of the quantum state manifold.</li>
+</ul>
+<h3 id="analogy-quantum-natural-gradient"><strong>Analogy: Quantum Natural Gradient</strong></h3>
+<hr />
+<ul>
+<li><strong>Connection to Natural Gradient:</strong> SR is the direct quantum extension of the <strong>Natural Gradient Descent</strong> technique used in information geometry. The Natural Gradient uses the Fisher Information Matrix (<span class="arithmatex">\(I_{ij}\)</span>, Section 2.3) to precondition the descent, ensuring that movement is maximized in the space of statistically distinguishable models.</li>
+<li><strong>Quantum Metric:</strong> In SR, the metric tensor <span class="arithmatex">\(S_{ij}\)</span> replaces <span class="arithmatex">\(I_{ij}\)</span>. The gradient descent process now follows the <strong>geodesic motion</strong> (shortest, most efficient path) on the manifold of normalized quantum states.</li>
+</ul>
+<p>This adaptation allows the NQS optimizer to converge quickly and stably, effectively modeling the natural <strong>relaxation dynamics</strong> of the quantum system in its abstract Hilbert space.</p>
+<hr />
+<h2 id="1710-code-demo-minimal-neural-quantum-state"><strong>17.10 Code Demo — Minimal Neural Quantum State</strong></h2>
+<p>This code demonstration provides a simplified, schematic implementation of a <strong>Neural Quantum State (NQS)</strong>, using a minimal <strong>Restricted Boltzmann Machine (RBM)</strong> structure (Section 17.3). The purpose is to show how a neural network's forward pass can output the <strong>quantum amplitude</strong> <span class="arithmatex">\(\psi_{\mathbf{\theta}}(\mathbf{s})\)</span> for a given spin configuration <span class="arithmatex">\(\mathbf{s}\)</span>.</p>
+<hr />
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span><span class="o">,</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="k">class</span><span class="w"> </span><span class="nc">NQS</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_visible</span><span class="p">,</span> <span class="n">n_hidden</span><span class="p">):</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>        <span class="c1"># W: Coupling matrix between visible (spins) and hidden (entanglement) units.</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n_visible</span><span class="p">,</span> <span class="n">n_hidden</span><span class="p">)</span><span class="o">*</span><span class="mf">0.1</span><span class="p">)</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>        <span class="c1"># a, b: Bias fields for visible and hidden units, respectively.</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_visible</span><span class="p">))</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_hidden</span><span class="p">))</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>        <span class="c1"># Implements the RBM wavefunction ansatz (Section 17.3):</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>        <span class="c1"># psi(s) = sum_h exp(a^T s + b^T h + s^T W h)</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>        <span class="c1"># 1. Linear term: a^T s</span>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>        <span class="n">linear_term</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">@</span> <span class="n">s</span> 
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>        <span class="c1"># 2. Coupling term: b + s @ W </span>
+</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>        <span class="c1"># This is the contribution to the hidden unit energies.</span>
+</span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>        <span class="n">coupling_term</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">+</span> <span class="n">s</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span>
+</span><span id="__span-5-22"><a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>
+</span><span id="__span-5-23"><a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>        <span class="c1"># 3. Summation over hidden units (logsumexp handles the sum efficiently):</span>
+</span><span id="__span-5-24"><a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>        <span class="c1"># The exponential of the RBM energy involves a sum over all possible hidden states h.</span>
+</span><span id="__span-5-25"><a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a>        <span class="n">log_sum_exp</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">logsumexp</span><span class="p">(</span><span class="n">coupling_term</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-5-26"><a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a>
+</span><span id="__span-5-27"><a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a>        <span class="c1"># 4. Final log-amplitude (unnormalized log|psi| or log psi)</span>
+</span><span id="__span-5-28"><a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a>        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">linear_term</span> <span class="o">+</span> <span class="n">log_sum_exp</span><span class="p">)</span>
+</span><span id="__span-5-29"><a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a>
+</span><span id="__span-5-30"><a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a><span class="c1"># Example energy estimation (schematic)</span>
+</span><span id="__span-5-31"><a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a><span class="c1"># Define 100 sample spin configurations (s) for a system of 10 spins.</span>
+</span><span id="__span-5-32"><a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a><span class="n">s</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,(</span><span class="mi">100</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">*</span><span class="mi">2</span><span class="o">-</span><span class="mi">1</span>
+</span><span id="__span-5-33"><a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a><span class="n">psi</span> <span class="o">=</span> <span class="n">NQS</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span> <span class="c1"># N=10 spins, 5 hidden units</span>
+</span><span id="__span-5-34"><a id="__codelineno-5-34" name="__codelineno-5-34" href="#__codelineno-5-34"></a><span class="n">log_psi</span> <span class="o">=</span> <span class="n">psi</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</span><span id="__span-5-35"><a id="__codelineno-5-35" name="__codelineno-5-35" href="#__codelineno-5-35"></a><span class="c1"># Gradient-based updates on &lt;H&gt; would follow with sampled local energies</span>
+</span></code></pre></div>
+<h3 id="interpretation-of-the-neural-ansatz"><strong>Interpretation of the Neural Ansatz</strong></h3>
+<hr />
+<ol>
+<li><strong>Architecture:</strong> The <code>NQS</code> class defines the neural network structure that acts as the <strong>variational ansatz</strong> for the wavefunction <span class="arithmatex">\(\psi_{\mathbf{\theta}}\)</span>. It uses the parameters <span class="arithmatex">\(W\)</span>, <span class="arithmatex">\(a\)</span>, and <span class="arithmatex">\(b\)</span> (collectively <span class="arithmatex">\(\mathbf{\theta}\)</span>) as the adjustable coefficients of the quantum state.</li>
+<li><strong>Input/Output:</strong> The input <span class="arithmatex">\(\mathbf{s}\)</span> is the <strong>spin configuration</strong>. The output <code>psi(s)</code> is the <strong>complex amplitude</strong> <span class="arithmatex">\(\psi_{\mathbf{\theta}}(\mathbf{s})\)</span> for that specific configuration (simplified here to a real-valued amplitude for demonstration).</li>
+<li><strong>Entanglement Encoding:</strong> The core of the RBM ansatz (the logic within the <code>logsumexp</code>) performs the complex summation over the hidden unit states. These hidden units model the system's <strong>entanglement</strong>, ensuring the network can encode the intricate quantum correlations necessary to represent the true ground state.</li>
+</ol>
+<p>The entire mechanism shows how the classical function approximation power of a neural network is harnessed to encode the exponential complexity of a quantum state. The next steps in a real NQS routine would involve using <strong>Variational Monte Carlo (VMC)</strong> (Section 17.4) to compute the expected energy and derive the energy gradient for training.</p>
+<hr />
+<h2 id="1711-deep-quantum-architectures"><strong>17.11 Deep Quantum Architectures</strong></h2>
+<p>The development of <strong>Neural Quantum States (NQS)</strong> (Section 17.1) has moved beyond the simple, shallow <strong>Restricted Boltzmann Machine (RBM)</strong> ansatz (Section 17.3) toward more sophisticated, deep architectures. These specialized designs are necessary to efficiently capture the diverse range of local and global correlations (entanglement) found in complex quantum systems.</p>
+<hr />
+<h3 id="hierarchical-architectures-for-entanglement"><strong>Hierarchical Architectures for Entanglement</strong></h3>
+<hr />
+<p>Just as hierarchical networks efficiently model complexity in classical data (Chapter 13), deep quantum architectures impose necessary <strong>inductive biases</strong> that align the network's structure with the system's physics:</p>
+<ul>
+<li><strong>Autoregressive NQS:</strong> These networks model the wavefunction amplitude <span class="arithmatex">\(\psi(\mathbf{s})\)</span> sequentially, ensuring that the total probability is always correctly normalized. This architecture is well-suited for efficient and exact <strong>sampling</strong> from the distribution <span class="arithmatex">\(P(\mathbf{s}) = |\psi(\mathbf{s})|^2\)</span>.</li>
+<li><strong>CNN-based NQS:</strong> Networks built with <strong>Convolutional Neural Network (CNN)</strong> layers are designed to capture the <strong>translational invariance</strong> inherent in regular lattice systems (e.g., crystal lattices). The shared weights enforce the physical symmetry of the environment (Chapter 13.3).</li>
+<li><strong>Transformer-NQS:</strong> These leverage the <strong>Self-Attention</strong> mechanism (Chapter 19) to model <strong>long-range quantum correlations</strong>. They can dynamically capture complex, nonlocal entanglement patterns without the connectivity limitations of local lattice models.</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Matching Architecture to Physics: The Power of Inductive Bias</p>
+</div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>The best neural quantum architecture is not necessarily the most complex, but the one whose **inductive bias** (built-in structural assumptions) aligns with the physical symmetries and correlations of the quantum system. For lattice systems with local interactions, CNNs exploit translational symmetry efficiently. For ordered phases with sequential dependencies, autoregressive models excel. For systems with long-range entanglement, Transformers provide the necessary global context. This principle mirrors the lesson from PINNs (Chapter 16): embedding physical structure into the model architecture dramatically reduces the parameters needed and accelerates convergence. The lesson: design your neural ansatz to mirror the quantum Hamiltonian&#39;s structure.
+</span></code></pre></div>
+<h3 id="analogy-multi-scale-quantum-interactions"><strong>Analogy: Multi-Scale Quantum Interactions</strong></h3>
+<hr />
+<p>Deep quantum architectures mirror the <strong>multi-scale organization of quantum interactions</strong>:
+* <strong>Local Interactions:</strong> CNN layers efficiently handle short-range correlations between neighboring spins.
+* <strong>Global Entanglement:</strong> Transformer layers capture the non-local influence of distant components.</p>
+<p>The network's depth (<span class="arithmatex">\(L\)</span>) defines the extent of the correlations it can effectively model.</p>
+<h3 id="hybrid-quantumclassical-models"><strong>Hybrid Quantum–Classical Models</strong></h3>
+<hr />
+<p>A significant modern extension involves <strong>Hybrid Quantum–Classical</strong> architectures:
+* <strong>Variational Quantum Eigensolvers (VQE):</strong> These use classical optimizers (Part II) to minimize the energy calculated from a <strong>quantum circuit</strong> (the variational ansatz). The classical optimization manages the complex energy landscape, while the quantum computer handles the necessary complex computation on the quantum state.</p>
+<p>This approach demonstrates the practical power of integrating classical AI optimization with quantum hardware, with the final goal of making quantum simulation tractable.</p>
+<hr />
+<h2 id="1712-quantum-probability-and-information-geometry"><strong>17.12 Quantum Probability and Information Geometry</strong></h2>
+<p>The training of <strong>Neural Quantum States (NQS)</strong> (Section 17.2) is an optimization problem that takes place on the highly constrained space of quantum states. <strong>Information Geometry</strong> provides the advanced mathematical language for understanding the structure of this space, establishing a rigorous connection between probability, quantum mechanics, and optimization.</p>
+<hr />
+<h3 id="the-manifold-of-quantum-states"><strong>The Manifold of Quantum States</strong></h3>
+<hr />
+<p>The NQS network parameters <span class="arithmatex">\(\mathbf{\theta}\)</span> define a <strong>manifold</strong>—a curved geometric surface—embedded within the vast Hilbert space. Every point on this manifold corresponds to a valid, normalized wavefunction <span class="arithmatex">\(\psi_{\mathbf{\theta}}\)</span>.</p>
+<p>The challenge for optimization is to measure distance and define the "steepest descent" correctly on this curved manifold, rather than using the inadequate Euclidean distance of the parameter space.</p>
+<h3 id="the-quantum-fisher-information"><strong>The Quantum Fisher Information</strong></h3>
+<hr />
+<p>The metric tensor that defines distance on the quantum state manifold is the <strong>Quantum Fisher Information Matrix (<span class="arithmatex">\(S_{ij}\)</span>)</strong>. This matrix plays the same role as the Fisher Information Matrix in classical statistics (Chapter 2.3).</p>
+<ul>
+<li><strong>Definition:</strong> <span class="arithmatex">\(S_{ij}\)</span> measures how quickly the quantum state <span class="arithmatex">\(\psi_{\mathbf{\theta}}\)</span> changes when the parameters <span class="arithmatex">\(\mathbf{\theta}\)</span> are varied. It quantifies the <strong>statistical distinguishability</strong> between two infinitesimally close quantum states.</li>
+<li><strong>Optimization Role:</strong> The inverse of this matrix, <span class="arithmatex">\(S^{-1}\)</span>, is used in <strong>Stochastic Reconfiguration (SR)</strong> (Section 17.9) to precondition the energy gradient. This ensures the optimization moves along the geodesic (shortest, most efficient path) of the quantum manifold, stabilizing convergence.</li>
+</ul>
+<h3 id="information-theoretic-view-compression"><strong>Information-Theoretic View: Compression</strong></h3>
+<hr />
+<p>The NQS process can be interpreted from an information-theoretic perspective:</p>
+<ul>
+<li><strong>Goal:</strong> The true quantum state <span class="arithmatex">\(\psi\)</span> is an object of exponential complexity. The learning process <span class="arithmatex">\(\psi_{\mathbf{\theta}} \to \psi\)</span> is equivalent to <strong>projecting the true quantum state</strong> onto the lower-dimensional manifold spanned by the neural network's parameters.</li>
+<li><strong>Analogy:</strong> Quantum learning is a highly efficient form of <strong>information compression</strong>. The network uses its finite capacity (polynomial number of weights) to encode the maximum possible entanglement structure (correlation) needed for the ground state.</li>
+</ul>
+<p>The geometry of the quantum state space thus dictates the optimal learning dynamics.</p>
+<hr />
+<h2 id="1713-applications"><strong>17.13 Applications</strong></h2>
+<p>The capacity of <strong>Neural Quantum States (NQS)</strong> to compress and represent complex wavefunctions (Section 17.7) makes them a transformative tool for solving intractable problems across the quantum sciences. By turning the search for the quantum ground state into a manageable <strong>optimization problem</strong> (Section 17.2), NQS provide a scalable bridge between classical deep learning and quantum many-body theory.</p>
+<hr />
+<h3 id="impact-scalable-quantum-inference"><strong>Impact: Scalable Quantum Inference</strong></h3>
+<hr />
+<p>The primary impact of NQS is to provide an efficient, polynomial-scaling alternative to traditional methods that struggle with the <strong>exponential complexity</strong> of the Hilbert space (Section 17.1).</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Domain</th>
+<th style="text-align: left;">Hamiltonian / System</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Quantum Spin Systems</strong></td>
+<td style="text-align: left;">Ising, Heisenberg models (Section 17.5).</td>
+<td style="text-align: left;"><strong>Ground State Estimation:</strong> Finding the lowest energy configuration of interacting spins in disordered systems, crucial for understanding quantum criticality and phase transitions.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Electronic Structure</strong></td>
+<td style="text-align: left;">Hubbard, H<span class="arithmatex">\(_2\)</span> molecule.</td>
+<td style="text-align: left;"><strong>Correlated Electron Wavefunctions:</strong> Modeling the complex behavior of interacting electrons in materials, which dictates conductivity and magnetic properties.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Quantum Chemistry</strong></td>
+<td style="text-align: left;">Molecular orbitals.</td>
+<td style="text-align: left;"><strong>Energy and Density Prediction:</strong> Calculating the total energy and electron density of molecular configurations with chemical accuracy.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Quantum Dynamics</strong></td>
+<td style="text-align: left;">Time-dependent Schrödinger Equation.</td>
+<td style="text-align: left;"><strong>Simulation via Time-Evolving PINNs:</strong> NQS can be combined with PINN techniques (Chapter 16) to model the evolution of the quantum state over time.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Quantum Hardware</strong></td>
+<td style="text-align: left;">Variational Quantum Eigensolvers (VQE).</td>
+<td style="text-align: left;"><strong>Hybrid Classical–Quantum Training:</strong> The NQS serves as the classical optimizer that efficiently guides the quantum computation performed on a quantum computer.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition example">
+<p class="admonition-title">Real-World Application: Solving the Hubbard Model for High-Temperature Superconductivity</p>
+</div>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>The Hubbard model describes interacting electrons on a lattice and is central to understanding high-temperature superconductors. Traditional methods (exact diagonalization, DMRG) fail for large 2D lattices due to exponential complexity. NQS with CNN architecture (Section 17.11) has successfully computed ground state energies for 10×10 lattices with accuracy matching or exceeding tensor network methods. The CNN&#39;s translational symmetry naturally captures the lattice periodicity, while hidden units encode electron correlations (entanglement). This breakthrough demonstrates NQS can tackle problems at the frontier of condensed matter physics, providing insights into the mechanism of superconductivity that could guide material design.
+</span></code></pre></div>
+The <strong>Unifying Impact</strong> is that NQS transforms the calculation of high-dimensional quantum observables into a problem of <strong>statistical inference</strong> (Variational Monte Carlo, Section 17.4), which can be scaled effectively on classical hardware.</p>
+<hr />
+<h2 id="1714-physical-interpretation-learning-as-quantum-relaxation"><strong>17.14 Physical Interpretation — Learning as Quantum Relaxation</strong></h2>
+<p>The convergence of the <strong>Neural Quantum State (NQS)</strong> training process (Section 17.2) is not merely a mathematical optimization; it is a computational simulation of a fundamental physical dynamic: <strong>quantum relaxation</strong>. This interpretation unifies machine learning and quantum physics under a common energetic geometry.</p>
+<hr />
+<h3 id="analogy-gradient-descent-in-energy"><strong>Analogy: Gradient Descent in Energy</strong></h3>
+<hr />
+<p>The optimization of the NQS parameters <span class="arithmatex">\(\mathbf{\theta}\)</span> using <strong>Variational Monte Carlo (VMC)</strong> (Section 17.4) is analogous to driving the quantum system toward its lowest energy configuration.</p>
+<ul>
+<li><strong>Classical Relaxation:</strong> In classical physics, an excited particle in a fluid undergoes <strong>overdamped relaxation</strong> (Chapter 5.1), minimizing its potential energy until it settles at a minimum.</li>
+<li><strong>Quantum Relaxation:</strong> The NQS training process mimics the <strong>imaginary-time Schrödinger evolution</strong>. This theoretical evolution is the quantum equivalent of classical relaxation; it is a flow that is guaranteed to minimize the expected energy and drive the trial wavefunction <span class="arithmatex">\(\psi_{\mathbf{\theta}}\)</span> toward the true ground state <span class="arithmatex">\(\psi_0\)</span>.</li>
+<li><strong>Unified Dynamics:</strong> In both classical and quantum contexts, the dynamics involve performing <strong>gradient descent in energy</strong>. The parameter updates are controlled by a "force" (the energy gradient) that pushes the system toward lower potential.</li>
+</ul>
+<h3 id="the-abstract-hilbert-manifold"><strong>The Abstract Hilbert Manifold</strong></h3>
+<hr />
+<p>The optimization does not take place in the physical 3D space of the atoms, but in the abstract, high-dimensional <strong>Hilbert manifold</strong> of possible quantum states (Section 17.12).</p>
+<ul>
+<li><strong>Parameter Updates <span class="arithmatex">\(\leftrightarrow\)</span> Relaxation:</strong> The iterative adjustment of the network parameters <span class="arithmatex">\(\mathbf{\theta}\)</span> is analogous to the quantum state relaxing within this abstract space.</li>
+<li><strong>Energy and Geometry:</strong> The stability of this motion is governed by the specialized metric (the Quantum Fisher Information, Section 17.9), ensuring the network finds the most efficient path (geodesic) to the energy minimum.</li>
+</ul>
+<h3 id="unification-a-common-energetic-geometry"><strong>Unification: A Common Energetic Geometry</strong></h3>
+<hr />
+<p>The NQS framework reveals a deep <strong>unification</strong>:</p>
+<ul>
+<li><strong>Machine learning and quantum physics share a common geometry</strong>.</li>
+<li>The fundamental currency is the minimization of <strong>expected energy</strong> (or loss). The learning algorithm is simply a computational tool that efficiently solves the universal physics problem of finding the lowest energy state.</li>
+</ul>
+<hr />
+<h2 id="1715-bridge-to-quantum-information-and-beyond"><strong>17.15 Bridge to Quantum Information and Beyond</strong></h2>
+<p>The framework of <strong>Neural Quantum States (NQS)</strong> establishes that classical deep learning models can act as efficient variational ansätze for simulating complex quantum many-body physics. This success opens the door to the broader field of <strong>Quantum Information Theory</strong> and sets the stage for the final frontiers of the Physics <span class="arithmatex">\(\leftrightarrow\)</span> AI synthesis.</p>
+<hr />
+<h3 id="next-steps-in-quantum-modeling"><strong>Next Steps in Quantum Modeling</strong></h3>
+<hr />
+<p>The NQS approach naturally extends to more complex quantum objects and phenomena, driving research into deeper areas of the field:</p>
+<ul>
+<li><strong>Quantum Boltzmann Machines (QBMs):</strong> These are the quantum generalization of the Restricted Boltzmann Machine (RBM) (Section 17.3, 17.8). They are used to represent <strong>mixed quantum states</strong> (density matrices, which encode thermal or disordered states) rather than just pure ground states (wavefunctions).</li>
+<li><strong>Learning Entanglement:</strong> NQS and related architectures are being developed to quantify and learn key informational properties of quantum systems, such as <strong>entanglement entropy</strong> and <strong>mutual information</strong> between subsystems. These are essential measures of quantum correlation.</li>
+<li><strong>Neural Quantum Dynamics:</strong> This involves using the network to model the <strong>time evolution</strong> of the quantum state. By training the NQS against the time-dependent Schrödinger equation (Chapter 16.11), the network learns the trajectory of the wavefunction through Hilbert space.</li>
+</ul>
+<h3 id="foreshadowing-graph-based-quantum-fields"><strong>Foreshadowing: Graph-Based Quantum Fields</strong></h3>
+<hr />
+<p>The challenge of modeling quantum systems involves both the non-local nature of entanglement (Chapter 19) and the local interaction structure imposed by the physical lattice.</p>
+<ul>
+<li>The next conceptual step in the architecture is the <strong>Graph Neural Network (GNN)</strong> (Chapter 18). While NQS can use GNNs internally (Section 17.11), the GNN framework itself models how local information propagates across a discrete, arbitrary graph.</li>
+<li>The connection: <strong>Quantum states on lattices or arbitrary graphs</strong> (chemical molecules, condensed matter lattices) are naturally described as <strong>graph-based functions</strong>. NQS with GNN layers represents the integration of two frontiers—quantum simulation and geometric deep learning.</li>
+</ul>
+<p>This conceptual evolution shows the broader trajectory of modern AI research: from image recognition (CNNs) → sequential data (Transformers, Chapter 19) → graph-structured data (GNNs) → and finally to <strong>quantum physics as graph learning</strong>.</p>
+<h3 id="the-final-insight-physics-is-the-language-of-learning"><strong>The Final Insight: Physics Is the Language of Learning</strong></h3>
+<hr />
+<p>The NQS framework completes the circle:</p>
+<ol>
+<li><strong>Classical ML</strong> (Chapters 1–11) begins with the language of <strong>optimization</strong>: energy landscapes, gradient descent, and loss functions.</li>
+<li><strong>Physics-Informed AI</strong> (Chapters 12–17) reveals that the <strong>laws of physics themselves are optimization problems</strong>: PDEs are energy minimization (Chapter 16), quantum states are variational principles (this chapter).</li>
+<li><strong>The Synthesis</strong>: Machine learning and physics are not separate fields—they are two perspectives on the same universal geometry of <strong>information constrained by dynamics</strong>.</li>
+</ol>
+<p>The final lesson: Neural networks are not just tools for data fitting—they are <strong>universal compressors</strong> for the structure of reality itself.</p>
+<hr />
+<h2 id="references"><strong>References</strong></h2>
+<p>[1] Carleo, G., &amp; Troyer, M. (2017). Solving the quantum many-body problem with artificial neural networks. <em>Science</em>, 355(6325), 602-606.
+[2] Torlai, G., et al. (2018). Neural-network quantum state tomography. <em>Nature Physics</em>, 14(5), 447-450.
+[3] Choo, K., Carleo, G., Regnault, N., &amp; Neupert, T. (2018). Symmetries and many-body excitations with neural-network quantum states. <em>Physical Review Letters</em>, 121(16), 167204.
+[4] Vicentini, F., et al. (2022). NetKet 3: Machine learning toolbox for many-body quantum systems. <em>SciPost Physics Codebases</em>, 7.
+[5] Glasser, I., et al. (2018). Neural-network quantum states, string-bond states, and chiral topological states. <em>Physical Review X</em>, 8(1), 011006.
+[6] Stokes, J., et al. (2020). Quantum natural gradient. <em>Quantum</em>, 4, 269.
+[7] Cai, Z., &amp; Liu, J. (2018). Approximating quantum many-body wave functions using artificial neural networks. <em>Physical Review B</em>, 97(3), 035116.
+[8] Hermann, J., Schätzle, Z., &amp; Noé, F. (2020). Deep-neural-network solution of the electronic Schrödinger equation. <em>Nature Chemistry</em>, 12(10), 891-897.
+[9] Pfau, D., et al. (2020). Ab initio solution of the many-electron Schrödinger equation with deep neural networks. <em>Physical Review Research</em>, 2(3), 033429.
+[10] Amari, S. (1998). Natural gradient works efficiently in learning. <em>Neural Computation</em>, 10(2), 251-276.
+* This message-passing dynamics directly mirrors the flow of <strong>quantum or physical interactions</strong> on arbitrary geometries. GNNs, therefore, serve as the <strong>discrete counterpart of continuous field theories</strong> and are a natural architecture for enforcing local conservation laws in quantum systems.</p>
+<p>The progression continues: from classical optimization to <strong>quantum amplitude mechanics</strong>, and then to the generalized interaction rules of arbitrary graph topology.</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://bigbookofcomputing.github.io" target="_blank" rel="noopener" title="bigbookofcomputing.github.io" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/bigbookofcomputing" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256c0 120 82.7 220.8 194.2 248.5V334.2h-52.8V256h52.8v-33.7c0-87.1 39.4-127.5 125-127.5 16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H287v175.9C413.8 494.8 512 386.9 512 256"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.youtube.com/@big-book-of-computing" target="_blank" rel="noopener" title="www.youtube.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M549.7 124.1c-6.2-23.7-24.8-42.3-48.3-48.6C458.9 64 288.1 64 288.1 64S117.3 64 74.7 75.5c-23.5 6.3-42 24.9-48.3 48.6C15 167 15 256.4 15 256.4s0 89.4 11.4 132.3c6.3 23.6 24.8 41.5 48.3 47.8C117.3 448 288.1 448 288.1 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zM232.2 337.6V175.2l142.7 81.2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+  
+
+
+<h4>Cookie consent</h4>
+<p>We use cookies to recognize your repeated visits and preferences, as well as to measure the effectiveness of our documentation and whether users find what they're searching for. With your consent, you're helping us to make our documentation better.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="github" checked>
+      <span class="task-list-indicator"></span>
+      GitHub
+    </label>
+  </li>
+
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../static/mathjax-config.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
