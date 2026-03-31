@@ -2979,15 +2979,15 @@ $$
 * <strong>Method:</strong> For fully observed data and simple graphs, maximizing likelihood can be done directly by counting frequencies. For complex or hidden variable models, iterative optimization is required, often using algorithms like <strong>Expectation-Maximization (EM)</strong>, which finds parameters that iteratively minimize the variational free energy (Chapter 9.6, 11.7).</p>
 <div class="admonition tip">
 <p class="admonition-title">Learning as Iterative Free Energy Minimization</p>
+<p>Parameter learning in graphical models with hidden variables uses EM:</p>
+<ul>
+<li><strong>E-step</strong>: Compute expected sufficient statistics given current parameters (inference)</li>
+<li><strong>M-step</strong>: Update parameters to maximize expected log-likelihood (optimization)</li>
+<li><strong>Convergence</strong>: EM iteratively minimizes variational free energy <span class="arithmatex">\(\mathcal{F}(q)\)</span></li>
+</ul>
+<p>This unifies inference (computing posteriors) and learning (fitting parameters) as joint optimization.</p>
 </div>
-<h2 id="parameter-learning-in-graphical-models-with-hidden-variables-uses-em-e-step-compute-expected-sufficient-statistics-given-current-parameters-inference-m-step-update-parameters-to-maximize-expected-log-likelihood-optimization-convergence-em-iteratively-minimizes-variational-free-energy-mathcalfq-this-unifies-inference-computing-posteriors-and-learning-fitting-parameters-as-joint-optimization"><div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Parameter learning in graphical models with hidden variables uses EM:
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>* **E-step**: Compute expected sufficient statistics given current parameters (inference)
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>* **M-step**: Update parameters to maximize expected log-likelihood (optimization)
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>* **Convergence**: EM iteratively minimizes variational free energy $\mathcal{F}(q)$
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>This unifies inference (computing posteriors) and learning (fitting parameters) as joint optimization.
-</span></code></pre></div></h2>
+<hr />
 <h3 id="structure-learning-discovering-connectivity"><strong>Structure Learning: Discovering Connectivity</strong></h3>
 <p>A more challenging task is <strong>structure learning</strong>, where the goal is to infer the <strong>topology</strong> of the graph itself—determining which nodes are connected by edges. This is equivalent to discovering the <strong>connectivity and interaction mechanism</strong> in an unknown physical system.</p>
 <ul>
@@ -3052,16 +3052,16 @@ $$
 <p>The <strong>unifying idea</strong> is that any system whose <strong>collective behavior is determined by local interactions</strong> can be modeled using a probabilistic graph. The computational challenge shifts from solving complex differential equations to achieving statistical consistency via local message passing.</p>
 <div class="admonition example">
 <p class="admonition-title">MRF for Image Denoising</p>
+<p>Apply MRF to denoise a corrupted binary image:</p>
+<ul>
+<li><strong>Variables</strong>: Each pixel <span class="arithmatex">\(x_i \in \{0, 1\}\)</span> (black or white)</li>
+<li><strong>Observations</strong>: Noisy pixel values <span class="arithmatex">\(y_i\)</span> (corrupted by flipping probability <span class="arithmatex">\(p\)</span>)</li>
+<li><strong>Pairwise potentials</strong>: <span class="arithmatex">\(\psi_{ij}(x_i, x_j) = e^{J}\)</span> if <span class="arithmatex">\(x_i = x_j\)</span> (smoothness prior)</li>
+<li><strong>Unary potentials</strong>: <span class="arithmatex">\(\psi_i(x_i) = e^{h \cdot \mathbb{1}_{x_i = y_i}}\)</span> (observation likelihood)</li>
+<li><strong>Inference</strong>: Loopy BP computes marginals <span class="arithmatex">\(p(x_i|\mathbf{y})\)</span> to denoise image</li>
+</ul>
+<p>The MRF enforces spatial coherence—neighboring pixels prefer same values—while respecting observations.</p>
 </div>
-<p><div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Apply MRF to denoise a corrupted binary image:
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>* **Variables**: Each pixel $x_i \in \{0, 1\}$ (black or white)
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>* **Observations**: Noisy pixel values $y_i$ (corrupted by flipping probability $p$)
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>* **Pairwise potentials**: $\psi_{ij}(x_i, x_j) = e^{J}$ if $x_i = x_j$ (smoothness prior)
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>* **Unary potentials**: $\psi_i(x_i) = e^{h \cdot \mathbb{1}_{x_i = y_i}}$ (observation likelihood)
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>* **Inference**: Loopy BP computes marginals $p(x_i|\mathbf{y})$ to denoise image
-</span></code></pre></div>
-The MRF enforces spatial coherence—neighboring pixels prefer same values—while respecting observations.</p>
 <h2 id="1114-takeaways-bridge-to-part-iv"><strong>11.14 Takeaways &amp; Bridge to Part IV</strong></h2>
 <p>This chapter concluded the analytical section of <strong>Part III: Learning as Inference</strong>, demonstrating how probability theory can be translated into a structural, architectural framework. We showed that complex systems, defined by intricate local dependencies, can be rigorously modeled and solved by graphical methods.</p>
 <hr />
@@ -3074,16 +3074,16 @@ The MRF enforces spatial coherence—neighboring pixels prefer same values—whi
 </ul>
 <details class="question">
 <summary>Why Is Belief Propagation Exact Only on Trees?</summary>
+<p>BP assumes messages summarize independent sub-graphs (no information recirculation):</p>
+<ul>
+<li><strong>Trees</strong>: No cycles → each message path is unique → messages are truly independent</li>
+<li><strong>Loopy graphs</strong>: Cycles allow messages to recirculate → statistical correlations violate independence</li>
+<li><strong>Physical analogy</strong>: Loops create frustrated spins (conflicting local energies) like spin glasses</li>
+<li><strong>Loopy BP</strong>: Despite violation, often converges to good approximations (Bethe free energy)</li>
+</ul>
+<p>Trees guarantee exact marginals; loops require approximation but remain practical.</p>
 </details>
-<h2 id="bp-assumes-messages-summarize-independent-sub-graphs-no-information-recirculation-trees-no-cycles-each-message-path-is-unique-messages-are-truly-independent-loopy-graphs-cycles-allow-messages-to-recirculate-statistical-correlations-violate-independence-physical-analogy-loops-create-frustrated-spins-conflicting-local-energies-like-spin-glasses-loopy-bp-despite-violation-often-converges-to-good-approximations-bethe-free-energy-trees-guarantee-exact-marginals-loops-require-approximation-but-remain-practical"><div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>BP assumes messages summarize independent sub-graphs (no information recirculation):
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>* **Trees**: No cycles → each message path is unique → messages are truly independent
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>* **Loopy graphs**: Cycles allow messages to recirculate → statistical correlations violate independence
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>* **Physical analogy**: Loops create frustrated spins (conflicting local energies) like spin glasses
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>* **Loopy BP**: Despite violation, often converges to good approximations (Bethe free energy)
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>Trees guarantee exact marginals; loops require approximation but remain practical.
-</span></code></pre></div></h2>
+<hr />
 <h3 id="bridge-to-part-iv-deep-learning-as-representation"><strong>Bridge to Part IV: Deep Learning as Representation</strong></h3>
 <p>In <strong>Part III: Learning as Inference</strong> (Chapters 9–11), the probabilistic and graphical structures were largely <strong>designed</strong> or explicitly inferred from simple assumptions (e.g., linearity, shared covariance, predefined couplings).</p>
 <p>In <strong>Part IV: Deep Learning as Representation</strong>, we take the final, massive leap: we introduce architectures that are powerful enough to <strong>learn the entire structure, hierarchy, and features autonomously</strong>.</p>

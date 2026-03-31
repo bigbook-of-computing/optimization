@@ -2550,9 +2550,9 @@ d \ll D
 <p>In standard physics, finding these low-dimensional variables requires deep theoretical insight. In data science, our goal is to <strong>automate this discovery</strong>. We seek algorithms that can look at raw simulation data and <em>learn</em> the optimal coarse-grained variables (latent variables) without prior knowledge of the governing equations.</p>
 <div class="admonition tip">
 <p class="admonition-title">Dimensionality Reduction as Automated Order Parameter Discovery</p>
+<p>The physicist manually chooses order parameters (magnetization, density, temperature) based on theoretical understanding. Machine learning algorithms like PCA and UMAP automate this process—they discover the collective coordinates that best describe the system's variability directly from data, without requiring prior physical insight.</p>
 </div>
-<h2 id="the-physicist-manually-chooses-order-parameters-magnetization-density-temperature-based-on-theoretical-understanding-machine-learning-algorithms-like-pca-and-umap-automate-this-processthey-discover-the-collective-coordinates-that-best-describe-the-systems-variability-directly-from-data-without-requiring-prior-physical-insight"><div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>The physicist manually chooses order parameters (magnetization, density, temperature) based on theoretical understanding. Machine learning algorithms like PCA and UMAP automate this process—they discover the collective coordinates that best describe the system&#39;s variability directly from data, without requiring prior physical insight.
-</span></code></pre></div></h2>
+<hr />
 <h3 id="the-mathematical-goal"><strong>The Mathematical Goal</strong></h3>
 <p>Formally, given a dataset <span class="arithmatex">\(X = \{\mathbf{x}_1, \dots, \mathbf{x}_N\}\)</span> where <span class="arithmatex">\(\mathbf{x}_i \in \mathbb{R}^D\)</span>, we seek a mapping function <span class="arithmatex">\(f\)</span>:</p>
 <div class="arithmatex">\[
@@ -2618,9 +2618,9 @@ $$By convention, the eigenvectors are sorted in descending order of their corres
 <p>PCA will fail dramatically on such data. It will attempt to "fit" a flat plane through the curved structure, leading to a projection that distorts the data, folds distinct states on top of each other, and completely misrepresents the system's true low-dimensional geometry.</p>
 <div class="admonition example">
 <p class="admonition-title">The Swiss Roll Problem</p>
+<p>Imagine a 2D ribbon rolled into a 3D spiral (the "Swiss roll" dataset). The intrinsic dimensionality is <span class="arithmatex">\(d=2\)</span> (two coordinates describe position on the ribbon), but it's embedded in <span class="arithmatex">\(\mathbb{R}^3\)</span>. PCA will project this onto a 2D plane, but the projection will overlap and fold distant parts of the ribbon onto each other. Nonlinear methods like UMAP successfully "unroll" the spiral back into a flat 2D rectangle, preserving the neighborhood structure.</p>
 </div>
-<h2 id="imagine-a-2d-ribbon-rolled-into-a-3d-spiral-the-swiss-roll-dataset-the-intrinsic-dimensionality-is-d2-two-coordinates-describe-position-on-the-ribbon-but-its-embedded-in-mathbbr3-pca-will-project-this-onto-a-2d-plane-but-the-projection-will-overlap-and-fold-distant-parts-of-the-ribbon-onto-each-other-nonlinear-methods-like-umap-successfully-unroll-the-spiral-back-into-a-flat-2d-rectangle-preserving-the-neighborhood-structure"><div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Imagine a 2D ribbon rolled into a 3D spiral (the &quot;Swiss roll&quot; dataset). The intrinsic dimensionality is $d=2$ (two coordinates describe position on the ribbon), but it&#39;s embedded in $\mathbb{R}^3$. PCA will project this onto a 2D plane, but the projection will overlap and fold distant parts of the ribbon onto each other. Nonlinear methods like UMAP successfully &quot;unroll&quot; the spiral back into a flat 2D rectangle, preserving the neighborhood structure.
-</span></code></pre></div></h2>
+<hr />
 <h3 id="manifold-learning-preserving-local-neighborhoods"><strong>Manifold Learning: Preserving Local Neighborhoods</strong></h3>
 <p>To solve this, we need <strong>nonlinear dimensionality reduction</strong>, also known as <strong>manifold learning</strong>. The guiding principle of these methods is to abandon the goal of preserving <em>global</em> linear variance (like PCA) and instead focus on preserving the <strong>local geometry</strong> of the data.</p>
 <p>The core intuition is this:</p>
@@ -2637,7 +2637,7 @@ $$By convention, the eigenvectors are sorted in descending order of their corres
 <div class="arithmatex">\[
 p_{j|i} = \frac{\exp(-\|\mathbf{x}_i - \mathbf{x}_j\|^2 / 2\sigma_i^2)}{\sum_{k \neq i} \exp(-\|\mathbf{x}_i - \mathbf{x}_k\|^2 / 2\sigma_i^2)}
 \]</div>
-<p><div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>(The bandwidth $\sigma_i$ is adaptively chosen for each point.) The final probability $P_{ij}$ is a symmetrized version, $P_{ij} = (p_{j|i} + p_{i|j}) / 2N$.
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>(The bandwidth $\sigma_i$ is adaptively chosen for each point.) The final probability $P_{ij}$ is a symmetrized version, $P_{ij} = (p_{j|i} + p_{i|j}) / 2N$.
 </span></code></pre></div>
 2.  <strong>Low-Dimensional Probabilities (<span class="arithmatex">\(Q_{ij}\)</span>):</strong> Second, t-SNE creates a similar probability distribution for the points <span class="arithmatex">\(\mathbf{z}_i\)</span> in the low-D "map" space (e.g., <span class="arithmatex">\(\mathbb{R}^2\)</span>). Critically, it uses a <strong>Student's t-distribution</strong> (which has "heavy tails") instead of a Gaussian:</p>
 <div class="arithmatex">\[
@@ -2698,13 +2698,13 @@ Q_{ij} = \frac{(1 + \|\mathbf{z}_i - \mathbf{z}_j\|^2)^{-1}}{\sum_{k \neq l} (1 
 <p><strong>Clustering is, therefore, the algorithmic identification of metastable states.</strong></p>
 <ul>
 <li><strong>Cluster <span class="arithmatex">\(C_1\)</span> <span class="arithmatex">\(\leftrightarrow\)</span> Metastable State 1 (e.g., "Protein Folded")</strong>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>This is a deep basin in the free-energy landscape. The simulation spends a long time here, so we collect many data points $\{\mathbf{x}_i\}$ in this region, forming a dense cluster.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>This is a deep basin in the free-energy landscape. The simulation spends a long time here, so we collect many data points $\{\mathbf{x}_i\}$ in this region, forming a dense cluster.
 </span></code></pre></div></li>
 <li><strong>Cluster <span class="arithmatex">\(C_2\)</span> <span class="arithmatex">\(\leftrightarrow\)</span> Metastable State 2 (e.g., "Protein Unfolded")</strong>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>This is a separate basin, and thus a separate cluster in the data.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>This is a separate basin, and thus a separate cluster in the data.
 </span></code></pre></div></li>
 <li><strong>The "Void" Between Clusters <span class="arithmatex">\(\leftrightarrow\)</span> The Energy Barrier</strong>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>The sparse, low-density region between clusters is the high-energy barrier. The clustering algorithm&#39;s job is to find this sparse &quot;watershed&quot; and draw a boundary through it.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>The sparse, low-density region between clusters is the high-energy barrier. The clustering algorithm&#39;s job is to find this sparse &quot;watershed&quot; and draw a boundary through it.
 </span></code></pre></div>
 By clustering our simulation data, we are automating the discovery of the system's distinct phases or conformational states.</li>
 </ul>
@@ -2719,17 +2719,17 @@ By clustering our simulation data, we are automating the discovery of the system
 </ol>
 <details class="question">
 <summary>Which Clustering Method Should I Use?</summary>
+<p>The choice depends on your data's geometry and your goals:</p>
+<ul>
+<li><strong>Spherical, well-separated clusters?</strong> Use K-Means (fast, simple)</li>
+<li><strong>Arbitrary shapes or noisy data?</strong> Use DBSCAN (handles complex geometries)</li>
+<li><strong>Unknown number of clusters?</strong> Use Hierarchical Clustering (dendrogram reveals structure at all scales)</li>
+<li><strong>Need probabilistic assignments?</strong> Use Gaussian Mixture Models (soft clustering with uncertainty)</li>
+<li><strong>Very high dimensions?</strong> First reduce dimensionality with UMAP, then cluster in low-D space</li>
+</ul>
+<p>Often the best strategy is to try multiple methods and compare results for robustness.</p>
 </details>
-<h2 id="the-choice-depends-on-your-datas-geometry-and-your-goals-spherical-well-separated-clusters-use-k-means-fast-simple-arbitrary-shapes-or-noisy-data-use-dbscan-handles-complex-geometries-unknown-number-of-clusters-use-hierarchical-clustering-dendrogram-reveals-structure-at-all-scales-need-probabilistic-assignments-use-gaussian-mixture-models-soft-clustering-with-uncertainty-very-high-dimensions-first-reduce-dimensionality-with-umap-then-cluster-in-low-d-space-often-the-best-strategy-is-to-try-multiple-methods-and-compare-results-for-robustness"><div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>The choice depends on your data&#39;s geometry and your goals:
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>* **Spherical, well-separated clusters?** Use K-Means (fast, simple)
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>* **Arbitrary shapes or noisy data?** Use DBSCAN (handles complex geometries)
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>* **Unknown number of clusters?** Use Hierarchical Clustering (dendrogram reveals structure at all scales)
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>* **Need probabilistic assignments?** Use Gaussian Mixture Models (soft clustering with uncertainty)
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>* **Very high dimensions?** First reduce dimensionality with UMAP, then cluster in low-D space
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>
-</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>Often the best strategy is to try multiple methods and compare results for robustness.
-</span></code></pre></div></h2>
+<hr />
 <h2 id="36-k-means-the-simplest-energy-minimizer"><strong>3.6 K-Means — The Simplest Energy Minimizer</strong></h2>
 <p>If clustering is the task of finding "basins" in the data landscape (Section 3.5), <strong>K-Means</strong> is the simplest, most direct algorithm for finding them. It is a centroid-based algorithm that models each of the <span class="arithmatex">\(K\)</span> clusters as a "blob" represented by its center, or <strong>centroid</strong>, <span class="arithmatex">\(\mathbf{\mu}_k\)</span>.</p>
 <hr />
@@ -2879,61 +2879,61 @@ p(k|\mathbf{x}_i) = \frac{\pi_k \mathcal{N}(\mathbf{x}_i|\mathbf{\mu}_k, \Sigma_
 <li>Visualize the final 2D projection, coloring the points by their discovered cluster labels.</li>
 </ol>
 <p>This process simulates the discovery of "phases" or "states" from high-dimensional, unlabeled simulation data.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCA</span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.cluster</span><span class="w"> </span><span class="kn">import</span> <span class="n">KMeans</span>
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_blobs</span>
-</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
-</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="c1">## 1. Generate synthetic high-dimensional data</span>
-</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>
-</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="c1">## We create 1000 samples in 5 dimensions (D=5)</span>
-</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>
-</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="c1">## with 3 distinct cluster centers (K=3).</span>
-</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>
-</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="n">X</span><span class="p">,</span> <span class="n">y_true</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">WAR</span><span class="p">:</span> <span class="n">tool</span><span class="o">-</span><span class="n">call</span><span class="o">-</span><span class="n">rejected</span>
-</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="n">n_features</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
-</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="n">centers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="n">cluster_std</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span>
-</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>
-</span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="c1">## X is our (1000, 5) data matrix. y_true holds the &quot;ground truth&quot; labels,</span>
-</span><span id="__span-7-20"><a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a>
-</span><span id="__span-7-21"><a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="c1">## but we will only use them for validation, not for the clustering.</span>
-</span><span id="__span-7-22"><a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>
-</span><span id="__span-7-23"><a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a><span class="c1">## 2. Apply PCA for dimensionality reduction</span>
-</span><span id="__span-7-24"><a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a>
-</span><span id="__span-7-25"><a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a><span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-</span><span id="__span-7-26"><a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a><span class="c1">## fit_transform finds the 2 principal components and projects</span>
-</span><span id="__span-7-27"><a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a>
-</span><span id="__span-7-28"><a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a><span class="c1">## the 5D data down to a 2D representation.</span>
-</span><span id="__span-7-29"><a id="__codelineno-7-29" name="__codelineno-7-29" href="#__codelineno-7-29"></a>
-</span><span id="__span-7-30"><a id="__codelineno-7-30" name="__codelineno-7-30" href="#__codelineno-7-30"></a><span class="n">X_pca</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-</span><span id="__span-7-31"><a id="__codelineno-7-31" name="__codelineno-7-31" href="#__codelineno-7-31"></a>
-</span><span id="__span-7-32"><a id="__codelineno-7-32" name="__codelineno-7-32" href="#__codelineno-7-32"></a><span class="c1">## X_pca is now our (1000, 2) &quot;map&quot; of the data.</span>
-</span><span id="__span-7-33"><a id="__codelineno-7-33" name="__codelineno-7-33" href="#__codelineno-7-33"></a>
-</span><span id="__span-7-34"><a id="__codelineno-7-34" name="__codelineno-7-34" href="#__codelineno-7-34"></a><span class="c1">## 3. Apply K-Means clustering</span>
-</span><span id="__span-7-35"><a id="__codelineno-7-35" name="__codelineno-7-35" href="#__codelineno-7-35"></a>
-</span><span id="__span-7-36"><a id="__codelineno-7-36" name="__codelineno-7-36" href="#__codelineno-7-36"></a><span class="c1">## We apply K-Means to the 2D projected data.</span>
-</span><span id="__span-7-37"><a id="__codelineno-7-37" name="__codelineno-7-37" href="#__codelineno-7-37"></a>
-</span><span id="__span-7-38"><a id="__codelineno-7-38" name="__codelineno-7-38" href="#__codelineno-7-38"></a><span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-</span><span id="__span-7-39"><a id="__codelineno-7-39" name="__codelineno-7-39" href="#__codelineno-7-39"></a><span class="n">labels</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">X_pca</span><span class="p">)</span>
-</span><span id="__span-7-40"><a id="__codelineno-7-40" name="__codelineno-7-40" href="#__codelineno-7-40"></a><span class="c1">## &#39;labels&#39; is an array of 0s, 1s, and 2s, assigning each point to a cluster.</span>
-</span><span id="__span-7-41"><a id="__codelineno-7-41" name="__codelineno-7-41" href="#__codelineno-7-41"></a>
-</span><span id="__span-7-42"><a id="__codelineno-7-42" name="__codelineno-7-42" href="#__codelineno-7-42"></a><span class="c1">## 4. Visualization</span>
-</span><span id="__span-7-43"><a id="__codelineno-7-43" name="__codelineno-7-43" href="#__codelineno-7-43"></a>
-</span><span id="__span-7-44"><a id="__codelineno-7-44" name="__codelineno-7-44" href="#__codelineno-7-44"></a><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
-</span><span id="__span-7-45"><a id="__codelineno-7-45" name="__codelineno-7-45" href="#__codelineno-7-45"></a><span class="c1">## Create a scatter plot of the PCA-projected data (PC1 vs PC2)</span>
-</span><span id="__span-7-46"><a id="__codelineno-7-46" name="__codelineno-7-46" href="#__codelineno-7-46"></a>
-</span><span id="__span-7-47"><a id="__codelineno-7-47" name="__codelineno-7-47" href="#__codelineno-7-47"></a><span class="c1">## Color each point (c=labels) according to its discovered cluster.</span>
-</span><span id="__span-7-48"><a id="__codelineno-7-48" name="__codelineno-7-48" href="#__codelineno-7-48"></a>
-</span><span id="__span-7-49"><a id="__codelineno-7-49" name="__codelineno-7-49" href="#__codelineno-7-49"></a><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_pca</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_pca</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
-</span><span id="__span-7-50"><a id="__codelineno-7-50" name="__codelineno-7-50" href="#__codelineno-7-50"></a>
-</span><span id="__span-7-51"><a id="__codelineno-7-51" name="__codelineno-7-51" href="#__codelineno-7-51"></a><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;PCA Projection + K-Means Clustering&#39;</span><span class="p">)</span>
-</span><span id="__span-7-52"><a id="__codelineno-7-52" name="__codelineno-7-52" href="#__codelineno-7-52"></a><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Principal Component 1 (PC1)&#39;</span><span class="p">)</span>
-</span><span id="__span-7-53"><a id="__codelineno-7-53" name="__codelineno-7-53" href="#__codelineno-7-53"></a><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Principal Component 2 (PC2)&#39;</span><span class="p">)</span>
-</span><span id="__span-7-54"><a id="__codelineno-7-54" name="__codelineno-7-54" href="#__codelineno-7-54"></a><span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-</span><span id="__span-7-55"><a id="__codelineno-7-55" name="__codelineno-7-55" href="#__codelineno-7-55"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCA</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.cluster</span><span class="w"> </span><span class="kn">import</span> <span class="n">KMeans</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_blobs</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c1">## 1. Generate synthetic high-dimensional data</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="c1">## We create 1000 samples in 5 dimensions (D=5)</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="c1">## with 3 distinct cluster centers (K=3).</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="n">X</span><span class="p">,</span> <span class="n">y_true</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">WAR</span><span class="p">:</span> <span class="n">tool</span><span class="o">-</span><span class="n">call</span><span class="o">-</span><span class="n">rejected</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="n">n_features</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="n">centers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="n">cluster_std</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="c1">## X is our (1000, 5) data matrix. y_true holds the &quot;ground truth&quot; labels,</span>
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="c1">## but we will only use them for validation, not for the clustering.</span>
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>
+</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="c1">## 2. Apply PCA for dimensionality reduction</span>
+</span><span id="__span-4-24"><a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>
+</span><span id="__span-4-25"><a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a><span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</span><span id="__span-4-26"><a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a><span class="c1">## fit_transform finds the 2 principal components and projects</span>
+</span><span id="__span-4-27"><a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a>
+</span><span id="__span-4-28"><a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a><span class="c1">## the 5D data down to a 2D representation.</span>
+</span><span id="__span-4-29"><a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a>
+</span><span id="__span-4-30"><a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a><span class="n">X_pca</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</span><span id="__span-4-31"><a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a>
+</span><span id="__span-4-32"><a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a><span class="c1">## X_pca is now our (1000, 2) &quot;map&quot; of the data.</span>
+</span><span id="__span-4-33"><a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a>
+</span><span id="__span-4-34"><a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a><span class="c1">## 3. Apply K-Means clustering</span>
+</span><span id="__span-4-35"><a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a>
+</span><span id="__span-4-36"><a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a><span class="c1">## We apply K-Means to the 2D projected data.</span>
+</span><span id="__span-4-37"><a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a>
+</span><span id="__span-4-38"><a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a><span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-4-39"><a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a><span class="n">labels</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">X_pca</span><span class="p">)</span>
+</span><span id="__span-4-40"><a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a><span class="c1">## &#39;labels&#39; is an array of 0s, 1s, and 2s, assigning each point to a cluster.</span>
+</span><span id="__span-4-41"><a id="__codelineno-4-41" name="__codelineno-4-41" href="#__codelineno-4-41"></a>
+</span><span id="__span-4-42"><a id="__codelineno-4-42" name="__codelineno-4-42" href="#__codelineno-4-42"></a><span class="c1">## 4. Visualization</span>
+</span><span id="__span-4-43"><a id="__codelineno-4-43" name="__codelineno-4-43" href="#__codelineno-4-43"></a>
+</span><span id="__span-4-44"><a id="__codelineno-4-44" name="__codelineno-4-44" href="#__codelineno-4-44"></a><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+</span><span id="__span-4-45"><a id="__codelineno-4-45" name="__codelineno-4-45" href="#__codelineno-4-45"></a><span class="c1">## Create a scatter plot of the PCA-projected data (PC1 vs PC2)</span>
+</span><span id="__span-4-46"><a id="__codelineno-4-46" name="__codelineno-4-46" href="#__codelineno-4-46"></a>
+</span><span id="__span-4-47"><a id="__codelineno-4-47" name="__codelineno-4-47" href="#__codelineno-4-47"></a><span class="c1">## Color each point (c=labels) according to its discovered cluster.</span>
+</span><span id="__span-4-48"><a id="__codelineno-4-48" name="__codelineno-4-48" href="#__codelineno-4-48"></a>
+</span><span id="__span-4-49"><a id="__codelineno-4-49" name="__codelineno-4-49" href="#__codelineno-4-49"></a><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_pca</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_pca</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+</span><span id="__span-4-50"><a id="__codelineno-4-50" name="__codelineno-4-50" href="#__codelineno-4-50"></a>
+</span><span id="__span-4-51"><a id="__codelineno-4-51" name="__codelineno-4-51" href="#__codelineno-4-51"></a><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;PCA Projection + K-Means Clustering&#39;</span><span class="p">)</span>
+</span><span id="__span-4-52"><a id="__codelineno-4-52" name="__codelineno-4-52" href="#__codelineno-4-52"></a><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Principal Component 1 (PC1)&#39;</span><span class="p">)</span>
+</span><span id="__span-4-53"><a id="__codelineno-4-53" name="__codelineno-4-53" href="#__codelineno-4-53"></a><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Principal Component 2 (PC2)&#39;</span><span class="p">)</span>
+</span><span id="__span-4-54"><a id="__codelineno-4-54" name="__codelineno-4-54" href="#__codelineno-4-54"></a><span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</span><span id="__span-4-55"><a id="__codelineno-4-55" name="__codelineno-4-55" href="#__codelineno-4-55"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </span></code></pre></div>
 <p><strong>Interpretation:</strong>
 The resulting plot shows the 2D principal component "map" of our original 5D data. The K-Means algorithm, operating <em>only</em> on this 2D data, has successfully identified the three distinct groups. The <code>cmap='viridis'</code> coloring clearly visualizes these discovered partitions.</p>
